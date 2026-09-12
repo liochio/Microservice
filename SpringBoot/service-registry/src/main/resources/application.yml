@@ -1,0 +1,18 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: service-registry
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false # Bản thân Registry Server không cần tự đăng ký vào chính nó
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false # Tắt chế độ tự bảo vệ trong môi trường Dev để dọn instance offline nhanh
+    eviction-interval-timer-in-ms: 5000

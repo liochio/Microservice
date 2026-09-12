@@ -1,0 +1,88 @@
+# ==============================================================================
+# Portfolio Backend Engine - Shared Microservice Configuration (Config Server)
+# Cấu hình dùng chung được nạp tự động cho 100% các Microservices con
+# ==============================================================================
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
+    always-use-message-format: false
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      force-response: true
+      enabled: true
+
+  # Cấu hình Pool kết nối Cơ sở Dữ liệu HikariCP
+  datasource:
+    username: ${DB_USER:${MYSQL_USER:root}}
+    password: ${DB_PASSWORD:${MYSQL_PASSWORD:12345678}}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+
+  # Cấu hình JPA & Hibernate chuẩn Microservices
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+        default_batch_fetch_size: 50
+
+  # Cấu hình Flyway mặc định (các service core tự kích hoạt)
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+    baseline-version: 0
+    locations: classpath:db/migration
+    validate-on-migrate: true
+
+  # Cấu hình Redis Cache L2
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 3000ms
+
+# Cấu hình Discovery Eureka Client
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+# Cấu hình JWT Security mặc định
+jwt:
+  secret: ${JWT_SECRET:portfolio-engine-super-secret-jwt-key-minimum-256-bits-for-security-2026}
+  access-token-validity-ms: 3600000        # 1 giờ
+  refresh-token-validity-ms: 604800000     # 7 ngày
+
+# Giám sát & Quản trị Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,prometheus"
+  endpoint:
+    health:
+      show-details: always

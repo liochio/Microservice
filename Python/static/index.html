@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liochio FinTech & Smart Piggy Bank - Hệ Sinh Thái Tài Chính Số & IoT</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#10b981',
+                            600: '#059669',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #070b14; color: #e2e8f0; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-hover:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.1);
+        }
+        .oled-display {
+            background-color: #02120e;
+            border: 2px solid #064e3b;
+            box-shadow: inset 0 0 15px rgba(16, 185, 129, 0.25), 0 0 10px rgba(16, 185, 129, 0.15);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .glow-green { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+        .glow-red { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); }
+        .glow-yellow { box-shadow: 0 0 25px rgba(234, 179, 8, 0.5); }
+        .glow-purple { box-shadow: 0 0 25px rgba(168, 85, 247, 0.4); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0b1120; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        .active-nav-tab {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-bottom: 2px solid #10b981;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- ========================================================================= -->
+    <!-- TOP HEADER -->
+    <!-- ========================================================================= -->
+    <header class="border-b border-gray-800/80 bg-[#090e1a]/90 backdrop-blur-md sticky top-0 z-50 px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                <i class="fa-solid fa-piggy-bank text-gray-950 text-xl"></i>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="font-extrabold text-lg tracking-tight text-white">Liochio FinTech & Smart Piggy Bank</h1>
+                    <span class="px-2 py-0.5 text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full">v2.5 Full App</span>
+                </div>
+                <p class="text-xs text-gray-400">Hệ Sinh Thái Tài Chính Microservice & Ngân Hàng Lõi IoT Bọc Thép</p>
+            </div>
+        </div>
+
+        <!-- Role Switcher & System Telemetry -->
+        <div class="flex items-center flex-wrap gap-3">
+            <!-- Role Switcher -->
+            <div class="flex items-center bg-gray-900 border border-gray-800 rounded-xl p-1 text-xs">
+                <span class="text-gray-400 px-2 font-medium">Chế độ:</span>
+                <button id="btn-role-parent" onclick="switchUserRole('PARENT')" class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-user-tie"></i> 👨‍👩‍👧 Phụ Huynh
+                </button>
+                <button id="btn-role-child" onclick="switchUserRole('CHILD')" class="px-3 py-1 rounded-lg text-gray-400 hover:text-white font-bold transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-child-reaching"></i> 🧒 Trẻ Em
+                </button>
+            </div>
+
+            <!-- WebSocket & API Status Badges -->
+            <div id="ws-status-badge" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400 text-xs font-medium">
+                <span id="ws-dot" class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                <span id="ws-status-text">WebSocket: Ready</span>
+            </div>
+
+            <div id="backend-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span id="backend-status-text">FastAPI :8089 LIVE</span>
+            </div>
+
+            <button onclick="pingBackend()" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs flex items-center gap-1.5 border border-gray-700 transition">
+                <i class="fa-solid fa-rotate"></i> Ping Health
+            </button>
+        </div>
+    </header>
+
+    <!-- ========================================================================= -->
+    <!-- MODULE NAVIGATION BAR (7 PHÂN HỆ NGHIỆP VỤ) -->
+    <!-- ========================================================================= -->
+    <nav class="border-b border-gray-800 bg-[#0c1222] px-6 flex items-center gap-2 overflow-x-auto custom-scrollbar">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent active-nav-tab whitespace-nowrap">
+            <i class="fa-solid fa-gauge-high"></i> 1. Tổng Quan (Executive Dashboard)
+        </button>
+        <button onclick="switchTab('smart-piggy')" id="nav-smart-piggy" class="px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent whitespace-nowrap">
+            <i class="fa-solid fa-piggy-bank text-pink-400"></i> 2. Heo Đất & Rút 2 Pha (IoT Hub)
+        </button>
+        <button onclick="switchTab('wallets')" id="nav-wallets" class="px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent whitespace-nowrap">
+            <i class="fa-solid fa-wallet text-sky-400"></i> 3. Quản Lý Ví & Chuyển Tiền Khép Kín
+        </button>
+        <button onclick="switchTab('ai-advisor')" id="nav-ai-advisor" class="px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent whitespace-nowrap">
+            <i class="fa-solid fa-brain text-purple-400"></i> 4. Cố Vấn Tài Chính AI (Robo-Advisor)
+        </button>
+        <button onclick="switchTab('core-ledger')" id="nav-core-ledger" class="px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent whitespace-nowrap">
+            <i class="fa-solid fa-scale-balanced text-teal-400"></i> 5. Sổ Cái Kép Kế Toán (Core Ledger)
+        </button>
+        <button onclick="switchTab('security-center')" id="nav-security-center" class="px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent whitespace-nowrap">
+            <i class="fa-solid fa-shield-halved text-red-400"></i> 6. Trung Tâm An Ninh & Thiết Bị
+        </button>
+        <button onclick="switchTab('parental-goals')" id="nav-parental-goals" class="px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent whitespace-nowrap">
+            <i class="fa-solid fa-bullseye text-amber-400"></i> 7. Phụ Huynh & Mục Tiêu (Goals)
+        </button>
+    </nav>
+
+    <!-- ========================================================================= -->
+    <!-- MAIN CONTENT CONTAINER -->
+    <!-- ========================================================================= -->
+    <main class="flex-1 p-6 max-w-[1700px] w-full mx-auto">
+
+        <!-- ===================================================================== -->
+        <!-- MODULE 1: EXECUTIVE DASHBOARD (TỔNG QUAN) -->
+        <!-- ===================================================================== -->
+        <section id="module-dashboard" class="space-y-6">
+            <!-- Top Summary Stat Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <!-- Total Net Worth -->
+                <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between text-xs text-gray-400 font-semibold mb-2">
+                        <span>TỔNG TÀI SẢN RÒNG</span>
+                        <div class="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-sack-dollar"></i>
+                        </div>
+                    </div>
+                    <div id="stat-total-balance" class="text-2xl font-extrabold text-white mono">12,450,000 đ</div>
+                    <div class="flex items-center gap-1.5 text-xs text-emerald-400 mt-2">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        <span>+15.2% so với tháng trước</span>
+                    </div>
+                </div>
+
+                <!-- Available Wallet -->
+                <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between text-xs text-gray-400 font-semibold mb-2">
+                        <span>VÍ KHẢ DỤNG (AVAILABLE)</span>
+                        <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
+                            <i class="fa-solid fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    <div id="stat-available-balance" class="text-2xl font-extrabold text-sky-400 mono">4,500,000 đ</div>
+                    <div class="text-[11px] text-gray-400 mt-2">Sẵn sàng chi tiêu & chuyển P2P</div>
+                </div>
+
+                <!-- Savings Piggy Wallet -->
+                <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between text-xs text-gray-400 font-semibold mb-2">
+                        <span>VÍ HEO ĐẤT (SAVINGS VẬT LÝ)</span>
+                        <div class="w-7 h-7 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center">
+                            <i class="fa-solid fa-piggy-bank"></i>
+                        </div>
+                    </div>
+                    <div id="stat-savings-balance" class="text-2xl font-extrabold text-pink-400 mono">6,700,000 đ</div>
+                    <div class="text-[11px] text-amber-400 mt-2 flex items-center gap-1">
+                        <i class="fa-solid fa-lock text-[10px]"></i> Ví khép kín (Khóa vật lý)
+                    </div>
+                </div>
+
+                <!-- Smart Piggy Device Telemetry -->
+                <div class="glass-panel rounded-2xl p-5 relative overflow-hidden">
+                    <div class="flex items-center justify-between text-xs text-gray-400 font-semibold mb-2">
+                        <span>TRẠNG THÁI THIẾT BỊ IOT</span>
+                        <div class="w-7 h-7 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span id="stat-piggy-status" class="text-lg font-bold text-white">ONLINE (PIGGY-VN-8888)</span>
+                    </div>
+                    <div class="flex justify-between items-center text-[11px] text-gray-400 mt-2">
+                        <span>Pin dự phòng: <b class="text-emerald-400">98.5%</b></span>
+                        <span>Nhịp tim: <b class="text-sky-400">10s Ping</b></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts & Activity Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Cashflow Trend Chart (7 cols) -->
+                <div class="lg:col-span-7 glass-panel rounded-2xl p-5 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm text-white">Biến Động Dòng Tiền & Tích Lũy</h3>
+                                <p class="text-[11px] text-gray-400">Thu nhập, Chi tiêu và Tốc độ nuôi Heo Đất 6 tháng gần nhất</p>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                            Cân Đối Kế Toán ACID
+                        </span>
+                    </div>
+                    <div class="h-64 w-full">
+                        <canvas id="cashflowChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Financial Transactions (5 cols) -->
+                <div class="lg:col-span-5 glass-panel rounded-2xl p-5 flex flex-col gap-3">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-sky-400 text-xs"></i>
+                            <h3 class="font-bold text-sm text-white">Giao Dịch Gần Đây</h3>
+                        </div>
+                        <button onclick="switchTab('core-ledger')" class="text-xs text-sky-400 hover:text-sky-300 font-semibold">Xem Sổ Cái →</button>
+                    </div>
+
+                    <div id="dashboard-recent-txs" class="space-y-2.5 overflow-y-auto max-h-60 custom-scrollbar pr-1">
+                        <!-- Items rendered dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- MODULE 2: SMART PIGGY IOT & 2-PHASE PHYSICAL WITHDRAWAL -->
+        <!-- ===================================================================== -->
+        <section id="module-smart-piggy" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- Left: ESP32 Hardware Simulator Box (6 cols) -->
+                <div class="lg:col-span-6 bg-gradient-to-b from-[#121a2c] to-[#0c1220] border border-gray-800 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                            <span class="text-xs font-bold uppercase tracking-wider text-gray-400 ml-2">ESP32 Hardware Enclosure</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs">
+                            <span id="piggy-solenoid-badge" class="px-2.5 py-1 rounded-lg bg-gray-800 text-gray-300 border border-gray-700 font-mono">
+                                <i class="fa-solid fa-lock text-amber-400 mr-1"></i> SOLENOID: LOCKED (NC)
+                            </span>
+                            <div id="piggy-rgb-led" class="w-4 h-4 rounded-full bg-emerald-400 glow-green transition-all duration-300"></div>
+                        </div>
+                    </div>
+
+                    <!-- OLED Screen -->
+                    <div class="oled-display rounded-2xl p-4 text-emerald-400 mb-5 relative overflow-hidden">
+                        <div class="flex justify-between items-center border-b border-emerald-900/60 pb-1.5 mb-2 text-[11px]">
+                            <span>[OLED: SSD1306 128x64 I2C]</span>
+                            <span class="flex items-center gap-1"><i class="fa-solid fa-wifi text-xs"></i> 2.4GHz RSSI -45dBm</span>
+                        </div>
+                        <div class="text-center py-2">
+                            <div id="piggy-oled-title" class="text-xs font-bold tracking-widest text-emerald-300 uppercase">🐷 HEO ĐẤT THÔNG MINH 🐷</div>
+                            <div id="piggy-oled-balance" class="text-3xl font-black tracking-tight text-white my-1">6,700,000 đ</div>
+                            <div id="piggy-oled-msg" class="text-xs text-emerald-400 animate-pulse">Sẵn sàng nhận xu tiết kiệm...</div>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-emerald-900/60 pt-1.5 mt-2 text-[10px] text-emerald-500">
+                            <span>MAC: 3C:71:BF:88:99:AA</span>
+                            <span id="piggy-oled-lvl">LVL: 3 (850/1000 XP)</span>
+                        </div>
+                    </div>
+
+                    <!-- Gamification Level Bar -->
+                    <div class="mb-5 p-3.5 rounded-2xl bg-gray-900/80 border border-gray-800 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-amber-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-trophy"></i>
+                                <span id="piggy-gamify-title">Cấp 3: Chiến Binh Tiết Kiệm (Savings Warrior)</span>
+                            </span>
+                            <span id="piggy-gamify-points" class="font-mono text-gray-300">850 / 1000 XP</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                            <div id="piggy-xp-bar" class="bg-gradient-to-r from-amber-500 via-emerald-400 to-teal-400 h-2.5 rounded-full transition-all duration-500" style="width: 85%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Coin Drop Buttons -->
+                    <div class="space-y-3">
+                        <div class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center justify-between">
+                            <span><i class="fa-solid fa-coins text-yellow-400 mr-1.5"></i> Thả Tiền Vào Khe (Cảm Biến Quang Kép)</span>
+                            <span class="text-[11px] text-gray-500">1,000 đ = 1 XP</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2.5">
+                            <button onclick="triggerCoinDropAction(20000)" class="p-3 rounded-xl bg-gray-800 hover:bg-emerald-600/30 hover:border-emerald-500 border border-gray-700 text-white text-xs font-bold transition flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-circle-dollar-to-slot text-base text-emerald-400"></i>
+                                <span>+20k</span>
+                            </button>
+                            <button onclick="triggerCoinDropAction(50000)" class="p-3 rounded-xl bg-gray-800 hover:bg-emerald-600/30 hover:border-emerald-500 border border-gray-700 text-white text-xs font-bold transition flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-circle-dollar-to-slot text-base text-teal-400"></i>
+                                <span>+50k</span>
+                            </button>
+                            <button onclick="triggerCoinDropAction(100000)" class="p-3 rounded-xl bg-gray-800 hover:bg-emerald-600/30 hover:border-emerald-500 border border-gray-700 text-white text-xs font-bold transition flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-circle-dollar-to-slot text-base text-sky-400"></i>
+                                <span>+100k</span>
+                            </button>
+                            <button onclick="triggerCoinDropAction(500000)" class="p-3 rounded-xl bg-gray-800 hover:bg-emerald-600/30 hover:border-emerald-500 border border-gray-700 text-white text-xs font-bold transition flex flex-col items-center gap-1">
+                                <i class="fa-solid fa-circle-dollar-to-slot text-base text-amber-400"></i>
+                                <span>+500k</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: 2-Phase Physical Withdrawal Saga Controller (6 cols) -->
+                <div class="lg:col-span-6 glass-panel rounded-3xl p-6 shadow-2xl flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-gray-800 pb-3 mb-4">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                                    <i class="fa-solid fa-key"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-sm text-white">Quy Trình Rút Tiền Vật Lý 2 Pha (2-Phase Commit)</h3>
+                                    <p class="text-[11px] text-gray-400">Đồng bộ tuyệt đối giữa Tiền Mặt trong Heo và Số Dư Kế Toán Lõi</p>
+                                </div>
+                            </div>
+                            <span id="withdraw-flow-state" class="px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-bold">
+                                IDLE (SẴN SÀNG)
+                            </span>
+                        </div>
+
+                        <!-- 2-Phase Flow Steps Explanation -->
+                        <div class="space-y-3 text-xs mb-4">
+                            <div class="p-3 rounded-xl bg-gray-900/80 border border-gray-800 flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center shrink-0 mt-0.5">1</div>
+                                <div>
+                                    <div class="font-bold text-white">Pha 1: Tạm Giữ & Mở Chốt Điện Từ</div>
+                                    <div class="text-gray-400 text-[11px]">Sổ cái khóa tiền sang HOLDING. Backend gửi WebSocket mở chốt Solenoid 5V (Normally Closed) và kích hoạt đếm ngược 60s.</div>
+                                </div>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-gray-900/80 border border-gray-800 flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0 mt-0.5">2</div>
+                                <div>
+                                    <div class="font-bold text-white">Pha 2: Lấy Tiền Mặt & Xác Nhận Vật Lý (Settle)</div>
+                                    <div class="text-gray-400 text-[11px]">Người dùng lấy tiền và bấm nút cứng trên Heo đất. Hệ thống quyết toán trừ hẳn số dư và khóa chốt an toàn.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 60s Countdown Progress -->
+                        <div id="withdraw-countdown-box" class="hidden p-4 rounded-2xl bg-amber-950/30 border border-amber-500/30 space-y-2 mb-4">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-stopwatch animate-spin"></i> Chốt Solenoid Đang Mở - Hãy lấy tiền:
+                                </span>
+                                <span id="withdraw-sec-remaining" class="font-mono font-bold text-base text-amber-400">60s</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                                <div id="withdraw-progress-bar" class="bg-gradient-to-r from-amber-500 to-emerald-500 h-2 transition-all duration-1000" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons for 2-Phase Flow -->
+                    <div class="space-y-2">
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <button id="btn-request-withdraw" onclick="execWithdrawFlow('REQUEST')" class="py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-lock-open"></i> 1. Yêu Cầu Rút 50,000 đ
+                            </button>
+                            <button id="btn-confirm-withdraw" onclick="execWithdrawFlow('CONFIRM_BUTTON')" class="py-3 px-4 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" disabled>
+                                <i class="fa-solid fa-hand-holding-dollar"></i> 2a. Bấm Nút Xác Nhận (Settle)
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2.5">
+                            <button onclick="execWithdrawFlow('TIMEOUT_EXPIRED')" class="py-2.5 px-3 bg-gray-800 hover:bg-gray-700 text-amber-400 border border-amber-500/30 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                                ⏱️ 2b. Giả Lập Quá 60s (Rollback)
+                            </button>
+                            <button onclick="execWithdrawFlow('MECHANICAL_JAM')" class="py-2.5 px-3 bg-gray-800 hover:bg-gray-700 text-red-400 border border-red-500/30 rounded-xl text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                                🔩 2c. Giả Lập Kẹt Bản Lề Cửa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- MODULE 3: WALLETS & CLOSED-LOOP TRANSFER -->
+        <!-- ===================================================================== -->
+        <section id="module-wallets" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- Left: Wallet List (5 cols) -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-base text-white flex items-center gap-2">
+                            <i class="fa-solid fa-wallet text-sky-400"></i> Danh Sách Ví Tài Chính
+                        </h3>
+                        <span class="text-xs text-gray-400">Multi-Wallet Architecture</span>
+                    </div>
+
+                    <!-- Wallet 1: AVAILABLE -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-5 transition cursor-pointer border-l-4 border-l-sky-500">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white text-sm">Ví Khả Dụng (Chính)</div>
+                                    <div class="text-[11px] text-gray-400 mono">CODE: WALLET_MAIN_AVAILABLE</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 border border-sky-500/30 text-xs font-semibold">AVAILABLE</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-end">
+                            <div>
+                                <div class="text-[10px] text-gray-400 uppercase">Số dư khả dụng</div>
+                                <div class="text-xl font-extrabold text-white mono">4,500,000 đ</div>
+                            </div>
+                            <span class="text-xs text-emerald-400"><i class="fa-solid fa-arrow-right-arrow-left"></i> Cho phép P2P</span>
+                        </div>
+                    </div>
+
+                    <!-- Wallet 2: SAVINGS (Heo Đất) -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-5 transition cursor-pointer border-l-4 border-l-pink-500">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-piggy-bank"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white text-sm">Ví Heo Đất Thông Minh</div>
+                                    <div class="text-[11px] text-gray-400 mono">CODE: WALLET_SMART_PIGGY</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-pink-500/10 text-pink-400 border border-pink-500/30 text-xs font-semibold">SAVINGS</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-end">
+                            <div>
+                                <div class="text-[10px] text-gray-400 uppercase">Tiền mặt vật lý trong heo</div>
+                                <div class="text-xl font-extrabold text-pink-400 mono">6,700,000 đ</div>
+                            </div>
+                            <span class="text-xs text-amber-400 font-medium"><i class="fa-solid fa-shield-halved"></i> Closed-Loop</span>
+                        </div>
+                    </div>
+
+                    <!-- Wallet 3: ESCROW (Ký Quỹ) -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-5 transition cursor-pointer border-l-4 border-l-purple-500">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg">
+                                    <i class="fa-solid fa-handshake"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white text-sm">Ví Ký Quỹ Đảm Bảo</div>
+                                    <div class="text-[11px] text-gray-400 mono">CODE: WALLET_ESCROW_GOALS</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/30 text-xs font-semibold">ESCROW</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-end">
+                            <div>
+                                <div class="text-[10px] text-gray-400 uppercase">Số dư tạm giữ mục tiêu</div>
+                                <div class="text-xl font-extrabold text-purple-400 mono">1,250,000 đ</div>
+                            </div>
+                            <span class="text-xs text-gray-400">Locked for Quests</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Smart Closed-Loop Transfer Engine (7 cols) -->
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                                <i class="fa-solid fa-arrows-turn-to-dots"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm text-white">Chuyển Tiền Thông Minh (Closed-Loop Guard)</h3>
+                                <p class="text-[11px] text-gray-400">Tự động chặn vi phạm chuyển tiền P2P từ ví Heo Đất</p>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                            Bảo Mật Ngân Hàng
+                        </span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">1. CHỌN VÍ NGUỒN (TRÍCH TIỀN):</label>
+                            <select id="transfer-src-wallet" onchange="onSourceWalletChange()" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                                <option value="WALLET_MAIN_AVAILABLE">Ví Khả Dụng (AVAILABLE) - Số dư: 4,500,000 đ</option>
+                                <option value="WALLET_SMART_PIGGY">Ví Heo Đất (SAVINGS Vật Lý) - Số dư: 6,700,000 đ</option>
+                            </select>
+                        </div>
+
+                        <!-- Closed-Loop Alert Banner -->
+                        <div id="closed-loop-warning-banner" class="hidden p-3 rounded-xl bg-amber-950/40 border border-amber-500/40 text-xs text-amber-300 flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation mt-0.5 text-amber-400"></i>
+                            <div>
+                                <span class="font-bold">Quy tắc Ví Khép kín (Closed-Loop Guard):</span>
+                                <div class="text-[11px] text-gray-300 mt-0.5">Tiền trong Heo Đất là tài sản tiền mặt vật lý. Hệ thống <b class="text-red-400">CẤM CHUYỂN P2P</b> sang tài khoản người khác. Bạn chỉ có thể Rút Tiền Về Ví Khả Dụng của chính mình.</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1">2. VÍ ĐÍCH NHẬN TIỀN:</label>
+                            <select id="transfer-tgt-wallet" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                                <option value="TARGET_OWN_AVAILABLE">Ví Khả Dụng Của Tôi (Rút Nội Bộ Hợp Lệ)</option>
+                                <option value="TARGET_OTHER_USER">Tài Khoản Bạn Bè (User Bob - P2P Ngoại Tuyến)</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">3. SỐ TIỀN CHUYỂN (VNĐ):</label>
+                                <input id="transfer-amount-input" type="number" value="100000" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500 mono">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 mb-1">4. NỘI DUNG CHUYỂN KHOẢN:</label>
+                                <input id="transfer-note-input" type="text" value="Chuyển tiền tiết kiệm tiêu dùng" class="w-full bg-gray-900 border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                        </div>
+
+                        <button onclick="executeWalletTransfer()" class="w-full mt-2 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Thực Thi Giao Dịch Chuyển Tiền
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- MODULE 4: AI ROBO-ADVISOR & ANALYTICS -->
+        <!-- ===================================================================== -->
+        <section id="module-ai-advisor" class="hidden space-y-6">
+            <!-- AI Sub-tabs -->
+            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base text-white">Trung Tâm Trí Tuệ Nhân Tạo (AI Robo-Advisor Hub)</h3>
+                        <p class="text-xs text-gray-400">OCR Hóa đơn 1-chạm, Ngân sách 50/30/20, Thói quen nạp Gaussian KDE & Quét gian lận Z-Score</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="switchAiSubTab('kde')" id="subtab-btn-kde" class="px-3 py-1.5 text-xs font-bold rounded-xl bg-purple-600 text-white transition">Thói Quen KDE</button>
+                    <button onclick="switchAiSubTab('ocr')" id="subtab-btn-ocr" class="px-3 py-1.5 text-xs font-bold rounded-xl text-gray-400 hover:text-white transition">OCR Hóa Đơn</button>
+                    <button onclick="switchAiSubTab('budget')" id="subtab-btn-budget" class="px-3 py-1.5 text-xs font-bold rounded-xl text-gray-400 hover:text-white transition">Ngân Sách 50/30/20</button>
+                    <button onclick="switchAiSubTab('fraud')" id="subtab-btn-fraud" class="px-3 py-1.5 text-xs font-bold rounded-xl text-gray-400 hover:text-white transition">Gian Lận Z-Score</button>
+                </div>
+            </div>
+
+            <!-- Subtab 1: Gaussian KDE Habit Tracker -->
+            <div id="ai-subtab-kde" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-8 glass-panel rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-sm text-white">Đường Cong Mật Độ Xác Suất Nạp Tiền $f(t)$ (Kernel Density Estimation)</h4>
+                        <button onclick="fetchKdeHabitData()" class="px-3 py-1 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-lg transition flex items-center gap-1">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Chạy Dự Báo AI
+                        </button>
+                    </div>
+                    <div class="h-64 w-full">
+                        <canvas id="kdeFullChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 glass-panel rounded-3xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-sm text-white">Thông Số Mô Hình Thích Ứng (Zero-Cron)</h4>
+                        <div class="p-3 bg-gray-900 rounded-xl border border-gray-800">
+                            <div class="text-[10px] text-gray-400 uppercase font-semibold">Chu kỳ nạp trung vị (Median)</div>
+                            <div id="ai-kde-median-val" class="text-base font-bold text-purple-400 mono mt-0.5">5.0 Ngày</div>
+                        </div>
+                        <div class="p-3 bg-gray-900 rounded-xl border border-gray-800">
+                            <div class="text-[10px] text-gray-400 uppercase font-semibold">Ngưỡng cảnh báo trễ P90 (Anomaly Threshold)</div>
+                            <div id="ai-kde-p90-val" class="text-base font-bold text-amber-400 mono mt-0.5">8.0 Ngày</div>
+                        </div>
+                        <div class="p-3 bg-gray-900 rounded-xl border border-gray-800">
+                            <div class="text-[10px] text-gray-400 uppercase font-semibold">Độ mịn băng thông (Silverman's Bandwidth)</div>
+                            <div id="ai-kde-h-val" class="text-base font-bold text-emerald-400 mono mt-0.5">h = 1.48</div>
+                        </div>
+                    </div>
+
+                    <!-- AI Robo-Advice Alert Box -->
+                    <div id="ai-robo-advice-box" class="p-3.5 rounded-2xl bg-purple-950/40 border border-purple-500/40 text-xs space-y-1">
+                        <div class="font-bold text-purple-300 flex items-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb"></i> Khuyến Nghị Quản Gia Tài Chính AI:
+                        </div>
+                        <p id="ai-robo-advice-msg" class="text-gray-300 text-[11px] leading-relaxed">
+                            Đã 8 ngày bạn chưa nạp tiền vào Heo đất. Dựa trên AI thói quen, bạn thường nạp sau mỗi 5.0 ngày. Hãy tích lũy ~100,000 VND để duy trì kỷ luật nhé!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 2: Receipt OCR Scanner -->
+            <div id="ai-subtab-ocr" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-5 glass-panel rounded-3xl p-6 space-y-4">
+                    <h4 class="font-bold text-sm text-white">Chọn Hóa Đơn Mẫu Hoặc Tải Ảnh Lên</h4>
+                    <div class="space-y-2">
+                        <button onclick="selectAppOcr('highlands')" class="w-full text-left p-3 rounded-2xl bg-gray-900 hover:bg-gray-800 border border-gray-700 text-xs text-gray-200 flex items-center justify-between transition">
+                            <div class="flex items-center gap-2.5">
+                                <span class="text-lg">☕</span>
+                                <div>
+                                    <div class="font-bold text-white">Highlands Coffee</div>
+                                    <div class="text-[10px] text-gray-400">Ăn uống / Giải khát</div>
+                                </div>
+                            </div>
+                            <span class="mono font-bold text-emerald-400 text-sm">65,000 đ</span>
+                        </button>
+                        <button onclick="selectAppOcr('coopmart')" class="w-full text-left p-3 rounded-2xl bg-gray-900 hover:bg-gray-800 border border-gray-700 text-xs text-gray-200 flex items-center justify-between transition">
+                            <div class="flex items-center gap-2.5">
+                                <span class="text-lg">🛒</span>
+                                <div>
+                                    <div class="font-bold text-white">Siêu Thị Co.opmart</div>
+                                    <div class="text-[10px] text-gray-400">Nhu cầu thiết yếu</div>
+                                </div>
+                            </div>
+                            <span class="mono font-bold text-emerald-400 text-sm">325,000 đ</span>
+                        </button>
+                        <button onclick="selectAppOcr('cgv')" class="w-full text-left p-3 rounded-2xl bg-gray-900 hover:bg-gray-800 border border-gray-700 text-xs text-gray-200 flex items-center justify-between transition">
+                            <div class="flex items-center gap-2.5">
+                                <span class="text-lg">🍿</span>
+                                <div>
+                                    <div class="font-bold text-white">Rạp Phim CGV Cinemas</div>
+                                    <div class="text-[10px] text-gray-400">Giải trí / Sở thích</div>
+                                </div>
+                            </div>
+                            <span class="mono font-bold text-emerald-400 text-sm">210,000 đ</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-6 space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-gray-800 pb-2 mb-3">
+                            <h4 class="font-bold text-sm text-white">Dữ Liệu Bóc Tách Tự Động Bằng AI OCR</h4>
+                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-mono font-bold">Confidence: 98.4%</span>
+                        </div>
+                        <div class="bg-gray-950 p-4 rounded-2xl border border-gray-800 font-mono text-xs text-gray-300 space-y-2">
+                            <div class="flex justify-between"><span>ĐƠN VỊ PHÁT HÀNH:</span> <b id="ocr-app-merchant" class="text-white">Highlands Coffee</b></div>
+                            <div class="flex justify-between"><span>MÃ HÓA ĐƠN:</span> <span id="ocr-app-billid" class="text-sky-400">HD-20260908-01</span></div>
+                            <div class="flex justify-between"><span>DANH MỤC TỰ ĐỘNG:</span> <span class="text-purple-400 font-bold">Ẩm Thực & Giải Khát</span></div>
+                            <div class="flex justify-between"><span>DANH SÁCH MẶT HÀNG:</span> <span id="ocr-app-items" class="text-gray-400">Phin Sữa Đá (L), Bánh Mì Que</span></div>
+                            <div class="border-t border-gray-800 pt-2 flex justify-between items-center text-sm">
+                                <span class="font-bold text-white">TỔNG TIỀN THANH TOÁN:</span>
+                                <b id="ocr-app-total" class="text-emerald-400 text-lg">65,000 đ</b>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="execOcrAutoDebit()" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-receipt"></i> 1-Click Tự Động Trừ Tiền Ví & Ghi Sổ Kép
+                    </button>
+                </div>
+            </div>
+
+            <!-- Subtab 3: 50/30/20 Budget -->
+            <div id="ai-subtab-budget" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-6 glass-panel rounded-3xl p-6 flex flex-col items-center">
+                    <h4 class="font-bold text-sm text-white mb-4">Biểu Đồ Phân Bổ Ngân Sách 50/30/20</h4>
+                    <div class="h-56 w-full flex justify-center">
+                        <canvas id="budgetDonutChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 glass-panel rounded-3xl p-6 space-y-3 flex flex-col justify-center text-xs">
+                    <div class="p-3.5 rounded-2xl bg-sky-950/40 border border-sky-800/40 flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-sky-300">1. Nhu Cầu Thiết Yếu (Needs 50%)</div>
+                            <div class="text-gray-400 text-[11px]">Tiền trọ, ăn uống cơ bản, điện nước</div>
+                        </div>
+                        <span class="font-bold text-white mono text-sm">48.5% (Tốt)</span>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-purple-950/40 border border-purple-800/40 flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-purple-300">2. Sở Thích & Linh Hoạt (Wants 30%)</div>
+                            <div class="text-gray-400 text-[11px]">Cà phê, xem phim, mua sắm giải trí</div>
+                        </div>
+                        <span class="font-bold text-white mono text-sm">29.1% (Tốt)</span>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-800/40 flex justify-between items-center">
+                        <div>
+                            <div class="font-bold text-emerald-300">3. Tích Lũy Heo Đất (Savings 20%)</div>
+                            <div class="text-gray-400 text-[11px]">Bỏ ống heo thông minh & Ký quỹ mục tiêu</div>
+                        </div>
+                        <span class="font-bold text-emerald-400 mono text-sm">22.4% (Vượt mức)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtab 4: Fraud Detection (Z-Score) -->
+            <div id="ai-subtab-fraud" class="hidden space-y-4">
+                <div class="flex items-center justify-between text-xs">
+                    <span class="text-gray-300">Bộ quét thống kê phát hiện giao dịch bất thường Z-Score & Khung giờ nhạy cảm</span>
+                    <span class="text-amber-400 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> 2 Cảnh Báo Nghi Vấn Đang Chờ Xử Lý</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 rounded-2xl bg-red-950/40 border border-red-800/40 space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-bold text-[10px]">CRITICAL (Z=3.42)</span>
+                            <span class="mono font-bold text-white text-base">15,000,000 đ</span>
+                        </div>
+                        <div class="font-bold text-white">Chuyển tiền mua sắm điện thoại cao cấp</div>
+                        <div class="text-gray-400 text-[11px]">Số tiền vượt quá 3.42 lần độ lệch chuẩn trung bình chi tiêu ngày (Z-Score > 3.0).</div>
+                        <button onclick="logEvent('FRAUD_DISPUTE', 'Đã đánh dấu tra soát giao dịch 15tr', 'text-amber-400')" class="w-full mt-2 py-1.5 bg-red-600/30 hover:bg-red-600/50 text-red-300 border border-red-500/40 rounded-xl font-bold">
+                            Tạm Khóa Tra Soát
+                        </button>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-amber-950/40 border border-amber-800/40 space-y-2">
+                        <div class="flex justify-between items-start">
+                            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold text-[10px]">ODD HOURS (03:25 AM)</span>
+                            <span class="mono font-bold text-white text-base">2,500,000 đ</span>
+                        </div>
+                        <div class="font-bold text-white">Thanh toán dịch vụ game quốc tế ban đêm</div>
+                        <div class="text-gray-400 text-[11px]">Phát sinh vào khung giờ nhạy cảm bất thường ban đêm (02:00 - 05:00).</div>
+                        <button onclick="logEvent('FRAUD_CONFIRMED', 'Chủ tài khoản đã xác nhận giao dịch game hợp lệ', 'text-emerald-400')" class="w-full mt-2 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 rounded-xl font-bold">
+                            Xác Nhận Là Chính Tôi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- MODULE 5: CORE DOUBLE-ENTRY LEDGER (SỔ CÁI KÉP) -->
+        <!-- ===================================================================== -->
+        <section id="module-core-ledger" class="hidden space-y-6">
+            <div class="glass-panel rounded-3xl p-6 shadow-2xl space-y-5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 flex items-center justify-center">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-base text-white">Sổ Cái Kế Toán Sổ Kép (Double-Entry General Ledger)</h3>
+                            <p class="text-xs text-gray-400">Kiểm toán đối soát $\sum Debit = \sum Credit$ và Bảng cân đối thử chuẩn ngân hàng</p>
+                        </div>
+                    </div>
+                    <!-- CSV Download Buttons -->
+                    <div class="flex gap-2">
+                        <button onclick="downloadTrialBalanceCsv()" class="py-2 px-3.5 bg-sky-600/20 hover:bg-sky-600/30 text-sky-400 border border-sky-500/30 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-csv"></i> Xuất Bảng Cân Đối Thử (CSV)
+                        </button>
+                        <button onclick="downloadStatementCsv()" class="py-2 px-3.5 bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 border border-purple-500/30 rounded-xl text-xs font-bold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-lines"></i> Xuất Sao Kê Ví (CSV)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trial Balance Summary Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-gray-900/90 p-4 rounded-2xl border border-gray-800">
+                        <div class="text-xs text-gray-400 uppercase font-semibold">TỔNG BÊN NỢ (TOTAL DEBIT)</div>
+                        <div id="ledger-debit-val" class="text-xl font-bold text-sky-400 mono mt-1">12,450,000 đ</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-2xl border border-gray-800">
+                        <div class="text-xs text-gray-400 uppercase font-semibold">TỔNG BÊN CÓ (TOTAL CREDIT)</div>
+                        <div id="ledger-credit-val" class="text-xl font-bold text-purple-400 mono mt-1">12,450,000 đ</div>
+                    </div>
+                    <div class="bg-gray-900/90 p-4 rounded-2xl border border-emerald-500/40 bg-emerald-950/20">
+                        <div class="text-xs text-gray-400 uppercase font-semibold">ĐỘ LỆCH KẾ TOÁN (IMBALANCE Δ)</div>
+                        <div class="text-xl font-bold text-emerald-400 mono mt-1">0.00 đ (CÂN ĐỐI 100%)</div>
+                    </div>
+                </div>
+
+                <!-- Journal Entries Table -->
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="bg-gray-900/80 uppercase text-[11px] font-bold text-gray-400 border-b border-gray-800">
+                            <tr>
+                                <th class="p-3">Thời Gian</th>
+                                <th class="p-3">Mã Bút Toán</th>
+                                <th class="p-3">Tài Khoản / Ví</th>
+                                <th class="p-3">Loại GD</th>
+                                <th class="p-3 text-right">Bên Nợ (Debit)</th>
+                                <th class="p-3 text-right">Bên Có (Credit)</th>
+                                <th class="p-3">Diễn Giải Nghiệp Vụ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ledger-journal-tbody" class="divide-y divide-gray-800/60 font-mono">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- MODULE 6: SECURITY & HARDWARE CENTER -->
+        <!-- ===================================================================== -->
+        <section id="module-security-center" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- Pairing & Unbind Card (5 cols) -->
+                <div class="lg:col-span-5 glass-panel rounded-3xl p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center gap-2 border-b border-gray-800 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm text-white">Ghép Đôi & Sang Nhượng Thiết Bị</h3>
+                            <p class="text-[11px] text-gray-400">QR Code Pairing & Anti-Resale Hijack</p>
+                        </div>
+                    </div>
+
+                    <!-- Simulated QR Box -->
+                    <div class="p-4 bg-white rounded-2xl flex flex-col items-center justify-center text-gray-950 space-y-2">
+                        <i class="fa-solid fa-qrcode text-7xl text-gray-900"></i>
+                        <div class="text-[11px] font-mono font-bold">PIGGY_QR_TOKEN_8888_SECRET</div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <button onclick="execDevicePairing()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-link"></i> 1-Click Quét QR Ghép Đôi Heo Đất Mới
+                        </button>
+                        <button onclick="execDeviceUnbind()" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-amber-400 border border-amber-500/30 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-link-slash"></i> Hủy Liên Kết (Unbind / Xóa Flash Sẵn Sàng Bán Lại)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hardware Telemetry & 10 Edge Cases Tests (7 cols) -->
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm text-white">Giám Sát Phần Cứng & Thử Nghiệm Tấn Công</h3>
+                                <p class="text-[11px] text-gray-400">Kiểm thử 10 kịch bản Edge Cases phần cứng và mạng</p>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-red-500/10 text-red-400 border border-red-500/30">
+                            Airtight Tested 100%
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <!-- Tamper Alarm -->
+                        <div class="p-3 bg-gray-900 rounded-xl border border-gray-800 space-y-2">
+                            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                <i class="fa-solid fa-triangle-exclamation text-red-400"></i> Cạy Nắp / Rung Lắc MPU6050
+                            </div>
+                            <div class="text-[11px] text-gray-400">Phát hiện rung lắc >3.5G, hú còi buzzer và tự động phong tỏa ví.</div>
+                            <button onclick="triggerAppTamperAlarm()" class="w-full py-1.5 bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/40 rounded-lg text-xs font-bold">
+                                🚨 Giả Lập Rung Lắc Cạy Nắp
+                            </button>
+                        </div>
+
+                        <!-- Heartbeat Watchdog -->
+                        <div class="p-3 bg-gray-900 rounded-xl border border-gray-800 space-y-2">
+                            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                <i class="fa-solid fa-heart-pulse text-pink-400"></i> Heartbeat Watchdog (30s)
+                            </div>
+                            <div class="text-[11px] text-gray-400">Phát hiện rút phích cắm điện hoặc máy phá sóng Wi-Fi.</div>
+                            <button onclick="triggerAppWatchdogCut()" class="w-full py-1.5 bg-pink-600/20 hover:bg-pink-600/30 text-pink-400 border border-pink-500/40 rounded-lg text-xs font-bold">
+                                ⚠️ Giả Lập Mất Mạng/Điện 45s
+                            </button>
+                        </div>
+
+                        <!-- Anti-Replay HMAC -->
+                        <div class="p-3 bg-gray-900 rounded-xl border border-gray-800 space-y-2">
+                            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                <i class="fa-solid fa-signature text-sky-400"></i> Chống Replay HMAC-SHA256
+                            </div>
+                            <div class="text-[11px] text-gray-400">Bắt gói tin Wireshark phát lại bị chặn bởi Cache Nonce.</div>
+                            <button onclick="triggerAppReplayTest()" class="w-full py-1.5 bg-sky-600/20 hover:bg-sky-600/30 text-sky-400 border border-sky-500/40 rounded-lg text-xs font-bold">
+                                🛡️ Thử Tấn Công Replay Nonce
+                            </button>
+                        </div>
+
+                        <!-- Debounce / Anti-fishing -->
+                        <div class="p-3 bg-gray-900 rounded-xl border border-gray-800 space-y-2">
+                            <div class="text-xs font-bold text-white flex items-center gap-1.5">
+                                <i class="fa-solid fa-filter text-purple-400"></i> Chống Chọc Giấy / Câu Tiền
+                            </div>
+                            <div class="text-[11px] text-gray-400">Lọc thời gian che cảm biến <100ms hoặc >3s.</div>
+                            <button onclick="triggerAppDebounceTest()" class="w-full py-1.5 bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 border border-purple-500/40 rounded-lg text-xs font-bold">
+                                🚫 Thử Chọc Giấy 40ms
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Fatal Crash & Write-off -->
+                    <div class="pt-2 border-t border-gray-800 flex gap-2">
+                        <button onclick="triggerAppFatalCrash()" class="flex-1 py-2 bg-red-950/40 hover:bg-red-950/60 text-red-400 border border-red-800/40 rounded-xl text-xs font-bold">
+                            💥 Đập Nát Heo (>6G Va Đập)
+                        </button>
+                        <button onclick="triggerAppWriteOff()" class="flex-1 py-2 bg-amber-950/40 hover:bg-amber-950/60 text-amber-400 border border-amber-800/40 rounded-xl text-xs font-bold">
+                            📝 Bút Toán Ghi Giảm Tổn Thất (Write-off)
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- MODULE 7: PARENTAL CONTROLS & SAVINGS GOALS (QUESTS) -->
+        <!-- ===================================================================== -->
+        <section id="module-parental-goals" class="hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                <!-- Left: Parental Controls (6 cols) -->
+                <div class="lg:col-span-6 glass-panel rounded-3xl p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center gap-2 border-b border-gray-800 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm text-white">Bảng Điều Khiển Của Phụ Huynh (Parental Controls)</h3>
+                            <p class="text-[11px] text-gray-400">Cấu hình thưởng nạp, Hạn mức chi tiêu & Mã PIN phê duyệt rút tiền</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-xs">
+                        <!-- Parent Matching Bonus Slider -->
+                        <div class="p-4 bg-gray-900 rounded-2xl border border-gray-800 space-y-2">
+                            <div class="flex justify-between items-center font-bold">
+                                <span class="text-white">Tỷ Lệ Thưởng Nạp Của Cha Mẹ (Parent Matching):</span>
+                                <span id="parent-bonus-pct-display" class="text-emerald-400 font-mono text-sm">+50%</span>
+                            </div>
+                            <input id="parent-bonus-slider" type="range" min="0" max="100" step="10" value="50" oninput="updateParentBonusPct(this.value)" class="w-full accent-emerald-500 cursor-pointer">
+                            <div class="text-[11px] text-gray-400">Mỗi khi con bỏ 100,000 đ vào Heo, ví cha mẹ sẽ tự động thưởng thêm 50,000 đ vào heo của con.</div>
+                        </div>
+
+                        <!-- Parent Approval PIN -->
+                        <div class="p-4 bg-gray-900 rounded-2xl border border-gray-800 space-y-2">
+                            <div class="flex justify-between items-center font-bold">
+                                <span class="text-white">Mã PIN Bảo Mật Phê Duyệt Rút Tiền:</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono">PIN: 8888</span>
+                            </div>
+                            <div class="text-[11px] text-gray-400">Ngăn chặn con tự ý mở nắp rút tiền khi chưa được cha mẹ cho phép.</div>
+                        </div>
+
+                        <!-- Emergency Wallet Freeze / Unfreeze -->
+                        <div class="p-4 bg-gray-900 rounded-2xl border border-gray-800 flex items-center justify-between">
+                            <div>
+                                <div class="font-bold text-white">Trạng Thái Khóa Ví Heo Đất:</div>
+                                <div id="parent-wallet-status-desc" class="text-[11px] text-emerald-400">Ví đang ở trạng thái BÌNH THƯỜNG (ACTIVE)</div>
+                            </div>
+                            <button id="btn-toggle-wallet-freeze" onclick="toggleParentWalletFreeze()" class="py-2 px-3.5 bg-red-600/30 hover:bg-red-600/50 text-red-300 border border-red-500/40 rounded-xl font-bold transition">
+                                Đóng Băng Ví
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Savings Goals & Quests (6 cols) -->
+                <div class="lg:col-span-6 glass-panel rounded-3xl p-6 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-sm text-white">Hũ Mục Tiêu Tiết Kiệm (Savings Quests)</h3>
+                                <p class="text-[11px] text-gray-400">Biến mục tiêu mua sắm thành động lực nuôi heo mỗi ngày</p>
+                            </div>
+                        </div>
+                        <button onclick="createNewGoalPrompt()" class="px-3 py-1 bg-pink-600 hover:bg-pink-500 text-white rounded-lg text-xs font-bold transition flex items-center gap-1">
+                            <i class="fa-solid fa-plus"></i> Thêm Mục Tiêu
+                        </button>
+                    </div>
+
+                    <!-- Goals List -->
+                    <div class="space-y-3">
+                        <!-- Goal 1: Mua Xe Đạp -->
+                        <div class="p-4 rounded-2xl bg-gray-900/80 border border-gray-800 space-y-2">
+                            <div class="flex justify-between items-center text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">🚲</span>
+                                    <div>
+                                        <div class="font-bold text-white text-sm">Mua Xe Đạp Thể Thao Mới</div>
+                                        <div class="text-[11px] text-gray-400">Hạn chót: 30/12/2026</div>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-emerald-400 mono">1,500,000 / 2,000,000 đ (75%)</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-teal-400 to-emerald-400 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Goal 2: Mua Bộ Lego -->
+                        <div class="p-4 rounded-2xl bg-gray-900/80 border border-gray-800 space-y-2">
+                            <div class="flex justify-between items-center text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xl">🚀</span>
+                                    <div>
+                                        <div class="font-bold text-white text-sm">Bộ Xếp Hình Lego NASA Apollo</div>
+                                        <div class="text-[11px] text-gray-400">Hạn chót: 15/10/2026</div>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-purple-400 mono">450,000 / 500,000 đ (90%)</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================================================================== -->
+        <!-- LIVE CONSOLE LOG (FOOTER ROW) -->
+        <!-- ===================================================================== -->
+        <div class="mt-6 glass-panel rounded-2xl p-4 flex flex-col min-h-[140px]">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2 mb-2">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-terminal text-emerald-400 text-xs"></i>
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-gray-300">Live Microservice Event Log</h4>
+                </div>
+                <button onclick="clearAppLogs()" class="text-xs text-gray-500 hover:text-gray-300">Xóa log</button>
+            </div>
+            <div id="app-event-logs" class="flex-1 overflow-y-auto max-h-32 space-y-1 text-xs mono text-gray-300 custom-scrollbar pr-1">
+                <div class="text-emerald-400">[SYSTEM] Liochio Full Frontend Web App đã sẵn sàng!</div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ========================================================================= -->
+    <!-- SOUND SYNTHESIZER (WEB AUDIO API) -->
+    <!-- ========================================================================= -->
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playCoinTingSound() {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+
+                const osc1 = audioCtx.createOscillator();
+                const gain1 = audioCtx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(987.77, now);
+                osc1.frequency.exponentialRampToValueAtTime(1318.51, now + 0.08);
+                gain1.gain.setValueAtTime(0.3, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.35);
+
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(1975.53, now + 0.08);
+                osc2.frequency.exponentialRampToValueAtTime(2637.02, now + 0.15);
+                gain2.gain.setValueAtTime(0.25, now + 0.08);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start(now + 0.08);
+                osc2.stop(now + 0.45);
+            } catch (e) {}
+        }
+
+        function playSirenAlarmSound() {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.setValueAtTime(400, now + 0.15);
+                osc.frequency.setValueAtTime(800, now + 0.3);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.5);
+            } catch (e) {}
+        }
+    </script>
+
+    <!-- ========================================================================= -->
+    <!-- APPLICATION STATE & CONTROLLER SCRIPT -->
+    <!-- ========================================================================= -->
+    <script>
+        const API_BASE = 'http://localhost:8089';
+        let currentRole = 'PARENT';
+        let piggyBalance = 6700000;
+        let availableBalance = 4500000;
+        let escrowBalance = 1250000;
+        let piggyExp = 850;
+        let piggyLevel = 3;
+        let parentBonusPct = 50;
+        let isWalletFrozen = false;
+        let withdrawCountdownTimer = null;
+        let withdrawSecs = 60;
+
+        let cashflowChartInstance = null;
+        let kdeChartInstance = null;
+        let budgetChartInstance = null;
+
+        function logEvent(tag, message, color = 'text-gray-300') {
+            const container = document.getElementById('app-event-logs');
+            if (!container) return;
+            const now = new Date().toLocaleTimeString('vi-VN');
+            const el = document.createElement('div');
+            el.className = `${color} text-[11px] leading-relaxed`;
+            el.innerHTML = `<span class="text-gray-500">[${now}]</span> <span class="font-bold">[${tag}]</span> ${message}`;
+            container.appendChild(el);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function clearAppLogs() {
+            document.getElementById('app-event-logs').innerHTML = '';
+        }
+
+        // =========================================================================
+        // TAB ROUTER
+        // =========================================================================
+        function switchTab(tabName) {
+            const tabs = ['dashboard', 'smart-piggy', 'wallets', 'ai-advisor', 'core-ledger', 'security-center', 'parental-goals'];
+            tabs.forEach(t => {
+                const mod = document.getElementById(`module-${t}`);
+                const nav = document.getElementById(`nav-${t}`);
+                if (mod) mod.classList.add('hidden');
+                if (nav) nav.className = 'px-4 py-3 text-xs font-bold text-gray-300 hover:text-emerald-400 transition flex items-center gap-2 border-b-2 border-transparent whitespace-nowrap';
+            });
+
+            const activeMod = document.getElementById(`module-${tabName}`);
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeMod) activeMod.classList.remove('hidden');
+            if (activeNav) activeNav.className = 'px-4 py-3 text-xs font-bold text-emerald-400 transition flex items-center gap-2 border-b-2 border-emerald-500 active-nav-tab whitespace-nowrap';
+
+            if (tabName === 'ai-advisor') {
+                setTimeout(() => { fetchKdeHabitData(); initBudgetDonut(); }, 100);
+            }
+        }
+
+        function switchUserRole(role) {
+            currentRole = role;
+            const btnP = document.getElementById('btn-role-parent');
+            const btnC = document.getElementById('btn-role-child');
+            if (role === 'PARENT') {
+                btnP.className = 'px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold transition flex items-center gap-1.5 shadow-sm';
+                btnC.className = 'px-3 py-1 rounded-lg text-gray-400 hover:text-white font-bold transition flex items-center gap-1.5';
+                logEvent('ROLE_SWITCH', 'Đã chuyển sang chế độ: PHỤ HUYNH (Toàn quyền quản trị tài chính)', 'text-emerald-400');
+            } else {
+                btnC.className = 'px-3 py-1 rounded-lg bg-pink-600 text-white font-bold transition flex items-center gap-1.5 shadow-sm';
+                btnP.className = 'px-3 py-1 rounded-lg text-gray-400 hover:text-white font-bold transition flex items-center gap-1.5';
+                logEvent('ROLE_SWITCH', 'Đã chuyển sang chế độ: TRẺ EM (Nuôi heo đất & Gamification)', 'text-pink-400');
+                switchTab('smart-piggy');
+            }
+        }
+
+        // =========================================================================
+        // BACKEND PING & TELEMETRY
+        // =========================================================================
+        async function pingBackend() {
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                if (res.ok) {
+                    const d = await res.json();
+                    document.getElementById('backend-status-text').innerText = 'FastAPI :8089 LIVE';
+                    logEvent('HEALTH', 'Kết nối Backend FastAPI phản hồi OK 200.', 'text-emerald-400');
+                }
+            } catch (e) {
+                document.getElementById('backend-status-text').innerText = 'FastAPI Offline (Mock)';
+            }
+        }
+
+        // =========================================================================
+        // COIN DROP & GAMIFICATION
+        // =========================================================================
+        async function triggerCoinDropAction(amount) {
+            playCoinTingSound();
+
+            const led = document.getElementById('piggy-rgb-led');
+            if (led) {
+                led.className = "w-4 h-4 rounded-full bg-emerald-400 glow-green animate-ping";
+                setTimeout(() => { led.className = "w-4 h-4 rounded-full bg-emerald-400 glow-green transition-all duration-300"; }, 600);
+            }
+
+            const parentBonus = amount * (parentBonusPct / 100.0);
+            const totalDrop = amount + parentBonus;
+
+            piggyBalance += totalDrop;
+            piggyExp += Math.floor(amount / 1000);
+            if (piggyExp >= 1000) {
+                piggyLevel += 1;
+                piggyExp -= 1000;
+            }
+
+            updateUiBalances();
+            document.getElementById('piggy-oled-msg').innerText = `TING TING! +${amount.toLocaleString('vi-VN')} đ (+${parentBonus.toLocaleString('vi-VN')} đ cha mẹ)`;
+
+            logEvent('IOT_COIN_DROP', `Cảm biến quang kép ghi nhận: +${amount.toLocaleString('vi-VN')} đ | Cha mẹ thưởng (${parentBonusPct}%): +${parentBonus.toLocaleString('vi-VN')} đ`, 'text-emerald-400');
+            logEvent('DOUBLE_ENTRY', `Sổ cái: Nợ Tiền Mặt Khả Dụng / Có Ví Heo Đất (+${totalDrop.toLocaleString('vi-VN')} đ)`, 'text-sky-400');
+
+            try {
+                await fetch(`${API_BASE}/api/v1/smart-piggy/simulator/drop-coin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mac_address: "ESP32_DEMO_PIGGY_01", coin_value: amount, piggy_id: "PIGGY-VN-8888" })
+                });
+            } catch (e) {}
+        }
+
+        // =========================================================================
+        // 2-PHASE PHYSICAL WITHDRAWAL SAGA
+        // =========================================================================
+        async function execWithdrawFlow(action) {
+            const flowState = document.getElementById('withdraw-flow-state');
+            const btnConfirm = document.getElementById('btn-confirm-withdraw');
+            const btnReq = document.getElementById('btn-request-withdraw');
+            const boxCount = document.getElementById('withdraw-countdown-box');
+
+            if (action === 'REQUEST') {
+                withdrawSecs = 60;
+                flowState.innerText = "PENDING_PHYSICAL (ĐANG MỞ CHỐT)";
+                flowState.className = "px-3 py-1 rounded-full bg-amber-950 text-amber-300 border border-amber-800 text-xs font-bold animate-pulse";
+                document.getElementById('piggy-solenoid-badge').innerHTML = '<i class="fa-solid fa-lock-open text-emerald-400 mr-1"></i> SOLENOID: UNLOCKED (OPEN)';
+                document.getElementById('piggy-solenoid-badge').className = "px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-300 border border-emerald-500 font-mono animate-pulse";
+                document.getElementById('piggy-oled-title').innerText = "🔓 DANG MO KHOA DAY HEO";
+                document.getElementById('piggy-oled-msg').innerText = "HAY LAY 50,000 D & BAM NUT!";
+
+                boxCount.classList.remove('hidden');
+                btnConfirm.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnConfirm.disabled = false;
+                btnReq.disabled = true;
+                btnReq.classList.add('opacity-50', 'cursor-not-allowed');
+
+                logEvent('WITHDRAW_HOLD', 'Phase 1: Khóa 50,000 đ sang HOLDING -> Mở chốt Solenoid 5V NC và kích hoạt Hardware Mutex', 'text-amber-400');
+
+                if (withdrawCountdownTimer) clearInterval(withdrawCountdownTimer);
+                withdrawCountdownTimer = setInterval(() => {
+                    withdrawSecs -= 1;
+                    document.getElementById('withdraw-sec-remaining').innerText = withdrawSecs + 's';
+                    document.getElementById('withdraw-progress-bar').style.width = (withdrawSecs / 60 * 100) + '%';
+                    if (withdrawSecs <= 0) {
+                        clearInterval(withdrawCountdownTimer);
+                        execWithdrawFlow('TIMEOUT_EXPIRED');
+                    }
+                }, 1000);
+
+            } else if (action === 'CONFIRM_BUTTON') {
+                if (withdrawCountdownTimer) clearInterval(withdrawCountdownTimer);
+                resetWithdrawFlowUi();
+                playCoinTingSound();
+
+                piggyBalance -= 50000;
+                updateUiBalances();
+                document.getElementById('piggy-oled-title').innerText = "✅ RUT TIEN HOAN TAT";
+                document.getElementById('piggy-oled-msg').innerText = "DA RUT 50,000 D THANH CONG";
+
+                logEvent('WITHDRAW_SETTLE', 'Phase 2: Khách bấm nút cứng -> Quyết toán (SETTLE) trừ 50,000 đ khỏi sổ cái và đóng chốt Solenoid', 'text-emerald-400');
+
+            } else if (action === 'TIMEOUT_EXPIRED') {
+                if (withdrawCountdownTimer) clearInterval(withdrawCountdownTimer);
+                resetWithdrawFlowUi();
+                playSirenAlarmSound();
+
+                document.getElementById('piggy-oled-title').innerText = "⏱️ QUA THOI GIAN CHO";
+                document.getElementById('piggy-oled-msg').innerText = "TU DONG KHOA CUA & HOAN TIEN";
+
+                logEvent('TIMEOUT_ROLLBACK', 'Phase 2 (Timeout): Quá 60s không bấm nút -> Solenoid tự khóa -> Saga Rollback hoàn tiền về AVAILABLE', 'text-amber-400');
+
+            } else if (action === 'MECHANICAL_JAM') {
+                if (withdrawCountdownTimer) clearInterval(withdrawCountdownTimer);
+                resetWithdrawFlowUi();
+                playSirenAlarmSound();
+
+                document.getElementById('piggy-oled-title').innerText = "🚨 KET CO HOC BAN LE";
+                document.getElementById('piggy-oled-msg').innerText = "CUA KET -> TU DONG HOAN TIEN";
+
+                logEvent('JAM_ROLLBACK', 'Phase 2 (Jam): Chốt rụt nhưng công tắc hành trình báo cửa kẹt -> Rollback hoàn tiền & Cảnh báo kẹt nắp', 'text-red-400');
+            }
+        }
+
+        function resetWithdrawFlowUi() {
+            document.getElementById('withdraw-flow-state').innerText = "IDLE (SẴN SÀNG)";
+            document.getElementById('withdraw-flow-state').className = "px-3 py-1 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-bold";
+            document.getElementById('piggy-solenoid-badge').innerHTML = '<i class="fa-solid fa-lock text-amber-400 mr-1"></i> SOLENOID: LOCKED (NC)';
+            document.getElementById('piggy-solenoid-badge').className = "px-2.5 py-1 rounded-lg bg-gray-800 text-gray-300 border border-gray-700 font-mono";
+            document.getElementById('withdraw-countdown-box').classList.add('hidden');
+            document.getElementById('btn-confirm-withdraw').classList.add('opacity-50', 'cursor-not-allowed');
+            document.getElementById('btn-confirm-withdraw').disabled = true;
+            document.getElementById('btn-request-withdraw').disabled = false;
+            document.getElementById('btn-request-withdraw').classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        // =========================================================================
+        // CLOSED-LOOP TRANSFER
+        // =========================================================================
+        function onSourceWalletChange() {
+            const src = document.getElementById('transfer-src-wallet').value;
+            const banner = document.getElementById('closed-loop-warning-banner');
+            if (src === 'WALLET_SMART_PIGGY') {
+                banner.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        async function executeWalletTransfer() {
+            const src = document.getElementById('transfer-src-wallet').value;
+            const tgt = document.getElementById('transfer-tgt-wallet').value;
+            const amt = parseInt(document.getElementById('transfer-amount-input').value) || 100000;
+
+            if (src === 'WALLET_SMART_PIGGY' && tgt === 'TARGET_OTHER_USER') {
+                playSirenAlarmSound();
+                logEvent('CLOSED_LOOP_BLOCKED', '❌ LỖI BẢO MẬT 403: Không thể chuyển tiền P2P trực tiếp từ Ví Heo Đất (SAVINGS) sang tài khoản người khác! Vui lòng rút tiền về Ví Khả Dụng trước.', 'text-red-400');
+                alert('🛑 BẢO VỆ VÍ KHÉP KÍN:
+Không thể chuyển tiền P2P trực tiếp từ Ví Heo Đất (SAVINGS) sang tài khoản của người khác.
+Vui lòng Rút tiền về Ví Khả Dụng trước!');
+                return;
+            }
+
+            if (src === 'WALLET_SMART_PIGGY' && tgt === 'TARGET_OWN_AVAILABLE') {
+                piggyBalance -= amt;
+                availableBalance += amt;
+                updateUiBalances();
+                playCoinTingSound();
+                logEvent('TRANSFER_SUCCESS', `✅ Rút nội bộ thành công: ${amt.toLocaleString('vi-VN')} đ từ Heo Đất sang Ví Khả Dụng.`, 'text-emerald-400');
+                return;
+            }
+
+            if (availableBalance < amt) {
+                alert('Số dư ví khả dụng không đủ!');
+                return;
+            }
+
+            availableBalance -= amt;
+            updateUiBalances();
+            playCoinTingSound();
+            logEvent('TRANSFER_SUCCESS', `✅ Chuyển tiền P2P thành công: -${amt.toLocaleString('vi-VN')} đ tới người nhận.`, 'text-emerald-400');
+        }
+
+        // =========================================================================
+        // AI SUB-TABS & OCR
+        // =========================================================================
+        function switchAiSubTab(sub) {
+            ['kde', 'ocr', 'budget', 'fraud'].forEach(s => {
+                const b = document.getElementById(`ai-subtab-${s}`);
+                const btn = document.getElementById(`subtab-btn-${s}`);
+                if (b) b.classList.add('hidden');
+                if (btn) btn.className = 'px-3 py-1.5 text-xs font-bold rounded-xl text-gray-400 hover:text-white transition';
+            });
+            const activeB = document.getElementById(`ai-subtab-${sub}`);
+            const activeBtn = document.getElementById(`subtab-btn-${sub}`);
+            if (activeB) activeB.classList.remove('hidden');
+            if (activeBtn) activeBtn.className = 'px-3 py-1.5 text-xs font-bold rounded-xl bg-purple-600 text-white transition';
+        }
+
+        async function fetchKdeHabitData() {
+            logEvent('AI_KDE', 'Đang phân tích thói quen nạp tiền bằng mô hình Gaussian Kernel Density Estimation...', 'text-purple-400');
+            try {
+                const res = await fetch(`${API_BASE}/api/v1/ai/habit-tracker`, { headers: { 'X-User-Id': 'gateway-verified-uuid-9999' } });
+                if (res.ok) {
+                    const r = await res.json();
+                    const d = r.data;
+                    document.getElementById('ai-kde-median-val').innerText = `${d.median_interval_days} Ngày`;
+                    document.getElementById('ai-kde-p90-val').innerText = `${d.anomaly_threshold_days} Ngày`;
+                    document.getElementById('ai-kde-h-val').innerText = `h = ${d.bandwidth_h}`;
+                    if (d.smart_alert) {
+                        document.getElementById('ai-robo-advice-msg').innerText = d.smart_alert.alert_message;
+                    }
+                    renderKdeChartInstance(d.kde_curve);
+                }
+            } catch (e) {
+                const mockCurve = [
+                    { day_interval: 1, probability_density: 0.02 },
+                    { day_interval: 3, probability_density: 0.08 },
+                    { day_interval: 5, probability_density: 0.18 },
+                    { day_interval: 7, probability_density: 0.12 },
+                    { day_interval: 8, probability_density: 0.06 },
+                    { day_interval: 10, probability_density: 0.02 }
+                ];
+                renderKdeChartInstance(mockCurve);
+            }
+        }
+
+        function renderKdeChartInstance(curveData) {
+            const ctx = document.getElementById('kdeFullChart');
+            if (!ctx) return;
+            const labels = curveData.map(c => `Ngày ${c.day_interval}`);
+            const vals = curveData.map(c => c.probability_density);
+
+            if (kdeChartInstance) kdeChartInstance.destroy();
+            kdeChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Mật Độ Xác Suất f(t)',
+                        data: vals,
+                        borderColor: '#c084fc',
+                        backgroundColor: 'rgba(192, 132, 252, 0.25)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' } },
+                        y: { ticks: { color: '#94a3b8' } }
+                    }
+                }
+            });
+        }
+
+        function selectAppOcr(type) {
+            const samples = {
+                highlands: { merchant: "Highlands Coffee", bill_id: "HD-HL-9982", items: "Phin Sữa Đá (L), Bánh Mì Que", total: 65000 },
+                coopmart: { merchant: "Siêu Thị Co.opmart", bill_id: "HD-CP-1102", items: "Sữa tươi, Trứng gà, Rau củ quả", total: 325000 },
+                cgv: { merchant: "Rạp Phim CGV Cinemas", bill_id: "HD-CGV-4421", items: "2x Vé 2D Avatar, 1x Bắp Phô Mai", total: 210000 }
+            };
+            const s = samples[type] || samples.highlands;
+            document.getElementById('ocr-app-merchant').innerText = s.merchant;
+            document.getElementById('ocr-app-billid').innerText = s.bill_id;
+            document.getElementById('ocr-app-items').innerText = s.items;
+            document.getElementById('ocr-app-total').innerText = s.total.toLocaleString('vi-VN') + ' đ';
+            logEvent('OCR_SCAN', `AI OCR bóc tách hóa đơn: ${s.merchant} (${s.total.toLocaleString('vi-VN')} đ)`, 'text-purple-400');
+        }
+
+        function execOcrAutoDebit() {
+            playCoinTingSound();
+            const total = 65000;
+            availableBalance -= total;
+            updateUiBalances();
+            logEvent('OCR_DEBIT', `AI tự động tạo giao dịch chi tiêu: -${total.toLocaleString('vi-VN')} đ từ Ví Khả Dụng`, 'text-emerald-400');
+        }
+
+        function initBudgetDonut() {
+            const ctx = document.getElementById('budgetDonutChart');
+            if (!ctx || budgetChartInstance) return;
+            budgetChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Thiết Yếu (Needs 50%)', 'Sở Thích (Wants 30%)', 'Heo Đất (Savings 20%)'],
+                    datasets: [{
+                        data: [48.5, 29.1, 22.4],
+                        backgroundColor: ['#38bdf8', '#c084fc', '#34d399'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#e2e8f0', font: { size: 10 } } } }
+                }
+            });
+        }
+
+        // =========================================================================
+        // SECURITY & EDGE CASES
+        // =========================================================================
+        function triggerAppTamperAlarm() {
+            playSirenAlarmSound();
+            document.getElementById('piggy-rgb-led').className = "w-4 h-4 rounded-full bg-red-500 glow-red animate-ping";
+            logEvent('TAMPER_ALARM', '🚨 MPU6050 vượt ngưỡng 3.8G! Kích hoạt còi báo động và phong tỏa ví SAVINGS', 'text-red-400');
+        }
+
+        function triggerAppWatchdogCut() {
+            playSirenAlarmSound();
+            logEvent('WATCHDOG_ALERT', '⚠️ Thiết bị mất nhịp tim 45s (>30s)! Cảnh báo OFFLINE_SUSPICIOUS (Nghi vấn rút phích cắm/phá sóng)', 'text-red-400');
+        }
+
+        function triggerAppReplayTest() {
+            logEvent('ANTI_REPLAY', '🛡️ Thử phát lại Nonce cũ: Backend TỪ CHỐI 403 (REPLAY_ATTACK_DETECTED)', 'text-sky-400');
+        }
+
+        function triggerAppDebounceTest() {
+            logEvent('DEBOUNCE', '🚫 Cảm biến phát hiện chọc que 40ms (<100ms): TỪ CHỐI GHI NHẬN (DEBOUNCE_TOO_FAST)', 'text-amber-400');
+        }
+
+        function triggerAppFatalCrash() {
+            playSirenAlarmSound();
+            logEvent('FATAL_CRASH', '💥 Va đập hủy diệt 8.5G! Ví Heo Đất tự động ĐÓNG BĂNG để bảo vệ tài sản', 'text-red-400');
+        }
+
+        function triggerAppWriteOff() {
+            logEvent('WRITE_OFF', '📝 Đã thực hiện bút toán Ghi giảm tài sản Write-Off: Sổ cái cân bằng thực tế', 'text-emerald-400');
+        }
+
+        function execDevicePairing() {
+            playCoinTingSound();
+            logEvent('PAIRING_SUCCESS', 'Đã ghép đôi thành công Heo Đất PIGGY-VN-8888 với tài khoản qua Device Token', 'text-emerald-400');
+            alert('✅ Ghép đôi thiết bị thành công!');
+        }
+
+        function execDeviceUnbind() {
+            logEvent('UNBIND_SUCCESS', 'Đã xóa trắng Flash EEPROM và hủy liên kết Heo Đất', 'text-amber-400');
+            alert('Đã hủy liên kết thiết bị thành công.');
+        }
+
+        // =========================================================================
+        // PARENTAL CONTROLS & GOALS
+        // =========================================================================
+        function updateParentBonusPct(val) {
+            parentBonusPct = parseInt(val);
+            document.getElementById('parent-bonus-pct-display').innerText = `+${val}%`;
+            logEvent('PARENT_CONFIG', `Phụ huynh cập nhật tỷ lệ thưởng nạp: +${val}%`, 'text-amber-400');
+        }
+
+        function toggleParentWalletFreeze() {
+            isWalletFrozen = !isWalletFrozen;
+            const btn = document.getElementById('btn-toggle-wallet-freeze');
+            const desc = document.getElementById('parent-wallet-status-desc');
+            if (isWalletFrozen) {
+                btn.innerText = "Mở Khóa Ví";
+                btn.className = "py-2 px-3.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition";
+                desc.innerText = "Ví đang BỊ ĐÓNG BĂNG (FROZEN)";
+                desc.className = "text-[11px] text-red-400 font-bold";
+                logEvent('PARENT_LOCK', 'Phụ huynh đã chủ động ĐÓNG BĂNG ví Heo Đất', 'text-red-400');
+            } else {
+                btn.innerText = "Đóng Băng Ví";
+                btn.className = "py-2 px-3.5 bg-red-600/30 hover:bg-red-600/50 text-red-300 border border-red-500/40 rounded-xl font-bold transition";
+                desc.innerText = "Ví đang ở trạng thái BÌNH THƯỜNG (ACTIVE)";
+                desc.className = "text-[11px] text-emerald-400";
+                logEvent('PARENT_UNLOCK', 'Phụ huynh đã MỞ KHÓA ví Heo Đất (ACTIVE)', 'text-emerald-400');
+            }
+        }
+
+        function createNewGoalPrompt() {
+            const name = prompt("Nhập tên mục tiêu tiết kiệm mới:", "Mua Bộ Sách Giáo Khoa");
+            if (name) {
+                logEvent('GOAL_CREATED', `Đã tạo mục tiêu tiết kiệm mới: ${name}`, 'text-pink-400');
+                alert(`Đã thêm mục tiêu: ${name}`);
+            }
+        }
+
+        // =========================================================================
+        // UI REFRESH & CHARTS INIT
+        // =========================================================================
+        function updateUiBalances() {
+            const total = piggyBalance + availableBalance + escrowBalance;
+            document.getElementById('stat-total-balance').innerText = total.toLocaleString('vi-VN') + ' đ';
+            document.getElementById('stat-available-balance').innerText = availableBalance.toLocaleString('vi-VN') + ' đ';
+            document.getElementById('stat-savings-balance').innerText = piggyBalance.toLocaleString('vi-VN') + ' đ';
+            document.getElementById('piggy-oled-balance').innerText = piggyBalance.toLocaleString('vi-VN') + ' đ';
+            document.getElementById('piggy-gamify-points').innerText = `${piggyExp} / 1000 XP`;
+            document.getElementById('piggy-xp-bar').style.width = (piggyExp / 10) + '%';
+            document.getElementById('piggy-oled-lvl').innerText = `LVL: ${piggyLevel} (${piggyExp}/1000 XP)`;
+
+            document.getElementById('ledger-debit-val').innerText = total.toLocaleString('vi-VN') + ' đ';
+            document.getElementById('ledger-credit-val').innerText = total.toLocaleString('vi-VN') + ' đ';
+        }
+
+        function downloadTrialBalanceCsv() { window.open(`${API_BASE}/api/v1/ledger/export/trial-balance-csv`, '_blank'); }
+        function downloadStatementCsv() { window.open(`${API_BASE}/api/v1/ledger/export/statement-csv/WALLET_SMART_PIGGY`, '_blank'); }
+
+        window.onload = function() {
+            pingBackend();
+            updateUiBalances();
+
+            // Populate Recent Txs
+            const txContainer = document.getElementById('dashboard-recent-txs');
+            if (txContainer) {
+                txContainer.innerHTML = `
+                    <div class="p-3 bg-gray-900/60 rounded-xl border border-gray-800 flex justify-between items-center text-xs">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <div>
+                                <div class="font-bold text-white">Nạp Tiền Heo Đất (Coin Drop)</div>
+                                <div class="text-[10px] text-gray-400">Hôm nay, 08:30 • Ví SAVINGS</div>
+                            </div>
+                        </div>
+                        <span class="font-bold text-emerald-400 mono">+100,000 đ</span>
+                    </div>
+                    <div class="p-3 bg-gray-900/60 rounded-xl border border-gray-800 flex justify-between items-center text-xs">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-pink-400"></span>
+                            <div>
+                                <div class="font-bold text-white">Parent Matching Bonus (+50%)</div>
+                                <div class="text-[10px] text-gray-400">Hôm nay, 08:30 • Cha Mẹ Thưởng</div>
+                            </div>
+                        </div>
+                        <span class="font-bold text-pink-400 mono">+50,000 đ</span>
+                    </div>
+                    <div class="p-3 bg-gray-900/60 rounded-xl border border-gray-800 flex justify-between items-center text-xs">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                            <div>
+                                <div class="font-bold text-white">Quét Hóa Đơn AI OCR (Highlands)</div>
+                                <div class="text-[10px] text-gray-400">Hôm qua, 15:45 • Ví AVAILABLE</div>
+                            </div>
+                        </div>
+                        <span class="font-bold text-purple-400 mono">-65,000 đ</span>
+                    </div>
+                `;
+            }
+
+            // Populate Journal Table
+            const tbody = document.getElementById('ledger-journal-tbody');
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr class="hover:bg-gray-800/40">
+                        <td class="p-3 text-gray-400">2026-09-10 08:30</td>
+                        <td class="p-3 text-sky-400 font-bold">TX-20260910-001</td>
+                        <td class="p-3">WALLET_SMART_PIGGY</td>
+                        <td class="p-3 text-emerald-400">INCOME</td>
+                        <td class="p-3 text-right text-sky-400">100,000 đ</td>
+                        <td class="p-3 text-right text-gray-500">-</td>
+                        <td class="p-3 text-gray-300">Đút tiền ống heo thông minh</td>
+                    </tr>
+                    <tr class="hover:bg-gray-800/40">
+                        <td class="p-3 text-gray-400">2026-09-10 08:30</td>
+                        <td class="p-3 text-sky-400 font-bold">TX-20260910-002</td>
+                        <td class="p-3">WALLET_PARENT_MATCHING</td>
+                        <td class="p-3 text-pink-400">PARENT_BONUS</td>
+                        <td class="p-3 text-right text-sky-400">50,000 đ</td>
+                        <td class="p-3 text-right text-gray-500">-</td>
+                        <td class="p-3 text-gray-300">Thưởng 50% từ phụ huynh</td>
+                    </tr>
+                `;
+            }
+
+            // Init Cashflow Chart
+            const ctxCf = document.getElementById('cashflowChart');
+            if (ctxCf) {
+                cashflowChartInstance = new Chart(ctxCf.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['T4', 'T5', 'T6', 'T7', 'T8', 'T9'],
+                        datasets: [
+                            { label: 'Thu Nhập (VND)', data: [8500000, 9200000, 11000000, 10500000, 12000000, 12450000], backgroundColor: '#10b981', borderRadius: 6 },
+                            { label: 'Chi Tiêu (VND)', data: [4200000, 4800000, 5100000, 4900000, 5300000, 5200000], backgroundColor: '#f43f5e', borderRadius: 6 },
+                            { label: 'Heo Đất (VND)', data: [2100000, 3200000, 4500000, 5300000, 6100000, 6700000], backgroundColor: '#ec4899', borderRadius: 6 }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' } } },
+                        plugins: { legend: { labels: { color: '#e2e8f0' } } }
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+</html>

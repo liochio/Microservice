@@ -1,0 +1,135 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+    data:
+      redis:
+        host: ${REDIS_HOST:localhost}
+        port: ${REDIS_PORT:6379}
+        timeout: 2000ms
+  cloud:
+    gateway:
+      httpclient:
+        connect-timeout: 3000
+        response-timeout: 5s
+        pool:
+          type: ELASTIC
+          max-idle-time: 15s
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # 1. Auth & IAM & Core Ledger Service Routes (Port 8081)
+        - id: auth-service
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/v1/auth/**, /api/v1/users/**, /api/v1/roles/**, /api/v1/tenants/**, /api/v1/menus/**, /api/v1/approvals/**, /api/v1/onboarding/**, /api/v1/security/**, /api/v1/configs/**, /api/v1/ledger/**, /api/auth/**, /api/users/**, /api/roles/**, /api/tenants/**, /api/menus/**, /api/approvals/**, /api/onboarding/**, /api/security/**, /api/configs/**, /api/ledger/**
+
+        # 2. Payment Service Routes (Port 8085)
+        - id: payment-service
+          uri: ${PAYMENT_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/api/v1/payments/**, /api/v1/bookings/**, /api/v1/wallets/**, /api/v1/transactions/**, /api/payments/**, /api/bookings/**, /api/wallets/**, /api/transactions/**
+
+        # 3. Python IoT & AI Satellite Extension (Port 8089 - Tenant A: PiggyBank / AI)
+        - id: python-iot-ai-service
+          uri: ${FINTECH_URL:http://localhost:8089}
+          predicates:
+            - Path=/api/v1/iot/**, /api/v1/smart-piggy/**, /api/v1/smart_piggy/**, /api/v1/ocr/**, /api/v1/ai/**, /api/v1/budgets/**, /api/v1/goals/**, /api/v1/transfers/**, /api/v1/reports/**, /api/v1/ws/**
+
+        # 4. Media Storage Service Routes (Port 8083)
+        - id: media-service
+          uri: ${MEDIA_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/media/**, /api/media/**
+
+        # 5. Enterprise Notification Service Routes (Port 8084)
+        - id: notification-service
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/v1/notifications/**, /api/notifications/**
+
+        # 6. Entity & Master Data Service Routes (Port 8082)
+        - id: entity-service
+          uri: ${ENTITY_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/entities/**, /api/v1/master-data/**, /api/v1/portfolios/**, /api/v1/ui-configs/**, /api/v1/forms/**, /api/v1/system/**, /api/v1/system-configs/**, /api/entities/**, /api/master-data/**, /api/portfolios/**, /api/ui-configs/**, /api/forms/**, /api/system/**, /api/system-configs/**
+
+        # 6. Tour Service (Port 8091)
+        - id: tour-service
+          uri: lb://tour-service
+          predicates:
+            - Path=/api/v1/tours/**, /api/tours/**
+
+        # 7. Music Service (Port 8092)
+        - id: music-service
+          uri: lb://music-service
+          predicates:
+            - Path=/api/v1/music/**, /api/music/**
+
+        # 8. Film Service (Port 8093)
+        - id: film-service
+          uri: lb://film-service
+          predicates:
+            - Path=/api/v1/films/**, /api/films/**
+
+        # 9. AI Service (Port 8086)
+        - id: ai-service
+          uri: lb://ai-service
+          predicates:
+            - Path=/api/v1/ai/**, /api/ai/**
+
+        # 10. Realtime WebSocket Gateway (Port 8087)
+        - id: realtime-service
+          uri: lb:ws://realtime-service
+          predicates:
+            - Path=/ws/**, /ws-notification/**
+
+        # 11. Dedicated OTP & SmartOTP Service (Port 8094)
+        - id: otp-service
+          uri: ${OTP_SERVICE_URL:http://localhost:8094}
+          predicates:
+            - Path=/api/v1/otp/**, /api/otp/**
+
+        # 12. Central Worker & Audit Service (Port 8095)
+        - id: worker-service
+          uri: ${WORKER_SERVICE_URL:http://localhost:8095}
+          predicates:
+            - Path=/api/v1/worker/**, /api/worker/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+jwt:
+  secret: ${JWT_SECRET:portfolio-engine-super-secret-jwt-key-minimum-256-bits-for-security-2026}
+  rsa:
+    public-key-path: ${JWT_RSA_PUBLIC_KEY:classpath:certs/rsa-public.pem}
+
+security:
+  cloudflare:
+    strict-origin-enabled: ${STRICT_ORIGIN_ENABLED:false}
+    whitelist-cidrs:
+      - "173.245.48.0/20"
+      - "103.21.244.0/22"
+      - "103.22.200.0/22"
+      - "103.31.4.0/22"
+      - "141.101.64.0/18"
+      - "108.162.192.0/18"
+      - "190.93.240.0/20"
+      - "188.114.96.0/20"
+      - "197.234.240.0/22"
+      - "198.41.128.0/17"
+      - "162.158.0.0/15"
+      - "104.16.0.0/13"
+      - "104.24.0.0/14"
+      - "172.64.0.0/13"
+      - "131.0.72.0/22"
+      - "127.0.0.1/32"
+      - "::1/128"

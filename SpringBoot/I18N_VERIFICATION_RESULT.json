@@ -1,0 +1,98 @@
+[
+  {
+    "title": "1. Unauthenticated Error - Vietnamese (vi)",
+    "status_code": 401,
+    "expected_status": 401,
+    "message": "Bạn chưa đăng nhập hoặc phiên làm việc đã hết hạn",
+    "expected_msg_substr": "Bạn chưa đăng nhập hoặc phiên làm việc đã hết hạn",
+    "passed": true
+  },
+  {
+    "title": "2. Unauthenticated Error - English (en)",
+    "status_code": 401,
+    "expected_status": 401,
+    "message": "Unauthenticated or session has expired",
+    "expected_msg_substr": "Unauthenticated or session has expired",
+    "passed": true
+  },
+  {
+    "title": "3. Unauthenticated Error - Chinese (zh)",
+    "status_code": 401,
+    "expected_status": 401,
+    "message": "用户未登录或登录已过期",
+    "expected_msg_substr": "用户未登录或登录已过期",
+    "passed": true
+  },
+  {
+    "title": "4. Register User - Vietnamese (vi)",
+    "status_code": 201,
+    "expected_status": 201,
+    "message": "Đăng ký tài khoản thành công. Vui lòng kiểm tra mã OTP để kích hoạt.",
+    "expected_msg_substr": "Đăng ký tài khoản thành công",
+    "passed": true
+  },
+  {
+    "title": "5. Register User - English (en)",
+    "status_code": 201,
+    "expected_status": 201,
+    "message": "Account registered successfully. Please check your OTP code to activate.",
+    "expected_msg_substr": "Account registered successfully",
+    "passed": true
+  },
+  {
+    "title": "6. Register User - Chinese (zh)",
+    "status_code": 201,
+    "expected_status": 201,
+    "message": "账号注册成功，请查收 OTP 验证码以激活账号。",
+    "expected_msg_substr": "账号注册成功",
+    "passed": true
+  },
+  {
+    "title": "7. Duplicate Username Error - Vietnamese (vi)",
+    "status_code": 400,
+    "expected_status": 400,
+    "message": "Tài khoản hoặc email đã tồn tại trên hệ thống",
+    "expected_msg_substr": "Tài khoản hoặc email đã tồn tại",
+    "passed": true
+  },
+  {
+    "title": "8. Duplicate Username Error - English (en)",
+    "status_code": 400,
+    "expected_status": 400,
+    "message": "Username or email already exists",
+    "expected_msg_substr": "Username or email already exists",
+    "passed": true
+  },
+  {
+    "title": "9. Duplicate Username Error - Chinese (zh)",
+    "status_code": 400,
+    "expected_status": 400,
+    "message": "用户名或电子邮箱已存在",
+    "expected_msg_substr": "用户名或电子邮箱已存在",
+    "passed": true
+  },
+  {
+    "title": "10. QR Code Init - Vietnamese (vi)",
+    "status_code": 200,
+    "expected_status": 200,
+    "message": "Khởi tạo mã QR thành công",
+    "expected_msg_substr": "Khởi tạo mã QR thành công",
+    "passed": true
+  },
+  {
+    "title": "11. QR Code Init - English (en)",
+    "status_code": 200,
+    "expected_status": 200,
+    "message": "QR login session initialized successfully",
+    "expected_msg_substr": "QR login session initialized successfully",
+    "passed": true
+  },
+  {
+    "title": "12. QR Code Init - Chinese (zh)",
+    "status_code": 200,
+    "expected_status": 200,
+    "message": "二维码登录会话初始化成功",
+    "expected_msg_substr": "二维码登录会话初始化成功",
+    "passed": true
+  }
+]
