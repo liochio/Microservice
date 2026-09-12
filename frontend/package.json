@@ -1,0 +1,15 @@
+{
+  "name": "liochio-fintech-frontends",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "admin": "npm run dev --prefix liochio-admin",
+    "portal": "npm run dev --prefix liochio-app-portal",
+    "dev:admin": "npm run dev --prefix liochio-admin",
+    "dev:portal": "npm run dev --prefix liochio-app-portal",
+    "build:admin": "npm run build --prefix liochio-admin",
+    "build:portal": "npm run build --prefix liochio-app-portal",
+    "build": "npm run build:admin && npm run build:portal"
+  }
+}

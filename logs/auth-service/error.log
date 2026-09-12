@@ -1,0 +1,1186 @@
+2026-09-08 17:13:48.429  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@78d50a3c uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:13:48.433  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@6759f091 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:13:48.433  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@33a053d uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:13:57.762  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'permissions' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:57.768  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'roles' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:57.773  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'users' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:57.778  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'user_roles' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:57.782  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'role_permissions' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:57.789  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Field 'version' doesn't have a default value (SQL State: HY000 - Error Code: 1364)
+2026-09-08 17:13:57.792  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry 'system:admin' for key 'permissions.permission_code' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.797  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Field 'version' doesn't have a default value (SQL State: HY000 - Error Code: 1364)
+2026-09-08 17:13:57.797  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1' for key 'roles.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.797  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '2' for key 'roles.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.798  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '3' for key 'roles.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.798  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '4' for key 'roles.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.807  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-1' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.808  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-2' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.808  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-3' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.809  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-4' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.810  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-5' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.812  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-6' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.812  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-7' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.814  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-8' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.815  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-9' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.815  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-10' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.815  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-11' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.816  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-12' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.817  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-13' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.817  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-14' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.818  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-15' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.819  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-16' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.820  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-17' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.821  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-18' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.822  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-19' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.823  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-20' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.823  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-21' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.824  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-22' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.825  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-23' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.825  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-24' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.826  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-25' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.826  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-26' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.827  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-27' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.831  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-28' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.832  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-29' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.833  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-30' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.834  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-31' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.834  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-32' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.834  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-33' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.834  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-34' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.834  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-35' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.834  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-36' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.836  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-37' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.836  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-38' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.837  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-39' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.837  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-40' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.837  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-41' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.838  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-42' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.839  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-43' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.839  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-44' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.841  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-45' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.841  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-46' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.842  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-47' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.843  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-48' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.844  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-49' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.844  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-50' for key 'role_permissions.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.847  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Field 'user_type' doesn't have a default value (SQL State: HY000 - Error Code: 1364)
+2026-09-08 17:13:57.847  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Field 'version' doesn't have a default value (SQL State: HY000 - Error Code: 1364)
+2026-09-08 17:13:57.847  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1' for key 'users.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.851  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry '1-1' for key 'user_roles.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:57.923  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'outbox_events' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:58.064  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'tenants' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:58.067  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Field 'tenant_id' doesn't have a default value (SQL State: HY000 - Error Code: 1364)
+2026-09-08 17:13:58.067  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Duplicate entry 'default' for key 'tenants.PRIMARY' (SQL State: 23000 - Error Code: 1062)
+2026-09-08 17:13:58.073  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'system_features' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:58.081  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Table 'tenant_features' already exists (SQL State: 42S01 - Error Code: 1050)
+2026-09-08 17:13:58.116 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.f.core.internal.command.DbMigrate      : Migration of schema `liochio_auth_db` to version "6 - create tenancy features and security tables" failed! Please restore backups and roll back database and code!
+2026-09-08 17:13:58.134 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'auditLoggingFilter': Unsatisfied dependency expressed through field 'auditLogRepository': Error creating bean with name 'auditLogRepository' defined in com.liochio.common.repository.AuditLogRepository defined in @EnableJpaRepositories declared on AuthServiceApplication: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2026-09-08 17:13:58.167  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.17/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.17/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.17/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.17/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.17/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.17/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.17/java.lang.Thread.run(Thread.java:842)
+2026-09-08 17:13:58.168  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.a.c.loader.WebappClassLoaderBase       : The web application [ROOT] appears to have started a thread named [HikariPool-1 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.17/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.17/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.17/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.17/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+ java.base@17.0.17/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1061)
+ java.base@17.0.17/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.17/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.17/java.lang.Thread.run(Thread.java:842)
+2026-09-08 17:13:58.171  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2026-09-08 17:13:58.252 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:170)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:621)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.liochio.auth.AuthServiceApplication.main(AuthServiceApplication.java:29)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:147)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:520)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:222)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:193)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:167)
+	... 15 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'auditLoggingFilter': Unsatisfied dependency expressed through field 'auditLogRepository': Error creating bean with name 'auditLogRepository' defined in com.liochio.common.repository.AuditLogRepository defined in @EnableJpaRepositories declared on AuthServiceApplication: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:146)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1445)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:207)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:211)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:174)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:169)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:154)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:271)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:245)
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4467)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:415)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:870)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:437)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128)
+	... 20 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'auditLogRepository' defined in com.liochio.common.repository.AuditLogRepository defined in @EnableJpaRepositories declared on AuthServiceApplication: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1711)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1460)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1606)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1552)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785)
+	... 62 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:691)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:513)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1361)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1191)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 74 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V6__create_tenancy_features_and_security_tables.sql failed
+-----------------------------------------------------------------
+SQL State  : 42S21
+Error Code : 1060
+Message    : Duplicate column name 'phone'
+Location   : db/migration/V6__create_tenancy_features_and_security_tables.sql (D:\Github\Back-end\Microservice\nested:\D:\Github\Back-end\Microservice\SpringBoot\auth-service\target\auth-service-1.0.0-SNAPSHOT.jar\!BOOT-INF\classes\!\db\migration\V6__create_tenancy_features_and_security_tables.sql)
+Line       : 76
+Statement  : Run Flyway with -X option to see the actual statement causing the problem
+
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1812)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:346)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:315)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 86 common frames omitted
+Caused by: org.flywaydb.core.internal.exception.FlywayMigrateException: Script V6__create_tenancy_features_and_security_tables.sql failed
+-----------------------------------------------------------------
+SQL State  : 42S21
+Error Code : 1060
+Message    : Duplicate column name 'phone'
+Location   : db/migration/V6__create_tenancy_features_and_security_tables.sql (D:\Github\Back-end\Microservice\nested:\D:\Github\Back-end\Microservice\SpringBoot\auth-service\target\auth-service-1.0.0-SNAPSHOT.jar\!BOOT-INF\classes\!\db\migration\V6__create_tenancy_features_and_security_tables.sql)
+Line       : 76
+Statement  : Run Flyway with -X option to see the actual statement causing the problem
+
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:399)
+	at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:283)
+	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:59)
+	at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:282)
+	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:255)
+	at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:153)
+	at org.flywaydb.database.mysql.MySQLNamedLockTemplate.execute(MySQLNamedLockTemplate.java:62)
+	at org.flywaydb.database.mysql.MySQLConnection.lock(MySQLConnection.java:159)
+	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:149)
+	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:153)
+	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:104)
+	at org.flywaydb.core.Flyway.lambda$migrate$1(Flyway.java:230)
+	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:213)
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:176)
+	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	... 95 common frames omitted
+Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Script V6__create_tenancy_features_and_security_tables.sql failed
+-----------------------------------------------------------------
+SQL State  : 42S21
+Error Code : 1060
+Message    : Duplicate column name 'phone'
+Location   : db/migration/V6__create_tenancy_features_and_security_tables.sql (D:\Github\Back-end\Microservice\nested:\D:\Github\Back-end\Microservice\SpringBoot\auth-service\target\auth-service-1.0.0-SNAPSHOT.jar\!BOOT-INF\classes\!\db\migration\V6__create_tenancy_features_and_security_tables.sql)
+Line       : 76
+Statement  : Run Flyway with -X option to see the actual statement causing the problem
+
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:256)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:217)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:137)
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:75)
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:66)
+	at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:31)
+	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:65)
+	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:391)
+	... 111 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Duplicate column name 'phone'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:770)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:653)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210)
+	at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:88)
+	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:212)
+	... 117 common frames omitted
+
+2026-09-08 17:15:12.283  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@4fbb001b uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:15:12.284  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@5d10455d uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:15:12.285  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@535b8c24 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:15:19.914  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 17:15:28.669  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 8dc6ae9b-2cee-4d53-aae1-700c422787d7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-08 17:15:33.967  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:15:33.968  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] com.netflix.discovery.DiscoveryClient    : Using default backup registry implementation which does not do anything.
+2026-09-08 17:15:34.077  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:15:34.077  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:15:34.082  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at com.netflix.discovery.InstanceInfoReplicator$2.run(InstanceInfoReplicator.java:105)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:16:04.003  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:16:04.003  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:16:04.003 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:16:04.097  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:16:04.097  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:16:04.097  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:16:34.037  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:16:34.037 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:16:34.037  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:16:34.109  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:16:34.110  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:16:34.110  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:17:04.070  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:17:04.070  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:17:04.070 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:17:04.129  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:17:04.129  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:17:04.129  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:17:34.103  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:17:34.104  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:17:34.104 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:17:34.147  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:17:34.147  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:17:34.147  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:17:42.419 ERROR [auth-service] [traceId=aecdc0b088a449e5] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 395 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 17:17:42.424 ERROR [auth-service] [traceId=aecdc0b088a449e5] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 411 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 17:17:42.437  WARN [auth-service] [traceId=aecdc0b088a449e5] [tenantId=default] [nio-8081-exec-1] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1007 - Message: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 17:17:45.630  WARN [auth-service] [traceId=2a389200b72c4fd6] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [SLOW_EXECUTION] com.liochio.auth.service.OtpService.generateAndSaveOtp() thực thi mất 2802 ms
+2026-09-08 17:17:45.666  WARN [auth-service] [traceId=2a389200b72c4fd6] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [SLOW_EXECUTION] com.liochio.auth.service.AuthService.register() thực thi mất 3114 ms
+2026-09-08 17:17:45.680  WARN [auth-service] [traceId=2a389200b72c4fd6] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [SLOW_EXECUTION] com.liochio.auth.controller.AuthController.register() thực thi mất 3128 ms
+2026-09-08 17:17:45.793  WARN [auth-service] [traceId=a7f36434074649af] [tenantId=default] [nio-8081-exec-3] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {otpCode=Mã OTP không được để trống}
+2026-09-08 17:17:45.887  WARN [auth-service] [traceId=6cf1241e3abb41ca] [tenantId=default] [nio-8081-exec-4] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {otpCode=Mã OTP không được để trống}
+2026-09-08 17:17:46.103 ERROR [auth-service] [traceId=f71df677381e4adf] [tenantId=default] [nio-8081-exec-5] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 24 ms: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 17:17:46.105 ERROR [auth-service] [traceId=f71df677381e4adf] [tenantId=default] [nio-8081-exec-5] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 26 ms: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 17:17:46.111  WARN [auth-service] [traceId=f71df677381e4adf] [tenantId=default] [nio-8081-exec-5] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 2001 - Message: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 17:17:46.143  WARN [auth-service] [traceId=91231b28476f41f5] [tenantId=default] [nio-8081-exec-6] c.l.c.s.CustomAuthenticationEntryPoint   : [AuthenticationEntryPoint] 401 Unauthorized tại URI: /api/v1/auth/me - Lý do: Full authentication is required to access this resource
+2026-09-08 17:17:46.169  WARN [auth-service] [traceId=e063a72a549441ce] [tenantId=default] [nio-8081-exec-7] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {refreshToken=Refresh Token không được để trống}
+2026-09-08 17:17:46.197  WARN [auth-service] [traceId=b1ad92b6fdbf48ca] [tenantId=default] [nio-8081-exec-8] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {email=Email không được để trống}
+2026-09-08 17:17:46.223  WARN [auth-service] [traceId=672deb9e04164e15] [tenantId=default] [nio-8081-exec-9] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {email=Định dạng email không hợp lệ}
+2026-09-08 17:17:46.259  WARN [auth-service] [traceId=946ab634d6144a87] [tenantId=default] [io-8081-exec-10] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {password=Mật khẩu phải từ 6 ký tự trở lên}
+2026-09-08 17:17:46.299 ERROR [auth-service] [traceId=42cf4b6346cb4ac6] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.register() ném ngoại lệ sau 4 ms: Tài khoản đã tồn tại
+2026-09-08 17:17:46.300 ERROR [auth-service] [traceId=42cf4b6346cb4ac6] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.register() ném ngoại lệ sau 6 ms: Tài khoản đã tồn tại
+2026-09-08 17:17:46.308  WARN [auth-service] [traceId=42cf4b6346cb4ac6] [tenantId=default] [nio-8081-exec-1] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1006 - Message: Tài khoản hoặc email đã tồn tại trên hệ thống
+2026-09-08 17:17:46.775  WARN [auth-service] [traceId=abcab6a08e3e4cd1] [tenantId=default] [nio-8081-exec-2] com.liochio.common.security.JwtUtils     : [JwtUtils] Token không hợp lệ hoặc đã hết hạn: Unable to verify RS256 signature with JCA algorithm 'SHA256withRSA' using key {Sun RSA public key, 2048 bits
+  params: null
+  modulus: 25027314363202909346517332645411421990058396615278005871484208316680389592109252327337715574144237091142280386288102213028762059672701808813372046756085592018355560867288457061162325568869093299304317743511009541123491365488218181893341353187837816690219021283541288488651739798134878132850680235502065475121368311692313566100785273179235699509545158762983981536054036671953242119350360055274785177532153425830791958578807599111423565624876311298471457465387864241251449233963027032167838613024987612607035765075693802046009269312442454194945130962108361444143652545970673521498361974294463902529732297783613579954209
+  public exponent: 65537}: Signature callback execution failed: Bad signature length: got 6 but was expecting 256
+2026-09-08 17:17:46.776  WARN [auth-service] [traceId=abcab6a08e3e4cd1] [tenantId=default] [nio-8081-exec-2] c.l.c.s.CustomAuthenticationEntryPoint   : [AuthenticationEntryPoint] 401 Unauthorized tại URI: /api/v1/auth/me - Lý do: Full authentication is required to access this resource
+2026-09-08 17:18:04.132  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:18:04.132  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:18:04.132 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:18:04.163  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:18:04.163  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:18:04.163  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:18:34.162  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:18:34.162 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:18:34.164  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:18:35.653  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:18:35.653  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:18:35.655  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:19:04.178  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:19:04.179 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:19:04.200  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:19:05.698  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:19:05.698  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:19:05.698  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:19:34.199  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:19:34.199 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:19:34.225  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:19:35.756  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:19:35.756  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:19:35.758  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:19:39.007  WARN [auth-service] [traceId=b60b92170841488a] [tenantId=default] [nio-8081-exec-4] o.s.s.c.bcrypt.BCryptPasswordEncoder     : Empty encoded password
+2026-09-08 17:19:39.036 ERROR [auth-service] [traceId=b60b92170841488a] [tenantId=default] [nio-8081-exec-4] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 41 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 17:19:39.037 ERROR [auth-service] [traceId=b60b92170841488a] [tenantId=default] [nio-8081-exec-4] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 43 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 17:19:39.043  WARN [auth-service] [traceId=b60b92170841488a] [tenantId=default] [nio-8081-exec-4] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1007 - Message: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 17:19:50.783  WARN [auth-service] [traceId=508fc66dec2c4317] [tenantId=default] [nio-8081-exec-5] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 17:19:50.783  WARN [auth-service] [traceId=508fc66dec2c4317] [tenantId=default] [nio-8081-exec-5] c.liochio.auth.service.SessionService    : [SessionService] [CONCURRENT KICK-OUT] Đã thu hồi phiên cũ sess_b55cedc353cc404eb8bd81ae9f97af56 của User ID: 1 do đăng nhập trên thiết bị mới postman-superadmin-01
+2026-09-08 17:20:04.207  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:20:04.207 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:20:04.241  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:20:05.776  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:20:05.778  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:20:05.778  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:20:34.242  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:20:34.242 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:20:34.263  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:20:35.800  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:20:35.801  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:20:35.802  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:21:04.256  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:21:04.256 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:21:04.324  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:21:05.808  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:21:05.808  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:21:05.808  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:21:34.277  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:21:34.277 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:21:34.343  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:21:35.819  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:21:35.819  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:21:35.819  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:22:04.300  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/AUTH-SERVICE/localhost:auth-service:8081": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:22:04.301 ERROR [auth-service] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:22:04.356  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:22:05.858  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/AUTH-SERVICE": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-09-08 17:22:05.858  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/localhost:auth-service:8081 - registration failed Cannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:22:05.858  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:828)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:125)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-09-08 17:22:43.233  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@1f9d6c7b uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:22:43.236  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@2617f816 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:22:43.236  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@676f0a60 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:22:51.043  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 17:22:58.666  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 2222ff47-af3a-4351-81f0-b8d8bd58721d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-08 17:25:05.653  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@1f9d6c7b uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:25:05.654  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@2617f816 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:25:05.656  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@676f0a60 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:25:18.963  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 17:25:27.166  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d32e6476-2095-47c4-b8f7-46ffac203864
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-08 17:28:53.333  WARN [auth-service] [traceId=e970f31988794d6b] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [SLOW_EXECUTION] com.liochio.auth.service.AuthService.register() thực thi mất 1233 ms
+2026-09-08 17:28:53.346  WARN [auth-service] [traceId=e970f31988794d6b] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [SLOW_EXECUTION] com.liochio.auth.controller.AuthController.register() thực thi mất 1249 ms
+2026-09-08 17:28:53.480  WARN [auth-service] [traceId=f787545e4a774d1a] [tenantId=default] [nio-8081-exec-3] com.liochio.auth.service.OtpService      : [OtpService] otp-service không khả dụng ([400] during [POST] to [http://localhost:8094/api/v1/otp/verify] [OtpServiceClient#verifyOtp(OtpVerifyRequest)]: [{"status":1010,"message":"Mã OTP không tồn tại hoặc đã được sử dụng","timestamp":"2026-09-08T10:28:53.462589100Z"}]), kiểm tra Fallback OTP Cache
+2026-09-08 17:28:53.885 ERROR [auth-service] [traceId=f787545e4a774d1a] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.OtpService.verifyOtp() ném ngoại lệ sau 469 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:53.886 ERROR [auth-service] [traceId=f787545e4a774d1a] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.verifyRegistrationOtp() ném ngoại lệ sau 476 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:53.890 ERROR [auth-service] [traceId=f787545e4a774d1a] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.verifyOtp() ném ngoại lệ sau 481 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:53.900  WARN [auth-service] [traceId=f787545e4a774d1a] [tenantId=default] [nio-8081-exec-3] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1010 - Message: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:54.046  WARN [auth-service] [traceId=a0ac6b798d7f43c3] [tenantId=default] [nio-8081-exec-4] com.liochio.auth.service.OtpService      : [OtpService] otp-service không khả dụng ([400] during [POST] to [http://localhost:8094/api/v1/otp/verify] [OtpServiceClient#verifyOtp(OtpVerifyRequest)]: [{"status":1010,"message":"Mã OTP không tồn tại hoặc đã được sử dụng","timestamp":"2026-09-08T10:28:54.043067100Z"}]), kiểm tra Fallback OTP Cache
+2026-09-08 17:28:54.052 ERROR [auth-service] [traceId=a0ac6b798d7f43c3] [tenantId=default] [nio-8081-exec-4] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.OtpService.verifyOtp() ném ngoại lệ sau 31 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:54.053 ERROR [auth-service] [traceId=a0ac6b798d7f43c3] [tenantId=default] [nio-8081-exec-4] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.verifyRegistrationOtp() ném ngoại lệ sau 36 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:54.054 ERROR [auth-service] [traceId=a0ac6b798d7f43c3] [tenantId=default] [nio-8081-exec-4] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.verifyOtp() ném ngoại lệ sau 39 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:54.061  WARN [auth-service] [traceId=a0ac6b798d7f43c3] [tenantId=default] [nio-8081-exec-4] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1010 - Message: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:28:54.292 ERROR [auth-service] [traceId=bf0e41224c4e4b90] [tenantId=default] [nio-8081-exec-5] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 28 ms: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 17:28:54.294 ERROR [auth-service] [traceId=bf0e41224c4e4b90] [tenantId=default] [nio-8081-exec-5] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 31 ms: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 17:28:54.300  WARN [auth-service] [traceId=bf0e41224c4e4b90] [tenantId=default] [nio-8081-exec-5] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 2001 - Message: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 17:28:54.337  WARN [auth-service] [traceId=931b70d409ca4e25] [tenantId=default] [nio-8081-exec-6] c.l.c.s.CustomAuthenticationEntryPoint   : [AuthenticationEntryPoint] 401 Unauthorized tại URI: /api/v1/auth/me - Lý do: Full authentication is required to access this resource
+2026-09-08 17:28:54.423  WARN [auth-service] [traceId=de6d9efb2cc24eb2] [tenantId=default] [nio-8081-exec-7] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 17:28:54.485  WARN [auth-service] [traceId=eb711b1083484bfa] [tenantId=default] [nio-8081-exec-8] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {email=Email không được để trống}
+2026-09-08 17:28:54.507  WARN [auth-service] [traceId=ea138335c8424b5c] [tenantId=default] [nio-8081-exec-9] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {email=Định dạng email không hợp lệ}
+2026-09-08 17:28:54.524  WARN [auth-service] [traceId=c052bf8ad63843c7] [tenantId=default] [io-8081-exec-10] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {password=Mật khẩu phải từ 6 ký tự trở lên}
+2026-09-08 17:28:54.557 ERROR [auth-service] [traceId=1dadfe8e12b74ace] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.register() ném ngoại lệ sau 3 ms: Tài khoản đã tồn tại
+2026-09-08 17:28:54.559 ERROR [auth-service] [traceId=1dadfe8e12b74ace] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.register() ném ngoại lệ sau 5 ms: Tài khoản đã tồn tại
+2026-09-08 17:28:54.565  WARN [auth-service] [traceId=1dadfe8e12b74ace] [tenantId=default] [nio-8081-exec-1] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1006 - Message: Tài khoản hoặc email đã tồn tại trên hệ thống
+2026-09-08 17:28:54.591  WARN [auth-service] [traceId=bfae027554084a54] [tenantId=default] [nio-8081-exec-2] com.liochio.common.security.JwtUtils     : [JwtUtils] Token không hợp lệ hoặc đã hết hạn: Unable to verify RS256 signature with JCA algorithm 'SHA256withRSA' using key {Sun RSA public key, 2048 bits
+  params: null
+  modulus: 25027314363202909346517332645411421990058396615278005871484208316680389592109252327337715574144237091142280386288102213028762059672701808813372046756085592018355560867288457061162325568869093299304317743511009541123491365488218181893341353187837816690219021283541288488651739798134878132850680235502065475121368311692313566100785273179235699509545158762983981536054036671953242119350360055274785177532153425830791958578807599111423565624876311298471457465387864241251449233963027032167838613024987612607035765075693802046009269312442454194945130962108361444143652545970673521498361974294463902529732297783613579954209
+  public exponent: 65537}: Signature callback execution failed: Bad signature length: got 6 but was expecting 256
+2026-09-08 17:28:54.592  WARN [auth-service] [traceId=bfae027554084a54] [tenantId=default] [nio-8081-exec-2] c.l.c.s.CustomAuthenticationEntryPoint   : [AuthenticationEntryPoint] 401 Unauthorized tại URI: /api/v1/auth/me - Lý do: Full authentication is required to access this resource
+2026-09-08 17:31:54.290  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@1f9d6c7b uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:31:54.293  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@2617f816 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:31:54.294  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@676f0a60 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 17:32:02.665  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 17:32:09.701  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1c97d431-2684-4b25-bfa2-9d789d0c6c1c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-08 17:32:26.943  WARN [auth-service] [traceId=c494e9fb3fdb432a] [tenantId=default] [nio-8081-exec-2] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 17:32:26.945  WARN [auth-service] [traceId=c494e9fb3fdb432a] [tenantId=default] [nio-8081-exec-2] c.liochio.auth.service.SessionService    : [SessionService] [CONCURRENT KICK-OUT] Đã thu hồi phiên cũ sess_ca3b20b3296342c2a59644d92403111f của User ID: 1 do đăng nhập trên thiết bị mới postman-superadmin-01
+2026-09-08 17:32:26.973  WARN [auth-service] [traceId=c494e9fb3fdb432a] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [SLOW_EXECUTION] com.liochio.auth.service.AuthService.login() thực thi mất 1120 ms
+2026-09-08 17:32:26.993  WARN [auth-service] [traceId=c494e9fb3fdb432a] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [SLOW_EXECUTION] com.liochio.auth.controller.AuthController.login() thực thi mất 1153 ms
+2026-09-08 17:32:28.073  WARN [auth-service] [traceId=b63342c789254cba] [tenantId=default] [nio-8081-exec-3] com.liochio.auth.service.OtpService      : [OtpService] otp-service không khả dụng ([400] during [POST] to [http://localhost:8094/api/v1/otp/verify] [OtpServiceClient#verifyOtp(OtpVerifyRequest)]: [{"status":1010,"message":"Mã OTP không chính xác. Bạn còn 2 lần thử.","timestamp":"2026-09-08T10:32:28.061782600Z"}]), kiểm tra Fallback OTP Cache
+2026-09-08 17:32:28.079 ERROR [auth-service] [traceId=b63342c789254cba] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.OtpService.verifyOtp() ném ngoại lệ sau 286 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:32:28.079 ERROR [auth-service] [traceId=b63342c789254cba] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.verifyRegistrationOtp() ném ngoại lệ sau 294 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:32:28.082 ERROR [auth-service] [traceId=b63342c789254cba] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.verifyOtp() ném ngoại lệ sau 298 ms: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:32:28.091  WARN [auth-service] [traceId=b63342c789254cba] [tenantId=default] [nio-8081-exec-3] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1010 - Message: Mã xác thực OTP không chính xác hoặc đã hết hạn
+2026-09-08 17:32:29.288  WARN [auth-service] [traceId=4469327fa25443c1] [tenantId=default] [nio-8081-exec-5] com.liochio.auth.service.AuthService     : [AuthService] Yêu cầu 2FA xác thực thiết bị mới cho User='v2user_04bdf9', DeviceId='device_v2_tester_01'
+2026-09-08 17:32:29.815  WARN [auth-service] [traceId=8a6db618c0ac4a06] [tenantId=default] [nio-8081-exec-8] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 17:32:29.870  WARN [auth-service] [traceId=93b04c4fee8b4cb6] [tenantId=default] [nio-8081-exec-9] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {email=Email không được để trống}
+2026-09-08 17:32:29.890  WARN [auth-service] [traceId=ef8603d985e8486b] [tenantId=default] [io-8081-exec-10] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {email=Định dạng email không hợp lệ}
+2026-09-08 17:32:29.908  WARN [auth-service] [traceId=e0c0fe6734d44f1f] [tenantId=default] [nio-8081-exec-2] c.l.c.exception.GlobalExceptionHandler   : [ValidationException] Field errors: {password=Mật khẩu phải từ 6 ký tự trở lên}
+2026-09-08 17:32:29.934 ERROR [auth-service] [traceId=cc8f438638e24795] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.register() ném ngoại lệ sau 5 ms: Tài khoản đã tồn tại
+2026-09-08 17:32:29.935 ERROR [auth-service] [traceId=cc8f438638e24795] [tenantId=default] [nio-8081-exec-1] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.register() ném ngoại lệ sau 6 ms: Tài khoản đã tồn tại
+2026-09-08 17:32:29.944  WARN [auth-service] [traceId=cc8f438638e24795] [tenantId=default] [nio-8081-exec-1] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1006 - Message: Tài khoản hoặc email đã tồn tại trên hệ thống
+2026-09-08 17:32:29.971  WARN [auth-service] [traceId=5269887367494a81] [tenantId=default] [nio-8081-exec-3] com.liochio.common.security.JwtUtils     : [JwtUtils] Token không hợp lệ hoặc đã hết hạn: Unable to verify RS256 signature with JCA algorithm 'SHA256withRSA' using key {Sun RSA public key, 2048 bits
+  params: null
+  modulus: 25027314363202909346517332645411421990058396615278005871484208316680389592109252327337715574144237091142280386288102213028762059672701808813372046756085592018355560867288457061162325568869093299304317743511009541123491365488218181893341353187837816690219021283541288488651739798134878132850680235502065475121368311692313566100785273179235699509545158762983981536054036671953242119350360055274785177532153425830791958578807599111423565624876311298471457465387864241251449233963027032167838613024987612607035765075693802046009269312442454194945130962108361444143652545970673521498361974294463902529732297783613579954209
+  public exponent: 65537}: Signature callback execution failed: Bad signature length: got 6 but was expecting 256
+2026-09-08 17:32:29.976  WARN [auth-service] [traceId=5269887367494a81] [tenantId=default] [nio-8081-exec-3] c.l.c.s.CustomAuthenticationEntryPoint   : [AuthenticationEntryPoint] 401 Unauthorized tại URI: /api/v1/auth/me - Lý do: Full authentication is required to access this resource
+2026-09-08 20:45:12.460  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@6df20ade uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 20:45:12.461  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@676f0a60 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 20:45:12.461  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@5d10455d uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 20:45:19.433  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 20:45:26.649  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: b9107214-d7bd-46f7-bde5-8393b59a89ea
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-08 20:45:37.882  WARN [auth-service] [traceId=b080cd2eac764f5b] [tenantId=default] [nio-8081-exec-1] c.l.c.exception.GlobalExceptionHandler   : [HttpMessageNotReadable] Malformed JSON: JSON parse error: Unexpected character ('\' (code 92)): was expecting double-quote to start field name
+2026-09-08 20:45:37.997  WARN [auth-service] [traceId=b080cd2eac764f5b] [tenantId=default] [nio-8081-exec-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 3140, SQLState: 22001
+2026-09-08 20:45:37.997 ERROR [auth-service] [traceId=b080cd2eac764f5b] [tenantId=default] [nio-8081-exec-1] o.h.engine.jdbc.spi.SqlExceptionHelper   : Data truncation: Invalid JSON text: "Missing a name for object member." at position 1 in value for column 'audit_logs.request_body'.
+2026-09-08 20:45:38.015  WARN [auth-service] [traceId=b080cd2eac764f5b] [tenantId=default] [nio-8081-exec-1] c.l.common.filter.AuditLoggingFilter     : [AuditLoggingFilter] Không thể lưu audit log: could not execute statement [Data truncation: Invalid JSON text: "Missing a name for object member." at position 1 in value for column 'audit_logs.request_body'.] [insert into audit_logs (action_description,action_type,client_ip,created_at,device_id,device_name,error_message,execution_time_ms,http_method,http_status_code,module,new_data,old_data,platform,request_body,request_params,request_uri,status,tenant_id,trace_id,user_agent,user_email,user_id,user_role,username) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)]; SQL [insert into audit_logs (action_description,action_type,client_ip,created_at,device_id,device_name,error_message,execution_time_ms,http_method,http_status_code,module,new_data,old_data,platform,request_body,request_params,request_uri,status,tenant_id,trace_id,user_agent,user_email,user_id,user_role,username) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)]
+2026-09-08 20:45:43.373 ERROR [auth-service] [traceId=dc830c6ca5f747ed] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 167 ms: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 20:45:43.374 ERROR [auth-service] [traceId=dc830c6ca5f747ed] [tenantId=default] [nio-8081-exec-2] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 169 ms: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 20:45:43.380  WARN [auth-service] [traceId=dc830c6ca5f747ed] [tenantId=default] [nio-8081-exec-2] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 2001 - Message: Tài khoản chưa được kích hoạt qua mã OTP. Vui lòng xác thực tài khoản.
+2026-09-08 20:45:46.082 ERROR [auth-service] [traceId=68a6a7b7969e4551] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 28 ms: Không tìm thấy người dùng
+2026-09-08 20:45:46.084 ERROR [auth-service] [traceId=68a6a7b7969e4551] [tenantId=default] [nio-8081-exec-3] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 30 ms: Không tìm thấy người dùng
+2026-09-08 20:45:46.090  WARN [auth-service] [traceId=68a6a7b7969e4551] [tenantId=default] [nio-8081-exec-3] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1005 - Message: Không tìm thấy thông tin tài khoản người dùng
+2026-09-08 20:46:04.171 ERROR [auth-service] [traceId=32ba2e77c09b4025] [tenantId=default] [nio-8081-exec-4] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 351 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 20:46:04.175 ERROR [auth-service] [traceId=32ba2e77c09b4025] [tenantId=default] [nio-8081-exec-4] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 355 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 20:46:04.181  WARN [auth-service] [traceId=32ba2e77c09b4025] [tenantId=default] [nio-8081-exec-4] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1007 - Message: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 20:46:24.270 ERROR [auth-service] [traceId=ab8de0f8da5b47d3] [tenantId=default] [nio-8081-exec-6] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.service.AuthService.login() ném ngoại lệ sau 98 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 20:46:24.271 ERROR [auth-service] [traceId=ab8de0f8da5b47d3] [tenantId=default] [nio-8081-exec-6] c.liochio.common.advice.LoggingAspect    : [EXCEPTION] com.liochio.auth.controller.AuthController.login() ném ngoại lệ sau 100 ms: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 20:46:24.275  WARN [auth-service] [traceId=ab8de0f8da5b47d3] [tenantId=default] [nio-8081-exec-6] c.l.c.exception.GlobalExceptionHandler   : [AppException] Code: 1007 - Message: Mật khẩu không chính xác. Bạn còn 4 lần thử.
+2026-09-08 20:47:09.427  WARN [auth-service] [traceId=357046ae21b94357] [tenantId=default] [nio-8081-exec-5] com.liochio.auth.service.OtpService      : [OtpService] otp-service (8094) không phản hồi (Connection refused: no further information executing POST http://localhost:8094/api/v1/otp/generate), kích hoạt Fallback OTP Mode
+2026-09-08 20:47:09.787  WARN [auth-service] [traceId=357046ae21b94357] [tenantId=default] [nio-8081-exec-5] com.liochio.auth.service.AuthService     : [AuthService] Yêu cầu 2FA xác thực thiết bị mới cho User='superadmin', DeviceId='fp_196e530f9c611ded'
+2026-09-08 20:47:13.130  WARN [auth-service] [traceId=47120569fce14d4e] [tenantId=default] [nio-8081-exec-7] com.liochio.auth.service.OtpService      : [OtpService] otp-service (8094) không phản hồi (Connection refused: no further information executing POST http://localhost:8094/api/v1/otp/generate), kích hoạt Fallback OTP Mode
+2026-09-08 20:47:13.137  WARN [auth-service] [traceId=47120569fce14d4e] [tenantId=default] [nio-8081-exec-7] com.liochio.auth.service.AuthService     : [AuthService] Yêu cầu 2FA xác thực thiết bị mới cho User='superadmin', DeviceId='fp_196e530f9c611ded'
+2026-09-08 20:47:27.717  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] com.liochio.auth.service.OtpService      : [OtpService] otp-service không khả dụng (Connection refused: no further information executing POST http://localhost:8094/api/v1/otp/verify), kiểm tra Fallback OTP Cache
+2026-09-08 20:47:27.869  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 20:47:27.869  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.liochio.auth.service.SessionService    : [SessionService] [CONCURRENT KICK-OUT] Đã thu hồi phiên cũ sess_1374b1258e7244baac74a92406bfe4b1 của User ID: 1 do đăng nhập trên thiết bị mới fp_196e530f9c611ded
+2026-09-08 20:47:27.873  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 20:47:27.873  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.liochio.auth.service.SessionService    : [SessionService] [CONCURRENT KICK-OUT] Đã thu hồi phiên cũ sess_7f452bd18bdf4f6d98d404ad318731ac của User ID: 1 do đăng nhập trên thiết bị mới fp_196e530f9c611ded
+2026-09-08 20:47:27.876  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 20:47:27.877  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.liochio.auth.service.SessionService    : [SessionService] [CONCURRENT KICK-OUT] Đã thu hồi phiên cũ sess_b70126e6304540fe96e1cceed2a763ea của User ID: 1 do đăng nhập trên thiết bị mới fp_196e530f9c611ded
+2026-09-08 20:47:27.879  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 20:47:27.880  WARN [auth-service] [traceId=40f72e763de14f77] [tenantId=default] [nio-8081-exec-8] c.liochio.auth.service.SessionService    : [SessionService] [CONCURRENT KICK-OUT] Đã thu hồi phiên cũ sess_d95697a6157a40ca9b187f5053afe8c3 của User ID: 1 do đăng nhập trên thiết bị mới fp_196e530f9c611ded
+2026-09-08 20:50:33.243  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@6df20ade uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 20:50:33.245  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@676f0a60 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 20:50:33.245  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@5d10455d uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 20:50:38.892  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 20:50:47.886  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: c18d4d03-4665-409f-8397-56d44da44706
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-08 21:03:11.869  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@6df20ade uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 21:03:11.871  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@676f0a60 uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 21:03:11.872  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.c.c.ConfigServerConfigDataLoader   : Could not locate PropertySource ([ConfigServerConfigDataResource@5d10455d uris = array<String>['http://localhost:8888/'], optional = true, profiles = 'default']): I/O error on GET request for "http://localhost:8888/auth-service/default": Connection refused: no further information
+2026-09-08 21:03:18.285  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 21:03:27.672  WARN [auth-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 61daf6d3-a86f-4c2f-8563-5263803a2a1d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-09-08 21:06:06.980  WARN [auth-service] [traceId=tr_06c58614cc694100] [tenantId=default] [nio-8081-exec-3] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Redis, sử dụng L1 Cache dự phòng: Unable to connect to Redis
+2026-09-08 21:06:06.986  WARN [auth-service] [traceId=tr_06c58614cc694100] [tenantId=default] [nio-8081-exec-3] c.l.c.security.TokenBlacklistService     : [TokenBlacklist] Không thể ghi Session vào Redis: Unable to connect to Redis
+2026-09-08 21:06:07.027  WARN [auth-service] [traceId=tr_8ad4f6e54d6c49d7] [tenantId=default] [nio-8081-exec-4] c.l.c.security.JwtAuthenticationFilter   : [JwtAuthenticationFilter] Phát hiện Token đã bị thu hồi / Blacklisted tại URI: /api/v1/auth/users

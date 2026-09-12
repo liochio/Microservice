@@ -1,0 +1,8 @@
+2026-09-08 20:50:53.091  WARN [worker-service] [traceId=NO_TRACE] [tenantId=default] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-08 20:50:58.053  WARN [worker-service] [traceId=NO_TRACE] [tenantId=default] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-09-08 20:50:58.158  WARN [worker-service] [traceId=NO_TRACE] [tenantId=default] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 562286a4-340c-44b8-a625-6ac3ef5a03d4
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+

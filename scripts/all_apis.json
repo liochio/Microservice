@@ -1,0 +1,2360 @@
+{
+  "spring_boot": [
+    {
+      "service": "ai-service",
+      "file": "AiChatbotController.java",
+      "method": "POST",
+      "path": "/api/v1/ai/chat/sessions",
+      "summary": "Khởi tạo phiên hội thoại mới với Chatbot AI",
+      "handler": "createSession"
+    },
+    {
+      "service": "ai-service",
+      "file": "AiChatbotController.java",
+      "method": "POST",
+      "path": "/api/ai/chat/sessions",
+      "summary": "Khởi tạo phiên hội thoại mới với Chatbot AI",
+      "handler": "createSession"
+    },
+    {
+      "service": "ai-service",
+      "file": "AiChatbotController.java",
+      "method": "GET",
+      "path": "/api/v1/ai/chat/sessions/{sessionId}/messages",
+      "summary": "Lấy lịch sử tin nhắn của một phiên hội thoại",
+      "handler": "getMessages"
+    },
+    {
+      "service": "ai-service",
+      "file": "AiChatbotController.java",
+      "method": "GET",
+      "path": "/api/ai/chat/sessions/{sessionId}/messages",
+      "summary": "Lấy lịch sử tin nhắn của một phiên hội thoại",
+      "handler": "getMessages"
+    },
+    {
+      "service": "ai-service",
+      "file": "AiChatbotController.java",
+      "method": "POST",
+      "path": "/api/v1/ai/chat/sessions/{sessionId}/messages",
+      "summary": "Gửi tin nhắn và nhận phản hồi từ AI Assistant",
+      "handler": "sendMessage"
+    },
+    {
+      "service": "ai-service",
+      "file": "AiChatbotController.java",
+      "method": "POST",
+      "path": "/api/ai/chat/sessions/{sessionId}/messages",
+      "summary": "Gửi tin nhắn và nhận phản hồi từ AI Assistant",
+      "handler": "sendMessage"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "POST",
+      "path": "/api/v1/corp/approvals/submit",
+      "summary": "submitRequest",
+      "handler": "submitRequest"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "POST",
+      "path": "/api/corp/approvals/submit",
+      "summary": "submitRequest",
+      "handler": "submitRequest"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "POST",
+      "path": "/api/v1/corp/approvals/{id}/action",
+      "summary": "actionRequest",
+      "handler": "actionRequest"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "POST",
+      "path": "/api/corp/approvals/{id}/action",
+      "summary": "actionRequest",
+      "handler": "actionRequest"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "GET",
+      "path": "/api/v1/corp/approvals",
+      "summary": "listRequests",
+      "handler": "listRequests"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "GET",
+      "path": "/api/corp/approvals",
+      "summary": "listRequests",
+      "handler": "listRequests"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "GET",
+      "path": "/api/v1/corp/approvals/{id}",
+      "summary": "getRequestById",
+      "handler": "getRequestById"
+    },
+    {
+      "service": "auth-service",
+      "file": "ApprovalController.java",
+      "method": "GET",
+      "path": "/api/corp/approvals/{id}",
+      "summary": "getRequestById",
+      "handler": "getRequestById"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/register",
+      "summary": "Đăng ký tài khoản",
+      "handler": "register"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "summary": "Đăng ký tài khoản",
+      "handler": "register"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/verify-otp",
+      "summary": "Xác thực OTP kích hoạt",
+      "handler": "verifyOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/verify-otp",
+      "summary": "Xác thực OTP kích hoạt",
+      "handler": "verifyOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "summary": "Đăng nhập hệ thống",
+      "handler": "login"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "summary": "Đăng nhập hệ thống",
+      "handler": "login"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/verify-device-otp",
+      "summary": "Xác thực 2FA thiết bị mới",
+      "handler": "verifyDeviceOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/verify-device-otp",
+      "summary": "Xác thực 2FA thiết bị mới",
+      "handler": "verifyDeviceOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "summary": "Làm mới mã xác thực (Token Rotation)",
+      "handler": "refreshToken"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/refresh",
+      "summary": "Làm mới mã xác thực (Token Rotation)",
+      "handler": "refreshToken"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/logout",
+      "summary": "Đăng xuất tài khoản",
+      "handler": "logout"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "summary": "Đăng xuất tài khoản",
+      "handler": "logout"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/logout-all-devices",
+      "summary": "Đăng xuất toàn bộ thiết bị",
+      "handler": "logoutAllDevices"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/force-logout\"}",
+      "summary": "Đăng xuất toàn bộ thiết bị",
+      "handler": "logoutAllDevices"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/logout-all-devices",
+      "summary": "Đăng xuất toàn bộ thiết bị",
+      "handler": "logoutAllDevices"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/force-logout\"}",
+      "summary": "Đăng xuất toàn bộ thiết bị",
+      "handler": "logoutAllDevices"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/change-password",
+      "summary": "Đổi mật khẩu tài khoản",
+      "handler": "changePassword"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/change-password",
+      "summary": "Đổi mật khẩu tài khoản",
+      "handler": "changePassword"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/qr/init",
+      "summary": "Khởi tạo QR Login (Web)",
+      "handler": "initQrLogin"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/qr/init",
+      "summary": "Khởi tạo QR Login (Web)",
+      "handler": "initQrLogin"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/qr/scan",
+      "summary": "Quét mã QR (Mobile)",
+      "handler": "scanQrCode"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/qr/scan",
+      "summary": "Quét mã QR (Mobile)",
+      "handler": "scanQrCode"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/qr/confirm",
+      "summary": "Xác nhận đăng nhập QR (Mobile)",
+      "handler": "confirmQrCode"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/qr/confirm",
+      "summary": "Xác nhận đăng nhập QR (Mobile)",
+      "handler": "confirmQrCode"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/qr/exchange",
+      "summary": "Đổi mã xác nhận QR lấy Token (Web)",
+      "handler": "exchangeQrCode"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/qr/exchange",
+      "summary": "Đổi mã xác nhận QR lấy Token (Web)",
+      "handler": "exchangeQrCode"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "GET",
+      "path": "/api/v1/auth/devices",
+      "summary": "Danh sách thiết bị truy cập",
+      "handler": "getDevices"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "GET",
+      "path": "/api/auth/devices",
+      "summary": "Danh sách thiết bị truy cập",
+      "handler": "getDevices"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "DELETE",
+      "path": "/api/v1/auth/devices/{deviceId}",
+      "summary": "Thu hồi quyền thiết bị",
+      "handler": "revokeDevice"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "DELETE",
+      "path": "/api/auth/devices/{deviceId}",
+      "summary": "Thu hồi quyền thiết bị",
+      "handler": "revokeDevice"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "GET",
+      "path": "/api/v1/auth/sessions",
+      "summary": "Danh sách phiên hoạt động",
+      "handler": "getSessions"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "GET",
+      "path": "/api/auth/sessions",
+      "summary": "Danh sách phiên hoạt động",
+      "handler": "getSessions"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/smart-otp/setup",
+      "summary": "Khởi tạo thiết lập SmartOTP",
+      "handler": "setupSmartOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/smart-otp/setup",
+      "summary": "Khởi tạo thiết lập SmartOTP",
+      "handler": "setupSmartOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/smart-otp/verify",
+      "summary": "Kích hoạt SmartOTP",
+      "handler": "verifySmartOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/smart-otp/verify",
+      "summary": "Kích hoạt SmartOTP",
+      "handler": "verifySmartOtp"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "summary": "Lấy thông tin tài khoản hiện tại",
+      "handler": "getCurrentUser"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "summary": "Lấy thông tin tài khoản hiện tại",
+      "handler": "getCurrentUser"
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/v1/auth/smart-otp/action-token",
+      "summary": "Xác thực Step-up SmartOTP và cấp Action Token",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "AuthController.java",
+      "method": "POST",
+      "path": "/api/auth/smart-otp/action-token",
+      "summary": "Xác thực Step-up SmartOTP và cấp Action Token",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "ConfigMatrixController.java",
+      "method": "GET",
+      "path": "/api/v1/system/configs",
+      "summary": "getConfigs",
+      "handler": "getConfigs"
+    },
+    {
+      "service": "auth-service",
+      "file": "ConfigMatrixController.java",
+      "method": "GET",
+      "path": "/api/system/configs\"}",
+      "summary": "getConfigs",
+      "handler": "getConfigs"
+    },
+    {
+      "service": "auth-service",
+      "file": "ConfigMatrixController.java",
+      "method": "POST",
+      "path": "/api/v1/system/configs/global",
+      "summary": "updateGlobalConfig",
+      "handler": "updateGlobalConfig"
+    },
+    {
+      "service": "auth-service",
+      "file": "ConfigMatrixController.java",
+      "method": "POST",
+      "path": "/api/system/configs/global\"}",
+      "summary": "updateGlobalConfig",
+      "handler": "updateGlobalConfig"
+    },
+    {
+      "service": "auth-service",
+      "file": "ConfigMatrixController.java",
+      "method": "POST",
+      "path": "/api/v1/corp/configs/{configKey}/override",
+      "summary": "setTenantOverride",
+      "handler": "setTenantOverride"
+    },
+    {
+      "service": "auth-service",
+      "file": "ConfigMatrixController.java",
+      "method": "POST",
+      "path": "/api/corp/configs/{configKey}/override\"}",
+      "summary": "setTenantOverride",
+      "handler": "setTenantOverride"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "GET",
+      "path": "/api/v1/corp/customer-gates",
+      "summary": "listCustomerGates",
+      "handler": "listCustomerGates"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "GET",
+      "path": "/api/corp/customer-gates\"}",
+      "summary": "listCustomerGates",
+      "handler": "listCustomerGates"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "GET",
+      "path": "/api/v1/corp/customer-gates/{userId}",
+      "summary": "getCustomerGate",
+      "handler": "getCustomerGate"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "GET",
+      "path": "/api/corp/customer-gates/{userId}\"}",
+      "summary": "getCustomerGate",
+      "handler": "getCustomerGate"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/v1/corp/customer-gates/{userId}/gate1-review",
+      "summary": "reviewGate1",
+      "handler": "reviewGate1"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/corp/customer-gates/{userId}/gate1-review\"}",
+      "summary": "reviewGate1",
+      "handler": "reviewGate1"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/v1/corp/customer-gates/{userId}/gate2-tier",
+      "summary": "assignGate2",
+      "handler": "assignGate2"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/corp/customer-gates/{userId}/gate2-tier\"}",
+      "summary": "assignGate2",
+      "handler": "assignGate2"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/v1/corp/customer-gates/{userId}/gate3-wallets",
+      "summary": "provisionGate3",
+      "handler": "provisionGate3"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/corp/customer-gates/{userId}/gate3-wallets\"}",
+      "summary": "provisionGate3",
+      "handler": "provisionGate3"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/v1/corp/customer-gates/{userId}/gate4-pair",
+      "summary": "pairGate4",
+      "handler": "pairGate4"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "POST",
+      "path": "/api/corp/customer-gates/{userId}/gate4-pair\"}",
+      "summary": "pairGate4",
+      "handler": "pairGate4"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "GET",
+      "path": "/api/v1/app/onboarding-status",
+      "summary": "getMyOnboardingStatus",
+      "handler": "getMyOnboardingStatus"
+    },
+    {
+      "service": "auth-service",
+      "file": "CustomerGateController.java",
+      "method": "GET",
+      "path": "/api/app/onboarding-status\"}",
+      "summary": "getMyOnboardingStatus",
+      "handler": "getMyOnboardingStatus"
+    },
+    {
+      "service": "auth-service",
+      "file": "DynamicMenuController.java",
+      "method": "GET",
+      "path": "/api/v1/menus/tree",
+      "summary": "getMenuTree",
+      "handler": "getMenuTree"
+    },
+    {
+      "service": "auth-service",
+      "file": "DynamicMenuController.java",
+      "method": "GET",
+      "path": "/api/menus/tree",
+      "summary": "getMenuTree",
+      "handler": "getMenuTree"
+    },
+    {
+      "service": "auth-service",
+      "file": "EkycController.java",
+      "method": "GET",
+      "path": "/api/v1/ekyc/status",
+      "summary": "Xem trạng thái định danh eKYC và hạn mức giao dịch hiện tại",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "EkycController.java",
+      "method": "GET",
+      "path": "/api/ekyc/status",
+      "summary": "Xem trạng thái định danh eKYC và hạn mức giao dịch hiện tại",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "EkycController.java",
+      "method": "POST",
+      "path": "/api/v1/ekyc/submit",
+      "summary": "Gửi hồ sơ định danh CCCD/Hộ chiếu để nâng cấp Tier",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "EkycController.java",
+      "method": "POST",
+      "path": "/api/ekyc/submit",
+      "summary": "Gửi hồ sơ định danh CCCD/Hộ chiếu để nâng cấp Tier",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "EkycController.java",
+      "method": "POST",
+      "path": "/api/v1/ekyc/approve/{userId}",
+      "summary": "Duyệt hồ sơ eKYC và nâng cấp Tier hạn mức (Dành cho Admin)",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "EkycController.java",
+      "method": "POST",
+      "path": "/api/ekyc/approve/{userId}",
+      "summary": "Duyệt hồ sơ eKYC và nâng cấp Tier hạn mức (Dành cho Admin)",
+      "handler": ""
+    },
+    {
+      "service": "auth-service",
+      "file": "JwksController.java",
+      "method": "GET",
+      "path": "/.well-known/jwks.json",
+      "summary": "Lấy danh sách khóa công khai JWKS",
+      "handler": "getJwks"
+    },
+    {
+      "service": "auth-service",
+      "file": "JwksController.java",
+      "method": "GET",
+      "path": "/api/v1/auth/.well-known/jwks.json",
+      "summary": "Lấy danh sách khóa công khai JWKS",
+      "handler": "getJwks"
+    },
+    {
+      "service": "auth-service",
+      "file": "JwksController.java",
+      "method": "GET",
+      "path": "/api/auth/.well-known/jwks.json\"}",
+      "summary": "Lấy danh sách khóa công khai JWKS",
+      "handler": "getJwks"
+    },
+    {
+      "service": "auth-service",
+      "file": "JwksController.java",
+      "method": "GET",
+      "path": "/produces = MediaType.APPLICATION_JSON_VALUE",
+      "summary": "Lấy danh sách khóa công khai JWKS",
+      "handler": "getJwks"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/v1/ledger/balance",
+      "summary": "Tra cứu số dư tài khoản đa trạng thái (Available, Holding, Escrow) của chính mình",
+      "handler": "getMyBalance"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/ledger/balance",
+      "summary": "Tra cứu số dư tài khoản đa trạng thái (Available, Holding, Escrow) của chính mình",
+      "handler": "getMyBalance"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/v1/ledger/balance/{userId}",
+      "summary": "Tra cứu số dư tài khoản của một người dùng theo User ID (Dành cho Admin/Core)",
+      "handler": "getUserBalance"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/ledger/balance/{userId}",
+      "summary": "Tra cứu số dư tài khoản của một người dùng theo User ID (Dành cho Admin/Core)",
+      "handler": "getUserBalance"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/v1/ledger/account/{accountNo}",
+      "summary": "Tra cứu số dư tài khoản sổ cái Core Banking theo mã tài khoản (Dành cho Corp và Retail)",
+      "handler": "getAccountBalance"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/ledger/account/{accountNo}",
+      "summary": "Tra cứu số dư tài khoản sổ cái Core Banking theo mã tài khoản (Dành cho Corp và Retail)",
+      "handler": "getAccountBalance"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/v1/ledger/history/{userId}",
+      "summary": "Tra cứu sao kê lịch sử sổ cái kép của một người dùng",
+      "handler": "getUserJournalHistory"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "GET",
+      "path": "/api/ledger/history/{userId}",
+      "summary": "Tra cứu sao kê lịch sử sổ cái kép của một người dùng",
+      "handler": "getUserJournalHistory"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "POST",
+      "path": "/api/v1/ledger/m2m/transaction",
+      "summary": "Cổng Machine-to-Machine (M2M) nhận lệnh hạch toán từ Python FinTech có kiểm tra chữ ký HMAC-SHA256",
+      "handler": "executeM2MTransaction"
+    },
+    {
+      "service": "auth-service",
+      "file": "LedgerController.java",
+      "method": "POST",
+      "path": "/api/ledger/m2m/transaction",
+      "summary": "Cổng Machine-to-Machine (M2M) nhận lệnh hạch toán từ Python FinTech có kiểm tra chữ ký HMAC-SHA256",
+      "handler": "executeM2MTransaction"
+    },
+    {
+      "service": "auth-service",
+      "file": "RoleController.java",
+      "method": "GET",
+      "path": "/api/v1/roles",
+      "summary": "Lấy danh sách tất cả các vai trò",
+      "handler": "getAllRoles"
+    },
+    {
+      "service": "auth-service",
+      "file": "RoleController.java",
+      "method": "GET",
+      "path": "/api/roles",
+      "summary": "Lấy danh sách tất cả các vai trò",
+      "handler": "getAllRoles"
+    },
+    {
+      "service": "auth-service",
+      "file": "RoleController.java",
+      "method": "GET",
+      "path": "/api/v1/roles/permissions",
+      "summary": "Lấy danh sách tất cả các quyền hạn trong hệ thống",
+      "handler": "getAllPermissions"
+    },
+    {
+      "service": "auth-service",
+      "file": "RoleController.java",
+      "method": "GET",
+      "path": "/api/roles/permissions",
+      "summary": "Lấy danh sách tất cả các quyền hạn trong hệ thống",
+      "handler": "getAllPermissions"
+    },
+    {
+      "service": "auth-service",
+      "file": "RoleController.java",
+      "method": "PUT",
+      "path": "/api/v1/roles/{roleId}/permissions",
+      "summary": "Gán danh sách quyền hạn cho một vai trò",
+      "handler": "assignPermissions"
+    },
+    {
+      "service": "auth-service",
+      "file": "RoleController.java",
+      "method": "PUT",
+      "path": "/api/roles/{roleId}/permissions",
+      "summary": "Gán danh sách quyền hạn cho một vai trò",
+      "handler": "assignPermissions"
+    },
+    {
+      "service": "auth-service",
+      "file": "SecurityController.java",
+      "method": "GET",
+      "path": "/api/auth/security/devices",
+      "summary": "Lấy danh sách các thiết bị đã đăng nhập của người dùng",
+      "handler": "getUserDevices"
+    },
+    {
+      "service": "auth-service",
+      "file": "SecurityController.java",
+      "method": "GET",
+      "path": "/api/auth/security/sessions",
+      "summary": "Lấy danh sách các phiên làm việc (Sessions) đang hoạt động",
+      "handler": "getActiveSessions"
+    },
+    {
+      "service": "auth-service",
+      "file": "SecurityController.java",
+      "method": "POST",
+      "path": "/api/auth/security/sessions/{sessionId}/revoke",
+      "summary": "Thu hồi từ xa một phiên làm việc (Revoke Session)",
+      "handler": "revokeSession"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "GET",
+      "path": "/api/v1/tenants",
+      "summary": "Lấy danh sách tất cả các Tenant trong hệ thống",
+      "handler": "getAllTenants"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "GET",
+      "path": "/api/tenants",
+      "summary": "Lấy danh sách tất cả các Tenant trong hệ thống",
+      "handler": "getAllTenants"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "POST",
+      "path": "/api/v1/tenants",
+      "summary": "Khởi tạo một Tenant mới (Cá nhân / Doanh nghiệp)",
+      "handler": "createTenant"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "POST",
+      "path": "/api/tenants",
+      "summary": "Khởi tạo một Tenant mới (Cá nhân / Doanh nghiệp)",
+      "handler": "createTenant"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "GET",
+      "path": "/api/v1/tenants/features/catalog",
+      "summary": "Lấy danh mục tính năng hệ thống (Feature Catalog)",
+      "handler": "getFeatureCatalog"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "GET",
+      "path": "/api/tenants/features/catalog",
+      "summary": "Lấy danh mục tính năng hệ thống (Feature Catalog)",
+      "handler": "getFeatureCatalog"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "GET",
+      "path": "/api/v1/tenants/{tenantId}/features",
+      "summary": "Lấy danh sách tính năng được cấp phát của Tenant",
+      "handler": "getTenantFeatures"
+    },
+    {
+      "service": "auth-service",
+      "file": "TenantManagementController.java",
+      "method": "GET",
+      "path": "/api/tenants/{tenantId}/features",
+      "summary": "Lấy danh sách tính năng được cấp phát của Tenant",
+      "handler": "getTenantFeatures"
+    },
+    {
+      "service": "auth-service",
+      "file": "UserController.java",
+      "method": "GET",
+      "path": "/api/v1/users",
+      "summary": "Lấy danh sách người dùng có phân trang",
+      "handler": "getUsers"
+    },
+    {
+      "service": "auth-service",
+      "file": "UserController.java",
+      "method": "GET",
+      "path": "/api/users",
+      "summary": "Lấy danh sách người dùng có phân trang",
+      "handler": "getUsers"
+    },
+    {
+      "service": "auth-service",
+      "file": "UserController.java",
+      "method": "GET",
+      "path": "/api/v1/users/{id}",
+      "summary": "Lấy chi tiết người dùng theo ID",
+      "handler": "getUserById"
+    },
+    {
+      "service": "auth-service",
+      "file": "UserController.java",
+      "method": "GET",
+      "path": "/api/users/{id}",
+      "summary": "Lấy chi tiết người dùng theo ID",
+      "handler": "getUserById"
+    },
+    {
+      "service": "auth-service",
+      "file": "UserController.java",
+      "method": "DELETE",
+      "path": "/api/v1/users/{id}",
+      "summary": "Xóa mềm người dùng theo ID",
+      "handler": "deleteUser"
+    },
+    {
+      "service": "auth-service",
+      "file": "UserController.java",
+      "method": "DELETE",
+      "path": "/api/users/{id}",
+      "summary": "Xóa mềm người dùng theo ID",
+      "handler": "deleteUser"
+    },
+    {
+      "service": "entity-service",
+      "file": "DatabaseHealthController.java",
+      "method": "GET",
+      "path": "/api/v1/system/databases/health",
+      "summary": "Kiểm tra kết nối toàn bộ Database",
+      "handler": "checkAllDatabasesHealth"
+    },
+    {
+      "service": "entity-service",
+      "file": "DatabaseHealthController.java",
+      "method": "GET",
+      "path": "/api/system/databases/health",
+      "summary": "Kiểm tra kết nối toàn bộ Database",
+      "handler": "checkAllDatabasesHealth"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "GET",
+      "path": "/api/entities",
+      "summary": "Tìm kiếm danh sách dynamic entities có phân trang",
+      "handler": "search"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "GET",
+      "path": "/api/v1/entities",
+      "summary": "Tìm kiếm danh sách dynamic entities có phân trang",
+      "handler": "search"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "GET",
+      "path": "/api/entities/{entityType}/{slug}",
+      "summary": "Lấy chi tiết dynamic entity theo entityType và slug",
+      "handler": "getBySlug"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "GET",
+      "path": "/api/v1/entities/{entityType}/{slug}",
+      "summary": "Lấy chi tiết dynamic entity theo entityType và slug",
+      "handler": "getBySlug"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "POST",
+      "path": "/api/entities",
+      "summary": "Tạo mới dynamic entity kèm schema validation & versioning",
+      "handler": "create"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "POST",
+      "path": "/api/v1/entities",
+      "summary": "Tạo mới dynamic entity kèm schema validation & versioning",
+      "handler": "create"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "PUT",
+      "path": "/api/entities/{id}",
+      "summary": "Cập nhật dynamic entity kèm snapshot revision mới",
+      "handler": "update"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "PUT",
+      "path": "/api/v1/entities/{id}",
+      "summary": "Cập nhật dynamic entity kèm snapshot revision mới",
+      "handler": "update"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "PATCH",
+      "path": "/api/entities/{id}/status",
+      "summary": "Chuyển đổi trạng thái workflow của thực thể (DRAFT -> PENDING_REVIEW -> PUBLISHED -> ARCHIVED)",
+      "handler": "updateStatus"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "PATCH",
+      "path": "/api/v1/entities/{id}/status",
+      "summary": "Chuyển đổi trạng thái workflow của thực thể (DRAFT -> PENDING_REVIEW -> PUBLISHED -> ARCHIVED)",
+      "handler": "updateStatus"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "GET",
+      "path": "/api/entities/{id}/revisions",
+      "summary": "Xem lịch sử các phiên bản revision của thực thể",
+      "handler": "getRevisions"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "GET",
+      "path": "/api/v1/entities/{id}/revisions",
+      "summary": "Xem lịch sử các phiên bản revision của thực thể",
+      "handler": "getRevisions"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "POST",
+      "path": "/api/entities/{id}/rollback/{revisionNumber}",
+      "summary": "Hoàn tác (Rollback) thực thể về một phiên bản revision cụ thể trong quá khứ",
+      "handler": "rollback"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "POST",
+      "path": "/api/v1/entities/{id}/rollback/{revisionNumber}",
+      "summary": "Hoàn tác (Rollback) thực thể về một phiên bản revision cụ thể trong quá khứ",
+      "handler": "rollback"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "DELETE",
+      "path": "/api/entities/{id}",
+      "summary": "Xóa mềm dynamic entity",
+      "handler": "delete"
+    },
+    {
+      "service": "entity-service",
+      "file": "DynamicEntityController.java",
+      "method": "DELETE",
+      "path": "/api/v1/entities/{id}",
+      "summary": "Xóa mềm dynamic entity",
+      "handler": "delete"
+    },
+    {
+      "service": "entity-service",
+      "file": "FormDefinitionController.java",
+      "method": "GET",
+      "path": "/api/forms/{formCode}",
+      "summary": "Lấy cấu trúc định nghĩa form theo formCode",
+      "handler": "getByFormCode"
+    },
+    {
+      "service": "entity-service",
+      "file": "FormDefinitionController.java",
+      "method": "POST",
+      "path": "/api/forms",
+      "summary": "Lưu hoặc cập nhật định nghĩa form",
+      "handler": "saveOrUpdate"
+    },
+    {
+      "service": "entity-service",
+      "file": "NavigationMenuController.java",
+      "method": "GET",
+      "path": "/api/menus/{menuCode}",
+      "summary": "Lấy cấu trúc menu theo menuCode",
+      "handler": "getByMenuCode"
+    },
+    {
+      "service": "entity-service",
+      "file": "NavigationMenuController.java",
+      "method": "POST",
+      "path": "/api/menus",
+      "summary": "Lưu hoặc cập nhật cấu trúc menu",
+      "handler": "saveOrUpdate"
+    },
+    {
+      "service": "entity-service",
+      "file": "TemplateController.java",
+      "method": "GET",
+      "path": "/api/entities/templates",
+      "summary": "Lấy danh sách các mẫu giao diện Website có sẵn (Web Templates)",
+      "handler": "getAllTemplates"
+    },
+    {
+      "service": "entity-service",
+      "file": "TemplateController.java",
+      "method": "GET",
+      "path": "/api/entities/templates/types",
+      "summary": "Lấy danh sách tất cả các loại thực thể động (Entity Types)",
+      "handler": "getEntityTypes"
+    },
+    {
+      "service": "entity-service",
+      "file": "UiConfigController.java",
+      "method": "GET",
+      "path": "/api/ui-configs/{pageCode}",
+      "summary": "Lấy cấu trúc layout JSON của một trang theo pageCode",
+      "handler": "getByPageCode"
+    },
+    {
+      "service": "entity-service",
+      "file": "UiConfigController.java",
+      "method": "POST",
+      "path": "/api/ui-configs",
+      "summary": "Lưu hoặc cập nhật cấu trúc layout UI của trang",
+      "handler": "saveOrUpdate"
+    },
+    {
+      "service": "film-service",
+      "file": "FilmController.java",
+      "method": "GET",
+      "path": "/api/v1/films",
+      "summary": "Lấy danh sách các bộ phim (phân trang)",
+      "handler": "getAllMovies"
+    },
+    {
+      "service": "film-service",
+      "file": "FilmController.java",
+      "method": "GET",
+      "path": "/api/films",
+      "summary": "Lấy danh sách các bộ phim (phân trang)",
+      "handler": "getAllMovies"
+    },
+    {
+      "service": "film-service",
+      "file": "FilmController.java",
+      "method": "GET",
+      "path": "/api/v1/films/{slug}",
+      "summary": "Lấy thông tin chi tiết phim theo slug",
+      "handler": "getMovieBySlug"
+    },
+    {
+      "service": "film-service",
+      "file": "FilmController.java",
+      "method": "GET",
+      "path": "/api/films/{slug}",
+      "summary": "Lấy thông tin chi tiết phim theo slug",
+      "handler": "getMovieBySlug"
+    },
+    {
+      "service": "film-service",
+      "file": "FilmController.java",
+      "method": "POST",
+      "path": "/api/v1/films",
+      "summary": "Thêm bộ phim mới vào kho dữ liệu",
+      "handler": "createMovie"
+    },
+    {
+      "service": "film-service",
+      "file": "FilmController.java",
+      "method": "POST",
+      "path": "/api/films",
+      "summary": "Thêm bộ phim mới vào kho dữ liệu",
+      "handler": "createMovie"
+    },
+    {
+      "service": "media-service",
+      "file": "MediaController.java",
+      "method": "POST",
+      "path": "/api/media/upload",
+      "summary": "Tải lên một tệp tin (ảnh / video / tài liệu)",
+      "handler": "upload"
+    },
+    {
+      "service": "media-service",
+      "file": "MediaController.java",
+      "method": "POST",
+      "path": "/api/media/consumes = MediaType.MULTIPART_FORM_DATA_VALUE",
+      "summary": "Tải lên một tệp tin (ảnh / video / tài liệu)",
+      "handler": "upload"
+    },
+    {
+      "service": "media-service",
+      "file": "MediaController.java",
+      "method": "POST",
+      "path": "/api/media/chunk-upload",
+      "summary": "Tải lên tệp tin dung lượng lớn theo từng phần (Chunk Upload)",
+      "handler": "uploadChunk"
+    },
+    {
+      "service": "media-service",
+      "file": "MediaController.java",
+      "method": "POST",
+      "path": "/api/media/consumes = MediaType.MULTIPART_FORM_DATA_VALUE",
+      "summary": "Tải lên tệp tin dung lượng lớn theo từng phần (Chunk Upload)",
+      "handler": "uploadChunk"
+    },
+    {
+      "service": "media-service",
+      "file": "MediaController.java",
+      "method": "GET",
+      "path": "/api/media",
+      "summary": "Lấy danh sách tất cả các tệp tin media của tenant",
+      "handler": "getAll"
+    },
+    {
+      "service": "music-service",
+      "file": "MusicController.java",
+      "method": "GET",
+      "path": "/api/v1/music/songs",
+      "summary": "Lấy danh sách các bài hát (phân trang)",
+      "handler": "getAllSongs"
+    },
+    {
+      "service": "music-service",
+      "file": "MusicController.java",
+      "method": "GET",
+      "path": "/api/music/songs",
+      "summary": "Lấy danh sách các bài hát (phân trang)",
+      "handler": "getAllSongs"
+    },
+    {
+      "service": "music-service",
+      "file": "MusicController.java",
+      "method": "GET",
+      "path": "/api/v1/music/songs/{slug}",
+      "summary": "Lấy chi tiết bài hát theo slug kèm audio streaming URL",
+      "handler": "getSongBySlug"
+    },
+    {
+      "service": "music-service",
+      "file": "MusicController.java",
+      "method": "GET",
+      "path": "/api/music/songs/{slug}",
+      "summary": "Lấy chi tiết bài hát theo slug kèm audio streaming URL",
+      "handler": "getSongBySlug"
+    },
+    {
+      "service": "music-service",
+      "file": "MusicController.java",
+      "method": "POST",
+      "path": "/api/v1/music/songs",
+      "summary": "Thêm bài hát mới vào thư viện",
+      "handler": "createSong"
+    },
+    {
+      "service": "music-service",
+      "file": "MusicController.java",
+      "method": "POST",
+      "path": "/api/music/songs",
+      "summary": "Thêm bài hát mới vào thư viện",
+      "handler": "createSong"
+    },
+    {
+      "service": "notification-service",
+      "file": "NotificationController.java",
+      "method": "POST",
+      "path": "/api/notifications/send",
+      "summary": "Gửi thông báo tới người nhận qua kênh chỉ định (Hỗ trợ Template & Idempotency Key)",
+      "handler": "send"
+    },
+    {
+      "service": "notification-service",
+      "file": "NotificationController.java",
+      "method": "GET",
+      "path": "/api/notifications/history",
+      "summary": "Lấy lịch sử thông báo đã gửi của tenant",
+      "handler": "getHistory"
+    },
+    {
+      "service": "notification-service",
+      "file": "NotificationController.java",
+      "method": "GET",
+      "path": "/api/notifications/my-inbox",
+      "summary": "Lấy danh sách thông báo hộp thư cá nhân",
+      "handler": "getMyInbox"
+    },
+    {
+      "service": "notification-service",
+      "file": "NotificationController.java",
+      "method": "PATCH",
+      "path": "/api/notifications/{id}/read",
+      "summary": "Đánh dấu thông báo là đã đọc",
+      "handler": "markAsRead"
+    },
+    {
+      "service": "notification-service",
+      "file": "NotificationController.java",
+      "method": "PATCH",
+      "path": "/api/notifications/read-all",
+      "summary": "Đánh dấu tất cả thông báo trong hộp thư là đã đọc",
+      "handler": "markAllAsRead"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpConfigController.java",
+      "method": "GET",
+      "path": "/api/v1/otp/config",
+      "summary": "Xem trạng thái cấu hình và cờ Bật/Tắt OTP Service",
+      "handler": "getConfig"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpConfigController.java",
+      "method": "GET",
+      "path": "/api/otp/config",
+      "summary": "Xem trạng thái cấu hình và cờ Bật/Tắt OTP Service",
+      "handler": "getConfig"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpConfigController.java",
+      "method": "PUT",
+      "path": "/api/v1/otp/config",
+      "summary": "Cập nhật cờ Bật/Tắt OTP Service (isEnabled, bypassInDev, devBypassCode)",
+      "handler": "updateConfig"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpConfigController.java",
+      "method": "PUT",
+      "path": "/api/otp/config",
+      "summary": "Cập nhật cờ Bật/Tắt OTP Service (isEnabled, bypassInDev, devBypassCode)",
+      "handler": "updateConfig"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/v1/otp/generate",
+      "summary": "Sinh mã xác thực OTP 6 số (Tự động hỗ trợ cờ bypass)",
+      "handler": "generateOtp"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/otp/generate",
+      "summary": "Sinh mã xác thực OTP 6 số (Tự động hỗ trợ cờ bypass)",
+      "handler": "generateOtp"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/v1/otp/verify",
+      "summary": "Xác thực mã OTP 6 số",
+      "handler": "verifyOtp"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/otp/verify",
+      "summary": "Xác thực mã OTP 6 số",
+      "handler": "verifyOtp"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/v1/otp/smart-otp/setup",
+      "summary": "Khởi tạo Base32 Secret & Barcode URI chuẩn TOTP RFC 6238",
+      "handler": "setupSmartOtp"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/otp/smart-otp/setup",
+      "summary": "Khởi tạo Base32 Secret & Barcode URI chuẩn TOTP RFC 6238",
+      "handler": "setupSmartOtp"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/v1/otp/smart-otp/verify",
+      "summary": "Xác thực và kích hoạt SmartOTP với mã TOTP 6 số & mã PIN",
+      "handler": "verifySmartOtp"
+    },
+    {
+      "service": "otp-service",
+      "file": "OtpController.java",
+      "method": "POST",
+      "path": "/api/otp/smart-otp/verify",
+      "summary": "Xác thực và kích hoạt SmartOTP với mã TOTP 6 số & mã PIN",
+      "handler": "verifySmartOtp"
+    },
+    {
+      "service": "payment-service",
+      "file": "BookingController.java",
+      "method": "POST",
+      "path": "/api/payments/bookings",
+      "summary": "Tạo một đơn hàng / đặt chỗ mới (chống trùng lặp Idempotency)",
+      "handler": "createBooking"
+    },
+    {
+      "service": "payment-service",
+      "file": "BookingController.java",
+      "method": "GET",
+      "path": "/api/payments/bookings",
+      "summary": "Lấy danh sách các đơn đặt chỗ của người dùng",
+      "handler": "getMyBookings"
+    },
+    {
+      "service": "payment-service",
+      "file": "IpnWebhookController.java",
+      "method": "GET",
+      "path": "/api/payments/ipn/vnpay",
+      "summary": "Tiếp nhận IPN callback từ cổng VNPay",
+      "handler": "vnpayIpn"
+    },
+    {
+      "service": "payment-service",
+      "file": "IpnWebhookController.java",
+      "method": "POST",
+      "path": "/api/payments/ipn/stripe",
+      "summary": "Tiếp nhận Webhook từ Stripe",
+      "handler": "stripeWebhook"
+    },
+    {
+      "service": "payment-service",
+      "file": "IpnWebhookController.java",
+      "method": "POST",
+      "path": "/api/payments/ipn/momo",
+      "summary": "Tiếp nhận IPN từ MoMo",
+      "handler": "momoIpn"
+    },
+    {
+      "service": "payment-service",
+      "file": "PaymentController.java",
+      "method": "POST",
+      "path": "/api/payments/create-url",
+      "summary": "Khởi tạo URL thanh toán chuyển hướng tới cổng (VNPay, MoMo, Stripe) với Idempotency Key",
+      "handler": "createPaymentUrl"
+    },
+    {
+      "service": "payment-service",
+      "file": "PaymentController.java",
+      "method": "GET",
+      "path": "/api/payments/orders/{orderId}",
+      "summary": "Xem trạng thái đơn hàng thanh toán theo Order ID",
+      "handler": "getOrder"
+    },
+    {
+      "service": "payment-service",
+      "file": "PaymentController.java",
+      "method": "POST",
+      "path": "/api/payments/orders/{orderId}/reconcile",
+      "summary": "Chủ động đối soát trạng thái đơn hàng (Active Status Reconciliation)",
+      "handler": "reconcileOrder"
+    },
+    {
+      "service": "payment-service",
+      "file": "PaymentController.java",
+      "method": "POST",
+      "path": "/api/payments/compensate",
+      "summary": "Kích hoạt giao dịch bù trừ Saga (Saga Compensating Transaction)",
+      "handler": ""
+    },
+    {
+      "service": "realtime-service",
+      "file": "RealtimeMessageController.java",
+      "method": "POST",
+      "path": "/api/v1/realtime/push",
+      "summary": "Phát tán thông điệp quảng bá (Broadcast) qua kênh Topic",
+      "handler": "pushNotification"
+    },
+    {
+      "service": "realtime-service",
+      "file": "RealtimeMessageController.java",
+      "method": "POST",
+      "path": "/api/v1/realtime/push-user",
+      "summary": "Đẩy thông điệp riêng tư (P2P Private Push) tới người dùng đích danh",
+      "handler": "pushToUser"
+    },
+    {
+      "service": "realtime-service",
+      "file": "RealtimeMessageController.java",
+      "method": "GET",
+      "path": "/api/v1/realtime/presence/online-count",
+      "summary": "Xem tổng số lượng kết nối WebSocket đang hoạt động",
+      "handler": "getOnlineCount"
+    },
+    {
+      "service": "tour-service",
+      "file": "TourController.java",
+      "method": "GET",
+      "path": "/api/v1/tours",
+      "summary": "Lấy danh sách các tour du lịch (phân trang)",
+      "handler": "getAllTours"
+    },
+    {
+      "service": "tour-service",
+      "file": "TourController.java",
+      "method": "GET",
+      "path": "/api/tours",
+      "summary": "Lấy danh sách các tour du lịch (phân trang)",
+      "handler": "getAllTours"
+    },
+    {
+      "service": "tour-service",
+      "file": "TourController.java",
+      "method": "GET",
+      "path": "/api/v1/tours/{slug}",
+      "summary": "Lấy chi tiết tour du lịch theo slug",
+      "handler": "getTourBySlug"
+    },
+    {
+      "service": "tour-service",
+      "file": "TourController.java",
+      "method": "GET",
+      "path": "/api/tours/{slug}",
+      "summary": "Lấy chi tiết tour du lịch theo slug",
+      "handler": "getTourBySlug"
+    },
+    {
+      "service": "tour-service",
+      "file": "TourController.java",
+      "method": "POST",
+      "path": "/api/v1/tours",
+      "summary": "Tạo mới tour du lịch",
+      "handler": "createTour"
+    },
+    {
+      "service": "tour-service",
+      "file": "TourController.java",
+      "method": "POST",
+      "path": "/api/tours",
+      "summary": "Tạo mới tour du lịch",
+      "handler": "createTour"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/health",
+      "summary": "Kiểm tra trạng thái sẵn sàng của Worker Service",
+      "handler": "health"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/health",
+      "summary": "Kiểm tra trạng thái sẵn sàng của Worker Service",
+      "handler": "health"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/status",
+      "summary": "Xem tổng quan số liệu hàng đợi Mail, Outbox, DLQ và Scheduler",
+      "handler": "getStatus"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/status",
+      "summary": "Xem tổng quan số liệu hàng đợi Mail, Outbox, DLQ và Scheduler",
+      "handler": "getStatus"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/mail/dispatch",
+      "summary": "Cổng nhận lệnh phát thư tín / email / SMS từ các Microservices khác",
+      "handler": "dispatchMail"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/mail/dispatch",
+      "summary": "Cổng nhận lệnh phát thư tín / email / SMS từ các Microservices khác",
+      "handler": "dispatchMail"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/mail/logs",
+      "summary": "Tra cứu nhật ký gửi email/SMS có phân trang và lọc theo trạng thái",
+      "handler": "getMailLogs"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/mail/logs",
+      "summary": "Tra cứu nhật ký gửi email/SMS có phân trang và lọc theo trạng thái",
+      "handler": "getMailLogs"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/outbox/trigger",
+      "summary": "Kích hoạt quét hàng đợi Outbox Events ngay lập tức",
+      "handler": "triggerOutbox"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/outbox/trigger",
+      "summary": "Kích hoạt quét hàng đợi Outbox Events ngay lập tức",
+      "handler": "triggerOutbox"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/reconciliation/trigger",
+      "summary": "Kích hoạt đối soát Sổ cái kép (EOD Audit) ngay lập tức",
+      "handler": "triggerReconciliation"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/reconciliation/trigger",
+      "summary": "Kích hoạt đối soát Sổ cái kép (EOD Audit) ngay lập tức",
+      "handler": "triggerReconciliation"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/cleanup/trigger",
+      "summary": "Kích hoạt dọn dẹp dữ liệu rác (Housekeeping) ngay lập tức",
+      "handler": "triggerCleanup"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/cleanup/trigger",
+      "summary": "Kích hoạt dọn dẹp dữ liệu rác (Housekeeping) ngay lập tức",
+      "handler": "triggerCleanup"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/dlq",
+      "summary": "Xem danh sách thông điệp lỗi trong Dead Letter Queue",
+      "handler": "getDlqMessages"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/dlq",
+      "summary": "Xem danh sách thông điệp lỗi trong Dead Letter Queue",
+      "handler": "getDlqMessages"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/dlq/{id}/retry",
+      "summary": "Thử lại một thông điệp trong hàng đợi Dead Letter Queue",
+      "handler": "retryDlqMessage"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/dlq/{id}/retry",
+      "summary": "Thử lại một thông điệp trong hàng đợi Dead Letter Queue",
+      "handler": "retryDlqMessage"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/audit/trace/{traceId}",
+      "summary": "Tra soát toàn trình phân tán (End-to-End Trace) từ Gateway, Core, Python tới Worker",
+      "handler": "getTraceDetail"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/audit/trace/{traceId}",
+      "summary": "Tra soát toàn trình phân tán (End-to-End Trace) từ Gateway, Core, Python tới Worker",
+      "handler": "getTraceDetail"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/audit/summary",
+      "summary": "Báo cáo tổng quan số liệu log và kiểm toán toàn hệ thống",
+      "handler": "getAuditSummary"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/audit/summary",
+      "summary": "Báo cáo tổng quan số liệu log và kiểm toán toàn hệ thống",
+      "handler": "getAuditSummary"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/audit/errors",
+      "summary": "Tra cứu danh sách lỗi hệ thống và Request thất bại gần nhất",
+      "handler": "getRecentErrors"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/audit/errors",
+      "summary": "Tra cứu danh sách lỗi hệ thống và Request thất bại gần nhất",
+      "handler": "getRecentErrors"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/mail/trigger",
+      "summary": "Kích hoạt xử lý hàng đợi phát thư tín ngay lập tức",
+      "handler": "triggerMailQueue"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/mail/trigger",
+      "summary": "Kích hoạt xử lý hàng đợi phát thư tín ngay lập tức",
+      "handler": "triggerMailQueue"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/alerts/send-test",
+      "summary": "Kiểm thử phát tin nhắn cảnh báo bảo mật & sự cố tức thì qua Telegram/Slack",
+      "handler": "sendTestAlert"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/alerts/send-test",
+      "summary": "Kiểm thử phát tin nhắn cảnh báo bảo mật & sự cố tức thì qua Telegram/Slack",
+      "handler": "sendTestAlert"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/v1/worker/partitions/status",
+      "summary": "Xem trạng thái phân mảnh bảng (Table Partitioning) của cơ sở dữ liệu",
+      "handler": "getPartitionStatus"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "GET",
+      "path": "/api/worker/partitions/status",
+      "summary": "Xem trạng thái phân mảnh bảng (Table Partitioning) của cơ sở dữ liệu",
+      "handler": "getPartitionStatus"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/v1/worker/partitions/maintain",
+      "summary": "Kích hoạt bảo trì và phân vùng tự động (Automated DB Partition Maintenance)",
+      "handler": "maintainPartitions"
+    },
+    {
+      "service": "worker-service",
+      "file": "WorkerController.java",
+      "method": "POST",
+      "path": "/api/worker/partitions/maintain",
+      "summary": "Kích hoạt bảo trì và phân vùng tự động (Automated DB Partition Maintenance)",
+      "handler": "maintainPartitions"
+    }
+  ],
+  "python": [
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ai",
+      "file": "ai.py",
+      "method": "GET",
+      "path": "/spending-score",
+      "summary": "Số ngày dự báo dòng tiền tương lai",
+      "handler": ""
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ai",
+      "file": "ai.py",
+      "method": "GET",
+      "path": "/budget-50-30-20",
+      "summary": "Số ngày kể từ lần nạp tiền gần nhất",
+      "handler": ""
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ai",
+      "file": "ai.py",
+      "method": "GET",
+      "path": "/habit/kde",
+      "summary": "get_gaussian_kde_model",
+      "handler": "get_gaussian_kde_model"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "auth",
+      "file": "auth.py",
+      "method": "POST",
+      "path": "/register",
+      "summary": "register_account",
+      "handler": "register_account"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "auth",
+      "file": "auth.py",
+      "method": "POST",
+      "path": "/login",
+      "summary": "login_account",
+      "handler": "login_account"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "auth",
+      "file": "auth.py",
+      "method": "POST",
+      "path": "/refresh-token",
+      "summary": "refresh_access_token",
+      "handler": "refresh_access_token"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "auth",
+      "file": "auth.py",
+      "method": "POST",
+      "path": "/logout",
+      "summary": "logout_account",
+      "handler": "logout_account"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "report",
+      "file": "report.py",
+      "method": "GET",
+      "path": "/revenue",
+      "summary": "get_revenue_report",
+      "handler": "get_revenue_report"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "verification",
+      "file": "verification.py",
+      "method": "GET",
+      "path": "/activate",
+      "summary": "activate_link_endpoint",
+      "handler": "activate_link_endpoint"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "verification",
+      "file": "verification.py",
+      "method": "POST",
+      "path": "/verify-otp",
+      "summary": "verify_otp_endpoint",
+      "handler": "verify_otp_endpoint"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "budget",
+      "file": "budget.py",
+      "method": "PUT",
+      "path": "/{budget_id}",
+      "summary": "update_budget",
+      "handler": "update_budget"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "budget",
+      "file": "budget.py",
+      "method": "DELETE",
+      "path": "/{budget_id}",
+      "summary": "delete_budget",
+      "handler": "delete_budget"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "goals",
+      "file": "goals.py",
+      "method": "GET",
+      "path": "/{goal_id}",
+      "summary": "get_financial_goal_detail",
+      "handler": "get_financial_goal_detail"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "goals",
+      "file": "goals.py",
+      "method": "PUT",
+      "path": "/{goal_id}",
+      "summary": "update_financial_goal",
+      "handler": "update_financial_goal"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "goals",
+      "file": "goals.py",
+      "method": "POST",
+      "path": "/{goal_id}/lock",
+      "summary": "lock_unlock_goal_piggy",
+      "handler": "lock_unlock_goal_piggy"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ledger",
+      "file": "ledger.py",
+      "method": "GET",
+      "path": "/trial-balance",
+      "summary": "get_trial_balance_audit",
+      "handler": "get_trial_balance_audit"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ledger",
+      "file": "ledger.py",
+      "method": "GET",
+      "path": "/statement/{wallet_id}",
+      "summary": "get_wallet_ledger_statement",
+      "handler": "get_wallet_ledger_statement"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ledger",
+      "file": "ledger.py",
+      "method": "POST",
+      "path": "/double-entry",
+      "summary": "execute_double_entry_booking",
+      "handler": "execute_double_entry_booking"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ledger",
+      "file": "ledger.py",
+      "method": "GET",
+      "path": "/export/trial-balance-csv",
+      "summary": "export_trial_balance_csv_report",
+      "handler": "export_trial_balance_csv_report"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ledger",
+      "file": "ledger.py",
+      "method": "GET",
+      "path": "/export/statement-csv/{wallet_id}",
+      "summary": "export_wallet_statement_csv_report",
+      "handler": "export_wallet_statement_csv_report"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ledger",
+      "file": "ledger.py",
+      "method": "GET",
+      "path": "/entries",
+      "summary": "list_ledger_entries",
+      "handler": "list_ledger_entries"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "notifications",
+      "file": "notifications.py",
+      "method": "PUT",
+      "path": "/{notification_id}/read",
+      "summary": "mark_notification_as_read",
+      "handler": "mark_notification_as_read"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "notifications",
+      "file": "notifications.py",
+      "method": "PUT",
+      "path": "/read-all",
+      "summary": "mark_all_notifications_as_read",
+      "handler": "mark_all_notifications_as_read"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ocr",
+      "file": "ocr.py",
+      "method": "POST",
+      "path": "/scan",
+      "summary": "scan_receipt",
+      "handler": "scan_receipt"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "ocr",
+      "file": "ocr.py",
+      "method": "POST",
+      "path": "/create-transaction",
+      "summary": "create_transaction_from_ocr",
+      "handler": "create_transaction_from_ocr"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "payment",
+      "file": "payment.py",
+      "method": "POST",
+      "path": "/create-vietqr",
+      "summary": "create_vietqr_deposit",
+      "handler": "create_vietqr_deposit"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "payment",
+      "file": "payment.py",
+      "method": "POST",
+      "path": "/webhook",
+      "summary": "process_payment_webhook",
+      "handler": "process_payment_webhook"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "payment",
+      "file": "payment.py",
+      "method": "GET",
+      "path": "/history",
+      "summary": "get_payment_history",
+      "handler": "get_payment_history"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "reports",
+      "file": "reports.py",
+      "method": "GET",
+      "path": "/cash-flow",
+      "summary": "get_cash_flow_report",
+      "handler": "get_cash_flow_report"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "reports",
+      "file": "reports.py",
+      "method": "GET",
+      "path": "/category-breakdown",
+      "summary": "get_category_breakdown",
+      "handler": "get_category_breakdown"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "reports",
+      "file": "reports.py",
+      "method": "GET",
+      "path": "/summary",
+      "summary": "get_financial_summary",
+      "handler": "get_financial_summary"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "reports",
+      "file": "reports.py",
+      "method": "GET",
+      "path": "/export-csv",
+      "summary": "export_transactions_csv",
+      "handler": "export_transactions_csv"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "parent_matching",
+      "file": "parent_matching.py",
+      "method": "POST",
+      "path": "/matching-rules",
+      "summary": "create_or_update_parent_matching_rule",
+      "handler": "create_or_update_parent_matching_rule"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "parent_matching",
+      "file": "parent_matching.py",
+      "method": "GET",
+      "path": "/matching-rules",
+      "summary": "get_parent_matching_rule",
+      "handler": "get_parent_matching_rule"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "parent_matching",
+      "file": "parent_matching.py",
+      "method": "GET",
+      "path": "/family-dashboard",
+      "summary": "get_family_savings_dashboard",
+      "handler": "get_family_savings_dashboard"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy",
+      "file": "smart_piggy.py",
+      "method": "POST",
+      "path": "/pair",
+      "summary": "Mệnh giá tiền thả vào heo",
+      "handler": "handle_coin_drop_frontend"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy",
+      "file": "smart_piggy.py",
+      "method": "POST",
+      "path": "/coin-drop",
+      "summary": "handle_coin_drop_frontend",
+      "handler": "handle_coin_drop_frontend"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy",
+      "file": "smart_piggy.py",
+      "method": "POST",
+      "path": "/withdrawal/request",
+      "summary": "request_withdrawal_saga_frontend",
+      "handler": "request_withdrawal_saga_frontend"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy",
+      "file": "smart_piggy.py",
+      "method": "POST",
+      "path": "/withdrawal/settle",
+      "summary": "settle_withdrawal_saga_frontend",
+      "handler": "settle_withdrawal_saga_frontend"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy",
+      "file": "smart_piggy.py",
+      "method": "POST",
+      "path": "/withdrawal/timeout",
+      "summary": "timeout_withdrawal_saga_frontend",
+      "handler": "timeout_withdrawal_saga_frontend"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy",
+      "file": "smart_piggy.py",
+      "method": "POST",
+      "path": "/unfreeze",
+      "summary": "unfreeze_savings_wallet",
+      "handler": "unfreeze_savings_wallet"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy_simulator",
+      "file": "smart_piggy_simulator.py",
+      "method": "POST",
+      "path": "/drop-coin",
+      "summary": "simulate_coin_drop",
+      "handler": "simulate_coin_drop"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy_simulator",
+      "file": "smart_piggy_simulator.py",
+      "method": "POST",
+      "path": "/tamper-alarm",
+      "summary": "simulate_tamper_alarm",
+      "handler": "simulate_tamper_alarm"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy_simulator",
+      "file": "smart_piggy_simulator.py",
+      "method": "POST",
+      "path": "/withdraw-flow",
+      "summary": "simulate_withdraw_flow",
+      "handler": "simulate_withdraw_flow"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy_simulator",
+      "file": "smart_piggy_simulator.py",
+      "method": "POST",
+      "path": "/security-replay-test",
+      "summary": "simulate_security_replay",
+      "handler": "simulate_security_replay"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy_simulator",
+      "file": "smart_piggy_simulator.py",
+      "method": "POST",
+      "path": "/sensor-deception-test",
+      "summary": "simulate_sensor_deception",
+      "handler": "simulate_sensor_deception"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "smart_piggy_simulator",
+      "file": "smart_piggy_simulator.py",
+      "method": "POST",
+      "path": "/heartbeat-watchdog-test",
+      "summary": "simulate_heartbeat_watchdog",
+      "handler": "simulate_heartbeat_watchdog"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "transaction",
+      "file": "transaction.py",
+      "method": "GET",
+      "path": "/{transaction_id}",
+      "summary": "get_transaction_detail",
+      "handler": "get_transaction_detail"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "transaction",
+      "file": "transaction.py",
+      "method": "DELETE",
+      "path": "/{transaction_id}",
+      "summary": "delete_transaction",
+      "handler": "delete_transaction"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "transfer",
+      "file": "transfer.py",
+      "method": "GET",
+      "path": "/{transfer_id}",
+      "summary": "get_transfer_detail",
+      "handler": "get_transfer_detail"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "user_profile",
+      "file": "user_profile.py",
+      "method": "GET",
+      "path": "/me",
+      "summary": "get_my_profile",
+      "handler": "get_my_profile"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "user_profile",
+      "file": "user_profile.py",
+      "method": "PUT",
+      "path": "/me",
+      "summary": "update_my_profile",
+      "handler": "update_my_profile"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "user_profile",
+      "file": "user_profile.py",
+      "method": "POST",
+      "path": "/change-password",
+      "summary": "change_password",
+      "handler": "change_password"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "user_profile",
+      "file": "user_profile.py",
+      "method": "POST",
+      "path": "/forgot-password",
+      "summary": "forgot_password",
+      "handler": "forgot_password"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "user_profile",
+      "file": "user_profile.py",
+      "method": "POST",
+      "path": "/reset-password",
+      "summary": "reset_password",
+      "handler": "reset_password"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "wallet",
+      "file": "wallet.py",
+      "method": "GET",
+      "path": "/user/{user_id}",
+      "summary": "list_wallets_endpoint",
+      "handler": "list_wallets_endpoint"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "wallet",
+      "file": "wallet.py",
+      "method": "POST",
+      "path": "/transfer",
+      "summary": "transfer_wallets_endpoint",
+      "handler": "transfer_wallets_endpoint"
+    },
+    {
+      "service": "Python FinTech & AI Core (:8089)",
+      "module": "wallet",
+      "file": "wallet.py",
+      "method": "GET",
+      "path": "/{wallet_id}",
+      "summary": "get_wallet_detail_endpoint",
+      "handler": "get_wallet_detail_endpoint"
+    }
+  ]
+}
