@@ -1,8 +1,8 @@
 {
   "info": {
-    "_postman_id": "liochio-python-resource-server-2026",
-    "name": "02. Liochio Python Resource Server (FinTech, Smart Piggy & AI :8000)",
-    "description": "Bộ Collection chuyên biệt 100% cho Python FastAPI Resource Server (Cổng 8000): Toàn bộ API nghiệp vụ người dùng thực tế bao gồm Heo Đất Thông Minh (Smart Piggy Bank IoT), Quản lý Ví FinTech, Mục tiêu tiết kiệm & Ngân sách, AI Cố vấn tài chính thông minh, Báo cáo & Hóa đơn OCR.",
+    "_postman_id": "liochio-python-resource-collection-2026",
+    "name": "02. Liochio Python Resource API (FastAPI IoT & AI :8000)",
+    "description": "Bộ Collection 100% Khách Hàng Cá Nhân cho Python FastAPI (Cổng 8000, hoặc định tuyến qua NGINX cổng 80): Phân hệ Heo Đất Thông Minh IoT, Luồng nạp tiền cảm biến, Rút tiền 2 pha có khóa Mutex Solenoid, Đồng bộ ngoại tuyến Flash LittleFS, Phân tích tài chính AI, Ngân sách và Mục tiêu tiết kiệm.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {
@@ -22,48 +22,48 @@
       "type": "string"
     },
     {
+      "key": "nginxUrl",
+      "value": "http://localhost",
+      "type": "string"
+    },
+    {
       "key": "pythonToken",
       "value": "",
       "type": "string"
     },
     {
-      "key": "pythonRefreshToken",
-      "value": "",
-      "type": "string"
-    },
-    {
       "key": "pythonUserId",
-      "value": "usr_14",
-      "type": "string"
-    },
-    {
-      "key": "walletId",
-      "value": "wal_14_vnd",
+      "value": "5",
       "type": "string"
     },
     {
       "key": "piggyDeviceId",
-      "value": "SN-PIGGY-NAM-2026",
+      "value": "ESP32_PIGGY_001",
       "type": "string"
     },
     {
-      "key": "goalId",
-      "value": "1",
+      "key": "piggyMac",
+      "value": "AA:BB:CC:DD:EE:01",
       "type": "string"
     },
     {
-      "key": "budgetId",
+      "key": "piggyWithdrawSessionId",
+      "value": "wdr_session_demo_001",
+      "type": "string"
+    },
+    {
+      "key": "walletId",
       "value": "1",
       "type": "string"
     }
   ],
   "item": [
     {
-      "name": "01. Authentication & User Profile (Python :8000)",
-      "description": "Cổng xác thực & Quản lý phiên làm việc trực tiếp trên Resource Server.",
+      "name": "01. Xác Thực & Quản Lý Hồ Sơ Cá Nhân (Auth & Profile)",
+      "description": "Đăng nhập, Xem & Cập nhật hồ sơ cá nhân (PUT /me), Đổi mật khẩu, Quên & Đặt lại mật khẩu bằng OTP và Kích hoạt tài khoản.",
       "item": [
         {
-          "name": "1.1 Đăng ký tài khoản người dùng (Register)",
+          "name": "1.1 Đăng nhập lấy Token Python FinTech (Login) [BẤM ĐẦU TIÊN]",
           "request": {
             "method": "POST",
             "header": [
@@ -79,62 +79,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/auth/register",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "register"
-              ]
-            },
-            "description": "Đăng ký tài khoản người dùng mới trên Resource Server.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"username\": \"customer_python_2026\",\n  \"email\": \"customer_python_2026@liochio.vn\",\n  \"password\": \"Password123!\",\n  \"full_name\": \"Python Customer Demo\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "1.2 Đăng nhập hệ thống (Login - Nhận Token JTI)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -160,91 +105,13 @@
                 "login"
               ]
             },
-            "description": "Đăng nhập tài khoản FinTech nhận Token JTI bọc thép và nạp ma trận quyền hạn.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"client_demo_2026_1@liochio.vn\",\n  \"password\": \"Password123!\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData && jsonData.data) {",
-                  "    if (jsonData.data.access_token) {",
-                  "        pm.collectionVariables.set(\"pythonToken\", jsonData.data.access_token);",
-                  "        console.log(\"Captured Python Token: \" + jsonData.data.access_token);",
-                  "    }",
-                  "    if (jsonData.data.refresh_token) {",
-                  "        pm.collectionVariables.set(\"pythonRefreshToken\", jsonData.data.refresh_token);",
-                  "    }",
-                  "    if (jsonData.data.user_id) {",
-                  "        pm.collectionVariables.set(\"pythonUserId\", jsonData.data.user_id);",
-                  "    }",
-                  "}",
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.expect(pm.response.code).to.eql(200);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
-        },
-        {
-          "name": "1.3 Đăng nhập với tài khoản Retail Parent (Phụ huynh)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/auth/login",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "login"
-              ]
+            "description": "Đăng nhập tài khoản cá nhân trên Python FinTech, tự động lưu Token vào biến môi trường.",
+            "auth": {
+              "type": "noauth"
             },
-            "description": "Đăng nhập tài khoản phụ huynh để quản lý Heo đất thông minh và thiết lập hạn mức.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"parent.retail@gmail.com\",\n  \"password\": \"Password123@\"\n}",
+              "raw": "{\n  \"identifier\": \"fintech_user01\",\n  \"password\": \"Password123@\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -258,21 +125,21 @@
               "script": {
                 "exec": [
                   "var jsonData = pm.response.json();",
+                  "pm.test(\"Đăng nhập Python FinTech thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
                   "if (jsonData && jsonData.data) {",
                   "    if (jsonData.data.access_token) {",
                   "        pm.collectionVariables.set(\"pythonToken\", jsonData.data.access_token);",
-                  "        console.log(\"Captured Python Token: \" + jsonData.data.access_token);",
-                  "    }",
-                  "    if (jsonData.data.refresh_token) {",
-                  "        pm.collectionVariables.set(\"pythonRefreshToken\", jsonData.data.refresh_token);",
+                  "        pm.environment.set(\"pythonToken\", jsonData.data.access_token);",
+                  "        console.log(\"Captured Python Access Token:\", jsonData.data.access_token.substring(0, 15) + \"...\");",
                   "    }",
                   "    if (jsonData.data.user_id) {",
-                  "        pm.collectionVariables.set(\"pythonUserId\", jsonData.data.user_id);",
+                  "        pm.collectionVariables.set(\"pythonUserId\", jsonData.data.user_id.toString());",
+                  "        pm.environment.set(\"pythonUserId\", jsonData.data.user_id.toString());",
                   "    }",
-                  "}",
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.expect(pm.response.code).to.eql(200);",
-                  "});"
+                  "}"
                 ],
                 "type": "text/javascript"
               }
@@ -280,88 +147,7 @@
           ]
         },
         {
-          "name": "1.4 Làm mới Access Token (Token Rotation)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/auth/refresh-token",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "refresh-token"
-              ]
-            },
-            "description": "Làm mới Token phiên làm việc chống Replay Attack.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"refresh_token\": \"{{pythonRefreshToken}}\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData && jsonData.data) {",
-                  "    if (jsonData.data.access_token) {",
-                  "        pm.collectionVariables.set(\"pythonToken\", jsonData.data.access_token);",
-                  "        console.log(\"Captured Python Token: \" + jsonData.data.access_token);",
-                  "    }",
-                  "    if (jsonData.data.refresh_token) {",
-                  "        pm.collectionVariables.set(\"pythonRefreshToken\", jsonData.data.refresh_token);",
-                  "    }",
-                  "    if (jsonData.data.user_id) {",
-                  "        pm.collectionVariables.set(\"pythonUserId\", jsonData.data.user_id);",
-                  "    }",
-                  "}",
-                  "pm.test(\"Status code is 200\", function () {",
-                  "    pm.expect(pm.response.code).to.eql(200);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
-        },
-        {
-          "name": "1.5 Lấy thông tin tài khoản hiện tại (Get /users/me)",
+          "name": "1.2 Xem hồ sơ cá nhân Python FinTech (Get Me)",
           "request": {
             "method": "GET",
             "header": [
@@ -377,7 +163,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -403,11 +189,92 @@
                 "me"
               ]
             },
-            "description": "Xem hồ sơ định danh, thông tin ví và quyền hạn hiện tại."
-          }
+            "description": "Tra cứu thông tin tài khoản cá nhân, họ tên, email, ngày sinh, giới tính và ví sở hữu."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "1.6 Đổi mật khẩu tài khoản (Change Password)",
+          "name": "1.3 Cập nhật hồ sơ cá nhân (Update Profile) [PUT /me]",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/users/me",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            },
+            "description": "API phương thức PUT cho phép người dùng thay đổi Họ tên, Ngày sinh, Giới tính có chống XSS.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Nguyễn Văn Cá Nhân Cập Nhật\",\n  \"date_of_birth\": \"1995-05-15\",\n  \"gender\": \"MALE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.4 Đổi mật khẩu tài khoản (Change Password)",
           "request": {
             "method": "POST",
             "header": [
@@ -423,7 +290,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -449,20 +316,33 @@
                 "change-password"
               ]
             },
-            "description": "Cập nhật mật khẩu tài khoản người dùng.",
+            "description": "Đổi mật khẩu người dùng với chính sách kiểm tra độ mạnh mật khẩu chuẩn Enterprise.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"old_password\": \"Password123!\",\n  \"new_password\": \"NewPassword123@\"\n}",
+              "raw": "{\n  \"old_password\": \"Password123@\",\n  \"new_password\": \"NewPassword123@\",\n  \"confirm_password\": \"NewPassword123@\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "1.7 Đăng xuất tài khoản (Logout)",
+          "name": "1.5 Quên mật khẩu - Yêu cầu gửi OTP (Forgot Password)",
           "request": {
             "method": "POST",
             "header": [
@@ -478,7 +358,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -493,7 +373,149 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/auth/logout",
+              "raw": "{{pythonUrl}}/api/v1/users/forgot-password",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "forgot-password"
+              ]
+            },
+            "description": "Yêu cầu cấp lại mật khẩu qua Email/SMS bằng mã OTP 6 số.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"fintech_user01@liochio.vn\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.6 Đặt lại mật khẩu mới bằng OTP (Reset Password)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/users/reset-password",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "reset-password"
+              ]
+            },
+            "description": "Xác thực mã OTP và cập nhật mật khẩu mới.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"fintech_user01@liochio.vn\",\n  \"otp_code\": \"123456\",\n  \"new_password\": \"NewPassword123@\",\n  \"confirm_password\": \"NewPassword123@\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.7 Xác thực OTP kích hoạt tài khoản Python (Verify Account OTP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/auth/verify-otp",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -501,20 +523,45 @@
                 "api",
                 "v1",
                 "auth",
-                "logout"
+                "verify-otp"
               ]
             },
-            "description": "Thu hồi Token JTI trong Redis Blacklist và xóa phiên đăng nhập."
-          }
+            "description": "Nhập mã OTP 6 số để hoàn tất kích hoạt tài khoản trên Python Resource.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"retail_user_{{$timestamp}}\",\n  \"otp_code\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },
     {
-      "name": "02. Smart Piggy Bank (Heo Đất Thông Minh & IoT)",
-      "description": "Toàn bộ API Heo Đất Thông Minh: Dashboard gia đình, ghép nối IoT, đút tiền, rút tiền, phụ huynh kiểm soát.",
+      "name": "02. Phân Hệ Heo Đất Thông Minh IoT (Smart Piggy Bank)",
+      "description": "100% Nghiệp vụ Khách Hàng Cá Nhân: Ghép đôi Heo, Thả tiền cảm biến, Đồng bộ ngoại tuyến Flash LittleFS, Rút tiền 2 pha và Cảnh báo cạy phá MPU6050.",
       "item": [
         {
-          "name": "2.1 Family Dashboard (Bảng điều khiển gia đình)",
+          "name": "2.1 Danh sách Heo Đất của tôi (Get My Piggy Devices)",
           "request": {
             "method": "GET",
             "header": [
@@ -530,53 +577,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/family-dashboard",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "smart-piggy",
-                "family-dashboard"
-              ]
-            },
-            "description": "Xem tổng hợp trạng thái Heo đất, số dư, mục tiêu tiết kiệm của con và tiến độ hoàn thành."
-          }
-        },
-        {
-          "name": "2.2 Danh sách thiết bị Heo Đất kết nối (Get Devices)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -602,11 +603,84 @@
                 "devices"
               ]
             },
-            "description": "Tra cứu thiết bị Heo đất SN-PIGGY-NAM-2026, tình trạng online/offline và pin."
-          }
+            "description": "Lấy danh sách toàn bộ Heo Đất IoT thuộc quyền sở hữu của người dùng hiện tại."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.3 Ghép nối Heo Đất mới (Pair Piggy Device)",
+          "name": "2.2 Chi tiết Heo Đất & Số dư (Get Piggy Detail)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/devices/{{piggyDeviceId}}",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "devices",
+                "{{piggyDeviceId}}"
+              ]
+            },
+            "description": "Xem chi tiết trạng thái trực tuyến, địa chỉ MAC, số dư và pin của Heo Đất."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.3 Ghép đôi Heo Đất mới với tài khoản (Pair Device)",
           "request": {
             "method": "POST",
             "header": [
@@ -622,7 +696,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -648,20 +722,33 @@
                 "pair"
               ]
             },
-            "description": "Phụ huynh thực hiện quét mã hoặc nhập serial để kết nối Heo đất với tài khoản của con.",
+            "description": "Gán Heo Đất ESP32 mới vào tài khoản cá nhân của người dùng.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"device_serial\": \"SN-PIGGY-NAM-2026\",\n  \"child_user_id\": \"usr_6\",\n  \"device_name\": \"Heo Đất Siêu Nhân Của Bé Nam\"\n}",
+              "raw": "{\n  \"mac_address\": \"{{piggyMac}}\",\n  \"device_name\": \"Heo Đất Tiết Kiệm Phòng Khách\",\n  \"pairing_code\": \"123456\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.4 Bé đút tiền xu vào Heo Đất (IoT Coin Drop)",
+          "name": "2.4 [ESP32 INGEST] Cảm biến thả tiền vào Heo (Sensor Drop Money)",
           "request": {
             "method": "POST",
             "header": [
@@ -677,62 +764,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/coin-drop",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "smart-piggy",
-                "coin-drop"
-              ]
-            },
-            "description": "Sự kiện cảm biến quang học nhận tiền xu/tiền giấy, cập nhật số dư mục tiêu và hạch toán sổ cái kép.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"coin_denomination\": 50000,\n  \"timestamp\": 1789192800\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "2.5 Bỏ tiền vào Heo Đất (Drop Money Online)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -758,20 +790,36 @@
                 "drop-money"
               ]
             },
-            "description": "Nạp tiền trực tiếp từ ví phụ huynh vào Heo đất của bé.",
+            "description": "ESP32 bắn tín hiệu cảm biến hồng ngoại khi người dùng thả tiền vào Heo -> Tự động cộng ví & hạch toán sổ cái.",
+            "auth": {
+              "type": "noauth"
+            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"amount\": 100000,\n  \"note\": \"Tiền thưởng điểm 10 môn Toán\"\n}",
+              "raw": "{\n  \"mac_address\": \"{{piggyMac}}\",\n  \"coin_value\": 50000.0,\n  \"weight_delta_grams\": 1.2,\n  \"sensor_confidence\": 0.99,\n  \"nonce\": \"drop_nonce_{{$timestamp}}_{{$randomInt}}\",\n  \"timestamp\": 1773460000\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.6 Bé đề xuất rút tiền (Withdrawal Request)",
+          "name": "2.5 [ESP32 OFFLINE] Đồng bộ ngoại tuyến từ Flash LittleFS (Sync Offline Batch)",
           "request": {
             "method": "POST",
             "header": [
@@ -787,7 +835,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -802,7 +850,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/withdrawal/request",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/sync-offline-batch",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -810,24 +858,115 @@
                 "api",
                 "v1",
                 "smart-piggy",
-                "withdrawal",
+                "sync-offline-batch"
+              ]
+            },
+            "description": "Đồng bộ hàng loạt các lần bỏ tiền lưu trong Flash LittleFS khi Heo đất có lại mạng Wi-Fi.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mac_address\": \"{{piggyMac}}\",\n  \"batch_items\": [\n    {\n      \"offline_tx_id\": \"off_tx_{{$timestamp}}_1\",\n      \"coin_value\": 10000.0,\n      \"weight_delta_grams\": 1.0,\n      \"nonce\": \"off_nonce_1_{{$timestamp}}\"\n    },\n    {\n      \"offline_tx_id\": \"off_tx_{{$timestamp}}_2\",\n      \"coin_value\": 20000.0,\n      \"weight_delta_grams\": 1.0,\n      \"nonce\": \"off_nonce_2_{{$timestamp}}\"\n    },\n    {\n      \"offline_tx_id\": \"off_tx_{{$timestamp}}_3\",\n      \"coin_value\": 50000.0,\n      \"weight_delta_grams\": 1.2,\n      \"nonce\": \"off_nonce_3_{{$timestamp}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.6 [RÚT TIỀN PHA 1] Yêu cầu mở chốt lấy tiền mặt (Withdraw Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/withdraw/request",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "withdraw",
                 "request"
               ]
             },
-            "description": "Bé bấm nút rút tiền trên Heo đất, kích hoạt phiên chờ phụ huynh duyệt.",
+            "description": "Phase 1: Khóa tiền ví sang HOLDING, gửi lệnh mở chốt Solenoid 5V và chiếm Mutex đếm ngược 60 giây.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"amount\": 50000,\n  \"reason\": \"Mua truyện tranh Doraemon\"\n}",
+              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"amount\": 50000.0,\n  \"timeout_seconds\": 60\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.test(\"Khởi tạo phiên rút tiền thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
+                  "if (jsonData && jsonData.data && jsonData.data.session_id) {",
+                  "    pm.collectionVariables.set(\"piggyWithdrawSessionId\", jsonData.data.session_id);",
+                  "    pm.environment.set(\"piggyWithdrawSessionId\", jsonData.data.session_id);",
+                  "    console.log(\"Captured Withdrawal Session ID:\", jsonData.data.session_id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.7 Phụ huynh phê duyệt mở khóa nhả tiền (Withdrawal Settle)",
+          "name": "2.7 [RÚT TIỀN PHA 2] Xác nhận đã lấy tiền qua nút vật lý (Withdraw Confirm)",
           "request": {
             "method": "POST",
             "header": [
@@ -843,7 +982,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -858,7 +997,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/withdrawal/settle",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/withdraw/confirm",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -866,24 +1005,37 @@
                 "api",
                 "v1",
                 "smart-piggy",
-                "withdrawal",
-                "settle"
+                "withdraw",
+                "confirm"
               ]
             },
-            "description": "Phụ huynh chấp thuận trên app, Heo đất kích hoạt động cơ servo nhả tiền.",
+            "description": "Phase 2: Người dùng bấm nút bấm vật lý trên Heo sau khi cầm tiền -> Trừ tiền dứt điểm, đóng chốt và giải phóng Mutex.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"amount\": 50000,\n  \"approved\": true\n}",
+              "raw": "{\n  \"session_id\": \"{{piggyWithdrawSessionId}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.8 Mở khóa khẩn cấp Heo Đất (Unfreeze Device)",
+          "name": "2.8 [RÚT TIỀN TIMEOUT] Tự động hoàn tiền khi quá 60s (Withdraw Timeout)",
           "request": {
             "method": "POST",
             "header": [
@@ -899,7 +1051,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -914,7 +1066,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/unfreeze",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/withdraw/timeout",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -922,25 +1074,39 @@
                 "api",
                 "v1",
                 "smart-piggy",
-                "unfreeze"
+                "withdraw",
+                "timeout"
               ]
             },
-            "description": "Mở khóa Heo đất sau khi bị kích hoạt chế độ chống trộm hoặc khóa đêm.",
+            "description": "Tự động rollback phiên rút tiền: Hoàn lại số tiền từ HOLDING về AVAILABLE nếu không có ai bấm nút lấy tiền.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\"\n}",
+              "raw": "{\n  \"session_id\": \"{{piggyWithdrawSessionId}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.9 Quy tắc bù tiền của Phụ huynh (Matching Rules)",
+          "name": "2.9 Cảnh báo va đập rung lắc MPU6050 (Tamper Alert)",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept-Language",
@@ -954,7 +1120,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -969,7 +1135,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/matching-rules",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/tamper-alert",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -977,16 +1143,41 @@
                 "api",
                 "v1",
                 "smart-piggy",
-                "matching-rules"
+                "tamper-alert"
               ]
             },
-            "description": "Xem chính sách phụ huynh thưởng thêm: bé bỏ 10k cha mẹ thưởng 5k."
-          }
+            "description": "Cảm biến gia tốc MPU6050 gửi cảnh báo cạy phá hoặc đánh rơi Heo đất.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sensor_type\": \"MPU6050_SHAKE\",\n  \"intensity_level\": \"CRITICAL\",\n  \"details\": \"Phát hiện rung chấn mạnh > 8.0G hoặc heo bị dốc ngược\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.10 Trạng thái Gamification & Huy hiệu (Gamification Status)",
+          "name": "2.10 Điều khiển đèn LED & Chuông Heo Đất (LED Control)",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept-Language",
@@ -1000,7 +1191,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1015,7 +1206,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/gamification/status",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/led-control",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -1023,15 +1214,36 @@
                 "api",
                 "v1",
                 "smart-piggy",
-                "gamification",
-                "status"
+                "led-control"
               ]
             },
-            "description": "Xem cấp bậc Heo đất (Level), chuỗi ngày tiết kiệm (Streak) và huy hiệu tích lũy."
-          }
+            "description": "Điều khiển dải LED RGB và chuông báo phản hồi người dùng trên Heo Đất.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"color_hex\": \"#00FF00\",\n  \"effect_mode\": \"PULSE\",\n  \"duration_seconds\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.11 AI dự báo thời gian đạt mục tiêu Heo Đất (AI Forecast)",
+          "name": "2.11 [SIMULATOR] Giả lập cảm biến thả tiền vào Heo (Drop Coin Simulator)",
           "request": {
             "method": "GET",
             "header": [
@@ -1047,7 +1259,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1062,7 +1274,326 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/ai/deposit-forecast",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/simulator/drop-coin?device_id={{piggyDeviceId}}&coin_value=50000",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "simulator",
+                "drop-coin?device_id={{piggyDeviceId}}&coin_value=50000"
+              ]
+            },
+            "description": "Endpoint mô phỏng sự kiện cảm biến thả tiền phục vụ kiểm thử nhanh không cần phần cứng thật.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03. Phân Tích Tài Chính Cá Nhân, Ngân Sách & Mục Tiêu AI",
+      "description": "Mục tiêu tài chính cá nhân, ngân sách chi tiêu, dự báo AI và thói quen tiết kiệm Heo Đất.",
+      "item": [
+        {
+          "name": "3.1 Danh sách mục tiêu tiết kiệm cá nhân (Get Saving Goals)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/goals/",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "goals"
+              ]
+            },
+            "description": "Xem các mục tiêu tiết kiệm cá nhân (mua laptop, quỹ khẩn cấp, mua sách...)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.2 Tạo mục tiêu tiết kiệm cá nhân mới (Create Goal)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/goals/",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "goals"
+              ]
+            },
+            "description": "Thiết lập mục tiêu tích lũy tài chính cá nhân mới.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Quỹ Tiết Kiệm Mua Laptop Mới {{$timestamp}}\",\n  \"target_amount\": 15000000.0,\n  \"deadline\": \"2026-12-31T23:59:59\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.3 Danh sách ngân sách chi tiêu (Get Budgets)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/budgets/",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "budgets"
+              ]
+            },
+            "description": "Xem danh sách ngân sách giới hạn chi tiêu theo danh mục."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.4 Thiết lập hạn mức ngân sách chi tiêu (Create Budget)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/budgets/",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "budgets"
+              ]
+            },
+            "description": "Thiết lập hạn mức chi tiêu hàng tháng cho danh mục (Ăn uống, Mua sắm...).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_id\": 1,\n  \"amount_limit\": 5000000.0,\n  \"start_date\": \"2026-09-01T00:00:00\",\n  \"end_date\": \"2026-09-30T23:59:59\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.5 AI dự báo ngày hoàn thành mục tiêu Heo Đất (AI Forecast)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/ai/forecast?device_id={{piggyDeviceId}}",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -1071,69 +1602,27 @@
                 "v1",
                 "smart-piggy",
                 "ai",
-                "deposit-forecast"
+                "forecast?device_id={{piggyDeviceId}}"
               ]
             },
-            "description": "Mô hình máy học dự báo ngày bé hoàn thành mục tiêu tiết kiệm mua Lego."
-          }
-        },
-        {
-          "name": "2.12 Thiết bị gửi nhịp tim định kỳ (IoT Heartbeat)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/heartbeat",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "smart-piggy",
-                "heartbeat"
-              ]
-            },
-            "description": "Heo đất định kỳ gửi thông tin pin, sóng wifi và cảm biến rung lắc.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"battery_level\": 92,\n  \"wifi_rssi\": -55,\n  \"tamper_status\": \"NORMAL\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+            "description": "Mô hình máy học phân tích tốc độ đút tiền Heo Đất để dự báo chính xác ngày đạt mục tiêu."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
               }
             }
-          }
+          ]
         },
         {
-          "name": "2.13 [SIMULATOR] Mô phỏng thả tiền ảo (Drop Coin Simulator)",
+          "name": "3.6 AI phân tích thói quen tiết kiệm Heo Đất (AI Behavior)",
           "request": {
             "method": "GET",
             "header": [
@@ -1149,7 +1638,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1164,7 +1653,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/simulator/drop-coin",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/ai/behavior?device_id={{piggyDeviceId}}",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -1172,15 +1661,28 @@
                 "api",
                 "v1",
                 "smart-piggy",
-                "simulator",
-                "drop-coin"
+                "ai",
+                "behavior?device_id={{piggyDeviceId}}"
               ]
             },
-            "description": "Giả lập sự kiện cảm biến phần cứng thả tiền phục vụ kiểm thử nhanh."
-          }
+            "description": "Phân tích chu kỳ thả tiền, mệnh giá yêu thích và đưa ra lời khuyên tài chính cá nhân tối ưu."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.14 [SIMULATOR] Mô phỏng cảnh báo cạy mở (Tamper Alarm Simulator)",
+          "name": "3.7 Trạng thái Gamification & Huy hiệu Heo Đất (Gamification Status)",
           "request": {
             "method": "GET",
             "header": [
@@ -1196,7 +1698,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1211,7 +1713,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/smart-piggy/simulator/tamper-alarm",
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/gamification/status?device_id={{piggyDeviceId}}",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -1219,21 +1721,28 @@
                 "api",
                 "v1",
                 "smart-piggy",
-                "simulator",
-                "tamper-alarm"
+                "gamification",
+                "status?device_id={{piggyDeviceId}}"
               ]
             },
-            "description": "Giả lập cảm biến gia tốc phát hiện Heo đất bị rung lắc hoặc cạy đáy."
-          }
-        }
-      ]
-    },
-    {
-      "name": "03. Wallets & Financial Transfers (Ví & Giao Dịch)",
-      "description": "Quản lý ví điện tử đa tiền tệ, nạp tiền, chuyển khoản và lịch sử giao dịch.",
-      "item": [
+            "description": "Xem cấp bậc Heo Đất (Level), chuỗi ngày tiết kiệm liên tục (Streak) và điểm tích lũy."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
         {
-          "name": "3.1 Danh sách ví của người dùng (Get My Wallets)",
+          "name": "3.8 Danh sách ví cá nhân của người dùng (Get Wallets)",
           "request": {
             "method": "GET",
             "header": [
@@ -1249,7 +1758,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1274,166 +1783,24 @@
                 "wallets"
               ]
             },
-            "description": "Lấy danh sách các ví tiêu dùng, ví tiết kiệm của người dùng hiện tại."
-          }
-        },
-        {
-          "name": "3.2 Chi tiết ví người dùng (Get Wallet Detail)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/wallets/{{walletId}}",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "wallets",
-                "{{walletId}}"
-              ]
-            },
-            "description": "Tra cứu số dư chi tiết và mã số tài khoản ví."
-          }
-        },
-        {
-          "name": "3.3 Nạp tiền vào ví (Top-up Wallet)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/wallet_topup",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "wallet_topup"
-              ]
-            },
-            "description": "Nạp tiền vào ví cá nhân.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"wallet_id\": \"{{walletId}}\",\n  \"amount\": 500000,\n  \"payment_method\": \"VIETQR\",\n  \"description\": \"Nạp tiền chi tiêu tuần này\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+            "description": "Tra cứu các ví chi tiêu và ví tiết kiệm Heo Đất của người dùng."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
               }
             }
-          }
+          ]
         },
         {
-          "name": "3.4 Chuyển tiền giữa các ví (Wallet Transfer)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/wallets/transfer",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "wallets",
-                "transfer"
-              ]
-            },
-            "description": "Chuyển tiền nội bộ giữa các ví người dùng Liochio.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"from_wallet_id\": \"{{walletId}}\",\n  \"to_wallet_id\": \"wal_5_vnd\",\n  \"amount\": 100000,\n  \"description\": \"Chuyển tiền tiêu vặt cho mẹ\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "3.5 Lịch sử biến động số dư giao dịch (Transactions)",
+          "name": "3.9 Báo cáo tài chính tổng quan (Overview Report)",
           "request": {
             "method": "GET",
             "header": [
@@ -1449,7 +1816,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1464,775 +1831,7 @@
               }
             ],
             "url": {
-              "raw": "{{pythonUrl}}/api/v1/transactions",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "transactions"
-              ]
-            },
-            "description": "Tra cứu lịch sử thu chi, chuyển tiền, biến động số dư ví."
-          }
-        }
-      ]
-    },
-    {
-      "name": "04. Financial Goals & Budgets (Mục Tiêu & Ngân Sách)",
-      "description": "Lập kế hoạch tài chính cá nhân, quản lý mục tiêu tiết kiệm và hạn mức chi tiêu.",
-      "item": [
-        {
-          "name": "4.1 Danh sách mục tiêu tiết kiệm (Get Saving Goals)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/goals",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "goals"
-              ]
-            },
-            "description": "Xem danh sách các mục tiêu: Mua Lego, Du lịch, Quỹ khẩn cấp."
-          }
-        },
-        {
-          "name": "4.2 Tạo mục tiêu tiết kiệm mới (Create Goal)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/goals",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "goals"
-              ]
-            },
-            "description": "Thiết lập mục tiêu tiết kiệm tài chính.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"title\": \"Mua Xe Đạp Thể Thao Mới\",\n  \"target_amount\": 2500000,\n  \"current_amount\": 0,\n  \"target_date\": \"2026-12-31\",\n  \"category\": \"SAVINGS\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "4.3 Khóa mục tiêu kỷ luật (Lock Goal Escrow)",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/goals/{{goalId}}/lock",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "goals",
-                "{{goalId}}",
-                "lock"
-              ]
-            },
-            "description": "Kích hoạt chế độ phong tỏa tiền tiết kiệm kỷ luật, không cho rút trước hạn."
-          }
-        },
-        {
-          "name": "4.4 Danh sách ngân sách định kỳ (Get Budgets)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/budgets",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "budgets"
-              ]
-            },
-            "description": "Xem hạn mức ngân sách chi tiêu tháng theo danh mục (Ăn uống, Giải trí, Mua sắm)."
-          }
-        },
-        {
-          "name": "4.5 Tạo ngân sách tháng mới (Create Budget)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/budgets",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "budgets"
-              ]
-            },
-            "description": "Thiết lập hạn mức ngân sách tháng.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"category_id\": 1,\n  \"amount_limit\": 3000000,\n  \"period\": \"MONTHLY\",\n  \"month\": \"2026-09\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "4.6 Danh mục chi tiêu tài chính (Get Categories)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/categories",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "categories"
-              ]
-            },
-            "description": "Tra cứu danh mục thu chi: Lương, Ăn uống, Tiết kiệm, Giải trí."
-          }
-        }
-      ]
-    },
-    {
-      "name": "05. AI Financial Advisor & Analytics (Trí Tuệ Nhân Tạo)",
-      "description": "Các mô hình máy học AI chấm điểm sức khỏe tài chính, dự báo dòng tiền và khuyến nghị thông minh.",
-      "item": [
-        {
-          "name": "5.1 Điểm số sức khỏe tài chính AI (Spending Score)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ai/spending-score",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ai",
-                "spending-score"
-              ]
-            },
-            "description": "AI phân tích thói quen thu chi và chấm điểm sức khỏe tài chính thang 100."
-          }
-        },
-        {
-          "name": "5.2 Khuyến nghị tài chính cá nhân hóa (AI Recommendations)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ai/recommendations",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ai",
-                "recommendations"
-              ]
-            },
-            "description": "AI đưa ra lời khuyên cắt giảm chi tiêu không cần thiết và tối ưu tiền nhàn rỗi."
-          }
-        },
-        {
-          "name": "5.3 Dự báo dòng tiền tương lai (Cashflow Forecast)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ai/forecast-cashflow",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ai",
-                "forecast-cashflow"
-              ]
-            },
-            "description": "Dự báo số dư ví và chi tiêu 30 ngày tới dựa trên chuỗi thời gian Time-series."
-          }
-        },
-        {
-          "name": "5.4 Phân bổ ngân sách chuẩn 50/30/20 (Budget 50-30-20)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ai/budget-50-30-20",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ai",
-                "budget-50-30-20"
-              ]
-            },
-            "description": "Đo lường cơ cấu chi tiêu: 50% Nhu cầu thiết yếu, 30% Sở thích cá nhân, 20% Tiết kiệm/Đầu tư."
-          }
-        },
-        {
-          "name": "5.5 Phát hiện giao dịch bất thường (AI Anomalies)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ai/anomalies",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ai",
-                "anomalies"
-              ]
-            },
-            "description": "AI cảnh báo các khoản chi tiêu đột biến hoặc có dấu hiệu gian lận."
-          }
-        },
-        {
-          "name": "5.6 Theo dõi thói quen tài chính (Habit Tracker)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ai/habit-tracker",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ai",
-                "habit-tracker"
-              ]
-            },
-            "description": "Theo dõi tần suất chi tiêu cà phê, ăn ngoài và đồ ăn nhanh."
-          }
-        }
-      ]
-    },
-    {
-      "name": "06. Ledger & Financial Reports (Báo Cáo Tài Chính)",
-      "description": "Báo cáo sổ cái, sao kê tài khoản và phân tích dòng tiền chuyên sâu.",
-      "item": [
-        {
-          "name": "6.1 Bảng cân đối thử phát sinh (Trial Balance)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ledger/trial-balance",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ledger",
-                "trial-balance"
-              ]
-            },
-            "description": "Báo cáo cân đối kế toán tổng hợp trên Resource Server."
-          }
-        },
-        {
-          "name": "6.2 Sao kê tài khoản ví (Wallet Statement)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ledger/statement/{{walletId}}",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ledger",
-                "statement",
-                "{{walletId}}"
-              ]
-            },
-            "description": "Sao kê toàn bộ biến động tài chính của ví người dùng."
-          }
-        },
-        {
-          "name": "6.3 Bút toán nhật ký Sổ cái kép (Ledger Entries)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ledger/entries",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ledger",
-                "entries"
-              ]
-            },
-            "description": "Tra cứu các dòng bút toán Nợ/Có đối ứng."
-          }
-        },
-        {
-          "name": "6.4 Báo cáo tài chính tổng quan (Summary Report)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/reports/summary",
+              "raw": "{{pythonUrl}}/api/v1/reports/overview",
               "host": [
                 "{{pythonUrl}}"
               ],
@@ -2240,356 +1839,24 @@
                 "api",
                 "v1",
                 "reports",
-                "summary"
+                "overview"
               ]
             },
-            "description": "Tổng hợp thu nhập, chi phí và tỷ lệ tiết kiệm tháng này."
-          }
-        },
-        {
-          "name": "6.5 Báo cáo dòng tiền thu chi (Cash Flow Report)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/reports/cash-flow",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "reports",
-                "cash-flow"
-              ]
-            },
-            "description": "Biểu đồ dòng tiền ròng vào/ra theo từng mốc thời gian."
-          }
-        },
-        {
-          "name": "6.6 Phân tích chi tiêu theo danh mục (Category Breakdown)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/reports/category-breakdown",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "reports",
-                "category-breakdown"
-              ]
-            },
-            "description": "Tỷ trọng phần trăm các nhóm chi tiêu (Ăn uống, Đi lại, Mua sắm)."
-          }
-        }
-      ]
-    },
-    {
-      "name": "07. OCR Scanner, Payments & Notifications",
-      "description": "Trích xuất hóa đơn tự động qua OCR, tích hợp thanh toán VietQR và thông báo trong app.",
-      "item": [
-        {
-          "name": "7.1 Quét hóa đơn tự động OCR (Scan Invoice)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/ocr/scan",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ocr",
-                "scan"
-              ]
-            },
-            "description": "Trích xuất tổng tiền, danh sách món hàng, mã hóa đơn từ ảnh chụp.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"image_url\": \"https://example.com/sample_invoice.jpg\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
+            "description": "Báo cáo phân tích thu chi cá nhân tổng hợp theo tháng."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
               }
             }
-          }
-        },
-        {
-          "name": "7.2 Tạo mã thanh toán VietQR (Create VietQR)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/payment/create-vietqr",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "payment",
-                "create-vietqr"
-              ]
-            },
-            "description": "Tạo mã VietQR chuẩn Napas247 cho khách hàng quét mã chuyển khoản ngân hàng.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"amount\": 200000,\n  \"description\": \"Nạp tiền ví Liochio qua Napas VietQR\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          }
-        },
-        {
-          "name": "7.3 Lịch sử giao dịch thanh toán (Payment History)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/payment/history",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "payment",
-                "history"
-              ]
-            },
-            "description": "Tra cứu lịch sử nạp/rút qua cổng thanh toán ngân hàng."
-          }
-        },
-        {
-          "name": "7.4 Danh sách thông báo (Get In-App Notifications)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/notifications",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "notifications"
-              ]
-            },
-            "description": "Xem các thông báo biến động số dư, quà tặng Heo đất và nhắc nhở mục tiêu."
-          }
-        },
-        {
-          "name": "7.5 Đánh dấu đã đọc tất cả thông báo (Mark All As Read)",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{pythonUrl}}/api/v1/notifications/read-all",
-              "host": [
-                "{{pythonUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "notifications",
-                "read-all"
-              ]
-            },
-            "description": "Đánh dấu trạng thái đã đọc cho tất cả thông báo người dùng."
-          }
+          ]
         }
       ]
     }

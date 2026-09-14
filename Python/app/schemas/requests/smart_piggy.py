@@ -21,10 +21,13 @@ class PiggyPairRequest(BaseModel):
 
 
 class PiggyDropMoneyRequest(BaseModel):
-    mac_address: str = Field(..., example="AA:BB:CC:DD:EE:FF", description="Địa chỉ MAC phần cứng")
+    mac_address: Optional[str] = Field(None, example="AA:BB:CC:DD:EE:FF", description="Địa chỉ MAC phần cứng")
+    device_id: Optional[str] = Field(None, example="device-uuid-123", description="ID định danh thiết bị Heo Đất")
+    bucket_id: Optional[str] = Field(None, example="bucket-uuid-123", description="ID Hũ mục tiêu con (tùy chọn)")
     coin_value: float = Field(..., gt=0, example=50000.0, description="Mệnh giá tiền vừa đút (VND)")
     weight_delta_grams: Optional[float] = Field(None, example=1.2, description="Độ tăng khối lượng từ cảm biến Load Cell")
     sensor_confidence: Optional[float] = Field(0.98, ge=0.0, le=1.0, example=0.98, description="Độ tin cậy cảm biến quang (0.0 - 1.0)")
+    drop_duration_ms: Optional[int] = Field(None, example=250, description="Thời gian vật thể che cảm biến quang (ms)")
     nonce: Optional[str] = Field(None, example="a1b2c3d4-nonce", description="Mã chống tấn công lặp gói tin (Replay Attack)")
     timestamp: Optional[int] = Field(None, example=1771934400, description="Unix timestamp từ đồng hồ RTC của ESP32")
     signature: Optional[str] = Field(None, description="Chữ ký HMAC-SHA256 bảo vệ gói tin vật lý")

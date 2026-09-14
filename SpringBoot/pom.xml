@@ -25,12 +25,8 @@
         <module>api-gateway</module>
         <module>auth-service</module>
         <module>entity-service</module>
-        <module>media-service</module>
         <module>notification-service</module>
         <module>payment-service</module>
-        <module>tour-service</module>
-        <module>music-service</module>
-        <module>film-service</module>
         <module>ai-service</module>
         <module>realtime-service</module>
         <module>otp-service</module>

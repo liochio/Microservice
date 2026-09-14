@@ -66,6 +66,52 @@ class UnbindDevicePayload(BaseModel):
     device_id: str = Field(..., description="Mã Heo đất cần hủy liên kết")
 
 
+class DepositInitPayload(BaseModel):
+    device_id: str = Field(..., description="Mã Heo đất ESP32")
+    amount: float = Field(..., gt=0, description="Mệnh giá tiền giấy nạp (VND)")
+    bucket_id: Optional[str] = Field(None, description="ID Hũ mục tiêu con")
+    timeout_seconds: Optional[int] = Field(60, ge=10, le=300, description="Thời gian chờ nạp (giây)")
+
+
+class DepositTimeoutPayload(BaseModel):
+    txn_id: str = Field(..., description="Mã giao dịch nạp tiền")
+    device_id: Optional[str] = Field(None, description="Mã Heo đất ESP32")
+
+
+class SmashPiggyRequestPayload(BaseModel):
+    device_id: str = Field(..., description="Mã Heo đất ESP32")
+    smart_otp: str = Field(..., min_length=4, max_length=8, description="Mã Smart OTP xác thực chủ sở hữu")
+
+
+class SmashPiggyConfirmPayload(BaseModel):
+    session_id: str = Field(..., description="Mã phiên đập heo")
+    device_id: str = Field(..., description="Mã Heo đất ESP32")
+
+
+class CreateBucketPayload(BaseModel):
+    device_id: str = Field(..., description="Mã Heo đất ESP32")
+    goal_name: str = Field(..., min_length=1, max_length=100, description="Tên Hũ mục tiêu (VD: Mua xe, Học tập)")
+    target_amount: float = Field(..., gt=0, description="Số tiền mục tiêu (VND)")
+    deadline: Optional[str] = Field(None, description="Hạn chót (YYYY-MM-DD)")
+
+
+class BucketTransferPayload(BaseModel):
+    from_bucket_id: str = Field(..., description="ID Hũ nguồn")
+    to_bucket_id: str = Field(..., description="ID Hũ đích")
+    amount: float = Field(..., gt=0, description="Số tiền chuyển nội bộ (VND)")
+
+
+class LidTamperPayload(BaseModel):
+    device_id: str = Field(..., description="Mã Heo đất ESP32")
+    lid_opened: bool = Field(True, description="Trạng thái mở nắp từ công tắc hành trình Limit Switch")
+    timestamp: Optional[int] = Field(None, description="Unix timestamp sự kiện")
+
+
+class PowerCutPayload(BaseModel):
+    device_id: str = Field(..., description="Mã Heo đất ESP32")
+    battery_pct: float = Field(100.0, ge=0, le=100, description="Dung lượng pin 18650 dự phòng (%)")
+
+
 # ==============================================================================
 # 👑 API GHÉP ĐÔI & QUẢN LÝ THIẾT BỊ
 # ==============================================================================
@@ -704,3 +750,350 @@ async def unfreeze_savings_wallet(
         "success": True,
         "message": "Xác thực Phụ huynh thành công! Đã gỡ đóng băng ví SAVINGS về trạng thái ACTIVE."
     }
+
+
+# ==============================================================================
+# 🪙 1. LUỒNG NẠP TIỀN CHỌN MỆNH GIÁ & MỞ KHE NẠP 60S (APP / PHYSICAL ASSISTED)
+# ==============================================================================
+@router.post("/deposit/init", status_code=status.HTTP_200_OK)
+async def init_physical_deposit(
+    payload: DepositInitPayload,
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🚀 KHỞI TẠO LƯỢT NẠP TIỀN:
+    - Chọn mệnh giá (10k, 20k, 50k, 100k, 200k, 500k) và Hũ mục tiêu con.
+    - Rút chốt Solenoid mở khe nạp đếm ngược 60 giây.
+    """
+    user_id = str(current_user.get("user_id"))
+    result = SmartPiggyIotService.init_deposit(
+        db=db,
+        user_id=user_id,
+        device_id=payload.device_id,
+        amount=payload.amount,
+        bucket_id=payload.bucket_id,
+        timeout_seconds=payload.timeout_seconds or 60
+    )
+    return {
+        "success": True,
+        "error_code": "DEPOSIT_INIT_SUCCESS",
+        "message": result["message"],
+        "data": result,
+        "trace_id": getattr(request.state, "trace_id", None)
+    }
+
+
+@router.post("/deposit/timeout", status_code=status.HTTP_200_OK)
+async def timeout_physical_deposit(
+    payload: DepositTimeoutPayload,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    """
+    ⏱️ HẾT THỜI GIAN CHỜ NẠP 60S (ROLLBACK & ĐÓNG KHE):
+    - Đóng chốt Solenoid bảo vệ, hủy phiên nạp PENDING.
+    """
+    result = SmartPiggyIotService.timeout_deposit(
+        db=db,
+        txn_id=payload.txn_id,
+        device_id=payload.device_id
+    )
+    return {
+        "success": True,
+        "error_code": "DEPOSIT_TIMEOUT_ROLLBACK",
+        "message": result["message"],
+        "data": result,
+        "trace_id": getattr(request.state, "trace_id", None)
+    }
+
+
+# ==============================================================================
+# 🔨 2. LUỒNG RÚT TIỀN DUY NHẤT: "ĐẬP HEO" TẤT TOÁN TOÀN BỘ (SMASH & SETTLEMENT)
+# ==============================================================================
+@router.post("/smash/request", status_code=status.HTTP_200_OK)
+async def request_smash_piggy(
+    payload: SmashPiggyRequestPayload,
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🔨 KHỞI TẠO LỆNH "ĐẬP HEO" VẬT LÝ:
+    - Bắt buộc xác thực Smart OTP chính chủ của chủ sở hữu.
+    - Rút chốt Solenoid mở bung toàn bộ nắp Heo, phát nhạc chúc mừng và hình ảnh động.
+    """
+    user_id = str(current_user.get("user_id"))
+    result = PiggyWithdrawalService.request_smash_piggy(
+        db=db,
+        user_id=user_id,
+        device_id=payload.device_id,
+        smart_otp=payload.smart_otp
+    )
+    return {
+        "success": True,
+        "error_code": "SMASH_REQUEST_ACCEPTED",
+        "message": result["message"],
+        "data": result,
+        "trace_id": getattr(request.state, "trace_id", None)
+    }
+
+
+@router.post("/smash/confirm", status_code=status.HTTP_200_OK)
+async def confirm_smash_piggy(
+    payload: SmashPiggyConfirmPayload,
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    ✅ XÁC NHẬN CẢM BIẾN HÀNH TRÌNH NẮP ĐÃ MỞ (TẤT TOÁN SỔ CÁI VỀ 0):
+    - Tất toán toàn bộ số dư ví Heo thành tiền mặt thực tế.
+    - Đưa số dư ví về 0 đ, hoàn thành toàn bộ mục tiêu con.
+    """
+    user_id = str(current_user.get("user_id"))
+    result = PiggyWithdrawalService.confirm_smash_piggy(
+        db=db,
+        user_id=user_id,
+        device_id=payload.device_id,
+        session_id=payload.session_id
+    )
+    return {
+        "success": True,
+        "error_code": "SMASH_SETTLED_SUCCESS",
+        "message": result["message"],
+        "data": result,
+        "trace_id": getattr(request.state, "trace_id", None)
+    }
+
+
+# ==============================================================================
+# 🎯 3. QUẢN LÝ ĐA HŨ MỤC TIÊU CON TRONG VÍ HEO (SUB-POTS / BUCKETS)
+# ==============================================================================
+@router.get("/buckets", status_code=status.HTTP_200_OK)
+async def list_piggy_buckets(
+    device_id: str = Query(..., description="Mã Heo đất ESP32"),
+    request: Request = None,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🎯 LẤY DANH SÁCH CÁC HŨ MỤC TIÊU CON TRONG VÍ HEO:
+    - Trả về danh sách: Tên hũ (Mua xe, Học tập...), Số tiền mục tiêu, Số tiền hiện có, % tiến độ.
+    """
+    user_id = str(current_user.get("user_id"))
+    buckets = SmartPiggyIotService.get_buckets(db=db, user_id=user_id, device_id=device_id)
+    return {
+        "success": True,
+        "data": buckets,
+        "total_buckets": len(buckets)
+    }
+
+
+@router.post("/buckets", status_code=status.HTTP_201_CREATED)
+async def create_piggy_bucket(
+    payload: CreateBucketPayload,
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🎯 TẠO MỚI HŨ MỤC TIÊU CON TRONG VÍ HEO:
+    - Ví dụ: Tạo hũ "Học tập" 5 triệu, "Mua xe máy" 20 triệu.
+    """
+    user_id = str(current_user.get("user_id"))
+    from datetime import datetime
+    dl = None
+    if payload.deadline:
+        try:
+            dl = datetime.strptime(payload.deadline, "%Y-%m-%d")
+        except Exception:
+            pass
+
+    bucket = SmartPiggyIotService.create_bucket(
+        db=db,
+        user_id=user_id,
+        device_id=payload.device_id,
+        goal_name=payload.goal_name,
+        target_amount=payload.target_amount,
+        deadline=dl
+    )
+    return {
+        "success": True,
+        "message": f"Đã tạo thành công hũ mục tiêu '{payload.goal_name}'!",
+        "data": bucket
+    }
+
+
+@router.post("/buckets/transfer", status_code=status.HTTP_200_OK)
+async def transfer_between_piggy_buckets(
+    payload: BucketTransferPayload,
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🔄 CHUYỂN TIỀN NỘI BỘ GIỮA CÁC HŨ CON TRONG VÍ HEO:
+    - Cho phép phân bổ lại vốn tiền mặt (VD: Chuyển 500k từ hũ 'Mua xe' sang hũ 'Học tập').
+    - RÀO CHẮN: Tuyệt đối không thay đổi tổng số dư ví Heo và không chuyển ra ngoài ngân hàng.
+    """
+    user_id = str(current_user.get("user_id"))
+    result = SmartPiggyIotService.transfer_bucket_funds(
+        db=db,
+        user_id=user_id,
+        from_bucket_id=payload.from_bucket_id,
+        to_bucket_id=payload.to_bucket_id,
+        amount=payload.amount
+    )
+    return {
+        "success": True,
+        "message": f"Chuyển thành công {payload.amount:,.0f} VND nội bộ giữa 2 hũ mục tiêu.",
+        "data": result
+    }
+
+
+@router.delete("/buckets/{bucket_id}", status_code=status.HTTP_200_OK)
+async def delete_piggy_bucket(
+    bucket_id: str,
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🗑️ XÓA HŨ MỤC TIÊU CON (TỰ ĐỘNG DỒN TIỀN CÒN LẠI VỀ HŨ KHÁC):
+    """
+    user_id = str(current_user.get("user_id"))
+    result = SmartPiggyIotService.delete_bucket(db=db, user_id=user_id, bucket_id=bucket_id)
+    return {
+        "success": True,
+        "message": "Đã xóa hũ mục tiêu thành công.",
+        "data": result
+    }
+
+
+# ==============================================================================
+# 🚨 4. AN NINH PHẦN CỨNG: CẢM BIẾN HÀNH TRÌNH NẮP (LIMIT SWITCH) & CẮT NGUỒN
+# ==============================================================================
+@router.post("/security/lid-tamper", status_code=status.HTTP_200_OK)
+async def report_lid_tamper_alert(
+    payload: LidTamperPayload,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    """
+    🚨 GIÁM SÁT CÔNG TẮC HÀNH TRÌNH NẮP (LIMIT SWITCH):
+    - Cạy mở nắp vật lý trái phép (không qua App) -> Còi hú 100dB, phong tỏa ví FROZEN, đẩy cảnh báo đỏ.
+    """
+    result = PiggySecurityService.report_lid_tamper(
+        db=db,
+        device_id=payload.device_id,
+        lid_opened=payload.lid_opened,
+        timestamp=payload.timestamp
+    )
+    return {
+        "success": True,
+        "data": result
+    }
+
+
+@router.post("/security/power-cut", status_code=status.HTTP_200_OK)
+async def report_power_cut_alert(
+    payload: PowerCutPayload,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    """
+    ⚡ CẢNH BÁO MẤT NGUỒN ADAPTER (CHUYỂN SANG PIN 18650 DỰ PHÒNG):
+    """
+    result = PiggySecurityService.report_power_cut(
+        db=db,
+        device_id=payload.device_id,
+        battery_pct=payload.battery_pct
+    )
+    return {
+        "success": True,
+        "data": result
+    }
+
+
+class UnfreezePayload(BaseModel):
+    device_id: Optional[str] = None
+    wallet_id: Optional[str] = None
+
+
+@router.post("/unfreeze", status_code=status.HTTP_200_OK)
+async def unfreeze_piggy_wallet(
+    payload: UnfreezePayload,
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🔓 GỠ PHONG TỎA VÍ HEO ĐẤT (SAU KHI XÁC THỰC AN TOÀN):
+    """
+    user_id = current_user.get("user_id")
+    device = None
+    if payload.device_id:
+        device = SmartPiggyRepository.get_by_id(db, payload.device_id)
+        if not device:
+            device = SmartPiggyRepository.get_by_mac(db, payload.device_id.upper())
+
+    wallet = None
+    if device:
+        wallet = db.query(Wallet).filter(Wallet.id == device.wallet_id).first()
+    elif payload.wallet_id:
+        wallet = db.query(Wallet).filter(Wallet.id == payload.wallet_id).first()
+    else:
+        wallet = db.query(Wallet).filter(Wallet.user_id == user_id, Wallet.type == "SMART_PIGGY").first()
+
+    if wallet:
+        wallet.status = "ACTIVE"
+        db.commit()
+
+    return {
+        "success": True,
+        "message": "Đã gỡ phong tỏa ví Heo Đất thành công. Ví đã hoạt động trở lại bình thường."
+    }
+
+
+# ==============================================================================
+# 🤖 5. AI THÓI QUEN TIẾT KIỆM & NHẮC NHỞ MÀN HÌNH OLED HEO ĐẤT
+# ==============================================================================
+@router.get("/ai/habits", status_code=status.HTTP_200_OK)
+async def get_ai_saving_habits(
+    device_id: Optional[str] = Query(None, description="Mã Heo đất ESP32"),
+    request: Request = None,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🤖 AI KHAI PHÁ THÓI QUEN TIẾT KIỆM (HABIT MINING):
+    - Trích xuất: Chuỗi ngày liên tục (streak), ngày hay nạp nhất, mệnh giá yêu thích, điểm kỷ luật.
+    """
+    user_id = str(current_user.get("user_id"))
+    habits = SmartPiggyAiService.get_saving_habits(db=db, user_id=user_id, device_id=device_id)
+    return {
+        "success": True,
+        "data": habits
+    }
+
+
+@router.post("/ai/trigger-nudge", status_code=status.HTTP_200_OK)
+async def trigger_ai_habit_nudge(
+    device_id: Optional[str] = Query(None, description="Mã Heo đất ESP32"),
+    request: Request = None,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🔔 AI KIỂM TRA KỶ LUẬT & BẮN THÔNG ĐIỆP LÊN MÀN HÌNH OLED HEO:
+    - Nếu hôm nay chưa nạp: Sinh biểu cảm đói bụng và lời nhắc tới Web + ESP32.
+    """
+    user_id = str(current_user.get("user_id"))
+    nudge = SmartPiggyAiService.trigger_nudge(db=db, user_id=user_id, device_id=device_id)
+    return {
+        "success": True,
+        "data": nudge
+    }
+

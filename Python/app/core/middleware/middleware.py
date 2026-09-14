@@ -30,14 +30,14 @@ def _insert_audit_db_sync(trace_id: str, tenant_id: str, user_id: Any, username:
             conn.execute(
                 text("""
                     INSERT INTO audit_logs (
-                        trace_id, tenant_id, user_id, username, user_email,
+                        id, action, trace_id, tenant_id, user_id, username, user_email,
                         user_role, client_ip, platform, device_id, device_name,
                         user_agent, module, action_type, action_description,
                         http_method, request_uri, request_params, request_body,
                         old_data, new_data, status, http_status_code,
                         error_message, execution_time_ms, created_at
                     ) VALUES (
-                        :trace_id, :tenant_id, :user_id, :username, :user_email,
+                        :id, :action, :trace_id, :tenant_id, :user_id, :username, :user_email,
                         :user_role, :client_ip, :platform, :device_id, :device_name,
                         :user_agent, :module, :action_type, :action_description,
                         :http_method, :request_uri, :request_params, :request_body,
@@ -46,6 +46,8 @@ def _insert_audit_db_sync(trace_id: str, tenant_id: str, user_id: Any, username:
                     )
                 """),
                 {
+                    "id": str(uuid.uuid4()),
+                    "action": f"{method} {path}",
                     "trace_id": trace_id,
                     "tenant_id": tenant_id or "default",
                     "user_id": clean_user_id,
@@ -199,37 +201,18 @@ class RequestContextAndLogMiddleware(BaseHTTPMiddleware):
                 request.state.user_roles = payload.get("roles", [])
                 request.state.user_modules = payload.get("modules", ["FINTECH", "LEDGER", "AI", "OCR", "PIGGY"])
                 request.state.modules = request.state.user_modules
+                request.state.jwt_payload = payload
+                request.state.auth_verified = True
                 print(f"   🔑 Auth (JWT) : User '{request.state.username}' (ID: {request.state.user_id})")
             except (jwt.ExpiredSignatureError, jwt.PyJWTError) as jwt_err:
-                # Nếu JWT không decode được với secret nội bộ, kiểm tra xem có được Gateway chuyển tiếp không
-                gateway_user_id = request.headers.get("X-User-Id") or request.headers.get("x-user-id")
-                if gateway_user_id:
-                    request.state.user_id = gateway_user_id
-                    request.state.username = request.headers.get("X-Username") or request.headers.get("x-username") or "gateway_user"
-                    roles_raw = request.headers.get("X-Roles") or request.headers.get("x-roles") or "USER"
-                    request.state.user_roles = [r.strip() for r in roles_raw.split(",") if r.strip()]
-                    request.state.user_permissions = ["READ", "WRITE", "EXECUTE"]
-                    request.state.permissions = request.state.user_permissions
-                    request.state.user_modules = ["FINTECH", "LEDGER", "AI", "OCR", "PIGGY"]
-                    request.state.modules = request.state.user_modules
-                    print(f"   🔑 Auth (Gateway-Validated) : User '{request.state.username}' (ID: {request.state.user_id})")
-                else:
-                    print(f"   ⚠️  Auth     : Bearer token không giải mã được: {str(jwt_err)}")
+                request.state.user_id = "ANONYMOUS"
+                request.state.auth_verified = False
+                request.state.token_error = str(jwt_err)
+                print(f"   ⚠️  Auth     : Bearer token không hợp lệ hoặc đã bị thu hồi: {str(jwt_err)}")
         else:
-            # Không có Bearer token, kiểm tra trực tiếp Gateway headers
-            gateway_user_id = request.headers.get("X-User-Id") or request.headers.get("x-user-id")
-            if gateway_user_id:
-                request.state.user_id = gateway_user_id
-                request.state.username = request.headers.get("X-Username") or request.headers.get("x-username") or "gateway_user"
-                roles_raw = request.headers.get("X-Roles") or request.headers.get("x-roles") or "USER"
-                request.state.user_roles = [r.strip() for r in roles_raw.split(",") if r.strip()]
-                request.state.user_permissions = ["READ", "WRITE", "EXECUTE"]
-                request.state.permissions = request.state.user_permissions
-                request.state.user_modules = ["FINTECH", "LEDGER", "AI", "OCR", "PIGGY"]
-                request.state.modules = request.state.user_modules
-                print(f"   🔑 Auth (Gateway Forwarded) : User '{request.state.username}' (ID: {request.state.user_id})")
-            else:
-                print(f"   👤 Auth     : Gói tin công khai (ANONYMOUS)")
+            request.state.user_id = "ANONYMOUS"
+            request.state.auth_verified = False
+            print(f"   👤 Auth     : Gói tin công khai (ANONYMOUS)")
 
         # 4. Chuyển tiếp Request vào Route Handler
         try:
@@ -249,7 +232,7 @@ class RequestContextAndLogMiddleware(BaseHTTPMiddleware):
             )
             raise unhandled_exc
 
-        # 5. Tính toán Latency & Tiêm Security Headers
+        # 5. RESTful Constraint: Cacheable & Layered System Security Headers
         latency_ms = (time.perf_counter() - start_time) * 1000
         response.headers["X-Trace-ID"] = trace_id
         response.headers["X-Response-Time"] = f"{latency_ms:.2f}ms"
@@ -257,6 +240,14 @@ class RequestContextAndLogMiddleware(BaseHTTPMiddleware):
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["X-XSS-Protection"] = "1; mode=block"
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+
+        req_path = request.url.path
+        if req_path.startswith(("/docs", "/redoc", "/openapi.json", "/api/v1/categories", "/health")):
+            response.headers["Cache-Control"] = "public, max-age=3600, stale-while-revalidate=600"
+        else:
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
 
         # 6. Ghi Access Log chi tiết
         status_code = response.status_code

@@ -12,7 +12,7 @@
 
     <artifactId>otp-service</artifactId>
     <name>otp-service</name>
-    <description>Dedicated OTP &amp; SmartOTP Microservice (portfolio_otp)</description>
+    <description>Dedicated OTP &amp; SmartOTP Microservice</description>
 
     <dependencies>
         <dependency>

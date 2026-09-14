@@ -98,12 +98,18 @@ public class JwtAuthenticationGatewayFilter implements GlobalFilter, Ordered {
             "/api/payments/webhook",
             "/api/payments/ipn",
             "/api/v1/worker/alerts",
-            "/api/v1/worker/partitions"
+            "/api/v1/worker/partitions",
+            "/api/v1/ledger/m2m",
+            "/api/ledger/m2m",
+            "/api/v1/smart-piggy/drop-money",
+            "/api/v1/smart-piggy/sync",
+            "/api/v1/smart-piggy/sync-offline-batch",
+            "/api/v1/iot/"
     );
 
     public JwtAuthenticationGatewayFilter(
             ResourceLoader resourceLoader,
-            @Value("${jwt.secret:portfolio-engine-super-secret-jwt-key-minimum-256-bits-for-security-2026}") String secret,
+            @Value("${jwt.secret:liochio-super-secret-jwt-key-minimum-256-bits-for-security-2026}") String secret,
             @Value("${jwt.rsa.public-key-path:classpath:certs/rsa-public.pem}") String publicKeyLocation,
             @Autowired(required = false) ReactiveStringRedisTemplate reactiveRedisTemplate
     ) {

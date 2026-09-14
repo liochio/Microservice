@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "liochio-core-platform-collection-2026",
     "name": "01. Liochio Core Platform API (Spring Boot IAM & Ledger :8081)",
-    "description": "Bộ Collection chuyên biệt 100% cho Spring Boot Core Platform (Cổng 8081): Xác thực IAM đa phân hệ (SuperAdmin, Corporate SaaS, Retail FinTech), Quản lý thiết bị & Phiên làm việc, Cấp phát Sổ cái kép (Core Banking Double-Entry Ledger), Phân quyền RBAC/ABAC và Kiểm toán Audit Logs.",
+    "description": "Bộ Collection chuyên biệt 100% cho Spring Boot Core Platform (Cổng 8081): Xác thực & Vòng đời tài khoản cá nhân, Đăng nhập không mật khẩu bằng QR Code, Smart OTP & Bảo mật giao dịch, Định danh eKYC, Sổ Cái Kép (Core Banking Double-Entry Ledger), Cổng thanh toán và Giám sát đối soát Worker.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth": {
@@ -33,32 +33,37 @@
     },
     {
       "key": "coreUserId",
-      "value": "1",
+      "value": "5",
       "type": "string"
     },
     {
-      "key": "registeredEmail",
-      "value": "client_demo_2026_1@liochio.vn",
+      "key": "coreSessionId",
+      "value": "",
       "type": "string"
     },
     {
-      "key": "registeredUsername",
-      "value": "client_demo_2026_1",
+      "key": "qrSessionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "exchangeAuthCode",
+      "value": "",
       "type": "string"
     },
     {
       "key": "deviceId",
-      "value": "fp_postman_core_client",
+      "value": "postman_retail_client",
       "type": "string"
     }
   ],
   "item": [
     {
-      "name": "01. Core Authentication & Identity (IAM)",
-      "description": "Xác thực tập trung, kiểm soát brute-force, thách thức 2FA, cấp phát tài khoản tự động.",
+      "name": "01. Xác Thực & Vòng Đời Tài Khoản (Auth & IAM Lifecycle)",
+      "description": "Đăng ký, Xác thực OTP kích hoạt, Đăng nhập, 2FA Challenge, Refresh Token, Đổi mật khẩu, Quản lý thiết bị & Xóa tài khoản.",
       "item": [
         {
-          "name": "1.1 Đăng ký tài khoản mới (Register)",
+          "name": "1.1 Đăng nhập tài khoản Cá Nhân (Login) [BẤM ĐẦU TIÊN]",
           "request": {
             "method": "POST",
             "header": [
@@ -74,7 +79,96 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/login",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Đăng nhập tài khoản cá nhân, tự động lưu Access Token và User ID vào biến môi trường.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"fintech_user01\",\n  \"password\": \"Password123@\",\n  \"portalType\": \"RETAIL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.test(\"Đăng nhập thành công và trả về dữ liệu\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
+                  "if (jsonData && jsonData.data) {",
+                  "    if (jsonData.data.accessToken) {",
+                  "        pm.collectionVariables.set(\"coreToken\", jsonData.data.accessToken);",
+                  "        pm.environment.set(\"coreToken\", jsonData.data.accessToken);",
+                  "        console.log(\"Captured Core Access Token:\", jsonData.data.accessToken.substring(0, 15) + \"...\");",
+                  "    }",
+                  "    if (jsonData.data.refreshToken) {",
+                  "        pm.collectionVariables.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
+                  "        pm.environment.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
+                  "    }",
+                  "    if (jsonData.data.userId || jsonData.data.id) {",
+                  "        var uId = jsonData.data.userId || jsonData.data.id;",
+                  "        pm.collectionVariables.set(\"coreUserId\", uId.toString());",
+                  "        pm.environment.set(\"coreUserId\", uId.toString());",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.2 Đăng ký tài khoản Cá Nhân mới (Register)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -100,10 +194,13 @@
                 "register"
               ]
             },
-            "description": "Tạo tài khoản ở trạng thái PENDING_VERIFY và sinh mã OTP 6 số thực tế qua Email.",
+            "description": "Đăng ký tài khoản cá nhân mới ở trạng thái PENDING_VERIFY chờ kích hoạt OTP.",
+            "auth": {
+              "type": "noauth"
+            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"client_demo_2026_new\",\n  \"password\": \"Password123!\",\n  \"email\": \"client_demo_2026_new@liochio.vn\",\n  \"fullName\": \"Liochio New Customer 2026\",\n  \"roles\": [\n    \"ROLE_CUSTOMER\"\n  ]\n}",
+              "raw": "{\n  \"username\": \"retail_user_{{$timestamp}}\",\n  \"password\": \"Password123@\",\n  \"email\": \"retail_{{$timestamp}}@liochio.vn\",\n  \"fullName\": \"Nguyễn Văn Cá Nhân\",\n  \"phone\": \"0987654321\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -116,14 +213,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "var res = pm.response.json();",
-                  "pm.test(\"Đăng ký thành công\", function () {",
-                  "    pm.expect(pm.response.code).to.eql(201);",
-                  "    if (res.data) {",
-                  "        pm.collectionVariables.set(\"coreUserId\", res.data.id.toString());",
-                  "        pm.collectionVariables.set(\"registeredEmail\", res.data.email);",
-                  "        pm.collectionVariables.set(\"registeredUsername\", res.data.username);",
-                  "    }",
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -132,7 +223,7 @@
           ]
         },
         {
-          "name": "1.2 Xác thực OTP kích hoạt tài khoản (Verify OTP)",
+          "name": "1.3 Xác thực OTP kích hoạt tài khoản (Verify Account OTP)",
           "request": {
             "method": "POST",
             "header": [
@@ -148,7 +239,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -174,78 +265,13 @@
                 "verify-otp"
               ]
             },
-            "description": "Kích hoạt tài khoản ACTIVE và tự động cấp phát 3 tài khoản Sổ cái kép Core + Ví tiền App DB.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"{{registeredEmail}}\",\n  \"username\": \"{{registeredUsername}}\",\n  \"otpCode\": \"123456\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Xác thực OTP thành công\", function () {",
-                  "    pm.expect(pm.response.code).to.eql(200);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
-        },
-        {
-          "name": "1.3 Đăng nhập SuperAdmin (Login SuperAdmin - Full 24 Quyền)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{coreUrl}}/api/v1/auth/login",
-              "host": [
-                "{{coreUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "login"
-              ]
+            "description": "Nhập mã OTP 6 số để kích hoạt tài khoản từ PENDING_VERIFY sang ACTIVE (bắt buộc trước khi login).",
+            "auth": {
+              "type": "noauth"
             },
-            "description": "Đăng nhập SuperAdmin nhận Token RS256 chứa 24/24 quyền hệ thống.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"superadmin\",\n  \"password\": \"Password123@\"\n}",
+              "raw": "{\n  \"email\": \"retail_{{$timestamp}}@liochio.vn\",\n  \"username\": \"retail_user_{{$timestamp}}\",\n  \"otpCode\": \"123456\",\n  \"otpPurpose\": \"REGISTRATION\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -258,25 +284,8 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData && jsonData.data) {",
-                  "    if (jsonData.data.accessToken) {",
-                  "        pm.collectionVariables.set(\"coreToken\", jsonData.data.accessToken);",
-                  "        console.log(\"Captured Core Token: \" + jsonData.data.accessToken);",
-                  "    }",
-                  "    if (jsonData.data.refreshToken) {",
-                  "        pm.collectionVariables.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
-                  "    }",
-                  "    if (jsonData.data.userId || jsonData.data.id) {",
-                  "        var uId = jsonData.data.userId || jsonData.data.id;",
-                  "        pm.collectionVariables.set(\"coreUserId\", uId.toString());",
-                  "    }",
-                  "    if (jsonData.data.sessionId) {",
-                  "        pm.collectionVariables.set(\"coreSessionId\", jsonData.data.sessionId);",
-                  "    }",
-                  "}",
-                  "pm.test(\"Status code is 200/201\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -285,7 +294,7 @@
           ]
         },
         {
-          "name": "1.4 Đăng nhập Corporate Admin (Acme Corp SaaS)",
+          "name": "1.4 Xác thực 2FA thiết bị mới (Verify Device OTP)",
           "request": {
             "method": "POST",
             "header": [
@@ -301,177 +310,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{coreUrl}}/api/v1/auth/login",
-              "host": [
-                "{{coreUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "login"
-              ]
-            },
-            "description": "Đăng nhập Corporate Admin Acme Corp, phân hệ doanh nghiệp phê duyệt chi.",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"username\": \"corp_admin\",\n  \"password\": \"Password123@\",\n  \"portalType\": \"CORP_PORTAL\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData && jsonData.data) {",
-                  "    if (jsonData.data.accessToken) {",
-                  "        pm.collectionVariables.set(\"coreToken\", jsonData.data.accessToken);",
-                  "        console.log(\"Captured Core Token: \" + jsonData.data.accessToken);",
-                  "    }",
-                  "    if (jsonData.data.refreshToken) {",
-                  "        pm.collectionVariables.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
-                  "    }",
-                  "    if (jsonData.data.userId || jsonData.data.id) {",
-                  "        var uId = jsonData.data.userId || jsonData.data.id;",
-                  "        pm.collectionVariables.set(\"coreUserId\", uId.toString());",
-                  "    }",
-                  "    if (jsonData.data.sessionId) {",
-                  "        pm.collectionVariables.set(\"coreSessionId\", jsonData.data.sessionId);",
-                  "    }",
-                  "}",
-                  "pm.test(\"Status code is 200/201\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
-        },
-        {
-          "name": "1.5 Đăng nhập Retail User (Khách hàng cá nhân / Phụ huynh)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "{{coreUrl}}/api/v1/auth/login",
-              "host": [
-                "{{coreUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "login"
-              ]
-            },
-            "description": "Đăng nhập Retail User cá nhân (quản lý Heo đất thông minh và con cái).",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"username\": \"retail_user\",\n  \"password\": \"Password123@\",\n  \"portalType\": \"RETAIL_PORTAL\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData && jsonData.data) {",
-                  "    if (jsonData.data.accessToken) {",
-                  "        pm.collectionVariables.set(\"coreToken\", jsonData.data.accessToken);",
-                  "        console.log(\"Captured Core Token: \" + jsonData.data.accessToken);",
-                  "    }",
-                  "    if (jsonData.data.refreshToken) {",
-                  "        pm.collectionVariables.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
-                  "    }",
-                  "    if (jsonData.data.userId || jsonData.data.id) {",
-                  "        var uId = jsonData.data.userId || jsonData.data.id;",
-                  "        pm.collectionVariables.set(\"coreUserId\", uId.toString());",
-                  "    }",
-                  "    if (jsonData.data.sessionId) {",
-                  "        pm.collectionVariables.set(\"coreSessionId\", jsonData.data.sessionId);",
-                  "    }",
-                  "}",
-                  "pm.test(\"Status code is 200/201\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
-        },
-        {
-          "name": "1.6 Xác thực 2FA Thiết bị lạ (Verify Device OTP)",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -497,10 +336,13 @@
                 "verify-device-otp"
               ]
             },
-            "description": "Xác thực thiết bị tin cậy bằng mã OTP khi đăng nhập từ trình duyệt/máy tính mới.",
+            "description": "Nhập mã OTP khi đăng nhập từ trình duyệt/thiết bị lạ để nhận cặp Token chính thức.",
+            "auth": {
+              "type": "noauth"
+            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"superadmin\",\n  \"deviceId\": \"{{deviceId}}\",\n  \"otpCode\": \"123456\",\n  \"rememberDevice\": true\n}",
+              "raw": "{\n  \"username\": \"fintech_user01\",\n  \"otpCode\": \"123456\",\n  \"deviceId\": \"{{deviceId}}\",\n  \"deviceType\": \"WEB_BROWSER\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -514,25 +356,26 @@
               "script": {
                 "exec": [
                   "var jsonData = pm.response.json();",
+                  "pm.test(\"Đăng nhập thành công và trả về dữ liệu\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
                   "if (jsonData && jsonData.data) {",
                   "    if (jsonData.data.accessToken) {",
                   "        pm.collectionVariables.set(\"coreToken\", jsonData.data.accessToken);",
-                  "        console.log(\"Captured Core Token: \" + jsonData.data.accessToken);",
+                  "        pm.environment.set(\"coreToken\", jsonData.data.accessToken);",
+                  "        console.log(\"Captured Core Access Token:\", jsonData.data.accessToken.substring(0, 15) + \"...\");",
                   "    }",
                   "    if (jsonData.data.refreshToken) {",
                   "        pm.collectionVariables.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
+                  "        pm.environment.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
                   "    }",
                   "    if (jsonData.data.userId || jsonData.data.id) {",
                   "        var uId = jsonData.data.userId || jsonData.data.id;",
                   "        pm.collectionVariables.set(\"coreUserId\", uId.toString());",
+                  "        pm.environment.set(\"coreUserId\", uId.toString());",
                   "    }",
-                  "    if (jsonData.data.sessionId) {",
-                  "        pm.collectionVariables.set(\"coreSessionId\", jsonData.data.sessionId);",
-                  "    }",
-                  "}",
-                  "pm.test(\"Status code is 200/201\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-                  "});"
+                  "}"
                 ],
                 "type": "text/javascript"
               }
@@ -540,7 +383,7 @@
           ]
         },
         {
-          "name": "1.7 Lấy thông tin tài khoản hiện tại (Get /me)",
+          "name": "1.5 Xem thông tin cá nhân & Hạn mức chuyển tiền (Get /me)",
           "request": {
             "method": "GET",
             "header": [
@@ -556,7 +399,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -582,11 +425,24 @@
                 "me"
               ]
             },
-            "description": "Xem hồ sơ cá nhân, vai trò và ma trận quyền hạn thực tế từ Token."
-          }
+            "description": "Xem hồ sơ cá nhân, vai trò ROLE_CUSTOMER, cấp độ eKYC và hạn mức giao dịch trong ngày."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "1.8 Làm mới Token (Refresh Token Rotation)",
+          "name": "1.6 Làm mới Token tự động (Refresh Token Rotation)",
           "request": {
             "method": "POST",
             "header": [
@@ -602,7 +458,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -628,7 +484,10 @@
                 "refresh-token"
               ]
             },
-            "description": "Thu hồi Refresh Token cũ và cấp cặp Token mới theo tiêu chuẩn an ninh OAuth2 RTR.",
+            "description": "Cấp cặp Token mới và thu hồi Refresh Token cũ theo tiêu chuẩn OAuth2 RTR.",
+            "auth": {
+              "type": "noauth"
+            },
             "body": {
               "mode": "raw",
               "raw": "{\n  \"refreshToken\": \"{{coreRefreshToken}}\"\n}",
@@ -645,24 +504,93 @@
               "script": {
                 "exec": [
                   "var jsonData = pm.response.json();",
+                  "pm.test(\"Đăng nhập thành công và trả về dữ liệu\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
                   "if (jsonData && jsonData.data) {",
                   "    if (jsonData.data.accessToken) {",
                   "        pm.collectionVariables.set(\"coreToken\", jsonData.data.accessToken);",
-                  "        console.log(\"Captured Core Token: \" + jsonData.data.accessToken);",
+                  "        pm.environment.set(\"coreToken\", jsonData.data.accessToken);",
+                  "        console.log(\"Captured Core Access Token:\", jsonData.data.accessToken.substring(0, 15) + \"...\");",
                   "    }",
                   "    if (jsonData.data.refreshToken) {",
                   "        pm.collectionVariables.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
+                  "        pm.environment.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
                   "    }",
                   "    if (jsonData.data.userId || jsonData.data.id) {",
                   "        var uId = jsonData.data.userId || jsonData.data.id;",
                   "        pm.collectionVariables.set(\"coreUserId\", uId.toString());",
+                  "        pm.environment.set(\"coreUserId\", uId.toString());",
                   "    }",
-                  "    if (jsonData.data.sessionId) {",
-                  "        pm.collectionVariables.set(\"coreSessionId\", jsonData.data.sessionId);",
-                  "    }",
-                  "}",
-                  "pm.test(\"Status code is 200/201\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.7 Đổi mật khẩu tài khoản (Change Password)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/change-password",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "change-password"
+              ]
+            },
+            "description": "Thay đổi mật khẩu đăng nhập tài khoản cá nhân.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"Password123@\",\n  \"newPassword\": \"Password123@\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
                   "});"
                 ],
                 "type": "text/javascript"
@@ -671,7 +599,7 @@
           ]
         },
         {
-          "name": "1.9 Danh sách thiết bị truy cập (Get Devices)",
+          "name": "1.8 Danh sách thiết bị tin cậy đã đăng nhập (Get Devices)",
           "request": {
             "method": "GET",
             "header": [
@@ -687,7 +615,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -713,11 +641,84 @@
                 "devices"
               ]
             },
-            "description": "Xem danh sách các thiết bị di động, web đã từng đăng nhập tài khoản."
-          }
+            "description": "Xem danh sách các thiết bị điện thoại, máy tính đã đăng nhập tài khoản."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "1.10 Danh sách phiên làm việc hoạt động (Get Sessions)",
+          "name": "1.9 Thu hồi quyền tin cậy của thiết bị (Revoke Device)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/devices/{{deviceId}}",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "devices",
+                "{{deviceId}}"
+              ]
+            },
+            "description": "Thu hồi quyền tin cậy và xóa thiết bị khỏi tài khoản."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.10 Danh sách phiên làm việc đang hoạt động (Get Sessions)",
           "request": {
             "method": "GET",
             "header": [
@@ -733,7 +734,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -759,11 +760,34 @@
                 "sessions"
               ]
             },
-            "description": "Xem các phiên đăng nhập đang hoạt động (Active Sessions) trên hệ thống."
-          }
+            "description": "Xem danh sách các phiên đăng nhập đang hoạt động trên hệ thống."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.test(\"Lấy danh sách phiên thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "if (jsonData && jsonData.data && jsonData.data.length > 0) {",
+                  "    var sess = jsonData.data[0];",
+                  "    if (sess.sessionId || sess.id) {",
+                  "        var sid = sess.sessionId || sess.id;",
+                  "        pm.collectionVariables.set(\"coreSessionId\", sid.toString());",
+                  "        pm.environment.set(\"coreSessionId\", sid.toString());",
+                  "        console.log(\"Captured Core Session ID:\", sid);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "1.11 Đăng xuất phiên làm việc (Logout)",
+          "name": "1.11 Thu hồi từ xa một phiên làm việc (Revoke Session)",
           "request": {
             "method": "POST",
             "header": [
@@ -779,7 +803,145 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/auth/security/sessions/{{coreSessionId}}/revoke",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "security",
+                "sessions",
+                "{{coreSessionId}}",
+                "revoke"
+              ]
+            },
+            "description": "Chủ động đá một phiên làm việc đáng ngờ ra khỏi hệ thống.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.12 Đăng xuất toàn bộ thiết bị (Force Logout All)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/logout-all-devices",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout-all-devices"
+              ]
+            },
+            "description": "Cưỡng chế đăng xuất trên toàn bộ máy tính, điện thoại đã đăng nhập.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "1.13 Đăng xuất phiên làm việc hiện tại (Logout)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -805,65 +967,35 @@
                 "logout"
               ]
             },
-            "description": "Hủy bỏ phiên làm việc hiện tại, đưa token vào Redis Blacklist."
-          }
-        }
-      ]
-    },
-    {
-      "name": "02. Core Banking & Double-Entry Ledger (Sổ Cái Kép)",
-      "description": "Quản trị Sổ cái kế toán kép Core, tài khoản khả dụng/tạm giữ/escrow, bút toán cân bằng Nợ-Có.",
-      "item": [
-        {
-          "name": "2.1 Danh sách tài khoản Sổ cái (Get Ledger Accounts)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
+            "description": "Hủy bỏ phiên làm việc, đưa Access Token vào Redis Blacklist.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
               }
-            ],
-            "url": {
-              "raw": "{{coreUrl}}/api/v1/ledger/accounts",
-              "host": [
-                "{{coreUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "ledger",
-                "accounts"
-              ]
-            },
-            "description": "Truy vấn danh sách toàn bộ tài khoản kế toán USER_AVAILABLE, USER_HOLDING, USER_ESCROW và QUỸ_DỰ_TRỮ."
-          }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.2 Lấy chi tiết tài khoản Sổ cái (Get Account By ID)",
+          "name": "1.14 Xóa tài khoản cá nhân (Delete Account)",
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [
               {
                 "key": "Accept-Language",
@@ -877,7 +1009,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -892,23 +1024,716 @@
               }
             ],
             "url": {
-              "raw": "{{coreUrl}}/api/v1/ledger/accounts/{{coreUserId}}",
+              "raw": "{{coreUrl}}/api/v1/users/{{coreUserId}}",
               "host": [
                 "{{coreUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "ledger",
-                "accounts",
+                "users",
                 "{{coreUserId}}"
               ]
             },
-            "description": "Xem số dư thực tế và đơn vị tiền tệ của tài khoản sổ cái."
-          }
+            "description": "Xóa mềm tài khoản cá nhân tuân thủ chính sách quyền riêng tư của App Store / Google Play."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02. Đăng Nhập Không Mật Khẩu Bằng QR Code (QR Login Service)",
+      "description": "Luồng đăng nhập hiện đại 4 bước: Web khởi tạo QR -> Mobile quét -> Mobile xác nhận FaceID/PIN -> Web nhận Token.",
+      "item": [
+        {
+          "name": "2.1 [WEB] Khởi tạo phiên quét mã QR Đăng nhập (Init QR Login)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/qr/init",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "qr",
+                "init"
+              ]
+            },
+            "description": "Web gọi API này để tạo session QR code hạn 120s và lắng nghe WebSocket.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.test(\"Khởi tạo QR thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
+                  "if (jsonData && jsonData.data && jsonData.data.sessionId) {",
+                  "    pm.collectionVariables.set(\"qrSessionId\", jsonData.data.sessionId);",
+                  "    pm.environment.set(\"qrSessionId\", jsonData.data.sessionId);",
+                  "    console.log(\"Captured QR Session ID:\", jsonData.data.sessionId);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.3 Danh sách bút toán kế toán trung tâm (Journal Entries)",
+          "name": "2.2 [MOBILE] Quét mã QR từ App Di Động (Scan QR Code)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/qr/scan",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "qr",
+                "scan"
+              ]
+            },
+            "description": "Mobile quét mã QR trên màn hình Web để chuyển trạng thái session sang SCANNED.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"{{qrSessionId}}\",\n  \"mobileDeviceId\": \"iphone_15_pro_client\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.3 [MOBILE] Xác nhận đăng nhập bằng FaceID/PIN (Confirm QR Code)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/qr/confirm",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "qr",
+                "confirm"
+              ]
+            },
+            "description": "Người dùng xác nhận trên App Mobile để sinh exchangeAuthCode cấp cho Web.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"{{qrSessionId}}\",\n  \"mobileDeviceId\": \"iphone_15_pro_client\",\n  \"confirmPin\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.test(\"Xác nhận QR thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
+                  "if (jsonData && jsonData.data) {",
+                  "    pm.collectionVariables.set(\"exchangeAuthCode\", jsonData.data);",
+                  "    pm.environment.set(\"exchangeAuthCode\", jsonData.data);",
+                  "    console.log(\"Captured QR Exchange Auth Code:\", jsonData.data);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.4 [WEB] Đổi mã xác nhận lấy Token đăng nhập (Exchange QR Code)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/qr/exchange",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "qr",
+                "exchange"
+              ]
+            },
+            "description": "Trình duyệt Web gửi exchangeAuthCode nhận Access Token chính thức.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"{{qrSessionId}}\",\n  \"exchangeAuthCode\": \"{{exchangeAuthCode}}\",\n  \"webDeviceId\": \"{{deviceId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.test(\"Đăng nhập thành công và trả về dữ liệu\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "});",
+                  "if (jsonData && jsonData.data) {",
+                  "    if (jsonData.data.accessToken) {",
+                  "        pm.collectionVariables.set(\"coreToken\", jsonData.data.accessToken);",
+                  "        pm.environment.set(\"coreToken\", jsonData.data.accessToken);",
+                  "        console.log(\"Captured Core Access Token:\", jsonData.data.accessToken.substring(0, 15) + \"...\");",
+                  "    }",
+                  "    if (jsonData.data.refreshToken) {",
+                  "        pm.collectionVariables.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
+                  "        pm.environment.set(\"coreRefreshToken\", jsonData.data.refreshToken);",
+                  "    }",
+                  "    if (jsonData.data.userId || jsonData.data.id) {",
+                  "        var uId = jsonData.data.userId || jsonData.data.id;",
+                  "        pm.collectionVariables.set(\"coreUserId\", uId.toString());",
+                  "        pm.environment.set(\"coreUserId\", uId.toString());",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03. Bảo Mật Giao Dịch FinTech & Smart OTP (Smart OTP & 2FA)",
+      "description": "Thiết lập TOTP RFC 6238, Kích hoạt Smart OTP bằng PIN, Cấp Action Token giao dịch nhạy cảm và OTP Service.",
+      "item": [
+        {
+          "name": "3.1 Khởi tạo thiết lập Smart OTP TOTP (Setup Smart OTP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/smart-otp/setup",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "smart-otp",
+                "setup"
+              ]
+            },
+            "description": "Sinh Base32 Secret và URL Barcode QR để nạp vào ứng dụng Google Authenticator / Smart OTP.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.2 Kích hoạt Smart OTP với OTP Code và PIN (Verify Smart OTP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/smart-otp/verify",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "smart-otp",
+                "verify"
+              ]
+            },
+            "description": "Xác thực mã 6 số TOTP và cài đặt mã PIN bảo vệ Smart OTP gắn chặt với thiết bị.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"otpCode\": \"123456\",\n  \"pin\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.3 Xác thực Step-up Smart OTP nhận Action Token (Get Action Token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/auth/smart-otp/action-token?purpose=FINANCIAL_TRANSACTION",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "smart-otp",
+                "action-token?purpose=FINANCIAL_TRANSACTION"
+              ]
+            },
+            "description": "Xác thực chữ ký Smart OTP trước khi chuyển khoản lớn hoặc mở khóa Heo đất (Action Token hiệu lực 120s).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"otpCode\": \"123456\",\n  \"pin\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.4 Yêu cầu phát sinh mã OTP qua Email/SMS (Generate OTP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/otp/generate",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "otp",
+                "generate"
+              ]
+            },
+            "description": "Gửi hoặc gửi lại mã xác thực OTP 6 số lưu trong Redis.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"SYSTEM\",\n  \"userId\": 5,\n  \"purpose\": \"REGISTRATION\",\n  \"destination\": \"retail_{{$timestamp}}@liochio.vn\",\n  \"otpType\": \"EMAIL\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.5 Xác thực mã OTP 6 số trung tâm (Verify Central OTP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/otp/verify",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "otp",
+                "verify"
+              ]
+            },
+            "description": "Kiểm tra tính hợp lệ của mã OTP 6 số từ Dedicated OTP Service.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"SYSTEM\",\n  \"userId\": 5,\n  \"purpose\": \"REGISTRATION\",\n  \"destination\": \"retail_{{$timestamp}}@liochio.vn\",\n  \"otpCode\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "04. Định Danh eKYC Cá Nhân (eKYC Verification)",
+      "description": "Tra cứu hạn mức, Nộp/Cập nhật lại hồ sơ CCCD khi bị từ chối và Phê duyệt cấp Tier dành cho Admin.",
+      "item": [
+        {
+          "name": "4.1 Tra cứu trạng thái eKYC & Hạn mức ngày (Get eKYC Status)",
           "request": {
             "method": "GET",
             "header": [
@@ -924,7 +1749,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -939,7 +1764,209 @@
               }
             ],
             "url": {
-              "raw": "{{coreUrl}}/api/v1/ledger/journal-entries",
+              "raw": "{{coreUrl}}/api/v1/ekyc/status",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ekyc",
+                "status"
+              ]
+            },
+            "description": "Xem trạng thái định danh CCCD và hạn mức giao dịch hiện tại (5Tr / 500Tr / Không giới hạn)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "4.2 Nộp / Cập nhật lại hồ sơ CCCD nâng hạn mức Tier 2 (Submit eKYC)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ekyc/submit",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ekyc",
+                "submit"
+              ]
+            },
+            "description": "Gửi hoặc nộp lại hồ sơ định danh CCCD (khi hồ sơ cũ bị mờ/từ chối) để nâng hạn mức lên 500 triệu/ngày.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idCardNumber\": \"079200{{$randomInt}}\",\n  \"idCardType\": \"CCCD\",\n  \"fullName\": \"Nguyễn Văn Cá Nhân\",\n  \"frontCardImageUrl\": \"https://media.liochio.vn/ekyc/cccd_mat_truoc.jpg\",\n  \"backCardImageUrl\": \"https://media.liochio.vn/ekyc/cccd_mat_sau.jpg\",\n  \"selfieImageUrl\": \"https://media.liochio.vn/ekyc/chan_dung.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "4.3 Phê duyệt hồ sơ eKYC nâng cấp Tier (Dành cho Admin) (Approve eKYC)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ekyc/approve/{{coreUserId}}",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ekyc",
+                "approve",
+                "{{coreUserId}}"
+              ]
+            },
+            "description": "Admin phê duyệt hồ sơ eKYC cho người dùng, tự động nâng hạn mức lên Tier 2.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetEkycLevel\": \"TIER_2\",\n  \"customDailyLimit\": 500000000.0,\n  \"reviewerNote\": \"Đã đối chiếu thông tin CCCD gắn chip hợp lệ\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "05. Sổ Cái Kép Core Banking (Double-Entry Ledger)",
+      "description": "Số dư đa trạng thái (Available, Holding, Escrow), sao kê móc xích SHA-256 và cổng M2M hạch toán dòng tiền.",
+      "item": [
+        {
+          "name": "5.1 Tra cứu số dư đa trạng thái của tôi (Get My Balance)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ledger/balance",
               "host": [
                 "{{coreUrl}}"
               ],
@@ -947,14 +1974,27 @@
                 "api",
                 "v1",
                 "ledger",
-                "journal-entries"
+                "balance"
               ]
             },
-            "description": "Tra cứu các bút toán hạch toán Nợ/Có trung tâm hệ sinh thái."
-          }
+            "description": "Xem số dư Khả dụng (Available), Tạm giữ (Holding), và Tiết kiệm mục tiêu Heo đất (Escrow)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "2.4 Bảng cân đối thử kế toán Core (Trial Balance)",
+          "name": "5.2 Xem sao kê lịch sử bút toán sổ cái móc xích SHA-256 (Get Journal History)",
           "request": {
             "method": "GET",
             "header": [
@@ -970,7 +2010,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -985,7 +2025,7 @@
               }
             ],
             "url": {
-              "raw": "{{coreUrl}}/api/v1/ledger/trial-balance",
+              "raw": "{{coreUrl}}/api/v1/ledger/history/{{coreUserId}}?page=0&size=20",
               "host": [
                 "{{coreUrl}}"
               ],
@@ -993,22 +2033,424 @@
                 "api",
                 "v1",
                 "ledger",
-                "trial-balance"
+                "history",
+                "{{coreUserId}}?page=0&size=20"
               ]
             },
-            "description": "Kiểm tra tổng Nợ (Debit) và tổng Có (Credit) đảm bảo cân bằng tuyệt đối."
-          }
+            "description": "Tra cứu sao kê bút toán sổ cái kép bất biến có liên kết mã băm prev_hash -> current_hash."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "5.3 Tra cứu số dư theo số tài khoản Sổ cái (Get Balance By AccountNo)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ledger/account/ACC_USR_{{coreUserId}}_AVAIL",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ledger",
+                "account",
+                "ACC_USR_{{coreUserId}}_AVAIL"
+              ]
+            },
+            "description": "Tra cứu số dư chi tiết theo mã định danh tài khoản sổ cái."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "5.4 [M2M] Hạch toán Nạp tiền vào ví khả dụng (M2M DEPOSIT)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Signature",
+                "value": "dev_bypass_or_hmac_sig",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Timestamp",
+                "value": "1773460000000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ledger/m2m/transaction",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ledger",
+                "m2m",
+                "transaction"
+              ]
+            },
+            "description": "Cổng M2M hạch toán nạp tiền: DEBIT System Settlement -> CREDIT User Available.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"SYSTEM\",\n  \"userId\": 5,\n  \"transactionType\": \"TOPUP\",\n  \"amount\": 200000.0,\n  \"referenceId\": \"VIETQR_DEMO_{{$timestamp}}\",\n  \"idempotencyKey\": \"topup_m2m_{{$timestamp}}_{{$randomInt}}\",\n  \"description\": \"Nạp 200.000 VND vào ví khả dụng cá nhân từ cổng thanh toán\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "5.5 [M2M] Hạch toán Khóa tiền mục tiêu Heo đất (M2M PIGGY_LOCK)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Signature",
+                "value": "dev_bypass_or_hmac_sig",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Timestamp",
+                "value": "1773460000000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ledger/m2m/transaction",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ledger",
+                "m2m",
+                "transaction"
+              ]
+            },
+            "description": "Cổng M2M hạch toán khóa tiền: DEBIT User Available -> CREDIT User Escrow.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"SYSTEM\",\n  \"userId\": 5,\n  \"transactionType\": \"PIGGY_LOCK\",\n  \"amount\": 50000.0,\n  \"referenceId\": \"PIGGY_LOCK_REF_{{$timestamp}}\",\n  \"idempotencyKey\": \"lock_m2m_{{$timestamp}}_{{$randomInt}}\",\n  \"description\": \"Tự nguyện khóa 50.000 VND vào quỹ tiết kiệm mục tiêu Heo đất\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "5.6 [M2M] Hạch toán Mở khóa tiền Heo đất về ví (M2M PIGGY_UNLOCK)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Signature",
+                "value": "dev_bypass_or_hmac_sig",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Timestamp",
+                "value": "1773460000000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ledger/m2m/transaction",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ledger",
+                "m2m",
+                "transaction"
+              ]
+            },
+            "description": "Cổng M2M hạch toán mở khóa: DEBIT User Escrow -> CREDIT User Available.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"SYSTEM\",\n  \"userId\": 5,\n  \"transactionType\": \"PIGGY_UNLOCK\",\n  \"amount\": 50000.0,\n  \"referenceId\": \"PIGGY_UNLOCK_REF_{{$timestamp}}\",\n  \"idempotencyKey\": \"unlock_m2m_{{$timestamp}}_{{$randomInt}}\",\n  \"description\": \"Mở khóa 50.000 VND từ quỹ Heo đất về lại ví khả dụng khi đạt mục tiêu\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "5.7 [M2M] Hạch toán Rút tiền khỏi hệ thống (M2M WITHDRAW)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Signature",
+                "value": "dev_bypass_or_hmac_sig",
+                "type": "text"
+              },
+              {
+                "key": "X-M2M-Timestamp",
+                "value": "1773460000000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/ledger/m2m/transaction",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "ledger",
+                "m2m",
+                "transaction"
+              ]
+            },
+            "description": "Cổng M2M hạch toán rút tiền: DEBIT User Available -> CREDIT System Settlement.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tenantId\": \"SYSTEM\",\n  \"userId\": 5,\n  \"transactionType\": \"WITHDRAW\",\n  \"amount\": 50000.0,\n  \"referenceId\": \"WITHDRAW_REF_{{$timestamp}}\",\n  \"idempotencyKey\": \"withdraw_m2m_{{$timestamp}}_{{$randomInt}}\",\n  \"description\": \"Rút 50.000 VND từ ví khả dụng về tài khoản ngân hàng liên kết\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },
     {
-      "name": "03. Tenancy, Roles & Permissions (RBAC/ABAC Matrix)",
-      "description": "Quản trị khách thuê đa bên (Multi-tenancy), vai trò, quyền hạn chi tiết.",
+      "name": "06. Cổng Thanh Toán VNPay / MoMo (Payment Gateway)",
+      "description": "Khởi tạo URL nạp tiền chuyển hướng sang cổng thanh toán ngoại và tra cứu đơn hàng.",
       "item": [
         {
-          "name": "3.1 Danh sách Khách thuê (Tenants)",
+          "name": "6.1 Khởi tạo link thanh toán VNPay / MoMo (Create Payment URL)",
           "request": {
-            "method": "GET",
+            "method": "POST",
             "header": [
               {
                 "key": "Accept-Language",
@@ -1022,7 +2464,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1034,24 +2476,51 @@
                 "key": "X-Platform",
                 "value": "POSTMAN",
                 "type": "text"
+              },
+              {
+                "key": "X-Idempotency-Key",
+                "value": "pay_url_{{$timestamp}}_{{$randomInt}}",
+                "type": "text"
               }
             ],
             "url": {
-              "raw": "{{coreUrl}}/api/v1/tenants",
+              "raw": "{{coreUrl}}/api/payments/create-url",
               "host": [
                 "{{coreUrl}}"
               ],
               "path": [
                 "api",
-                "v1",
-                "tenants"
+                "payments",
+                "create-url"
               ]
             },
-            "description": "Tra cứu 4 tenant tiêu chuẩn: default, acme_corp, techcom_partner, SYSTEM."
-          }
+            "description": "Tạo liên kết thanh toán chuyển hướng người dùng sang VNPay / MoMo.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 100000,\n  \"paymentGateway\": \"VNPAY\",\n  \"orderInfo\": \"Nạp 100.000 VND vào ví cá nhân\",\n  \"returnUrl\": \"http://localhost:3000/payment/success\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "3.2 Danh sách Quyền hạn (Master Permissions)",
+          "name": "6.2 Tra cứu trạng thái đơn nạp tiền (Get Payment Order)",
           "request": {
             "method": "GET",
             "header": [
@@ -1067,7 +2536,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1082,72 +2551,41 @@
               }
             ],
             "url": {
-              "raw": "{{coreUrl}}/api/v1/permissions",
+              "raw": "{{coreUrl}}/api/payments/orders/ORD_DEMO_001",
               "host": [
                 "{{coreUrl}}"
               ],
               "path": [
                 "api",
-                "v1",
-                "permissions"
+                "payments",
+                "orders",
+                "ORD_DEMO_001"
               ]
             },
-            "description": "Danh mục 24 quyền hạn chi tiết của hệ thống."
-          }
-        },
-        {
-          "name": "3.3 Danh sách Vai trò (Roles)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
+            "description": "Kiểm tra trạng thái đơn nạp tiền theo mã orderId."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
               }
-            ],
-            "url": {
-              "raw": "{{coreUrl}}/api/v1/roles",
-              "host": [
-                "{{coreUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "roles"
-              ]
-            },
-            "description": "Danh sách 7 vai trò: ROLE_SUPER_ADMIN, ROLE_CORP_ADMIN, ROLE_MAKER, ROLE_CHECKER, ROLE_CUSTOMER, ROLE_PARENT, ROLE_CHILD."
-          }
+            }
+          ]
         }
       ]
     },
     {
-      "name": "04. Security, Outbox & Audit Logs",
-      "description": "Nhật ký kiểm toán thời gian thực và hàng đợi sự kiện Transactional Outbox.",
+      "name": "07. Giám Sát Đối Soát & Tác Vụ Nền (Worker Service :8095)",
+      "description": "Báo cáo đối soát sổ cái tự động kiểm tra tổng Nợ bằng tổng Có và trạng thái ShedLock.",
       "item": [
         {
-          "name": "4.1 Lịch sử đăng nhập bảo mật (Security Login Histories)",
+          "name": "7.1 Báo cáo đối soát Sổ Cái Kép tự động (Reconciliation Report)",
           "request": {
             "method": "GET",
             "header": [
@@ -1163,7 +2601,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1178,22 +2616,36 @@
               }
             ],
             "url": {
-              "raw": "{{coreUrl}}/api/v1/security/login-histories",
+              "raw": "{{coreUrl}}/api/v1/worker/reconciliation/report",
               "host": [
                 "{{coreUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "security",
-                "login-histories"
+                "worker",
+                "reconciliation",
+                "report"
               ]
             },
-            "description": "Truy vết IP, thiết bị, thời gian và kết quả đăng nhập của người dùng."
-          }
+            "description": "Kiểm tra kết quả chạy của LedgerReconciliationJob xác nhận tính cân bằng Σ Debit = Σ Credit."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         },
         {
-          "name": "4.2 Hàng đợi sự kiện Outbox (Outbox Events)",
+          "name": "7.2 Trạng thái Central Worker & ShedLock (Worker Status)",
           "request": {
             "method": "GET",
             "header": [
@@ -1209,7 +2661,7 @@
               },
               {
                 "key": "X-Tenant-ID",
-                "value": "default",
+                "value": "SYSTEM",
                 "type": "text"
               },
               {
@@ -1224,65 +2676,32 @@
               }
             ],
             "url": {
-              "raw": "{{coreUrl}}/api/v1/outbox/events",
+              "raw": "{{coreUrl}}/api/v1/worker/status",
               "host": [
                 "{{coreUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "outbox",
-                "events"
+                "worker",
+                "status"
               ]
             },
-            "description": "Theo dõi các sự kiện USER_REGISTERED, USER_ACTIVATED trạng thái PROCESSED."
-          }
-        },
-        {
-          "name": "4.3 Nhật ký kiểm toán Core (Core Audit Logs)",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Accept-Language",
-                "value": "vi-VN",
-                "type": "text"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json",
-                "type": "text"
-              },
-              {
-                "key": "X-Tenant-ID",
-                "value": "default",
-                "type": "text"
-              },
-              {
-                "key": "X-Device-ID",
-                "value": "{{deviceId}}",
-                "type": "text"
-              },
-              {
-                "key": "X-Platform",
-                "value": "POSTMAN",
-                "type": "text"
+            "description": "Xem danh sách các tác vụ định kỳ đang hoạt động: Outbox Poller, Partition Maintenance, Housekeeping."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200/201/204\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
               }
-            ],
-            "url": {
-              "raw": "{{coreUrl}}/api/v1/audit/logs",
-              "host": [
-                "{{coreUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "audit",
-                "logs"
-              ]
-            },
-            "description": "Theo dõi mọi lời gọi API, phương thức HTTP, IP và thời gian xử lý."
-          }
+            }
+          ]
         }
       ]
     }

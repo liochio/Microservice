@@ -57,10 +57,10 @@
 
     <!-- 4. Log Tập Trung Toàn Bộ Hệ Thống (Central Combined Log) -->
     <appender name="CENTRAL_COMBINED_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME}/portfolio-combined.log</file>
+        <file>${LOG_HOME}/liochio-combined.log</file>
         <prudent>true</prudent>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/portfolio-combined-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/liochio-combined-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>

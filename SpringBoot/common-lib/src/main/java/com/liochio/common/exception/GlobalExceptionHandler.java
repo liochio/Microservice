@@ -172,7 +172,44 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 10. Fallback: Bắt toàn bộ các lỗi 500 chưa được định nghĩa khác
+     * 10. Bắt lỗi sai kiểu dữ liệu tham số URL/Query (MethodArgumentTypeMismatchException - 400 Bad Request)
+     */
+    @ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiResponse<Object>> handleTypeMismatch(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException ex) {
+        String paramName = ex.getName();
+        Object value = ex.getValue();
+        String requiredType = ex.getRequiredType() != null ? ex.getRequiredType().getSimpleName() : "hợp lệ";
+        String message = String.format("Tham số '%s' nhận giá trị '%s' không đúng định dạng (yêu cầu kiểu %s)", paramName, value, requiredType);
+        log.warn("[TypeMismatch] Param: {}, Value: {}, Required: {}", paramName, value, requiredType);
+
+        ApiResponse<Object> response = ApiResponse.error(ErrorCode.INVALID_REQUEST.getCode(), message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    /**
+     * 11. Bắt lỗi xung đột ràng buộc dữ liệu CSDL (DataIntegrityViolationException - 409 Conflict)
+     */
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleDataIntegrityViolation(org.springframework.dao.DataIntegrityViolationException ex) {
+        log.warn("[DataIntegrityViolation] Database constraint violated: {}", ex.getMostSpecificCause().getMessage());
+        String message = "Dữ liệu bị trùng lặp hoặc vi phạm ràng buộc toàn vẹn của hệ thống";
+
+        ApiResponse<Object> response = ApiResponse.error(HttpStatus.CONFLICT.value(), message);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    /**
+     * 12. Bắt lỗi tham số nghiệp vụ không hợp lệ (IllegalArgumentException, IllegalStateException - 400 Bad Request)
+     */
+    @ExceptionHandler({IllegalArgumentException.class, IllegalStateException.class})
+    public ResponseEntity<ApiResponse<Object>> handleIllegalArguments(RuntimeException ex) {
+        log.warn("[IllegalArgument] {}", ex.getMessage());
+        ApiResponse<Object> response = ApiResponse.error(ErrorCode.INVALID_REQUEST.getCode(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    /**
+     * 13. Fallback: Bắt toàn bộ các lỗi 500 chưa được định nghĩa khác
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Object>> handleGeneralException(Exception ex) {

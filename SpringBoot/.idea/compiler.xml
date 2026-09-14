@@ -30,22 +30,24 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="film-service" />
         <module name="worker-service" />
-        <module name="music-service" />
+        <module name="config-server" />
+        <module name="api-gateway" />
+        <module name="entity-service" />
         <module name="otp-service" />
         <module name="common-lib" />
-        <module name="tour-service" />
         <module name="realtime-service" />
         <module name="ai-service" />
         <module name="notification-service" />
-        <module name="config-server" />
-        <module name="media-service" />
-        <module name="api-gateway" />
-        <module name="entity-service" />
         <module name="service-registry" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="film-service" target="17" />
+      <module name="media-service" target="17" />
+      <module name="music-service" target="17" />
+      <module name="tour-service" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

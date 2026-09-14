@@ -53,7 +53,6 @@ public final class AppConstants {
      */
     public static final String SERVICE_AUTH = "auth-service";
     public static final String SERVICE_ENTITY = "entity-service";
-    public static final String SERVICE_MEDIA = "media-service";
     public static final String SERVICE_NOTIFICATION = "notification-service";
     public static final String SERVICE_PAYMENT = "payment-service";
     public static final String SERVICE_GATEWAY = "api-gateway";

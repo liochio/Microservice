@@ -1,6 +1,7 @@
 package com.liochio.auth.controller;
 
 import com.liochio.auth.dto.UserResponse;
+import com.liochio.auth.service.AuthService;
 import com.liochio.auth.service.UserService;
 import com.liochio.common.annotation.AuditLog;
 import com.liochio.common.annotation.RequirePermission;
@@ -29,7 +30,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final AuthService authService;
     private final MessageService messageService;
+
+    @GetMapping("/me")
+    @Operation(summary = "Lấy thông tin tài khoản cá nhân của chính mình")
+    public ApiResponse<UserResponse> getMyProfile() {
+        UserResponse response = authService.getCurrentUser();
+        return ApiResponse.success(response);
+    }
 
     @GetMapping
     @RequirePermission({"user:read"})

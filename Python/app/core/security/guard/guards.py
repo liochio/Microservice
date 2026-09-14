@@ -22,21 +22,10 @@ async def get_current_user(
     🎯 Mục đích:
        - Kiểm tra Bearer Token JWT trong Header Authorization.
        - Giải mã chữ ký RS256 JWT bằng Public Key (lấy từ JWKS của liochio-core).
-       - Nạp thông tin định danh (user_id, username, permissions, roles, modules) vào `request.state`.
-       - Ném lỗi 401 Unauthorized nếu token thiếu, hết hạn hoặc sai chữ ký.
+       - Đối soát Blacklist 3 tầng (L1 RAM + L2 Redis + L3 Database Session).
+       - Ném lỗi 401 Unauthorized nếu token thiếu, hết hạn hoặc đã bị thu hồi/đăng xuất.
     """
-    # Nếu middleware đã giải mã thành công user_id hợp lệ
-    current_user_id = getattr(request.state, "user_id", "ANONYMOUS")
-    if current_user_id != "ANONYMOUS":
-        return {
-            "user_id": current_user_id,
-            "username": getattr(request.state, "username", "ANONYMOUS"),
-            "permissions": getattr(request.state, "user_permissions", []),
-            "roles": getattr(request.state, "user_roles", []),
-            "modules": getattr(request.state, "user_modules", [])
-        }
-
-    # Bóc tách token từ credentials hoặc Header
+    # 1. Bóc tách token từ credentials hoặc Header
     token = credentials.credentials if credentials and credentials.credentials else None
     if not token:
         auth_header = request.headers.get("Authorization") or request.headers.get("authorization")
@@ -53,33 +42,61 @@ async def get_current_user(
             error_code=SystemConstants.AUTH_UNAUTHORIZED,
             status_code=status.HTTP_401_UNAUTHORIZED
         )
+
+    if getattr(request.state, "auth_verified", False) and hasattr(request.state, "jwt_payload"):
+        payload = request.state.jwt_payload
+        return {
+            "user_id": request.state.user_id,
+            "username": request.state.username,
+            "permissions": request.state.user_permissions,
+            "roles": request.state.user_roles,
+            "modules": request.state.user_modules,
+            "payload": payload
+        }
+
+    if hasattr(request.state, "token_error") and request.state.token_error:
+        raise FintechBaseException(
+            error_code=SystemConstants.AUTH_UNAUTHORIZED,
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            context={"reason": request.state.token_error}
+        )
+
     try:
         payload = JwtService.decode_token(token)
-        user_id = payload.get("sub")
+        user_id = str(payload.get("userId") or payload.get("sub") or "")
         if not user_id:
             raise FintechBaseException(error_code=SystemConstants.AUTH_INVALID_TOKEN, status_code=status.HTTP_401_UNAUTHORIZED)
 
+        username = payload.get("username") or payload.get("sub") or "ANONYMOUS"
+
         # Nạp lại vào request.state để dùng chung xuyên suốt router
         request.state.user_id = user_id
-        request.state.username = payload.get("username", "ANONYMOUS")
+        request.state.username = username
         request.state.user_permissions = payload.get("permissions", [])
         request.state.permissions = request.state.user_permissions
         request.state.user_roles = payload.get("roles", [])
         request.state.user_modules = payload.get("modules", [])
         request.state.modules = request.state.user_modules
+        request.state.jwt_payload = payload
+        request.state.auth_verified = True
 
         return {
             "user_id": user_id,
             "username": request.state.username,
             "permissions": request.state.user_permissions,
             "roles": request.state.user_roles,
-            "modules": request.state.user_modules
+            "modules": request.state.user_modules,
+            "payload": payload
         }
 
     except jwt.ExpiredSignatureError:
         raise FintechBaseException(error_code=SystemConstants.AUTH_TOKEN_EXPIRED, status_code=status.HTTP_401_UNAUTHORIZED)
-    except jwt.PyJWTError:
-        raise FintechBaseException(error_code=SystemConstants.AUTH_INVALID_TOKEN, status_code=status.HTTP_401_UNAUTHORIZED)
+    except jwt.PyJWTError as e:
+        raise FintechBaseException(
+            error_code=SystemConstants.AUTH_UNAUTHORIZED,
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            context={"reason": str(e)}
+        )
 
 
 class RoleBasedGuard:

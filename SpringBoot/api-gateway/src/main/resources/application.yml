@@ -34,55 +34,31 @@ spring:
           predicates:
             - Path=/api/v1/payments/**, /api/v1/bookings/**, /api/v1/wallets/**, /api/v1/transactions/**, /api/payments/**, /api/bookings/**, /api/wallets/**, /api/transactions/**
 
-        # 3. Python IoT & AI Satellite Extension (Port 8089 - Tenant A: PiggyBank / AI)
+        # 3. Python IoT & AI Satellite Extension (Port 8000 - Tenant A: PiggyBank / AI)
         - id: python-iot-ai-service
-          uri: ${FINTECH_URL:http://localhost:8089}
+          uri: ${FINTECH_URL:http://localhost:8000}
           predicates:
             - Path=/api/v1/iot/**, /api/v1/smart-piggy/**, /api/v1/smart_piggy/**, /api/v1/ocr/**, /api/v1/ai/**, /api/v1/budgets/**, /api/v1/goals/**, /api/v1/transfers/**, /api/v1/reports/**, /api/v1/ws/**
 
-        # 4. Media Storage Service Routes (Port 8083)
-        - id: media-service
-          uri: ${MEDIA_SERVICE_URL:http://localhost:8083}
-          predicates:
-            - Path=/api/v1/media/**, /api/media/**
-
-        # 5. Enterprise Notification Service Routes (Port 8084)
+        # 4. Enterprise Notification Service Routes (Port 8084)
         - id: notification-service
           uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
           predicates:
             - Path=/api/v1/notifications/**, /api/notifications/**
 
-        # 6. Entity & Master Data Service Routes (Port 8082)
+        # 5. Entity & Master Data Service Routes (Port 8082)
         - id: entity-service
           uri: ${ENTITY_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/api/v1/entities/**, /api/v1/master-data/**, /api/v1/portfolios/**, /api/v1/ui-configs/**, /api/v1/forms/**, /api/v1/system/**, /api/v1/system-configs/**, /api/entities/**, /api/master-data/**, /api/portfolios/**, /api/ui-configs/**, /api/forms/**, /api/system/**, /api/system-configs/**
 
-        # 6. Tour Service (Port 8091)
-        - id: tour-service
-          uri: lb://tour-service
-          predicates:
-            - Path=/api/v1/tours/**, /api/tours/**
-
-        # 7. Music Service (Port 8092)
-        - id: music-service
-          uri: lb://music-service
-          predicates:
-            - Path=/api/v1/music/**, /api/music/**
-
-        # 8. Film Service (Port 8093)
-        - id: film-service
-          uri: lb://film-service
-          predicates:
-            - Path=/api/v1/films/**, /api/films/**
-
-        # 9. AI Service (Port 8086)
+        # 6. AI Service (Port 8086)
         - id: ai-service
           uri: lb://ai-service
           predicates:
             - Path=/api/v1/ai/**, /api/ai/**
 
-        # 10. Realtime WebSocket Gateway (Port 8087)
+        # 7. Realtime WebSocket Gateway (Port 8087)
         - id: realtime-service
           uri: lb:ws://realtime-service
           predicates:
@@ -108,7 +84,7 @@ eureka:
     fetch-registry: true
 
 jwt:
-  secret: ${JWT_SECRET:portfolio-engine-super-secret-jwt-key-minimum-256-bits-for-security-2026}
+  secret: ${JWT_SECRET:liochio-super-secret-jwt-key-minimum-256-bits-for-security-2026}
   rsa:
     public-key-path: ${JWT_RSA_PUBLIC_KEY:classpath:certs/rsa-public.pem}
 

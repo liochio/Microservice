@@ -175,15 +175,38 @@ async def logout_account(
     db: Session = Depends(get_db),
 ):
     """
-    🎯 API Đăng xuất hệ thống:
+    🎯 API Đăng xuất hệ thống (Chuẩn Enterprise 3 Tầng):
        - Yêu cầu Bearer Token hợp lệ.
+       - Đưa Token & Session vào L1 In-Memory Blacklist và L2 Redis Blacklist.
        - Thu hồi phiên làm việc (is_revoked = 1) trong bảng `user_sessions`.
-       - Vô hiệu hóa quyền truy cập của Token.
+       - Vô hiệu hóa tức thì quyền truy cập của Token trên toàn bộ hệ thống.
     """
     user_id = current_user.get("user_id")
+    payload = current_user.get("payload", {})
+    session_id = payload.get("sessionId")
+    jti = payload.get("jti")
+
+    auth_header = request.headers.get("Authorization") or request.headers.get("authorization") or ""
+    raw_token = auth_header[7:].strip() if auth_header.lower().startswith("bearer ") else auth_header.strip()
 
     try:
-        TokenService.revoke_session(db_conn=db, user_id=user_id)
+        # 1. Đưa vào Blacklist 3 tầng (L1 RAM + L2 Redis)
+        JwtService.register_logout(raw_token, session_id=session_id, user_id=user_id)
+
+        # 2. Cập nhật bảng user_sessions trong liochio_app_db
+        TokenService.revoke_session(db_conn=db, user_id=user_id, jti=jti)
+
+        # 3. Đồng bộ cập nhật liochio_core_db.user_sessions
+        if session_id:
+            try:
+                import pymysql
+                conn = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="12345678", connect_timeout=1)
+                with conn.cursor() as cur:
+                    cur.execute("UPDATE liochio_core_db.user_sessions SET is_revoked = 1, revoked_reason = 'LOGOUT' WHERE id = %s", (session_id,))
+                conn.commit()
+                conn.close()
+            except Exception:
+                pass
 
         i18n_message = i18n_translator.translate(
             request,

@@ -1,4 +1,4 @@
-﻿# 📄 Đường dẫn file: app/services/smart_piggy/piggy_withdrawal_service.py
+# 📄 Đường dẫn file: app/services/smart_piggy/piggy_withdrawal_service.py
 from datetime import datetime
 from typing import Dict, Any, Optional
 import uuid
@@ -13,6 +13,7 @@ from app.core.exceptions.base_exception import FintechBaseException
 from app.models.wallet.wallet import Wallet
 from app.models.finance.category import Category
 from app.models.notification.notification import Notification
+from app.models.smart_piggy.smart_piggy_goal import SmartPiggyGoal
 from app.repositories.finance.transaction_repository import TransactionRepository
 from app.repositories.smart_piggy.smart_piggy_repository import SmartPiggyRepository
 from app.websocket.manager.connection_manager import ws_manager
@@ -29,6 +30,7 @@ class PiggyWithdrawalState:
 
 # Bộ nhớ lưu trữ phiên rút tiền 2 pha (In-memory Session Store hỗ trợ đồng bộ thời gian thực)
 _WITHDRAWAL_SESSIONS: Dict[str, Dict[str, Any]] = {}
+_SMASH_SESSIONS: Dict[str, Dict[str, Any]] = {}
 
 
 class PiggyWithdrawalService:
@@ -209,12 +211,12 @@ class PiggyWithdrawalService:
 
         # 4. Ghi thông báo
         notif = Notification(
-            id=str(uuid.uuid4()),
             user_id=user_id,
+            recipient=user_id,
             title="🐷 Rút Tiền Heo Đất Thành Công",
             content=f"Đã rút thành công {amount:,.0f} VND từ Heo đất. Đồng bộ vật lý và sổ cái 100%.",
             notification_type="SMART_PIGGY",
-            is_read="UNREAD",
+            is_read=0,
             status="ACTIVE"
         )
         db.add(notif)
@@ -300,12 +302,12 @@ class PiggyWithdrawalService:
 
         # 4. Gửi thông báo hoàn tiền
         notif = Notification(
-            id=str(uuid.uuid4()),
             user_id=user_id,
+            recipient=user_id,
             title="⚠️ Hủy Rút Tiền Do Quá Hạn",
             content=f"Giao dịch rút {amount:,.0f} VND đã bị hủy do quá thời gian lấy tiền. Tiền đã được hoàn lại ví.",
             notification_type="SMART_PIGGY",
-            is_read="UNREAD",
+            is_read=0,
             status="ACTIVE"
         )
         db.add(notif)
@@ -424,4 +426,173 @@ class PiggyWithdrawalService:
     @staticmethod
     def get_session_status(session_id: str) -> Optional[Dict[str, Any]]:
         """Tra cứu trạng thái của một phiên rút tiền"""
-        return _WITHDRAWAL_SESSIONS.get(session_id)
+        return _WITHDRAWAL_SESSIONS.get(session_id) or _SMASH_SESSIONS.get(session_id)
+
+    # =========================================================================
+    # 🔨 LUỒNG "ĐẬP HEO" TẤT TOÁN TOÀN BỘ TIỀN MẶT (SMASH & SETTLEMENT)
+    # =========================================================================
+    @staticmethod
+    def request_smash_piggy(
+        db: Session,
+        user_id: str,
+        device_id: str,
+        smart_otp: str
+    ) -> Dict[str, Any]:
+        """
+        🚀 KHỞI TẠO LỆNH "ĐẬP HEO" VẬT LÝ:
+        - Bắt buộc xác thực Smart OTP chính chủ.
+        - Mở bung nắp hoàn toàn (Normally Closed Solenoid Unlocked).
+        - Chiếm quyền Hardware Mutex độc quyền (lock_type = SMASH).
+        - Phát lệnh mừng hoàn thành mục tiêu qua WebSocket tới Web và ESP32.
+        """
+        if not smart_otp or len(str(smart_otp).strip()) < 4:
+            raise FintechBaseException(error_code="INVALID_SMART_OTP", status_code=400)
+
+        device = SmartPiggyRepository.get_by_id(db, device_id)
+        if not device or device.user_id != user_id:
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+            if not device or device.user_id != user_id:
+                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+
+        wallet_id = device.wallet_id
+        wallet = db.query(Wallet).filter(Wallet.id == wallet_id).first()
+        if not wallet or wallet.is_deleted:
+            raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+
+        current_balance = float(wallet.balance)
+        if current_balance <= 0:
+            raise FintechBaseException(
+                error_code="PIGGY_ALREADY_EMPTY",
+                status_code=400,
+                context={"message": "Heo đất hiện không có số dư để đập. Số dư bằng 0 đ."}
+            )
+
+        # Chiếm Hardware Mutex
+        PiggySecurityService.acquire_device_lock(device.id, lock_type="SMASH")
+
+        session_id = f"SMSH-{uuid.uuid4().hex[:12].upper()}"
+        _SMASH_SESSIONS[session_id] = {
+            "session_id": session_id,
+            "user_id": user_id,
+            "device_id": device.id,
+            "wallet_id": wallet.id,
+            "total_cash_amount": current_balance,
+            "status": "DOOR_OPENED_PENDING_CONFIRM",
+            "created_at": datetime.now()
+        }
+
+        # Phát sóng lệnh mở bung nắp và chúc mừng
+        ws_event = {
+            "event": "CMD_SMASH_PIGGY",
+            "session_id": session_id,
+            "device_id": device.id,
+            "total_cash_amount": current_balance,
+            "message": f"🎉 CHÚC MỪNG BẠN ĐÃ ĐẬP HEO THÀNH CÔNG! Nắp Heo đã mở, vui lòng lấy {current_balance:,.0f} VND tiền mặt.",
+            "hardware_command": {
+                "solenoid_state": "UNLOCKED_FULL",
+                "oled_display": "CHUC MUNG! BAN DA HOAN THANH MUC TIEU!",
+                "rgb_led": "#FFD700_RAINBOW",
+                "buzzer_melody": "VICTORY_FANFARE"
+            }
+        }
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                asyncio.create_task(ws_manager.send_to_user(user_id, ws_event))
+                asyncio.create_task(ws_manager.send_to_device(device.id, ws_event))
+                asyncio.create_task(ws_manager.broadcast_all(ws_event))
+        except Exception:
+            pass
+
+        return {
+            "session_id": session_id,
+            "device_id": device.id,
+            "device_name": device.device_name,
+            "total_cash_amount": current_balance,
+            "status": "DOOR_OPENED_PENDING_CONFIRM",
+            "solenoid_door_state": "UNLOCKED",
+            "message": f"Lệnh đập heo đã duyệt. Chốt khóa điện từ đã mở bung nắp, mời bạn lấy toàn bộ {current_balance:,.0f} VND tiền mặt."
+        }
+
+    @staticmethod
+    def confirm_smash_piggy(
+        db: Session,
+        user_id: str,
+        device_id: str,
+        session_id: str
+    ) -> Dict[str, Any]:
+        """
+        ✅ XÁC NHẬN CẢM BIẾN HÀNH TRÌNH NẮP ĐÃ MỞ (LIMIT SWITCH VERIFIED):
+        - Tất toán số dư ví Heo về 0 đ.
+        - Chuyển trạng thái toàn bộ Hũ con thành COMPLETED.
+        - Ghi bút toán sổ cái rút tiền mặt (EXPENSE).
+        - Giải phóng Hardware Mutex, chuyển trạng thái thiết bị thành SMASHED_EMPTY.
+        """
+        session = _SMASH_SESSIONS.get(session_id)
+        device = SmartPiggyRepository.get_by_id(db, device_id)
+        if not device:
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+
+        wallet = db.query(Wallet).filter(Wallet.id == device.wallet_id).first() if device else None
+        settled_amount = float(wallet.balance) if wallet else (session["total_cash_amount"] if session else 0.0)
+
+        if wallet:
+            bal_before = float(wallet.balance)
+            wallet.balance = 0.0
+            wallet.status = "ACTIVE"
+            wallet.updated_at = datetime.now()
+
+            # Ghi bút toán sổ cái
+            expense_cat = db.query(Category).filter(Category.type == "EXPENSE").first()
+            cat_id = expense_cat.id if expense_cat else None
+
+            TransactionRepository.insert_transaction(
+                db=db,
+                user_id=user_id,
+                wallet_id=wallet.id,
+                category_id=cat_id,
+                amount=settled_amount,
+                tx_type="EXPENSE",
+                tx_date=datetime.now(),
+                description=f"Tất toán tiền mặt đập heo: {device.device_name if device else device_id}",
+                balance_before=bal_before,
+                balance_after=0.0
+            )
+
+        # Chuyển trạng thái toàn bộ Hũ mục tiêu con sang COMPLETED
+        if device:
+            buckets = SmartPiggyRepository.get_buckets(db, device.id)
+            for b in buckets:
+                b.status = "COMPLETED"
+                b.current_amount = 0.0
+            device.status = "SMASHED_EMPTY"
+
+        # Giải phóng Mutex
+        PiggySecurityService.release_device_lock(device.id if device else device_id)
+
+        if session:
+            session["status"] = "SETTLED_COMPLETED"
+
+        db.commit()
+
+        # Tạo thông báo tất toán
+        notif = Notification(
+            user_id=user_id,
+            recipient=user_id,
+            title="🔨 Đập Heo Đất Hoàn Tất",
+            content=f"Bạn đã tất toán thành công {settled_amount:,.0f} VND từ Heo Đất. Số dư đã quy đổi ra tiền mặt.",
+            notification_type="SMART_PIGGY",
+            is_read=0,
+            status="ACTIVE"
+        )
+        db.add(notif)
+        db.commit()
+
+        return {
+            "session_id": session_id,
+            "device_id": device.id if device else device_id,
+            "settled_cash_amount": settled_amount,
+            "new_wallet_balance": 0.0,
+            "device_status": "SMASHED_EMPTY",
+            "message": f"Tất toán thành công! Đã quy đổi {settled_amount:,.0f} VND thành tiền mặt thực tế. Số dư sổ cái đã đưa về 0."
+        }

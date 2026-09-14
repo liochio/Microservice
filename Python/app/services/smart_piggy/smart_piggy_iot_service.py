@@ -1,4 +1,4 @@
-﻿# 📄 Đường dẫn file: app/services/smart_piggy/smart_piggy_iot_service.py
+# 📄 Đường dẫn file: app/services/smart_piggy/smart_piggy_iot_service.py
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from typing import List, Dict, Any, Optional
@@ -7,6 +7,7 @@ import hmac
 import hashlib
 import uuid
 import asyncio
+import time
 
 from app.constants import SystemConstants
 from app.core.exceptions.base_exception import FintechBaseException
@@ -16,7 +17,10 @@ from app.repositories.finance.transaction_repository import TransactionRepositor
 from app.models.wallet.wallet import Wallet
 from app.models.finance.category import Category
 from app.models.notification.notification import Notification
+from app.models.smart_piggy.smart_piggy_goal import SmartPiggyGoal
 from app.websocket.manager.connection_manager import ws_manager
+
+_DEPOSIT_SESSIONS: Dict[str, Dict[str, Any]] = {}
 from app.schemas.requests.smart_piggy import (
     PiggyPairRequest,
     PiggyDropMoneyRequest,
@@ -156,8 +160,11 @@ class SmartPiggyIotService:
         6. Tự động tính Parent Matching Bonus (nếu có).
         7. Bắn WebSocket Live Thông Báo "Ting ting" lên Mobile App tức thời.
         """
-        mac = payload.mac_address.upper()
-        device = SmartPiggyRepository.get_by_mac(db, mac)
+        device = None
+        if getattr(payload, "device_id", None):
+            device = SmartPiggyRepository.get_by_id(db, payload.device_id)
+        if not device and getattr(payload, "mac_address", None):
+            device = SmartPiggyRepository.get_by_mac(db, payload.mac_address.upper())
         if not device:
             raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
 
@@ -191,6 +198,13 @@ class SmartPiggyIotService:
             bal_after = amount
             new_balance = amount
 
+        # Cập nhật số dư Hũ mục tiêu con (nếu có)
+        if getattr(payload, "bucket_id", None):
+            bucket = db.query(SmartPiggyGoal).filter(SmartPiggyGoal.id == payload.bucket_id).first()
+            if bucket:
+                bucket.current_amount = float(bucket.current_amount) + amount
+                db.commit()
+
         # 4. Ghi Transaction tài chính (INCOME)
         income_cat = db.query(Category).filter(Category.type == "INCOME").first()
         cat_id = income_cat.id if income_cat else None
@@ -217,12 +231,12 @@ class SmartPiggyIotService:
 
         # 7. Tạo bản ghi thông báo hệ thống
         notif = Notification(
-            id=str(uuid.uuid4()),
             user_id=user_id,
+            recipient=user_id,
             title="🐷 Ting Ting! Đút Tiền Thành Công",
             content=f"Bạn vừa bỏ vào Heo đất {amount:,.0f} VND. Số dư mới: {new_balance:,.0f} VND (+{points_earned} điểm)",
             notification_type="SMART_PIGGY",
-            is_read="UNREAD",
+            is_read=0,
             status="ACTIVE"
         )
         db.add(notif)
@@ -425,3 +439,238 @@ class SmartPiggyIotService:
             "effect_mode": payload.effect_mode,
             "duration_seconds": payload.duration_seconds
         }
+
+    # =========================================================================
+    # 🪙 LUỒNG NẠP TIỀN CHỌN MỆNH GIÁ & MỞ KHE NẠP 60 GIÂY
+    # =========================================================================
+    @staticmethod
+    def init_deposit(
+        db: Session,
+        user_id: str,
+        device_id: str,
+        amount: float,
+        bucket_id: Optional[str] = None,
+        timeout_seconds: int = 60
+    ) -> dict:
+        """
+        🚀 KHỞI TẠO PHIÊN NẠP TIỀN (CHỌN MỆNH GIÁ & HŨ MỤC TIÊU):
+        - Mở chốt Solenoid khe nạp trong 60 giây.
+        - Phát lệnh WebSocket / MQTT CMD_OPEN_SLOT tới ESP32.
+        - Đăng ký phiên nạp PENDING_DROP chờ cảm biến quang xác nhận.
+        """
+        if amount <= 0:
+            raise FintechBaseException(error_code="INVALID_AMOUNT", status_code=400)
+
+        device = SmartPiggyRepository.get_by_id(db, device_id)
+        if not device or device.user_id != user_id:
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+            if not device or device.user_id != user_id:
+                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+
+        # Kiểm tra Hũ mục tiêu con nếu có truyền
+        target_bucket = None
+        if bucket_id:
+            target_bucket = SmartPiggyRepository.get_bucket_by_id(db, bucket_id)
+            if not target_bucket or target_bucket.smart_piggy_device_id != device.id:
+                raise FintechBaseException(error_code="BUCKET_NOT_FOUND", status_code=404)
+
+        txn_id = f"DEP-{uuid.uuid4().hex[:12].upper()}"
+        now_ts = time.time()
+        expires_at = now_ts + timeout_seconds
+
+        _DEPOSIT_SESSIONS[txn_id] = {
+            "txn_id": txn_id,
+            "user_id": user_id,
+            "device_id": device.id,
+            "amount": amount,
+            "bucket_id": bucket_id,
+            "status": "PENDING_DROP",
+            "created_at": now_ts,
+            "expires_at": expires_at
+        }
+
+        # Phát bản tin mở khe nạp qua WebSocket tới Web & ESP32
+        ws_payload = {
+            "event": "CMD_OPEN_SLOT",
+            "txn_id": txn_id,
+            "device_id": device.id,
+            "amount": amount,
+            "bucket_name": target_bucket.goal_name if target_bucket else "Heo Đất Chung",
+            "timeout_seconds": timeout_seconds,
+            "message": f"Mời đưa tờ tiền {amount:,.0f} VND qua khe nạp (Thời gian chờ: {timeout_seconds}s)"
+        }
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                asyncio.create_task(ws_manager.send_to_user(user_id, ws_payload))
+                asyncio.create_task(ws_manager.send_to_device(device.id, ws_payload))
+        except Exception:
+            pass
+
+        return {
+            "txn_id": txn_id,
+            "device_id": device.id,
+            "amount": amount,
+            "bucket_id": bucket_id,
+            "bucket_name": target_bucket.goal_name if target_bucket else "Heo Đất Chung",
+            "timeout_seconds": timeout_seconds,
+            "status": "PENDING_DROP",
+            "solenoid_slot_state": "OPEN",
+            "message": f"Đã mở chốt khe nạp tiền. Quý khách vui lòng đút tờ {amount:,.0f} VND trong {timeout_seconds} giây."
+        }
+
+    @staticmethod
+    def timeout_deposit(db: Session, txn_id: str, device_id: Optional[str] = None) -> dict:
+        """
+        ⏱️ HẾT THỜI GIAN 60S NẠP TIỀN (ROLLBACK & ĐÓNG KHE):
+        - Hủy phiên nạp PENDING, đóng chốt Solenoid khe đút.
+        """
+        session = _DEPOSIT_SESSIONS.get(txn_id)
+        if not session:
+            return {
+                "txn_id": txn_id,
+                "status": "EXPIRED_OR_COMPLETED",
+                "message": "Phiên nạp đã hết hạn hoặc đã hoàn tất trước đó."
+            }
+
+        session["status"] = "CANCELLED_TIMEOUT"
+        dev_id = session.get("device_id") or device_id
+
+        ws_payload = {
+            "event": "DEPOSIT_TIMEOUT",
+            "txn_id": txn_id,
+            "device_id": dev_id,
+            "status": "CANCELLED_TIMEOUT",
+            "message": "Quá thời gian 60 giây không ghi nhận tiền đi qua khe. Khe nạp đã đóng lại bảo vệ an toàn."
+        }
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                if dev_id:
+                    asyncio.create_task(ws_manager.send_to_device(dev_id, ws_payload))
+                user_id = session.get("user_id")
+                if user_id:
+                    asyncio.create_task(ws_manager.send_to_user(user_id, ws_payload))
+        except Exception:
+            pass
+
+        return {
+            "txn_id": txn_id,
+            "status": "CANCELLED_TIMEOUT",
+            "solenoid_slot_state": "CLOSED",
+            "message": "Phiên nạp tiền đã hủy do hết thời gian chờ 60 giây. Khe nạp đã tự động đóng."
+        }
+
+    # =========================================================================
+    # 🎯 QUẢN LÝ ĐA HŨ MỤC TIÊU CON TRONG VÍ HEO (SUB-POTS / BUCKETS)
+    # =========================================================================
+    @staticmethod
+    def get_buckets(db: Session, user_id: str, device_id: str) -> List[dict]:
+        """Lấy danh sách các Hũ mục tiêu con trong Heo Đất"""
+        device = SmartPiggyRepository.get_by_id(db, device_id)
+        if not device or device.user_id != user_id:
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+            if not device or device.user_id != user_id:
+                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+
+        raw_buckets = SmartPiggyRepository.get_buckets(db, device.id)
+        results = []
+        for b in raw_buckets:
+            tgt = float(b.target_amount)
+            curr = float(b.current_amount)
+            pct = round((curr / tgt * 100) if tgt > 0 else 0, 1)
+            results.append({
+                "id": b.id,
+                "device_id": b.smart_piggy_device_id,
+                "goal_name": b.goal_name,
+                "target_amount": tgt,
+                "current_amount": curr,
+                "progress_percentage": min(100.0, pct),
+                "is_completed": curr >= tgt,
+                "deadline": b.deadline.strftime("%Y-%m-%d") if b.deadline else None,
+                "status": b.status,
+                "created_at": b.created_at.strftime("%Y-%m-%d %H:%M:%S") if b.created_at else None
+            })
+        return results
+
+    @staticmethod
+    def create_bucket(
+        db: Session,
+        user_id: str,
+        device_id: str,
+        goal_name: str,
+        target_amount: float,
+        deadline: Optional[datetime] = None
+    ) -> dict:
+        """Tạo thêm Hũ mục tiêu con mới trong ví Heo"""
+        if target_amount <= 0:
+            raise FintechBaseException(error_code="INVALID_AMOUNT", status_code=400)
+
+        device = SmartPiggyRepository.get_by_id(db, device_id)
+        if not device or device.user_id != user_id:
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+            if not device or device.user_id != user_id:
+                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+
+        b = SmartPiggyRepository.create_bucket(
+            db=db,
+            device_id=device.id,
+            goal_name=goal_name,
+            target_amount=target_amount,
+            deadline=deadline
+        )
+        db.commit()
+        db.refresh(b)
+        return {
+            "id": b.id,
+            "device_id": b.smart_piggy_device_id,
+            "goal_name": b.goal_name,
+            "target_amount": float(b.target_amount),
+            "current_amount": float(b.current_amount),
+            "status": b.status,
+            "created_at": b.created_at.strftime("%Y-%m-%d %H:%M:%S") if b.created_at else None
+        }
+
+    @staticmethod
+    def transfer_bucket_funds(
+        db: Session,
+        user_id: str,
+        from_bucket_id: str,
+        to_bucket_id: str,
+        amount: float
+    ) -> dict:
+        """Chuyển tiền nội bộ giữa các hũ con trong cùng một Heo đất"""
+        if amount <= 0:
+            raise FintechBaseException(error_code="INVALID_AMOUNT", status_code=400)
+
+        from_b = SmartPiggyRepository.get_bucket_by_id(db, from_bucket_id)
+        to_b = SmartPiggyRepository.get_bucket_by_id(db, to_bucket_id)
+        if not from_b or not to_b:
+            raise FintechBaseException(error_code="BUCKET_NOT_FOUND", status_code=404)
+
+        # Kiểm tra tính sở hữu của user
+        dev = SmartPiggyRepository.get_by_id(db, from_b.smart_piggy_device_id)
+        if not dev or dev.user_id != user_id:
+            raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=403)
+
+        try:
+            res = SmartPiggyRepository.transfer_bucket_funds(db, from_bucket_id, to_bucket_id, amount)
+            db.commit()
+            return res
+        except ValueError as val_err:
+            raise FintechBaseException(error_code="BUCKET_TRANSFER_FAILED", status_code=400, context={"reason": str(val_err)})
+
+    @staticmethod
+    def delete_bucket(db: Session, user_id: str, bucket_id: str) -> dict:
+        """Xóa Hũ mục tiêu con và hoàn dồn số dư"""
+        b = SmartPiggyRepository.get_bucket_by_id(db, bucket_id)
+        if not b:
+            raise FintechBaseException(error_code="BUCKET_NOT_FOUND", status_code=404)
+
+        dev = SmartPiggyRepository.get_by_id(db, b.smart_piggy_device_id)
+        if not dev or dev.user_id != user_id:
+            raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=403)
+
+        res = SmartPiggyRepository.delete_bucket(db, bucket_id)
+        db.commit()
+        return res

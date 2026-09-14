@@ -13,6 +13,7 @@ import com.liochio.auth.repository.LedgerAccountRepository;
 import com.liochio.auth.repository.UserRepository;
 import com.liochio.common.exception.AppException;
 import com.liochio.common.exception.ErrorCode;
+import com.liochio.common.outbox.OutboxPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,7 @@ import java.util.*;
  * 2. Khóa bi quan (SELECT ... FOR UPDATE) chống Race Condition.
  * 3. Chuỗi băm SHA-256 bảo đảm tính bất biến (Hash Chaining).
  * 4. Idempotency Key triệt tiêu rủi ro gọi lặp (Duplicate Request).
+ * 5. Transactional Outbox phát sinh sự kiện cho Realtime & Notification.
  */
 @Slf4j
 @Service
@@ -47,6 +49,7 @@ public class LedgerService {
     private final JournalEntryDetailRepository detailRepository;
     private final UserRepository userRepository;
     private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
+    private final OutboxPublisher outboxPublisher;
 
     public static final String ACC_SYS_SETTLEMENT = "ACC_SYS_SETTLEMENT";
     public static final String ACC_SYS_REVENUE = "ACC_SYS_REVENUE";
@@ -246,15 +249,6 @@ public class LedgerService {
                 creditAcc = getAccountForUpdate(safeTenant, request.getUserId(), "USER_AVAILABLE");
                 validateSufficientBalance(debitAcc, amount);
             }
-            case "PARENT_BONUS" -> {
-                // Cha mẹ duyệt thưởng: DEBIT Parent Available -> CREDIT Child Escrow
-                if (request.getTargetUserId() == null) {
-                    throw new AppException(ErrorCode.INVALID_REQUEST, "Thưởng phụ huynh yêu cầu targetUserId (ID của con)");
-                }
-                debitAcc = getAccountForUpdate(safeTenant, request.getUserId(), "USER_AVAILABLE");
-                creditAcc = getAccountForUpdate(safeTenant, request.getTargetUserId(), "USER_ESCROW");
-                validateSufficientBalance(debitAcc, amount);
-            }
             default -> throw new AppException(ErrorCode.INVALID_REQUEST, "Loại giao dịch không hỗ trợ: " + txType);
         }
 
@@ -315,6 +309,20 @@ public class LedgerService {
         detailRepository.save(debitDetail);
         detailRepository.save(creditDetail);
         entry.setDetails(List.of(debitDetail, creditDetail));
+
+        // 6. Phát sinh sự kiện Outbox (Transactional Outbox Pattern)
+        if (outboxPublisher != null) {
+            Map<String, Object> eventPayload = new HashMap<>();
+            eventPayload.put("entryNo", entryNo);
+            eventPayload.put("userId", request.getUserId());
+            eventPayload.put("transactionType", txType);
+            eventPayload.put("amount", amount);
+            eventPayload.put("currency", "VND");
+            eventPayload.put("referenceId", request.getReferenceId());
+            eventPayload.put("idempotencyKey", request.getIdempotencyKey());
+            eventPayload.put("postedAt", postedAt.toString());
+            outboxPublisher.publish("LEDGER_TRANSACTION", entryNo, "TRANSACTION_POSTED", eventPayload);
+        }
 
         log.info("[LedgerService] Ghi sổ kép thành công: EntryNo={}, Type={}, Amount={} VND, PrevHash={}, CurrentHash={}",
                 entryNo, txType, amount, prevHash.substring(0, 8), currentHash.substring(0, 8));

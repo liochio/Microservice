@@ -10,6 +10,7 @@ from app.models.smart_piggy.smart_piggy_coin_log import SmartPiggyCoinLog
 from app.models.smart_piggy.smart_piggy_sensor import SmartPiggySensor
 from app.models.smart_piggy.smart_piggy_led_log import SmartPiggyLedLog
 from app.models.smart_piggy.smart_piggy_gamification import SmartPiggyGamification
+from app.models.smart_piggy.smart_piggy_goal import SmartPiggyGoal
 
 
 class SmartPiggyRepository:
@@ -134,3 +135,109 @@ class SmartPiggyRepository:
 
         db.flush()
         return game
+
+    # =========================================================================
+    # 🎯 SMART PIGGY SUB-POTS / BUCKETS (MỤC TIÊU TÍCH LŨY CON TRONG VÍ HEO)
+    # =========================================================================
+    @staticmethod
+    def get_buckets(db: Session, device_id: str) -> List[SmartPiggyGoal]:
+        """Lấy danh sách các hũ mục tiêu con của một thiết bị Heo đất"""
+        return db.query(SmartPiggyGoal).filter(
+            SmartPiggyGoal.smart_piggy_device_id == device_id
+        ).order_by(desc(SmartPiggyGoal.created_at)).all()
+
+    @staticmethod
+    def get_bucket_by_id(db: Session, bucket_id: str) -> Optional[SmartPiggyGoal]:
+        """Lấy chi tiết 1 hũ mục tiêu con theo ID"""
+        return db.query(SmartPiggyGoal).filter(
+            SmartPiggyGoal.id == bucket_id
+        ).first()
+
+    @staticmethod
+    def create_bucket(
+        db: Session,
+        device_id: str,
+        goal_name: str,
+        target_amount: float,
+        deadline: Optional[datetime] = None
+    ) -> SmartPiggyGoal:
+        """Tạo mới một hũ mục tiêu con trong Heo đất"""
+        bucket = SmartPiggyGoal(
+            id=str(uuid.uuid4()),
+            smart_piggy_device_id=device_id,
+            goal_name=goal_name,
+            target_amount=target_amount,
+            current_amount=0.0,
+            deadline=deadline,
+            status="ACTIVE"
+        )
+        db.add(bucket)
+        db.flush()
+        return bucket
+
+    @staticmethod
+    def transfer_bucket_funds(
+        db: Session,
+        from_bucket_id: str,
+        to_bucket_id: str,
+        amount: float
+    ) -> dict:
+        """Chuyển tiền nội bộ giữa 2 hũ mục tiêu con trong cùng một chiếc Heo đất"""
+        from_b = db.query(SmartPiggyGoal).filter(SmartPiggyGoal.id == from_bucket_id).first()
+        to_b = db.query(SmartPiggyGoal).filter(SmartPiggyGoal.id == to_bucket_id).first()
+
+        if not from_b or not to_b:
+            raise ValueError("Không tìm thấy một trong hai hũ mục tiêu cần chuyển.")
+
+        if from_b.smart_piggy_device_id != to_b.smart_piggy_device_id:
+            raise ValueError("Hai hũ mục tiêu không thuộc cùng một thiết bị Heo Đất.")
+
+        curr_from = float(from_b.current_amount)
+        if curr_from < amount:
+            raise ValueError(f"Số dư hũ '{from_b.goal_name}' ({curr_from:,.0f} đ) không đủ để chuyển {amount:,.0f} đ.")
+
+        from_b.current_amount = curr_from - amount
+        to_b.current_amount = float(to_b.current_amount) + amount
+        db.flush()
+
+        return {
+            "from_bucket": {
+                "id": from_b.id,
+                "goal_name": from_b.goal_name,
+                "remaining_amount": float(from_b.current_amount)
+            },
+            "to_bucket": {
+                "id": to_b.id,
+                "goal_name": to_b.goal_name,
+                "new_amount": float(to_b.current_amount)
+            },
+            "transferred_amount": amount
+        }
+
+    @staticmethod
+    def delete_bucket(db: Session, bucket_id: str) -> dict:
+        """Xóa hũ mục tiêu con (dồn tiền còn lại về hũ mặc định hoặc giữ nguyên)"""
+        bucket = db.query(SmartPiggyGoal).filter(SmartPiggyGoal.id == bucket_id).first()
+        if not bucket:
+            raise ValueError("Hũ mục tiêu không tồn tại.")
+
+        remaining = float(bucket.current_amount)
+        device_id = bucket.smart_piggy_device_id
+
+        # Tìm hũ mục tiêu khác cùng thiết bị để nhận dồn tiền nếu có
+        other_bucket = db.query(SmartPiggyGoal).filter(
+            SmartPiggyGoal.smart_piggy_device_id == device_id,
+            SmartPiggyGoal.id != bucket_id
+        ).first()
+
+        if other_bucket and remaining > 0:
+            other_bucket.current_amount = float(other_bucket.current_amount) + remaining
+
+        db.delete(bucket)
+        db.flush()
+        return {
+            "deleted_bucket_id": bucket_id,
+            "refunded_amount": remaining,
+            "transferred_to": other_bucket.id if other_bucket else None
+        }
+

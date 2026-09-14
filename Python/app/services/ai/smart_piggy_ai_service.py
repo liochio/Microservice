@@ -161,3 +161,97 @@ class SmartPiggyAiService:
             "badges_unlocked": [b for b in badges if b["unlocked"]],
             "ranking_title": f"Top #{max(1, 100 - lvl * 15)} Bảng Phong Thần Nuôi Heo"
         }
+
+    # =========================================================================
+    # 🤖 AI CỐ VẤN KỶ LUẬT: THÓI QUEN TIẾT KIỆM & NHẮC NHỞ MÀN HÌNH HEO
+    # =========================================================================
+    @staticmethod
+    def get_saving_habits(db: Session, user_id: str, device_id: Optional[str] = None) -> dict:
+        """Khai phá dữ liệu thói quen nạp tiền của người dùng"""
+        behavior = SmartPiggyAiService.analyze_saving_behavior(db, user_id)
+        devices = SmartPiggyRepository.get_user_devices(db, user_id)
+        dev = next((d for d in devices if d.id == device_id), devices[0]) if devices else None
+
+        return {
+            "user_id": user_id,
+            "device_id": dev.id if dev else None,
+            "device_name": dev.device_name if dev else "Heo Đất Thông Minh",
+            "habit_summary": {
+                "streak_days": behavior.get("saving_streak_days", 1),
+                "peak_deposit_day": behavior.get("most_frequent_day_of_week", "Chủ Nhật"),
+                "favorite_denomination": behavior.get("favorite_coin_denomination", 50000.0),
+                "discipline_score": behavior.get("saving_consistency_score", 80),
+                "persona": behavior.get("behavior_persona", "Người Nuôi Heo Đều Đặn")
+            },
+            "smart_advice": behavior.get("ai_recommendation_tips", [])
+        }
+
+    @staticmethod
+    def trigger_nudge(db: Session, user_id: str, device_id: Optional[str] = None) -> dict:
+        """
+        🔔 AI KIỂM TRA KỶ LUẬT & GỬI LỜI NHẮC ĐẾN MÀN HÌNH OLED HEO ĐẤT:
+        - Nếu hôm nay chưa nạp tiền: Bắn thông báo lên App và cập nhật màn hình OLED Heo.
+        """
+        devices = SmartPiggyRepository.get_user_devices(db, user_id)
+        dev = next((d for d in devices if d.id == device_id), devices[0]) if devices else None
+
+        # Kiểm tra xem hôm nay đã có lượt nạp tiền nào chưa
+        has_dropped_today = False
+        if dev:
+            recent_logs = SmartPiggyRepository.get_coin_logs(db, dev.id, limit=5)
+            today_str = datetime.now().strftime("%Y-%m-%d")
+            for log in recent_logs:
+                if log.created_at and log.created_at.strftime("%Y-%m-%d") == today_str:
+                    has_dropped_today = True
+                    break
+
+        if has_dropped_today:
+            nudge_msg = "Tuyệt vời! Hôm nay bạn đã hoàn thành nhiệm vụ nuôi heo. Hãy tiếp tục duy trì phong độ!"
+            oled_face = "HAPPY_FULL"
+            oled_text = "HEO NO ROI! CAM ON BAN!"
+            need_reminder = False
+        else:
+            nudge_msg = "Hôm nay bạn chưa cho Heo ăn. Hãy bỏ ống 20,000 - 50,000 VND để không bị đứt chuỗi tiết kiệm!"
+            oled_face = "HUNGRY_POUTING"
+            oled_text = "BAC CHU OI! TOI DOI QUA..."
+            need_reminder = True
+
+        from app.websocket.manager.connection_manager import ws_manager
+        import asyncio
+
+        ws_payload = {
+            "event": "AI_HABIT_NUDGE",
+            "device_id": dev.id if dev else "UNKNOWN",
+            "need_reminder": need_reminder,
+            "nudge_message": nudge_msg,
+            "oled_screen": {
+                "display_text": oled_text,
+                "face_animation": oled_face,
+                "led_color": "#FFA500" if need_reminder else "#00FF00"
+            },
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        }
+
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                asyncio.create_task(ws_manager.send_to_user(user_id, ws_payload))
+                if dev:
+                    asyncio.create_task(ws_manager.send_to_device(dev.id, ws_payload))
+        except Exception:
+            pass
+
+        return {
+            "user_id": user_id,
+            "device_id": dev.id if dev else None,
+            "has_dropped_today": has_dropped_today,
+            "need_reminder": need_reminder,
+            "nudge_message": nudge_msg,
+            "oled_hardware_payload": {
+                "screen_line1": "LIOCHIO PIGGY",
+                "screen_line2": oled_text,
+                "face_icon": oled_face,
+                "buzzer_nudge_chime": need_reminder
+            }
+        }
+

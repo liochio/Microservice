@@ -17,12 +17,18 @@ class UserService:
 
     @staticmethod
     def get_profile(db, user_id: str) -> dict:
-        user = db.execute(select(User).where(User.id == user_id)).scalars().first()
+        user = db.execute(
+            select(User).where(
+                (User.id == str(user_id)) |
+                (User.id == f"usr_{user_id}") |
+                (User.username == str(user_id))
+            )
+        ).scalars().first()
         if not user:
             raise FintechBaseException(error_code=SystemConstants.USER_NOT_FOUND, status_code=404)
 
         # Lấy danh sách tên vai trò
-        roles_stmt = select(Role.name).join(UserRole, Role.id == UserRole.role_id).where(UserRole.user_id == user_id)
+        roles_stmt = select(Role.name).join(UserRole, Role.id == UserRole.role_id).where(UserRole.user_id == user.id)
         role_names = db.execute(roles_stmt).scalars().all()
 
         return {
@@ -40,7 +46,13 @@ class UserService:
 
     @staticmethod
     def update_profile(db, user_id: str, payload) -> dict:
-        user = db.execute(select(User).where(User.id == user_id)).scalars().first()
+        user = db.execute(
+            select(User).where(
+                (User.id == str(user_id)) |
+                (User.id == f"usr_{user_id}") |
+                (User.username == str(user_id))
+            )
+        ).scalars().first()
         if not user:
             raise FintechBaseException(error_code=SystemConstants.USER_NOT_FOUND, status_code=404)
 
@@ -54,10 +66,10 @@ class UserService:
 
         if update_values:
             update_values["updated_at"] = datetime.now()
-            db.execute(update(User).where(User.id == user_id).values(**update_values))
+            db.execute(update(User).where(User.id == user.id).values(**update_values))
             db.commit()
 
-        return UserService.get_profile(db, user_id)
+        return UserService.get_profile(db, user.id)
 
     @staticmethod
     def change_password(db, user_id: str, payload) -> bool:

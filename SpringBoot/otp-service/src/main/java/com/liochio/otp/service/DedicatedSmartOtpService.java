@@ -28,7 +28,7 @@ public class DedicatedSmartOtpService {
     private final OtpVerificationRepository otpRepository;
     private final OtpConfigService otpConfigService;
 
-    private static final String ISSUER = "PortfolioEngine";
+    private static final String ISSUER = "LiochioFintech";
 
     @Transactional
     public SmartOtpSetupResponse setupSmartOtp(SmartOtpSetupRequest request) {

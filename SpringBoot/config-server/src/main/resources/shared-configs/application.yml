@@ -1,5 +1,5 @@
 # ==============================================================================
-# Portfolio Backend Engine - Shared Microservice Configuration (Config Server)
+# Liochio Microservices Ecosystem - Shared Microservice Configuration (Config Server)
 # Cấu hình dùng chung được nạp tự động cho 100% các Microservices con
 # ==============================================================================
 
@@ -73,7 +73,7 @@ eureka:
 
 # Cấu hình JWT Security mặc định
 jwt:
-  secret: ${JWT_SECRET:portfolio-engine-super-secret-jwt-key-minimum-256-bits-for-security-2026}
+  secret: ${JWT_SECRET:liochio-super-secret-jwt-key-minimum-256-bits-for-security-2026}
   access-token-validity-ms: 3600000        # 1 giờ
   refresh-token-validity-ms: 604800000     # 7 ngày
 

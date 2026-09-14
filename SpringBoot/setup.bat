@@ -338,7 +338,7 @@ echo     ^<groupId^>com.liochio^</groupId^>
 echo     ^<artifactId^>liochio-microservices^</artifactId^>
 echo     ^<version^>1.0.0-SNAPSHOT^</version^>
 echo     ^<packaging^>pom^</packaging^>
-echo     ^<name^>Portfolio Headless Backend Engine Root^</name^>
+echo     ^<name^>Liochio Microservices Ecosystem^</name^>
 echo.
 echo     ^<modules^>
 echo         ^<module^>common-lib^</module^>
@@ -347,9 +347,12 @@ echo         ^<module^>config-server^</module^>
 echo         ^<module^>api-gateway^</module^>
 echo         ^<module^>auth-service^</module^>
 echo         ^<module^>entity-service^</module^>
-echo         ^<module^>media-service^</module^>
 echo         ^<module^>notification-service^</module^>
 echo         ^<module^>payment-service^</module^>
+echo         ^<module^>ai-service^</module^>
+echo         ^<module^>realtime-service^</module^>
+echo         ^<module^>otp-service^</module^>
+echo         ^<module^>worker-service^</module^>
 echo     ^</modules^>
 echo.
 echo     ^<properties^>

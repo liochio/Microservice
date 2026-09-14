@@ -1,10 +1,11 @@
-﻿# 📄 Đường dẫn file: app/services/smart_piggy/piggy_security_service.py
+# 📄 Đường dẫn file: app/services/smart_piggy/piggy_security_service.py
 from datetime import datetime
 from typing import Dict, Any, Optional, List
 import hmac
 import hashlib
 import time
 import uuid
+import asyncio
 
 from sqlalchemy.orm import Session
 from sqlalchemy import select, update
@@ -217,10 +218,28 @@ class PiggySecurityService:
     # =========================================================================
     @classmethod
     def unbind_device(cls, db: Session, user_id: str, device_id: str) -> Dict[str, Any]:
-        """Hủy liên kết Heo Đất khỏi tài khoản, xóa sạch token bảo mật để sẵn sàng sang nhượng"""
+        """
+        🔄 HỦY LIÊN KẾT HEO ĐẤT (STRICT UNBINDING GUARD):
+        - Bắt buộc số dư ví Heo Đất phải bằng 0 hoặc đã đập heo tất toán!
+        - Nếu còn tiền -> Từ chối thẳng thừng với HTTP 400.
+        """
         device = SmartPiggyRepository.get_by_id(db, device_id)
         if not device or device.user_id != user_id:
-            raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+            if not device or device.user_id != user_id:
+                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+
+        # 👑 BỌC THÉP RÀO CHẮN: KIỂM TRA SỐ DƯ TIỀN MẶT CÒN TRONG HEO
+        wallet = db.query(Wallet).filter(Wallet.id == device.wallet_id).first()
+        if wallet and float(wallet.balance) > 0:
+            raise FintechBaseException(
+                error_code="CANNOT_UNBIND_NONZERO_BALANCE",
+                status_code=400,
+                context={
+                    "current_balance": float(wallet.balance),
+                    "message": f"Heo đất vẫn còn {float(wallet.balance):,.0f} VND tiền mặt. Vui lòng thực hiện lệnh 'Đập heo' và lấy hết tiền ra trước khi hủy liên kết!"
+                }
+            )
 
         # Xóa liên kết người dùng và đưa thiết bị về chế độ UNPAIRED
         device.user_id = "UNBOUND"
@@ -228,15 +247,117 @@ class PiggySecurityService:
         db.commit()
 
         # Dọn dẹp cache
-        cls.release_device_lock(device_id)
-        if device_id in _HEARTBEAT_REGISTRY:
-            del _HEARTBEAT_REGISTRY[device_id]
+        cls.release_device_lock(device.id)
+        if device.id in _HEARTBEAT_REGISTRY:
+            del _HEARTBEAT_REGISTRY[device.id]
 
         return {
-            "device_id": device_id,
+            "device_id": device.id,
             "status": "UNBOUND_SUCCESS",
             "message": "Đã hủy liên kết thiết bị Heo Đất thành công. Thiết bị đã được xóa trắng sẵn sàng ghép đôi lại."
         }
+
+    # =========================================================================
+    # 🚨 AN NINH CHỐNG TRỘM: CẢM BIẾN HÀNH TRÌNH NẮP & CẢNH BÁO MẤT NGUỒN
+    # =========================================================================
+    @classmethod
+    def report_lid_tamper(
+        cls,
+        db: Session,
+        device_id: str,
+        lid_opened: bool,
+        timestamp: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """
+        🚨 PHÁT HIỆN CẠY NẮP BẰNG CẢM BIẾN HÀNH TRÌNH (LIMIT SWITCH):
+        - Nếu nắp mở mà KHÔNG CÓ lệnh SMASH từ App -> Báo động khẩn cấp! Còi hú 100dB, phong tỏa ví FROZEN.
+        """
+        device = SmartPiggyRepository.get_by_id(db, device_id)
+        if not device:
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+
+        lock_info = _HARDWARE_MUTEXES.get(device.id if device else device_id, {})
+        is_authorized_smash = lock_info.get("locked") and lock_info.get("lock_type") == "SMASH"
+
+        if lid_opened and not is_authorized_smash:
+            # Cạy nắp trái phép -> Phong tỏa ví và kích hoạt còi hú
+            wallet = db.query(Wallet).filter(Wallet.id == device.wallet_id).first() if device else None
+            if wallet:
+                wallet.status = "FROZEN"
+                db.commit()
+
+            ws_event = {
+                "event": "SECURITY_BREACH_TAMPER",
+                "device_id": device.id if device else device_id,
+                "alarm_type": "LID_TAMPER_LIMIT_SWITCH",
+                "message": "CẢNH BÁO NGUY CẤP: Nắp Heo Đất đang bị cạy mở vật lý trái phép! Ví đã tự động phong tỏa.",
+                "hardware_action": {
+                    "buzzer_mode": "SIREN_100DB",
+                    "solenoid_lock": "SECURED_CLOSED",
+                    "led_rgb": "#FF0000_STROBE"
+                }
+            }
+            try:
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    if device:
+                        asyncio.create_task(ws_manager.send_to_user(device.user_id, ws_event))
+                    asyncio.create_task(ws_manager.broadcast_all(ws_event))
+            except Exception:
+                pass
+
+            return {
+                "status": "SECURITY_BREACH",
+                "device_id": device.id if device else device_id,
+                "alarm_triggered": True,
+                "wallet_status": "FROZEN",
+                "hardware_response": {
+                    "buzzer": "SIREN_100DB",
+                    "led": "#FF0000_STROBE",
+                    "solenoid": "LOCKED"
+                },
+                "message": "CẢNH BÁO: Phát hiện cạy nắp trái phép! Còi hú 100dB đã kích hoạt và ví đã bị phong tỏa."
+            }
+
+        return {
+            "status": "AUTHORIZED_OR_NORMAL",
+            "device_id": device.id if device else device_id,
+            "alarm_triggered": False,
+            "message": "Trạng thái nắp bình thường hoặc đã được cấp quyền mở qua App."
+        }
+
+    @classmethod
+    def report_power_cut(cls, db: Session, device_id: str, battery_pct: float = 100.0) -> Dict[str, Any]:
+        """
+        ⚡ CẢNH BÁO MẤT NGUỒN ADAPTER (CHUYỂN SANG PIN 18650 DỰ PHÒNG):
+        """
+        device = SmartPiggyRepository.get_by_id(db, device_id)
+        if not device:
+            device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
+
+        ws_event = {
+            "event": "POWER_OUTAGE_ALERT",
+            "device_id": device.id if device else device_id,
+            "battery_pct": battery_pct,
+            "message": f"Nguồn điện ngoài của Heo Đất đã bị ngắt. Thiết bị đang chạy pin dự phòng ({battery_pct:.0f}%)."
+        }
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                if device:
+                    asyncio.create_task(ws_manager.send_to_user(device.user_id, ws_event))
+                asyncio.create_task(ws_manager.broadcast_all(ws_event))
+        except Exception:
+            pass
+
+        return {
+            "status": "POWER_CUT_ALERT_RECORDED",
+            "device_id": device.id if device else device_id,
+            "running_on_backup_battery": True,
+            "battery_pct": battery_pct,
+            "message": "Đã ghi nhận cảnh báo mất nguồn điện ngoài. Hệ thống đang bảo vệ bằng pin dự phòng."
+        }
+
 
     # =========================================================================
     # 6. FATAL CRASH & WRITE-OFF ADJUSTMENT (EVENTUAL CONSISTENCY)
