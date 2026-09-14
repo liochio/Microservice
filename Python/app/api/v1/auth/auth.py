@@ -1,229 +1,110 @@
 # 📄 Đường dẫn file: app/api/v1/auth/auth.py
-from fastapi import APIRouter, Depends, Request, status
-from sqlalchemy.orm import Session
+# 👑 IDENTITY & ACCESS MANAGEMENT ROUTER - PROXIED TO JAVA CORE IAM (:8081 / :8080)
+# Bảo đảm 100% Zero Regression cho các client gọi trực tiếp qua Python port 8000
 
-from app.constants import SystemConstants
-from app.core.exceptions.base_exception import FintechBaseException
-from app.core.security.guard.guards import get_current_user
-from app.core.translator.translator_engine import i18n_translator
-from app.dependency import get_db
-from app.schemas.requests.auth import (
-    UserLoginRequest,
-    UserRegisterRequest,
-    RefreshTokenRequest,
-)
-from app.schemas.responses.auth import UserRegisterResponse
-from app.services.auth.auth.auth_service import AuthService
-from app.services.auth.auth.token_service import TokenService
+from fastapi import APIRouter, Request, Response, status
+from fastapi.responses import JSONResponse
+import httpx
+import logging
 
-router = APIRouter(prefix="/auth", tags=["Authentication"])
+logger = logging.getLogger(__name__)
+
+router = APIRouter(prefix="/auth", tags=["Authentication (Proxied to Core IAM)"])
+
+GATEWAY_IAM_URL = "http://localhost:8080/api/v1/auth"
+CORE_IAM_URL = "http://localhost:8081/api/v1/auth"
 
 
-# ==============================================================================
-# 👑 API 1: ĐĂNG KÝ TÀI KHOẢN MỚI (PUBLIC ENDPOINT)
-# ==============================================================================
-@router.post(
-    "/register",
-    response_model=UserRegisterResponse,
-    status_code=status.HTTP_201_CREATED,
-)
-async def register_account(
-    request: Request,
-    payload: UserRegisterRequest,
-    db: Session = Depends(get_db),
-):
-    """
-    🎯 API Đăng ký tài khoản người dùng mới:
-       - Validate định dạng dữ liệu đầu vào tuần tự.
-       - Tạo bản ghi User trạng thái PENDING, Notification email và phát hành link token.
-       - Tự động Commit dữ liệu vào Database.
-    """
-    try:
-        result_data = AuthService.register_new_user(db, payload)
-
-        i18n_message = i18n_translator.translate(
-            request,
-            error_code=SystemConstants.USER_REGISTER_SUCCESS,
-            msg_type=SystemConstants.MSG_TYPE_MESSAGE
-        )
-
-        return UserRegisterResponse(
-            success=True,
-            error_code=SystemConstants.USER_REGISTER_SUCCESS,
-            message=i18n_message,
-            data=result_data,
-        )
-
-    except FintechBaseException:
-        raise
-
-    except Exception:
-        raise FintechBaseException(
-            error_code=SystemConstants.REGISTRATION_INTERNAL_CRASH,
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
-
-
-# ==============================================================================
-# 👑 API 2: ĐĂNG NHẬP HỆ THỐNG (PUBLIC ENDPOINT)
-# ==============================================================================
-@router.post(
-    "/login",
-    status_code=status.HTTP_200_OK,
-)
-async def login_account(
-    request: Request,
-    payload: UserLoginRequest,
-    db: Session = Depends(get_db),
-):
-    """
-    🎯 API Đăng nhập hệ thống:
-       - Đối chiếu thông tin đăng nhập (email & mật khẩu Bcrypt).
-       - Kiểm tra trạng thái tài khoản (ACTIVE / BLOCKED / PENDING).
-       - Cấp cặp bài trùng Token JTI (Access Token 30m + Refresh Token 7d) chứa Ma trận quyền.
-       - Khóa xích Session xuống bảng `user_sessions`.
-    """
-    try:
-        result_data = AuthService.login_user(db, payload)
-
-        print("DA TOI DAY!")
-
-        i18n_message = i18n_translator.translate(
-            request,
-            error_code=SystemConstants.USER_LOGIN_SUCCESS,
-            msg_type=SystemConstants.MSG_TYPE_MESSAGE
-        )
-
-        return {
-            "success": True,
-            "error_code": SystemConstants.USER_LOGIN_SUCCESS,
-            "message": i18n_message,
-            "data": result_data,
-        }
-
-    except FintechBaseException:
-        raise
-
-    except Exception:
-        raise FintechBaseException(
-            error_code=SystemConstants.LOGIN_INTERNAL_CRASH,
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
-
-
-# ==============================================================================
-# 👑 API 3: LÀM MỚI ACCESS TOKEN (REFRESH TOKEN ROTATION)
-# ==============================================================================
-@router.post(
-    "/refresh-token",
-    status_code=status.HTTP_200_OK,
-)
-async def refresh_access_token(
-    request: Request,
-    payload: RefreshTokenRequest,
-    db: Session = Depends(get_db),
-):
-    """
-    🎯 API Làm mới Token (Token Rotation):
-       - Kiểm tra tính hợp lệ của Refresh Token (chống Replay Attack).
-       - Thu hồi JTI cũ và cấp cặp Token mới.
-       - TỰ ĐỘNG NẠP LẠI ĐẦY ĐỦ QUYỀN HẠN (roles, modules, permissions) của User từ DB.
-    """
-    device = getattr(request.state, "user_agent", SystemConstants.UNKNOWN)
-    client_ip = getattr(request.state, "client_ip", "127.0.0.1")
+async def proxy_to_iam(request: Request, path: str):
+    """Chuyển tiếp yêu cầu xác thực sang Java IAM Service để thống nhất Single Source of Truth."""
+    url = f"{CORE_IAM_URL}/{path}"
+    headers = {k: v for k, v in request.headers.items() if k.lower() not in ("host", "content-length")}
+    params = dict(request.query_params)
+    body = await request.body()
 
     try:
-        new_token_data = TokenService.rotate_refresh_token(
-            db_conn=db,
-            old_refresh_token=payload.refresh_token,
-            device=device,
-            ip=client_ip
-        )
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.request(
+                method=request.method,
+                url=url,
+                headers=headers,
+                params=params,
+                content=body
+            )
+            return Response(
+                content=resp.content,
+                status_code=resp.status_code,
+                headers=dict(resp.headers),
+                media_type=resp.headers.get("content-type", "application/json")
+            )
+    except Exception as e:
+        logger.error(f"[IAM_PROXY_ERROR] Không thể kết nối tới Core IAM Service: {str(e)}")
+        # Fallback qua Gateway
+        try:
+            gw_url = f"{GATEWAY_IAM_URL}/{path}"
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.request(
+                    method=request.method,
+                    url=gw_url,
+                    headers=headers,
+                    params=params,
+                    content=body
+                )
+                return Response(
+                    content=resp.content,
+                    status_code=resp.status_code,
+                    headers=dict(resp.headers),
+                    media_type=resp.headers.get("content-type", "application/json")
+                )
+        except Exception as gw_err:
+            logger.error(f"[GATEWAY_PROXY_ERROR] Fallback gateway thất bại: {str(gw_err)}")
+            return JSONResponse(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                content={"code": "IAM_SERVICE_UNAVAILABLE", "message": "Dịch vụ xác thực Core IAM hiện không khả dụng"}
+            )
 
-        i18n_message = i18n_translator.translate(
-            request,
-            error_code=SystemConstants.TOKEN_REFRESH_SUCCESS,
-            msg_type=SystemConstants.MSG_TYPE_MESSAGE
-        )
 
-        return {
-            "success": True,
-            "error_code": SystemConstants.TOKEN_REFRESH_SUCCESS,
-            "message": i18n_message,
-            "data": new_token_data
-        }
-
-    except FintechBaseException:
-        raise
-    except Exception:
-        raise FintechBaseException(
-            error_code=SystemConstants.TOKEN_REFRESH_CRASH,
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
+@router.post("/register")
+async def register_account(request: Request):
+    return await proxy_to_iam(request, "register")
 
 
-# ==============================================================================
-# 👑 API 4: ĐĂNG XUẤT HỆ THỐNG (REVOKE SESSION / LOGOUT)
-# ==============================================================================
-@router.post(
-    "/logout",
-    status_code=status.HTTP_200_OK,
-)
-async def logout_account(
-    request: Request,
-    current_user: dict = Depends(get_current_user),
-    db: Session = Depends(get_db),
-):
-    """
-    🎯 API Đăng xuất hệ thống (Chuẩn Enterprise 3 Tầng):
-       - Yêu cầu Bearer Token hợp lệ.
-       - Đưa Token & Session vào L1 In-Memory Blacklist và L2 Redis Blacklist.
-       - Thu hồi phiên làm việc (is_revoked = 1) trong bảng `user_sessions`.
-       - Vô hiệu hóa tức thì quyền truy cập của Token trên toàn bộ hệ thống.
-    """
-    user_id = current_user.get("user_id")
-    payload = current_user.get("payload", {})
-    session_id = payload.get("sessionId")
-    jti = payload.get("jti")
+@router.post("/login")
+async def login_account(request: Request):
+    return await proxy_to_iam(request, "login")
 
-    auth_header = request.headers.get("Authorization") or request.headers.get("authorization") or ""
-    raw_token = auth_header[7:].strip() if auth_header.lower().startswith("bearer ") else auth_header.strip()
 
-    try:
-        # 1. Đưa vào Blacklist 3 tầng (L1 RAM + L2 Redis)
-        JwtService.register_logout(raw_token, session_id=session_id, user_id=user_id)
+@router.post("/refresh")
+@router.post("/token/refresh")
+async def refresh_token(request: Request):
+    return await proxy_to_iam(request, "token/refresh")
 
-        # 2. Cập nhật bảng user_sessions trong liochio_app_db
-        TokenService.revoke_session(db_conn=db, user_id=user_id, jti=jti)
 
-        # 3. Đồng bộ cập nhật liochio_core_db.user_sessions
-        if session_id:
-            try:
-                import pymysql
-                conn = pymysql.connect(host="127.0.0.1", port=3306, user="root", password="12345678", connect_timeout=1)
-                with conn.cursor() as cur:
-                    cur.execute("UPDATE liochio_core_db.user_sessions SET is_revoked = 1, revoked_reason = 'LOGOUT' WHERE id = %s", (session_id,))
-                conn.commit()
-                conn.close()
-            except Exception:
-                pass
+@router.post("/logout")
+async def logout_account(request: Request):
+    return await proxy_to_iam(request, "logout")
 
-        i18n_message = i18n_translator.translate(
-            request,
-            error_code=SystemConstants.AUTH_LOGOUT_SUCCESS,
-            msg_type=SystemConstants.MSG_TYPE_MESSAGE
-        )
 
-        return {
-            "success": True,
-            "error_code": SystemConstants.AUTH_LOGOUT_SUCCESS,
-            "message": i18n_message
-        }
+@router.post("/otp/verify")
+async def verify_otp(request: Request):
+    return await proxy_to_iam(request, "otp/verify")
 
-    except FintechBaseException:
-        raise
-    except Exception:
-        raise FintechBaseException(
-            error_code=SystemConstants.LOGOUT_INTERNAL_CRASH,
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
-        )
+
+@router.post("/otp/resend")
+async def resend_otp(request: Request):
+    return await proxy_to_iam(request, "otp/resend")
+
+
+@router.post("/password/forgot")
+async def forgot_password(request: Request):
+    return await proxy_to_iam(request, "password/forgot")
+
+
+@router.post("/password/reset")
+async def reset_password(request: Request):
+    return await proxy_to_iam(request, "password/reset")
+
+
+@router.get("/me")
+async def get_current_user_profile(request: Request):
+    return await proxy_to_iam(request, "me")

@@ -22,35 +22,41 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        # 1. Auth & IAM & Core Ledger Service Routes (Port 8081)
+        # 1. Auth & Pure IAM Service Routes (Port 8081)
         - id: auth-service
           uri: ${AUTH_SERVICE_URL:http://localhost:8081}
           predicates:
-            - Path=/api/v1/auth/**, /api/v1/users/**, /api/v1/roles/**, /api/v1/tenants/**, /api/v1/menus/**, /api/v1/approvals/**, /api/v1/onboarding/**, /api/v1/security/**, /api/v1/configs/**, /api/v1/ledger/**, /api/auth/**, /api/users/**, /api/roles/**, /api/tenants/**, /api/menus/**, /api/approvals/**, /api/onboarding/**, /api/security/**, /api/configs/**, /api/ledger/**
+            - Path=/api/v1/auth/**, /api/v1/users/**, /api/v1/roles/**, /api/v1/tenants/**, /api/v1/approvals/**, /api/v1/onboarding/**, /api/v1/security/**, /api/auth/**, /api/users/**, /api/roles/**, /api/tenants/**, /api/approvals/**, /api/onboarding/**, /api/security/**
 
-        # 2. Payment Service Routes (Port 8085)
+        # 2. Core Banking Double-Entry Ledger Service Routes (Port 8085)
+        - id: ledger-service
+          uri: ${LEDGER_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/api/v1/ledger/**, /api/ledger/**
+
+        # 3. Payment Service Routes (Port 8083)
         - id: payment-service
-          uri: ${PAYMENT_SERVICE_URL:http://localhost:8085}
+          uri: ${PAYMENT_SERVICE_URL:http://localhost:8083}
           predicates:
             - Path=/api/v1/payments/**, /api/v1/bookings/**, /api/v1/wallets/**, /api/v1/transactions/**, /api/payments/**, /api/bookings/**, /api/wallets/**, /api/transactions/**
 
-        # 3. Python IoT & AI Satellite Extension (Port 8000 - Tenant A: PiggyBank / AI)
+        # 4. Python IoT & AI Satellite Extension (Port 8000 - Tenant A: PiggyBank / AI)
         - id: python-iot-ai-service
           uri: ${FINTECH_URL:http://localhost:8000}
           predicates:
             - Path=/api/v1/iot/**, /api/v1/smart-piggy/**, /api/v1/smart_piggy/**, /api/v1/ocr/**, /api/v1/ai/**, /api/v1/budgets/**, /api/v1/goals/**, /api/v1/transfers/**, /api/v1/reports/**, /api/v1/ws/**
 
-        # 4. Enterprise Notification Service Routes (Port 8084)
+        # 5. Enterprise Notification Service Routes (Port 8084)
         - id: notification-service
           uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
           predicates:
             - Path=/api/v1/notifications/**, /api/notifications/**
 
-        # 5. Entity & Master Data Service Routes (Port 8082)
+        # 6. Entity, Master Data, Dynamic Menus & Config Matrix Routes (Port 8082)
         - id: entity-service
           uri: ${ENTITY_SERVICE_URL:http://localhost:8082}
           predicates:
-            - Path=/api/v1/entities/**, /api/v1/master-data/**, /api/v1/portfolios/**, /api/v1/ui-configs/**, /api/v1/forms/**, /api/v1/system/**, /api/v1/system-configs/**, /api/entities/**, /api/master-data/**, /api/portfolios/**, /api/ui-configs/**, /api/forms/**, /api/system/**, /api/system-configs/**
+            - Path=/api/v1/entities/**, /api/v1/master-data/**, /api/v1/portfolios/**, /api/v1/ui-configs/**, /api/v1/forms/**, /api/v1/system/**, /api/v1/system-configs/**, /api/v1/menus/**, /api/v1/configs/**, /api/v1/corp/configs/**, /api/entities/**, /api/master-data/**, /api/portfolios/**, /api/ui-configs/**, /api/forms/**, /api/system/**, /api/system-configs/**, /api/menus/**, /api/configs/**, /api/corp/configs/**
 
         # 6. AI Service (Port 8086)
         - id: ai-service

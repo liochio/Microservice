@@ -60,50 +60,9 @@ class UserRegisterProcessor:
         except CORE_FALLBACK_ERRORS:
             raise FintechBaseException(error_code=SystemConstants.USER_CREATION_DATABASE_FAILED, status_code=500)
 
-        # 2.5 👑 ĐỒNG BỘ NGUYÊN TỬ 100% SANG CẢ LIOCHIO_AUTH_DB (User + 3 Sổ Cái Kép)
-        try:
-            phone_val = getattr(payload, 'phone', None) or getattr(payload, 'phone_number', None)
-            fname_val = getattr(payload, 'full_name', None) or username
-            db_conn.execute(text("""
-                INSERT INTO `liochio_auth_db`.`users` (
-                    `tenant_id`, `username`, `password`, `email`, `phone`, `full_name`,
-                    `ekyc_level`, `ekyc_status`, `daily_transfer_limit`, `user_type`,
-                    `status`, `is_email_verified`, `is_phone_verified`, `failed_login_attempts`,
-                    `preferred_locale`, `version`, `created_at`, `updated_at`, `is_deleted`
-                ) VALUES (
-                    'default', :uname, :pwd, :mail, :phone, :fname,
-                    'TIER_1', 'UNVERIFIED', 5000000.00, 'CUSTOMER',
-                    'ACTIVE', 1, 0, 0,
-                    'vi', 0, NOW(), NOW(), 0
-                )
-                ON DUPLICATE KEY UPDATE
-                    `email` = VALUES(`email`),
-                    `phone` = VALUES(`phone`),
-                    `full_name` = VALUES(`full_name`),
-                    `status` = 'ACTIVE';
-            """), {
-                "uname": username,
-                "pwd": hashed_pwd,
-                "mail": clean_email,
-                "phone": phone_val,
-                "fname": fname_val
-            })
-
-            res_auth_user = db_conn.execute(text("SELECT id FROM `liochio_auth_db`.`users` WHERE username = :uname LIMIT 1"), {"uname": username}).fetchone()
-            if res_auth_user:
-                auth_user_id = res_auth_user[0]
-                for acc_t in ['USER_AVAILABLE', 'USER_HOLDING', 'USER_ESCROW']:
-                    acc_num = f"LEDGER_{acc_t}_{auth_user_id}"
-                    db_conn.execute(text("""
-                        INSERT IGNORE INTO `liochio_auth_db`.`ledger_accounts` (
-                            `tenant_id`, `account_number`, `user_id`, `account_type`, `currency`, `balance`, `status`, `version`, `created_at`, `updated_at`
-                        ) VALUES (
-                            'default', :acc_num, :uid, :acc_type, 'VND', 0.00, 'ACTIVE', 0, NOW(), NOW()
-                        );
-                    """), {"acc_num": acc_num, "uid": auth_user_id, "acc_type": acc_t})
-        except Exception:
-            pass
-
+        # 2.5 👑 PHÂN ĐỊNH RANH GIỚI: Việc đồng bộ Sổ cái kép và Identity thuộc quyền kiểm soát của Java IAM & Ledger Service qua Event/M2M API
+        # Đã loại bỏ hoàn toàn các truy vấn Raw SQL chọc chéo Database liochio_auth_db theo chuẩn Database-Per-Service.
+        
         # 3. TRUY VẤN TẦNG HỆ THỐNG: Lấy cấu hình thời gian hết hạn hệ thống
         try:
             q_setting = text(

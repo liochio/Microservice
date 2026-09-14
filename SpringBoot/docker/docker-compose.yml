@@ -1,18 +1,17 @@
 # ==============================================================================
-# Docker Compose - Portfolio Backend Engine Infrastructure Stack
-# Cung cấp toàn bộ hạ tầng cơ sở dữ liệu, caching, message queue, email testing
+# Docker Compose - Liochio FinTech Platform Infrastructure Stack
+# Cung cấp hạ tầng cơ sở dữ liệu phân tán, caching, message queue, email testing
 # ==============================================================================
 version: '3.8'
 
 services:
-  # 1. MySQL 8.0 Database Server
+  # 1. MySQL 8.0 Database Server (Database-Per-Service)
   mysql:
     image: mysql:8.0.36
-    container_name: portfolio-mysql
+    container_name: liochio-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: "your_password"
-      MYSQL_DATABASE: "portfolio-engine"
       TZ: "UTC"
     ports:
       - "3306:3306"
@@ -33,7 +32,7 @@ services:
   # 2. Redis 7 (L2 Cache, Distributed Lock ShedLock, Token Blacklist)
   redis:
     image: redis:7.2-alpine
-    container_name: portfolio-redis
+    container_name: liochio-redis
     restart: always
     ports:
       - "6379:6379"
@@ -49,7 +48,7 @@ services:
   # 3. RabbitMQ Message Broker (Outbox Pattern & Event Relay)
   rabbitmq:
     image: rabbitmq:3.13-management-alpine
-    container_name: portfolio-rabbitmq
+    container_name: liochio-rabbitmq
     restart: always
     environment:
       RABBITMQ_DEFAULT_USER: "guest"
@@ -59,35 +58,20 @@ services:
       - "15672:15672" # RabbitMQ Management Web UI
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # 4. Mailpit (Mock SMTP Server cho Notification Service testing)
+  # 4. Mailpit (Mock SMTP Testing Server)
   mailpit:
-    image: axllent/mailpit:latest
-    container_name: portfolio-mailpit
+    image: axllent/mailpit:v1.18
+    container_name: liochio-mailpit
     restart: always
     ports:
-      - "1025:1025" # SMTP port
-      - "8025:8025" # Web UI xem email test
-    environment:
-      MP_MAX_MESSAGES: 500
-
-  # 5. Zipkin Distributed Tracing (Micrometer Tracing)
-  zipkin:
-    image: openzipkin/zipkin:latest
-    container_name: portfolio-zipkin
-    restart: always
-    ports:
-      - "9411:9411"
-
-  # 6. Adminer (Web UI quản lý MySQL database trực quan)
-  adminer:
-    image: adminer:latest
-    container_name: portfolio-adminer
-    restart: always
-    ports:
-      - "8088:8080"
-    depends_on:
-      - mysql
+      - "1025:1025" # SMTP Port
+      - "8025:8025" # Web UI Port
 
 volumes:
   mysql_data:

@@ -5,97 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7595ff70-27b1-4166-b6ee-52f5f54990c7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/v1/auth/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/auth/auth.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/v1/smart_piggy/smart_piggy.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/smart_piggy/smart_piggy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/middleware/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/middleware/middleware.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/security/guard/guards.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/security/guard/guards.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/core/security/jwt/jwt_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/security/jwt/jwt_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/notification/notification.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/notification/notification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/repositories/smart_piggy/smart_piggy_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/smart_piggy/smart_piggy_repository.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/schemas/requests/smart_piggy.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/smart_piggy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/ai/smart_piggy_ai_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ai/smart_piggy_ai_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/auth/user/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/user/user_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/smart_piggy/piggy_security_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/smart_piggy/piggy_security_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/smart_piggy/piggy_withdrawal_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/smart_piggy/piggy_withdrawal_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/smart_piggy/smart_piggy_iot_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/smart_piggy/smart_piggy_iot_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/JwtAuthenticationGatewayFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/JwtAuthenticationGatewayFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/LedgerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/LedgerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/API_CATALOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/API_CATALOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/FilmServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/controller/FilmController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/entity/MovieEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/entity/MovieEpisodeEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/entity/MovieGenreEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/entity/MovieReviewEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/entity/StreamingServerEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/repository/MovieRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/java/com/liochio/film/service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/film-service/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/MediaServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/adapter/CloudinaryStorageAdapter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/adapter/LocalStorageAdapter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/adapter/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/config/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/config/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/controller/MediaController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/controller/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/dto/MediaUploadResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/dto/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/entity/MediaAssetEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/entity/MediaChunkUploadEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/entity/MediaFileEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/entity/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/repository/MediaAssetRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/repository/MediaChunkUploadRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/repository/MediaFileRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/repository/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/service/MediaService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/java/com/liochio/media/service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/resources/db/migration/V1__init_media_schema.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/resources/db/migration/V2__create_outbox_events.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/resources/db/migration/V3__create_media_assets_and_chunks.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/media-service/src/main/resources/logback-spring.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/MusicServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/controller/MusicController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/entity/AlbumEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/entity/ArtistEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/entity/MusicGenreEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/entity/PlaylistEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/entity/SongEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/entity/TrackReviewEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/repository/SongRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/java/com/liochio/music/service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/music-service/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/TourServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/controller/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/controller/TourController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/dto/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/entity/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/entity/TourBookingEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/entity/TourDepartureEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/entity/TourDestinationEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/entity/TourEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/entity/TourItineraryEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/entity/TourReviewEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/repository/TourRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/java/com/liochio/tour/service/NOTE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SpringBoot/tour-service/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../postman/01_Liochio_Core_Platform_API.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/../postman/01_Liochio_Core_Platform_API.postman_collection.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../postman/02_Liochio_Python_Resource_API.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/../postman/02_Liochio_Python_Resource_API.postman_collection.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../postman/Liochio_Local_Environment.postman_environment.json" beforeDir="false" afterPath="$PROJECT_DIR$/../postman/Liochio_Local_Environment.postman_environment.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../postman/Liochio_Microservices_API.postman_collection.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,11 +83,22 @@
       <workItem from="1789025217008" duration="6853000" />
       <workItem from="1789120967065" duration="3149000" />
       <workItem from="1789185998918" duration="3097000" />
-      <workItem from="1789366928904" duration="7071000" />
+      <workItem from="1789366928904" duration="8597000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/api/v1/ledger/ledger.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

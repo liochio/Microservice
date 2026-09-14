@@ -2,10 +2,8 @@ package com.liochio.auth.service;
 
 import com.liochio.auth.dto.CustomerGateDto;
 import com.liochio.auth.entity.CustomerOnboardingGateEntity;
-import com.liochio.auth.entity.LedgerAccountEntity;
 import com.liochio.auth.entity.UserEntity;
 import com.liochio.auth.repository.CustomerOnboardingGateRepository;
-import com.liochio.auth.repository.LedgerAccountRepository;
 import com.liochio.auth.repository.UserRepository;
 import com.liochio.common.exception.AppException;
 import com.liochio.common.exception.ErrorCode;
@@ -27,7 +25,6 @@ public class CustomerGateService {
 
     private final CustomerOnboardingGateRepository gateRepository;
     private final UserRepository userRepository;
-    private final LedgerAccountRepository ledgerAccountRepository;
 
     @Transactional
     public CustomerGateDto getOrCreateGate(Long userId, String tenantId) {
@@ -123,34 +120,7 @@ public class CustomerGateService {
         String availAccNo = "ACC_USR_" + userId + "_AVAIL";
         String savingsAccNo = "ACC_USR_" + userId + "_SAVINGS";
 
-        // Mở ví Khả dụng nếu chưa có
-        if (ledgerAccountRepository.findByTenantIdAndAccountNumber(entity.getTenantId(), availAccNo).isEmpty()) {
-            LedgerAccountEntity availAcc = LedgerAccountEntity.builder()
-                    .tenantId(entity.getTenantId())
-                    .accountNumber(availAccNo)
-                    .userId(userId)
-                    .accountType("USER_AVAILABLE")
-                    .currency("VND")
-                    .balance(BigDecimal.ZERO)
-                    .status("ACTIVE")
-                    .build();
-            ledgerAccountRepository.save(availAcc);
-        }
-
-        // Mở ví Tiết kiệm / Heo Đất nếu chưa có
-        if (ledgerAccountRepository.findByTenantIdAndAccountNumber(entity.getTenantId(), savingsAccNo).isEmpty()) {
-            LedgerAccountEntity savingsAcc = LedgerAccountEntity.builder()
-                    .tenantId(entity.getTenantId())
-                    .accountNumber(savingsAccNo)
-                    .userId(userId)
-                    .accountType("USER_ESCROW")
-                    .currency("VND")
-                    .balance(BigDecimal.ZERO)
-                    .status("ACTIVE")
-                    .build();
-            ledgerAccountRepository.save(savingsAcc);
-        }
-
+        // Việc cấp phát thực tế do ledger-service quản lý độc lập
         entity.setAvailableAccountNo(availAccNo);
         entity.setSavingsAccountNo(savingsAccNo);
         entity.setGate3WalletProvisionStatus("PROVISIONED");
