@@ -50,7 +50,7 @@ foreach ($db in $databases) {
     try {
         $pinfo = New-Object System.Diagnostics.ProcessStartInfo
         $pinfo.FileName = $mysqlExe
-        $pinfo.Arguments = "-h $DbHost -P $DbPort -u $DbUser -p$DbPass -N -e `"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '$name';`""
+        $pinfo.Arguments = "-h $DbHost -P $DbPort -u $DbUser -p$DbPass -N -e '"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '$name';'""
         $pinfo.RedirectStandardOutput = $true
         $pinfo.RedirectStandardError = $true
         $pinfo.UseShellExecute = $false

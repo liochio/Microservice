@@ -15,10 +15,10 @@ import java.util.Set;
  * 
  * Mục đích:
  * - Lưu trữ thông tin định danh của người dùng đang thực hiện request (User ID, Username, Roles, Permissions).
- * - Cung cấp thông tin cho JPA Auditing (`AuditorAware`) tự động điền `createdBy` và `lastModifiedBy`.
+ * - Cung cấp thông tin cho JPA Auditing ('AuditorAware') tự động điền 'createdBy' và 'lastModifiedBy'.
  * 
  * Khi nào gọi:
- * - Được JwtAuthenticationFilter nạp sau khi giải mã Token thành công và dọn sạch ở khối `finally`.
+ * - Được JwtAuthenticationFilter nạp sau khi giải mã Token thành công và dọn sạch ở khối 'finally'.
  */
 public final class UserContext {
 

@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/repositories/finance/budget_repository.py
+
 import uuid
 from datetime import datetime
 from sqlalchemy import select, update, and_, func
@@ -8,7 +8,7 @@ from app.models.finance.transaction import Transaction
 
 class BudgetRepository:
     """
-    👑 REPOSITORY: QUẢN LÝ BẢNG `budgets`
+    👑 REPOSITORY: QUẢN LÝ BẢNG 'budgets'
     """
 
     @staticmethod

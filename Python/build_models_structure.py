@@ -237,7 +237,7 @@ from app.db.base import Base
 class RequestFlowLog(Base):
     \"\"\"
     👑 REQUEST FLOW LOGS ENTITY MODEL (CLASSIC STYLE)
-    🎯 Viết giống hệt phong cách AuditLog của sếp để hệ thống tự sinh bảng mượt mà.
+    🎯 Viết giống hệt phong cách AuditLog hệ thống để hệ thống tự sinh bảng mượt mà.
     🔒 Tuyệt đối không đụng chạm hay làm ảnh hưởng tính năng cũ.
     \"\"\"
     __tablename__ = "request_flow_logs"
@@ -376,7 +376,7 @@ class BaseEntity(Base):
     \"\"\"👑 Thực thể gốc trừu tượng cho metadata engine \"\"\"
     __abstract__ = True
 
-# 👑 SIÊU BỌC THÉP METADATA: Ép hệ thống nạp toàn bộ các phân hệ để tạo các bảng vật lý tự động
+# 👑 SIÊU BẢO MẬT CAO METADATA: Ép hệ thống nạp toàn bộ các phân hệ để tạo các bảng vật lý tự động
 
 """
     )

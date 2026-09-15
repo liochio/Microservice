@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/services/smart_piggy/smart_piggy_service.py
+
 from datetime import datetime
 from decimal import Decimal
 from sqlalchemy import select, text

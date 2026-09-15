@@ -1,8 +1,8 @@
-# 📄 Đường dẫn file: setup_database.py
+
 """
 👑 SCRIPT KHỞI TẠO CƠ SỞ DỮ LIỆU & NẠP DỮ LIỆU MẪU (FINTECH RESOURCE SERVER)
 🎯 Mục đích:
-   1. Kiểm tra kết nối và khởi tạo toàn bộ cấu trúc bảng (Schema) qua SQLAlchemy BaseEntity trên `liochio_fintech_db`.
+   1. Kiểm tra kết nối và khởi tạo toàn bộ cấu trúc bảng (Schema) qua SQLAlchemy BaseEntity trên 'liochio_fintech_db'.
    2. Nạp cấu hình hệ thống mặc định (System Settings).
    3. Nạp danh mục Phân hệ (Modules) & Ma trận quyền hạn (Permissions).
    4. Nạp các Vai trò cốt lõi (ROLE_ADMIN, ROLE_USER) và gán phân hệ tương ứng.
@@ -35,6 +35,7 @@ from app.models.user_role.user_role import UserRole, RoleModule
 from app.models.common.system_setting import SystemSetting
 from app.models.wallet.wallet import Wallet
 from app.models.finance.category import Category
+from app.models.finance.mock_bank_account import MockBankAccount
 
 
 def init_schema():
@@ -236,7 +237,7 @@ def seed_default_accounts_and_wallets(db):
             email="admin@liochio.com",
             phone_number="0900000001",
             password_hash=CryptoService.hash_password("Admin@123456"),
-            full_name="Liochio System Administrator",
+            full_name="Quản Trị Viên Hệ Thống (Liochio Admin)",
             date_of_birth=date(1990, 1, 1),
             gender="MALE",
             status="ACTIVE",
@@ -256,7 +257,7 @@ def seed_default_accounts_and_wallets(db):
             email="user@liochio.com",
             phone_number="0900000002",
             password_hash=CryptoService.hash_password("User@123456"),
-            full_name="Liochio FinTech Client",
+            full_name="Nguyễn Văn An",
             date_of_birth=date(2000, 1, 1),
             gender="MALE",
             status="ACTIVE",
@@ -289,7 +290,7 @@ def seed_default_accounts_and_wallets(db):
             user_id=user_id,
             wallet_code="PIGGY_SMART_001",
             wallet_account="8887776662",
-            name="Heo Đất Thông Minh",
+            name="Ví Heo Đất Thông Minh IoT",
             currency="VND",
             balance=1250000.0,
             wallet_type="SMART_PIGGY",
@@ -303,6 +304,45 @@ def seed_default_accounts_and_wallets(db):
 
     db.commit()
     print("✅ [5/7] Hoàn tất khởi tạo tài khoản & ví mẫu.")
+
+
+def seed_mock_bank_accounts(db):
+    """Khởi tạo tài khoản ngân hàng liên kết mẫu phục vụ nạp tiền Topup"""
+    print("🏦 [5.1/7] Khởi tạo tài khoản ngân hàng đối tác mẫu...")
+    now = datetime.now()
+    banks = [
+        {
+            "bank_name": "Vietcombank - Ngân hàng TMCP Ngoại thương Việt Nam",
+            "account_number": "1012345678",
+            "account_name": "NGUYEN VAN AN",
+            "balance": 50000000.0,
+            "currency": "VND",
+            "status": "ACTIVE"
+        },
+        {
+            "bank_name": "Techcombank - Ngân hàng TMCP Kỹ thương Việt Nam",
+            "account_number": "1903456789",
+            "account_name": "NGUYEN VAN AN",
+            "balance": 25000000.0,
+            "currency": "VND",
+            "status": "ACTIVE"
+        }
+    ]
+    for b in banks:
+        existing = db.execute(select(MockBankAccount).where(MockBankAccount.account_number == b["account_number"])).scalars().first()
+        if not existing:
+            db.execute(insert(MockBankAccount).values(
+                id=str(uuid.uuid4()),
+                bank_name=b["bank_name"],
+                account_number=b["account_number"],
+                account_name=b["account_name"],
+                balance=b["balance"],
+                currency=b["currency"],
+                status=b["status"],
+                created_at=now
+            ))
+    db.commit()
+    print("✅ [5.1/7] Hoàn tất nạp tài khoản ngân hàng đối tác.")
 
 
 def seed_default_categories(db):
@@ -365,6 +405,7 @@ def main():
         seed_modules_and_permissions(db)
         seed_roles_and_role_modules(db)
         seed_default_accounts_and_wallets(db)
+        seed_mock_bank_accounts(db)
         seed_default_categories(db)
         sync_i18n_translations()
         print("\n" + "=" * 70)

@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/api/v1/ai/ai.py
+
 from fastapi import APIRouter, Depends, Request, status, Query
 from sqlalchemy.orm import Session
 from app.dependency import get_db

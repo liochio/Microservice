@@ -18,7 +18,7 @@ public class InitDatabases {
             try (Connection conn = DriverManager.getConnection(url, user, pass);
                  Statement stmt = conn.createStatement()) {
                 for (String db : dbNames) {
-                    stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS `" + db + "` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+                    stmt.executeUpdate("CREATE DATABASE IF NOT EXISTS '" + db + "' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
                     System.out.println("✅ Database verified/created: " + db);
                 }
             }

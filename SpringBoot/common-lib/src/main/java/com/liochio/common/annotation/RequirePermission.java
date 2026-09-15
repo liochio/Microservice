@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
  * 
  * Mục đích:
  * - Đặt trên method của Controller hoặc Service để kiểm tra quyền hạn tài nguyên
- *   theo định dạng `resource:action` (vd: `tour:create`, `booking:refund`, `user:delete`).
- * - Hỗ trợ kiểm tra đơn lẻ hoặc danh sách quyền với chế độ `ALL` hoặc `ANY`.
+ *   theo định dạng 'resource:action' (vd: 'tour:create', 'booking:refund', 'user:delete').
+ * - Hỗ trợ kiểm tra đơn lẻ hoặc danh sách quyền với chế độ 'ALL' hoặc 'ANY'.
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

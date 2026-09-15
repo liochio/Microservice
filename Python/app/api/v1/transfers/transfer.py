@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/api/v1/transfers/transfer.py
+
 from fastapi import APIRouter, Depends, Request, Query, status
 from sqlalchemy.orm import Session
 from app.dependency import get_db

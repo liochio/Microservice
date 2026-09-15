@@ -6,10 +6,10 @@ Cung cấp các API quản lý thông tin cá nhân, cập nhật hồ sơ, đ�
 ---
 
 ## 1. Lấy Thông Tin Cá Nhân (Profile)
-- **Endpoint**: `GET /api/v1/users/me`
+- **Endpoint**: 'GET /api/v1/users/me'
 - **Khi nào dùng**: Khi mở trang Profile hoặc hiển thị tên/avatar người dùng trên Header ứng dụng.
 - **Response Mẫu**:
-```json
+'''json
 {
   "success": true,
   "error_code": "USER_PROFILE_FETCH_SUCCESS",
@@ -27,50 +27,50 @@ Cung cấp các API quản lý thông tin cá nhân, cập nhật hồ sơ, đ�
     "roles": ["USER"]
   }
 }
-```
+'''
 
 ---
 
 ## 2. Cập Nhật Hồ Sơ Cá Nhân
-- **Endpoint**: `PUT /api/v1/users/me`
+- **Endpoint**: 'PUT /api/v1/users/me'
 - **Payload**:
-```json
+'''json
 {
   "full_name": "Nguyễn Văn Đã Sửa",
   "date_of_birth": "1998-10-20",
   "gender": "MALE"
 }
-```
+'''
 
 ---
 
 ## 3. Đổi Mật Khẩu
-- **Endpoint**: `POST /api/v1/users/change-password`
+- **Endpoint**: 'POST /api/v1/users/change-password'
 - **Payload**:
-```json
+'''json
 {
   "old_password": "OldPassword123!",
   "new_password": "NewPassword456!",
   "confirm_password": "NewPassword456!"
 }
-```
+'''
 
 ---
 
 ## 4. Quên Mật Khẩu (Gửi OTP)
-- **Endpoint**: `POST /api/v1/users/forgot-password`
-- **Payload**: `{"email": "user_demo@gmail.com"}`
+- **Endpoint**: 'POST /api/v1/users/forgot-password'
+- **Payload**: '{"email": "user_demo@gmail.com"}'
 
 ---
 
 ## 5. Đặt Lại Mật Khẩu Bằng OTP
-- **Endpoint**: `POST /api/v1/users/reset-password`
+- **Endpoint**: 'POST /api/v1/users/reset-password'
 - **Payload**:
-```json
+'''json
 {
   "email": "user_demo@gmail.com",
   "otp_code": "123456",
   "new_password": "ResetPassword789!",
   "confirm_password": "ResetPassword789!"
 }
-```
+'''

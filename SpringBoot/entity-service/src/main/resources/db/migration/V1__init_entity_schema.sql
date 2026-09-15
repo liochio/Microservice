@@ -77,7 +77,7 @@ INSERT IGNORE INTO `ui_configurations` (`id`, `tenant_id`, `page_code`, `theme_n
     'sections', JSON_ARRAY(
         JSON_OBJECT('type', 'HeroSection', 'order', 1, 'props', JSON_OBJECT('headline', 'Xin chào, Tôi là Lập trình viên Backend', 'subheadline', 'Chuyên gia xây dựng hệ thống phân tán hiệu năng cao')),
         JSON_OBJECT('type', 'ProjectsSection', 'order', 2, 'props', JSON_OBJECT('title', 'Dự án Tiêu biểu', 'displayMode', 'grid')),
-        JSON_OBJECT('type', 'ContactSection', 'order', 3, 'props', JSON_OBJECT('title', 'Liên hệ Hợp tác', 'email', 'contact@portfolio-engine.dev'))
+        JSON_OBJECT('type', 'ContactSection', 'order', 3, 'props', JSON_OBJECT('title', 'Liên hệ Hợp tác', 'email', 'contact@fintech.liochio.com'))
     )
 ));
 

@@ -10,7 +10,7 @@ package com.liochio.common.constant;
  *   cùng với các hằng số cấu hình TTL (Time-To-Live).
  * 
  * Khi nào sử dụng:
- * - Được dùng trong annotation `@Cacheable`, `@CachePut`, `@CacheEvict` và trong CacheManager configs.
+ * - Được dùng trong annotation '@Cacheable', '@CachePut', '@CacheEvict' và trong CacheManager configs.
  */
 public final class CacheConstants {
 

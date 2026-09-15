@@ -10,16 +10,16 @@ Kiến trúc này mang lại 2 lợi ích vượt trội:
 ---
 
 ## 🛡️ 2. Năm (05) Quy Tắc Kiến Trúc Bọc Thép (Golden Rules)
-1. **Cấm tuyệt đối SQL JOIN chéo Bounded Context**: Repository của phân hệ `wallets` chỉ được query bảng `wallets`. Dữ liệu User được lấy từ JWT Token context.
-2. **Giao tiếp liên module phải qua Service Layer**: Tuyệt đối không import chéo Repository giữa các phân hệ. `TransferService` gọi `WalletService.deduct_balance()`.
-3. **Single Source of Truth cho dữ liệu**: Mỗi bảng chỉ có duy nhất 1 Service được cấp quyền `INSERT/UPDATE/DELETE`.
-4. **Xác thực phi trạng thái & Distributed Tracing**: Token JWT chứa sẵn `user_id`, `permissions`, `modules`. Mọi gói tin HTTP đều mang `X-Trace-ID` để giám sát luồng xuyên suốt.
-5. **Idempotency & Safe Failover**: Mọi giao dịch tài chính hỗ trợ `Idempotency-Key` chống trừ tiền 2 lần khi xảy ra sự cố mạng.
+1. **Cấm tuyệt đối SQL JOIN chéo Bounded Context**: Repository của phân hệ 'wallets' chỉ được query bảng 'wallets'. Dữ liệu User được lấy từ JWT Token context.
+2. **Giao tiếp liên module phải qua Service Layer**: Tuyệt đối không import chéo Repository giữa các phân hệ. 'TransferService' gọi 'WalletService.deduct_balance()'.
+3. **Single Source of Truth cho dữ liệu**: Mỗi bảng chỉ có duy nhất 1 Service được cấp quyền 'INSERT/UPDATE/DELETE'.
+4. **Xác thực phi trạng thái & Distributed Tracing**: Token JWT chứa sẵn 'user_id', 'permissions', 'modules'. Mọi gói tin HTTP đều mang 'X-Trace-ID' để giám sát luồng xuyên suốt.
+5. **Idempotency & Safe Failover**: Mọi giao dịch tài chính hỗ trợ 'Idempotency-Key' chống trừ tiền 2 lần khi xảy ra sự cố mạng.
 
 ---
 
 ## 🗺️ 3. Sơ Đồ Phân Tầng Hệ Thống (Layered Architecture)
-```
+'''
   [CLIENTS]  (Web Dashboard / Mobile App Flutter / IoT Smart Piggy / Postman)
       │
       ▼ (HTTP REST / JSON / WebSocket / MQTT)
@@ -52,4 +52,4 @@ Kiến trúc này mang lại 2 lợi ích vượt trội:
   [DATA PERSISTENCE & CACHE]
       ├─► MySQL / MariaDB (InnoDB Storage Engine - ACID Compliance)
       └─► Redis In-Memory Cache (Rate limiting & Session Management)
-```
+'''

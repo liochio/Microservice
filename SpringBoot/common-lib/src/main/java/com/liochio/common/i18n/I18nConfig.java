@@ -19,7 +19,7 @@ import java.util.Locale;
  * ==============================================================================
  * 
  * Mục đích:
- * - Tự động nhận diện ngôn ngữ yêu cầu từ Client thông qua HTTP Header `Accept-Language`.
+ * - Tự động nhận diện ngôn ngữ yêu cầu từ Client thông qua HTTP Header 'Accept-Language'.
  * - Hỗ trợ 3 ngôn ngữ chính: Tiếng Việt (vi - mặc định), Tiếng Anh (en), Tiếng Trung (zh).
  * - Nạp tập tin tài nguyên messages_{lang}.properties chuẩn UTF-8.
  * 

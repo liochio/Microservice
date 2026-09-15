@@ -1,5 +1,5 @@
--- Patch all core tables in portfolio-engine with BaseEntity columns
-USE `portfolio-engine`;
+-- Patch all core tables in liochio_core_db with BaseEntity columns
+USE `liochio_core_db`;
 
 -- permissions
 ALTER TABLE `permissions`

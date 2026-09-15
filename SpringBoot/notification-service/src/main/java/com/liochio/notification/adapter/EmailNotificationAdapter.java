@@ -33,9 +33,9 @@ public class EmailNotificationAdapter implements NotificationStrategy {
     public boolean send(String recipient, String subject, String content, Map<String, Object> metadata) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("noreply@portfolio-engine.dev");
+            message.setFrom("noreply@fintech.liochio.com");
             message.setTo(recipient);
-            message.setSubject(subject != null ? subject : "Thông báo từ Portfolio Engine");
+            message.setSubject(subject != null ? subject : "Thông báo từ Hệ thống Tài chính Liochio FinTech");
             message.setText(content);
 
             mailSender.send(message);

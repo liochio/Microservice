@@ -8,15 +8,18 @@ export interface CorpUser {
   username: string;
   fullName: string;
   role: 'CORP_ADMIN' | 'MAKER' | 'CHECKER';
+  avatarUrl?: string;
   branch?: string;
   coreAccountRef?: string;
 }
 
 interface AuthContextType {
   user: CorpUser | null;
+  role?: any;
+  switchRole: (newRole: any) => void;
   token: string | null;
   isAuthenticated: boolean;
-  login: (username: string, role?: 'CORP_ADMIN' | 'MAKER' | 'CHECKER', tenantCode?: string, password?: string) => Promise<boolean>;
+  login: (username: string, role?: any, tenantCode?: any, password?: any) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -24,6 +27,8 @@ export const AuthContext = createContext<AuthContextType>({
   user: null,
   token: null,
   isAuthenticated: false,
+  role: "CORP_ADMIN",
+  switchRole: () => {},
   login: async () => false,
   logout: () => {},
 });
@@ -44,9 +49,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (
     username: string,
-    role: 'CORP_ADMIN' | 'MAKER' | 'CHECKER' = 'CORP_ADMIN',
-    tenantCode: string = 'VPB-FINTECH',
-    password?: string
+    role: any = 'CORP_ADMIN',
+    tenantCode: any = 'VPB-FINTECH',
+    password?: any
   ): Promise<boolean> => {
     if (username.trim().length > 0) {
       try {
@@ -111,7 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, isAuthenticated: !!token, login, logout }}>
+    <AuthContext.Provider value={{ user, role: user?.role || 'CORP_ADMIN', switchRole: () => {}, token, isAuthenticated: !!token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

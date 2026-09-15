@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\models\finance\mock_bank_account.py
+
 
 from sqlalchemy import Column, String, Numeric, DateTime, text
 from sqlalchemy.sql import func

@@ -46,17 +46,17 @@ public class AuditDatabases {
                 System.out.println("\n[2] CHI TIẾT CÁC BẢNG TRONG TỪNG DATABASE CHUẨN:");
                 for (String db : expectedDbs) {
                     if (allDbs.contains(db)) {
-                        ResultSet trs = stmt.executeQuery("SHOW TABLES FROM `" + db + "`");
+                        ResultSet trs = stmt.executeQuery("SHOW TABLES FROM '" + db + "'");
                         List<String> tables = new ArrayList<>();
                         while (trs.next()) {
                             tables.add(trs.getString(1));
                         }
-                        System.out.println("\n📂 Database: `" + db + "` -> " + tables.size() + " bảng:");
+                        System.out.println("\n📂 Database: '" + db + "' -> " + tables.size() + " bảng:");
                         for (String t : tables) {
                             System.out.println("   ├─ " + t);
                         }
                     } else {
-                        System.out.println("\n⚠️ Database: `" + db + "` -> Chưa tạo");
+                        System.out.println("\n⚠️ Database: '" + db + "' -> Chưa tạo");
                     }
                 }
 
@@ -64,31 +64,31 @@ public class AuditDatabases {
                 System.out.println("🛡️ KIỂM TRA PHÂN LẬP VÀ DỌN DẸP BẢNG TRÙNG LẶP:");
 
                 // db_auth: Không có user_otp_verifications, không có user_tokens
-                ResultSet chkAuthOtp = stmt.executeQuery("SHOW TABLES FROM `db_auth` LIKE 'user_otp_verifications'");
+                ResultSet chkAuthOtp = stmt.executeQuery("SHOW TABLES FROM db_auth LIKE 'user_otp_verifications'");
                 if (!chkAuthOtp.next()) {
-                    System.out.println("  ✅ db_auth: Không chứa bảng `user_otp_verifications` (Đã chuyển về db_otp)");
+                    System.out.println("  ✅ db_auth: Không chứa bảng 'user_otp_verifications' (Đã chuyển về db_otp)");
                 } else {
-                    System.out.println("  ❌ db_auth: Vẫn còn `user_otp_verifications`");
+                    System.out.println("  ❌ db_auth: Vẫn còn 'user_otp_verifications'");
                 }
-                ResultSet chkAuthTokens = stmt.executeQuery("SHOW TABLES FROM `db_auth` LIKE 'user_tokens'");
+                ResultSet chkAuthTokens = stmt.executeQuery("SHOW TABLES FROM db_auth LIKE 'user_tokens'");
                 if (!chkAuthTokens.next()) {
-                    System.out.println("  ✅ db_auth: Không chứa bảng `user_tokens` (Đã thống nhất dùng `user_sessions`)");
+                    System.out.println("  ✅ db_auth: Không chứa bảng 'user_tokens' (Đã thống nhất dùng 'user_sessions')");
                 } else {
-                    System.out.println("  ❌ db_auth: Vẫn còn `user_tokens`");
+                    System.out.println("  ❌ db_auth: Vẫn còn 'user_tokens'");
                 }
 
                 // db_otp: Có otp_service_configs và user_otp_verifications
-                ResultSet trsOtp = stmt.executeQuery("SHOW TABLES FROM `db_otp`");
+                ResultSet trsOtp = stmt.executeQuery("SHOW TABLES FROM db_otp");
                 List<String> otpTables = new ArrayList<>();
                 while (trsOtp.next()) {
                     otpTables.add(trsOtp.getString(1));
                 }
                 if (otpTables.contains("otp_service_configs") && otpTables.contains("user_otp_verifications")) {
-                    System.out.println("  ✅ db_otp: Độc quyền quản lý `otp_service_configs` & `user_otp_verifications`");
+                    System.out.println("  ✅ db_otp: Độc quyền quản lý 'otp_service_configs' & 'user_otp_verifications'");
                 }
 
                 // db_content_eav: Không chứa AI tables và không chứa portfolio_items
-                ResultSet trsEav = stmt.executeQuery("SHOW TABLES FROM `db_content_eav`");
+                ResultSet trsEav = stmt.executeQuery("SHOW TABLES FROM db_content_eav");
                 List<String> eavTables = new ArrayList<>();
                 while (trsEav.next()) {
                     eavTables.add(trsEav.getString(1));
@@ -102,13 +102,13 @@ public class AuditDatabases {
                     System.out.println("  ❌ db_content_eav: Vẫn còn bảng AI!");
                 }
                 if (!hasPortfolioInEav) {
-                    System.out.println("  ✅ db_content_eav: Đã dọn dẹp `portfolio_items` (Đã chuyển sang `dynamic_entities`)");
+                    System.out.println("  ✅ db_content_eav: Đã dọn dẹp 'portfolio_items' (Đã chuyển sang 'dynamic_entities')");
                 } else {
-                    System.out.println("  ❌ db_content_eav: Vẫn còn `portfolio_items`!");
+                    System.out.println("  ❌ db_content_eav: Vẫn còn 'portfolio_items'!");
                 }
 
                 // db_ai_vector: Có các bảng AI
-                ResultSet trsAi = stmt.executeQuery("SHOW TABLES FROM `db_ai_vector`");
+                ResultSet trsAi = stmt.executeQuery("SHOW TABLES FROM db_ai_vector");
                 List<String> aiTables = new ArrayList<>();
                 while (trsAi.next()) {
                     aiTables.add(trsAi.getString(1));

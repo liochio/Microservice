@@ -1,10 +1,10 @@
-# 📄 Đường dẫn file: app/core/exceptions/base_exception.py
+
 import inspect
 import os
 from fastapi import HTTPException, status
 
 class FintechBaseException(HTTPException):
-    """👑 Thực thể lỗi gốc bọc thép cho toàn bộ hệ thống Monolith"""
+    """👑 Thực thể lỗi gốc bảo mật cao cho toàn bộ hệ thống Monolith"""
     def __init__(
         self,
         error_code: str,

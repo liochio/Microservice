@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/core/translator/i18n_loader.py
+
 import os
 import json
 from sqlalchemy import text
@@ -9,9 +9,9 @@ def auto_sync_i18n_json_to_db():
     """
     👑 ENGINE ĐỒNG BỘ TỐI CAO i18n 3-IN-1:
     Tự động quét trọn bộ ma trận dữ liệu (errors, messages, labels) của cả 3 ngôn ngữ (vi, en, zh),
-    phân loại bằng cột `msg_type` và găm thẳng xuống bảng gốc `error_messages` của sếp.
+    phân loại bằng cột 'msg_type' và găm thẳng xuống bảng gốc 'error_messages' hệ thống.
 
-    🛡️ BỌC THÉP AN TOÀN TUYỆT ĐỐI: Lỗi bất kỳ trong file JSON hoặc DB sẽ bị cô lập hoàn toàn,
+    🛡️ BẢO MẬT CAO AN TOÀN TUYỆT ĐỐI: Lỗi bất kỳ trong file JSON hoặc DB sẽ bị cô lập hoàn toàn,
     không bao giờ được phép làm ảnh hưởng hoặc crash sập tiến trình khởi động Uvicorn.
     """
     try:
@@ -27,7 +27,7 @@ def auto_sync_i18n_json_to_db():
 
         languages = ["vi", "en", "zh"]
 
-        # Câu lệnh UPSERT bọc thép master: Khóa cứng error_code gốc của sếp, ép cập nhật nội dung đa ngôn ngữ
+        # Câu lệnh UPSERT bảo mật cao master: Khóa cứng error_code gốc hệ thống, ép cập nhật nội dung đa ngôn ngữ
         query = text("""
                      INSERT INTO error_messages (id, error_code, msg_type, lang_vi, lang_en, lang_zh, status,
                                                  created_at, updated_at)

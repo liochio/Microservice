@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * ==============================================================================
  * 
  * Mục đích:
- * 1. Đọc cấu hình theo môi trường (dev, test, prod) từ DB `system_configs`.
+ * 1. Đọc cấu hình theo môi trường (dev, test, prod) từ DB 'system_configs'.
  * 2. Lưu vào L1 Caffeine RAM Cache (O(1) lookup < 1ms).
  * 3. Hỗ trợ Hot-Reload cấu hình không cần khởi động lại Server.
  */

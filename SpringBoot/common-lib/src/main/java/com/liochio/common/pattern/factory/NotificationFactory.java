@@ -14,7 +14,7 @@ import java.util.Map;
  * ==============================================================================
  * 
  * Mục đích:
- * - Thu thập và điều phối các Strategy gửi thông báo dựa trên Enum `NotificationChannel`.
+ * - Thu thập và điều phối các Strategy gửi thông báo dựa trên Enum 'NotificationChannel'.
  */
 @Component
 public class NotificationFactory {

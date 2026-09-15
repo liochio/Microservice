@@ -23,8 +23,8 @@ import java.util.Set;
  * 
  * Mục đích:
  * - Chặn trước khi Controller/Service method thực thi.
- * - Đối chiếu `@RequireRole` và `@RequirePermission` với UserContext (nạp từ JWT / Header Gateway).
- * - Ném 403 Forbidden (`ErrorCode.UNAUTHORIZED`) kèm thông điệp rõ ràng nếu thiếu quyền.
+ * - Đối chiếu '@RequireRole' và '@RequirePermission' với UserContext (nạp từ JWT / Header Gateway).
+ * - Ném 403 Forbidden ('ErrorCode.UNAUTHORIZED') kèm thông điệp rõ ràng nếu thiếu quyền.
  */
 @Slf4j
 @Aspect

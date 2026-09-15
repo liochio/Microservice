@@ -1,4 +1,4 @@
-USE `portfolio-engine`;
+USE `liochio_core_db`;
 
 -- Helper procedure to add column safely
 DROP PROCEDURE IF EXISTS AddColumnSafely;
@@ -7,7 +7,7 @@ CREATE PROCEDURE AddColumnSafely(IN tableName VARCHAR(64), IN colName VARCHAR(64
 BEGIN
     IF NOT EXISTS (
         SELECT * FROM information_schema.COLUMNS 
-        WHERE TABLE_SCHEMA = 'portfolio-engine' 
+        WHERE TABLE_SCHEMA = 'liochio_core_db' 
           AND TABLE_NAME = tableName 
           AND COLUMN_NAME = colName
     ) THEN

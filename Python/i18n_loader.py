@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/core/translator/i18n_loader.py
+
 import os
 import json
 from sqlalchemy import text
@@ -9,7 +9,7 @@ def auto_sync_i18n_json_to_db():
     """
     👑 ENGINE ĐỒNG BỘ TỐI CAO i18n 3-IN-1:
     Tự động quét trọn bộ ma trận dữ liệu (errors, messages, labels) của cả 3 ngôn ngữ (vi, en, zh),
-    phân loại bằng cột `msg_type` và găm thẳng xuống bảng gốc `error_messages` của sếp.
+    phân loại bằng cột 'msg_type' và găm thẳng xuống bảng gốc 'error_messages' hệ thống.
 
     🛡️ KHẮC PHỤC LỖI ĐÈ DATA: Sử dụng logic Python để cô lập dòng theo cặp (error_code, msg_type),
     đảm bảo cả 3 nhãn ERROR, MESSAGE, LABEL nằm song song hiên ngang dưới DB mà không bị đè bấy dữ liệu.

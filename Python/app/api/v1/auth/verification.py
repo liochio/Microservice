@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/api/v1/auth/verification.py
+
 from typing import Optional
 from fastapi import APIRouter, Request, Depends, status
 from fastapi.responses import JSONResponse

@@ -17,7 +17,7 @@ import java.io.IOException;
  * 
  * Mục đích:
  * - Cung cấp ObjectMapper đã cấu hình tối ưu sẵn (hỗ trợ JavaTimeModule, Instant UTC,
- *   bỏ qua trường lạ `FAIL_ON_UNKNOWN_PROPERTIES = false`).
+ *   bỏ qua trường lạ 'FAIL_ON_UNKNOWN_PROPERTIES = false').
  * - Hỗ trợ parse JSON sang Java Object và ngược lại một cách an toàn.
  * 
  * Khi nào gọi:

@@ -16,7 +16,7 @@ import java.util.Set;
  * 
  * Mục đích:
  * - Đại diện cho vai trò của người dùng (ROLE_SUPER_ADMIN, ROLE_TENANT_ADMIN, ROLE_EDITOR...).
- * - Liên kết N-N với PermissionEntity qua bảng `role_permissions`.
+ * - Liên kết N-N với PermissionEntity qua bảng 'role_permissions'.
  */
 @Entity
 @Table(name = "roles")

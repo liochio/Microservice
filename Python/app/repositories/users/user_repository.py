@@ -3,7 +3,7 @@ from app.repositories.users.user_mapping import UserMappingFactory
 class UserRepository:
     """
     👑 REPOSITORY QUẢN LÝ NGHIỆP VỤ USERS ĐỘC LẬP
-    🎯 Thực thi 100% qua ORM Mapping chính quy của sếp, dẹp sạch rác rưởi SQL thô tại Service.
+    🎯 Thực thi 100% qua ORM Mapping chính quy, tuân thủ nguyên tắc Clean Architecture.
     """
 
     @staticmethod

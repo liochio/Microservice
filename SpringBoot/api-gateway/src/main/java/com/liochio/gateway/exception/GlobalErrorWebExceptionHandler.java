@@ -30,7 +30,7 @@ import java.util.Map;
  * 
  * Mục đích:
  * 1. Bắt 100% ngoại lệ cấp mạng (404 Route Not Found, 502 Bad Gateway, 503 Service Unavailable, 504 Timeout).
- * 2. Chuẩn hóa format phản hồi JSON `ApiResponse<T>` đồng nhất với toàn bộ hệ sinh thái Microservices.
+ * 2. Chuẩn hóa format phản hồi JSON 'ApiResponse<T>' đồng nhất với toàn bộ hệ sinh thái Microservices.
  * 3. Loại bỏ hoàn toàn trang lỗi HTML Whitelabel mặc định của Spring Boot / Netty.
  */
 @Slf4j

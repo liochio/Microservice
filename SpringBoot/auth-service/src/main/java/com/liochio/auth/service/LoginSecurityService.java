@@ -18,9 +18,9 @@ import java.time.temporal.ChronoUnit;
  * Dịch Vụ Kiểm Soát Đăng Nhập & Bảo Mật Độc Lập (Login Security & Audit Service)
  * ==============================================================================
  * 
- * Sử dụng `Propagation.REQUIRES_NEW` để đảm bảo:
- * - Ghi nhận 100% lịch sử đăng nhập thành công và thất bại vào bảng `security_login_histories`.
- * - Tăng và lưu biến đếm `failed_login_attempts` trong bảng `users` ngay cả khi API ném Exception.
+ * Sử dụng 'Propagation.REQUIRES_NEW' để đảm bảo:
+ * - Ghi nhận 100% lịch sử đăng nhập thành công và thất bại vào bảng 'security_login_histories'.
+ * - Tăng và lưu biến đếm 'failed_login_attempts' trong bảng 'users' ngay cả khi API ném Exception.
  * - Khóa tài khoản 15 phút (Brute-force protection) độc lập với transaction chính.
  */
 @Slf4j

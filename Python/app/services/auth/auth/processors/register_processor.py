@@ -66,7 +66,7 @@ class UserRegisterProcessor:
         # 3. TRUY VẤN TẦNG HỆ THỐNG: Lấy cấu hình thời gian hết hạn hệ thống
         try:
             q_setting = text(
-                "SELECT value FROM system_settings WHERE `key` = 'LINK_TOKEN_EXPIRE_MINUTES' AND status = 'ACTIVE' LIMIT 1")
+                "SELECT value FROM system_settings WHERE system_settings.key = 'LINK_TOKEN_EXPIRE_MINUTES' AND status = 'ACTIVE' LIMIT 1")
             res_setting = db_conn.execute(q_setting).fetchone()
             expire_minutes = int(res_setting[0]) if res_setting else 15
         except CORE_FALLBACK_ERRORS:

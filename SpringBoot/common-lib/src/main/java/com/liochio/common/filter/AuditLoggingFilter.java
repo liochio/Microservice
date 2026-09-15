@@ -166,11 +166,11 @@ public class AuditLoggingFilter extends OncePerRequestFilter {
         org.springframework.jdbc.core.JdbcTemplate jdbc = getJdbcTemplate();
         if (jdbc != null) {
             try {
-                String insertSql = "INSERT INTO `liochio_app_db`.`audit_logs` ("
-                        + "`user_id`, `action`, `table_name`, `action_description`, `action_type`,"
-                        + "`client_ip`, `http_method`, `http_status_code`, `module`, `platform`,"
-                        + "`request_uri`, `status`, `tenant_id`, `trace_id`, `username`, `execution_time_ms`,"
-                        + "`ip_address`, `user_agent`, `created_at`, `updated_at`"
+                String insertSql = "INSERT INTO liochio_app_db.audit_logs ("
+                        + "user_id, action, table_name, action_description, action_type,"
+                        + "client_ip, http_method, http_status_code, module, platform,"
+                        + "request_uri, status, tenant_id, trace_id, username, execution_time_ms,"
+                        + "ip_address, user_agent, created_at, updated_at"
                         + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
                 jdbc.update(insertSql,
                         userId, "HTTP_API_CALL", "system", method + " " + uri, detectAction(method),
@@ -189,9 +189,9 @@ public class AuditLoggingFilter extends OncePerRequestFilter {
                 String[] dbs = new String[]{"liochio_app_db", "liochio_core_db"};
                 for (String db : dbs) {
                     try {
-                        String apiLogSql = "INSERT INTO `" + db + "`.`api_request_logs` ("
-                                + "`id`, `user_id`, `endpoint`, `method`, `request_payload`, `response_payload`,"
-                                + "`status_code`, `latency_ms`, `status`, `created_at`, `updated_at`"
+                        String apiLogSql = "INSERT INTO " + db + ".api_request_logs ("
+                                + "id, user_id, endpoint, method, request_payload, response_payload,"
+                                + "status_code, latency_ms, status, created_at, updated_at"
                                 + ") VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
                         jdbc.update(apiLogSql,
                                 userId != null ? ("usr_" + userId) : null,
@@ -215,8 +215,8 @@ public class AuditLoggingFilter extends OncePerRequestFilter {
                 String[] dbs = new String[]{"liochio_app_db", "liochio_core_db"};
                 for (String db : dbs) {
                     try {
-                        String flowSql = "INSERT INTO `" + db + "`.`request_flow_logs` ("
-                                + "`id`, `trace_id`, `node`, `details`, `created_at`, `updated_at`"
+                        String flowSql = "INSERT INTO " + db + ".request_flow_logs ("
+                                + "id, trace_id, node, details, created_at, updated_at"
                                 + ") VALUES (UUID(), ?, ?, ?, NOW(), NOW())";
                         jdbc.update(flowSql,
                                 traceId != null ? traceId : java.util.UUID.randomUUID().toString(),

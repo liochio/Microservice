@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\models\finance\wallet_transfer.py
+
 
 from sqlalchemy import Column, String, Numeric, ForeignKey, DateTime, text
 from sqlalchemy.sql import func

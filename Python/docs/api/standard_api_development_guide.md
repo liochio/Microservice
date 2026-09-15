@@ -7,7 +7,7 @@
 
 Hệ thống FinTech Monolith tuân thủ nghiêm ngặt mô hình kiến trúc **Clean Layered Architecture (Kiến trúc phân tầng sạch)**. Mọi Request từ Client gửi lên bắt buộc phải đi qua tuần tự các tầng phòng thủ và xử lý theo luồng dưới đây:
 
-```mermaid
+'''mermaid
 sequenceDiagram
     autonumber
     actor Client as Client (Web / App)
@@ -39,46 +39,46 @@ sequenceDiagram
     Note over Schema,Service: Nếu có lỗi bất kỳ: Ném FintechBaseException
     Service-->>i18n: Ném FintechBaseException(error_code=...)
     i18n-->>Client: Tự động dịch mã lỗi theo ngôn ngữ Client và trả về Response 4xx/5xx
-```
+'''
 
 ---
 
 ## 🚫 2. Bốn Nguyên Tắc "Bất Di Bất Dịch" (Zero Tolerance Rules)
 
 1. **KHÔNG BAO GIỜ code cứng chuỗi ký tự (Zero Magic Strings)**:
-   - CẤM: `error_code="WALLET_NOT_FOUND"`, `msg_type="MESSAGE"`, `PermissionGuard("WALLET_CREATE")`.
-   - BẮT BUỘC: `error_code=SystemConstants.WALLET_NOT_FOUND`, `msg_type=SystemConstants.MSG_TYPE_MESSAGE`, `PermissionGuard(SystemConstants.WALLET_CREATE)`.
+   - CẤM: 'error_code="WALLET_NOT_FOUND"', 'msg_type="MESSAGE"', 'PermissionGuard("WALLET_CREATE")'.
+   - BẮT BUỘC: 'error_code=SystemConstants.WALLET_NOT_FOUND', 'msg_type=SystemConstants.MSG_TYPE_MESSAGE', 'PermissionGuard(SystemConstants.WALLET_CREATE)'.
 2. **Đa ngôn ngữ là bắt buộc (i18n First)**:
-   - Mọi mã lỗi (`error_code`) hoặc mã thông điệp (`message_code`) khi tạo mới **bắt buộc** phải được định nghĩa ngay trong 3 file từ điển: `i18n/vi/`, `i18n/en/`, `i18n/zh/`.
+   - Mọi mã lỗi ('error_code') hoặc mã thông điệp ('message_code') khi tạo mới **bắt buộc** phải được định nghĩa ngay trong 3 file từ điển: 'i18n/vi/', 'i18n/en/', 'i18n/zh/'.
 3. **Tuyệt đối không viết truy vấn SQL trong Router hoặc Service**:
-   - CẤM: `db_conn.execute("SELECT * FROM users WHERE id = ...")` trong file Router hay Service.
-   - BẮT BUỘC: Khai báo hàm trong `app/repositories/` và gọi thông qua Repository.
+   - CẤM: 'db_conn.execute("SELECT * FROM users WHERE id = ...")' trong file Router hay Service.
+   - BẮT BUỘC: Khai báo hàm trong 'app/repositories/' và gọi thông qua Repository.
 4. **Tuyệt đối không bắt lỗi chung chung (No Bare Except)**:
-   - CẤM: `except:` hoặc `except Exception: pass` mà không ghi log hay rollback.
-   - BẮT BUỘC: Luôn Rollback Transaction khi gặp lỗi, ghi log kiểm toán và ném `FintechBaseException`.
+   - CẤM: 'except:' hoặc 'except Exception: pass' mà không ghi log hay rollback.
+   - BẮT BUỘC: Luôn Rollback Transaction khi gặp lỗi, ghi log kiểm toán và ném 'FintechBaseException'.
 
 ---
 
 ## 🛠️ 3. Quy Trình 7 Bước Chuẩn Để Xây Dựng Một API Mới
 
-Khi nhận yêu cầu viết một API mới (Ví dụ: Tạo ví tài chính `POST /api/v1/wallets`), lập trình viên phải thực hiện chuẩn chỉ **7 bước** theo thứ tự từ gốc lên ngọn:
+Khi nhận yêu cầu viết một API mới (Ví dụ: Tạo ví tài chính 'POST /api/v1/wallets'), lập trình viên phải thực hiện chuẩn chỉ **7 bước** theo thứ tự từ gốc lên ngọn:
 
-```
+'''
 [Bước 1: SystemConstants] --> [Bước 2: Từ điển i18n] --> [Bước 3: Schema DTO]
                                                                   |
 [Bước 6: Router API] <----- [Bước 5: Service Logic] <---- [Bước 4: Model & Repo]
         |
 [Bước 7: Testcase & Kiểm thử]
-```
+'''
 
 ---
 
-### 📍 Bước 1: Khai Báo Hằng Số Tại `app/constants.py`
+### 📍 Bước 1: Khai Báo Hằng Số Tại 'app/constants.py'
 
-- **Tệp tin**: `app/constants.py`
+- **Tệp tin**: 'app/constants.py'
 - **Cần làm gì?**: Khai báo tên Module, Quyền hạn (Permission), Mã thành công và các Mã lỗi nghiệp vụ có thể xảy ra.
 - **Mã nguồn mẫu**:
-```python
+'''python
 class SystemConstants:
     # 1. Module Code & Permission Code
     MODULE_WALLET_MGMT = "WALLET_MGMT"
@@ -92,45 +92,45 @@ class SystemConstants:
     MISSING_WALLET_NAME = "MISSING_WALLET_NAME"
     WALLET_ALREADY_EXISTS = "WALLET_ALREADY_EXISTS"
     INVALID_CURRENCY_ENUM = "INVALID_CURRENCY_ENUM"
-```
+'''
 - **Vì sao phải làm?**: Đảm bảo tất cả các file trong dự án (Guard, Schema, Service, Testcase) dùng chung 1 nguồn chân lý (Single Source of Truth), tránh lỗi gõ sai chính tả (typo).
 - **Có bỏ qua được không?**: **KHÔNG**. Nếu bỏ qua và gõ chuỗi cứng, bộ kiểm tra tự động (AST Scanner) sẽ chặn commit.
 
 ---
 
-### 📍 Bước 2: Cập Nhật Từ Điển Đa Ngôn Ngữ i18n (`vi`, `en`, `zh`)
+### 📍 Bước 2: Cập Nhật Từ Điển Đa Ngôn Ngữ i18n ('vi', 'en', 'zh')
 
 - **Tệp tin**:
-  - Tiếng Việt: `i18n/vi/errors.json`, `i18n/vi/messages.json`, `i18n/vi/labels.json`
-  - Tiếng Anh: `i18n/en/errors.json`, `i18n/en/messages.json`, `i18n/en/labels.json`
-  - Tiếng Trung: `i18n/zh/errors.json`, `i18n/zh/messages.json`, `i18n/zh/labels.json`
+  - Tiếng Việt: 'i18n/vi/errors.json', 'i18n/vi/messages.json', 'i18n/vi/labels.json'
+  - Tiếng Anh: 'i18n/en/errors.json', 'i18n/en/messages.json', 'i18n/en/labels.json'
+  - Tiếng Trung: 'i18n/zh/errors.json', 'i18n/zh/messages.json', 'i18n/zh/labels.json'
 - **Cần làm gì?**: Bổ sung bản dịch tương ứng cho các hằng số vừa tạo ở Bước 1.
 - **Mã nguồn mẫu (i18n/vi/errors.json)**:
-```json
+'''json
 {
   "MISSING_WALLET_CODE": "Mã ví không được để trống.",
   "MISSING_WALLET_NAME": "Tên ví không được để trống.",
   "WALLET_ALREADY_EXISTS": "Mã ví này đã tồn tại trên hệ thống.",
   "INVALID_CURRENCY_ENUM": "Đơn vị tiền tệ không hợp lệ (chỉ hỗ trợ VND, USD, EUR, CNY)."
 }
-```
+'''
 - **Mã nguồn mẫu (i18n/vi/messages.json)**:
-```json
+'''json
 {
   "WALLET_CREATE_SUCCESS": "Khởi tạo ví tài chính thành công!"
 }
-```
-- **Vì sao phải làm?**: Đảm bảo khi Client truyền Header `Accept-Language: en` hoặc `vi`, hệ thống tự động trả về câu thông báo thân thiện tương ứng thay vì trả về mã code vô nghĩa.
+'''
+- **Vì sao phải làm?**: Đảm bảo khi Client truyền Header 'Accept-Language: en' hoặc 'vi', hệ thống tự động trả về câu thông báo thân thiện tương ứng thay vì trả về mã code vô nghĩa.
 - **Có bỏ qua được không?**: **KHÔNG**. Nếu thiếu, hệ thống sẽ trả về mã code thô hoặc thông báo mặc định.
 
 ---
 
 ### 📍 Bước 3: Xây Dựng Request & Response Schemas (DTO)
 
-- **Tệp tin**: `app/schemas/requests/wallet.py`
-- **Cần làm gì?**: Sử dụng Pydantic `BaseModel` kết hợp `@model_validator(mode="after")` để tạo **Ma trận phòng thủ tuần tự (Sequential Defense Matrix)**.
+- **Tệp tin**: 'app/schemas/requests/wallet.py'
+- **Cần làm gì?**: Sử dụng Pydantic 'BaseModel' kết hợp '@model_validator(mode="after")' để tạo **Ma trận phòng thủ tuần tự (Sequential Defense Matrix)**.
 - **Mã nguồn mẫu**:
-```python
+'''python
 from typing import Optional, Any
 from pydantic import BaseModel, model_validator
 from app.constants import SystemConstants
@@ -169,7 +169,7 @@ class CreateWalletRequest(BaseModel):
 
         self.wallet_type = str(self.wallet_type).strip().upper()
         return self
-```
+'''
 - **Vì sao phải làm?**: Chặn đứng 100% dữ liệu rác, tấn công XSS, SQLi, số âm... ngay tại cổng vào của ứng dụng trước khi lọt xuống Service hay Database.
 - **Có bỏ qua được không?**: **KHÔNG**. Không bao giờ tin tưởng dữ liệu từ Client gửi lên.
 
@@ -177,12 +177,12 @@ class CreateWalletRequest(BaseModel):
 
 ### 📍 Bước 4: Định Nghĩa Model ORM & Repository Truy Vấn
 
-- **Tệp tin**: `app/models/wallet/wallet.py` & `app/repositories/wallet/wallet_repository.py`
+- **Tệp tin**: 'app/models/wallet/wallet.py' & 'app/repositories/wallet/wallet_repository.py'
 - **Cần làm gì?**: 
-  1. Khai báo Model bảng CSDL trong `app/models/`.
-  2. Tạo hàm truy vấn CSDL thuần túy trong `app/repositories/`.
+  1. Khai báo Model bảng CSDL trong 'app/models/'.
+  2. Tạo hàm truy vấn CSDL thuần túy trong 'app/repositories/'.
 - **Mã nguồn mẫu (Repository)**:
-```python
+'''python
 import uuid
 from typing import Optional
 from sqlalchemy import text
@@ -207,7 +207,7 @@ class WalletRepository:
             "cur": currency, "w_type": wallet_type, "col": color, "icon": icon, "desc": description
         })
         return Wallet(id=wallet_id, user_id=user_id, wallet_code=wallet_code, name=name, currency=currency)
-```
+'''
 - **Vì sao phải làm?**: Đóng gói toàn bộ logic truy vấn SQL/ORM tại tầng Repository. Nếu sau này CSDL thay đổi cấu trúc bảng, chỉ cần sửa tại Repo mà không ảnh hưởng tới tầng Service hay API Router.
 - **Có bỏ qua được không?**: **KHÔNG**. Tuyệt đối không gọi truy vấn SQL trực tiếp trong Service hoặc Router.
 
@@ -215,10 +215,10 @@ class WalletRepository:
 
 ### 📍 Bước 5: Xây Dựng Tầng Nghiệp Vụ (Service / Processor Layer)
 
-- **Tệp tin**: `app/services/wallet/wallet_service.py`
-- **Cần làm gì?**: Triển khai logic tính toán, kiểm tra trùng lặp qua `GenericValidator`, gọi Repository, quản lý Commit/Rollback và ghi Log kiểm toán.
+- **Tệp tin**: 'app/services/wallet/wallet_service.py'
+- **Cần làm gì?**: Triển khai logic tính toán, kiểm tra trùng lặp qua 'GenericValidator', gọi Repository, quản lý Commit/Rollback và ghi Log kiểm toán.
 - **Mã nguồn mẫu**:
-```python
+'''python
 from typing import Dict, Any, Optional
 from app.constants import SystemConstants
 from app.core.exceptions.base_exception import FintechBaseException
@@ -264,7 +264,7 @@ class WalletService:
                 db_conn.rollback()
             DBLogger.system(db_conn, "ERROR", "WalletService", f"Lỗi: {str(e)}")
             raise FintechBaseException(SystemConstants.INTERNAL_SERVER_ERROR, 500)
-```
+'''
 - **Vì sao phải làm?**: Đảm bảo toàn vẹn dữ liệu (ACID). Nếu xảy ra lỗi giữa chừng, toàn bộ thay đổi sẽ được Rollback tự động, không để lại dữ liệu rác trong CSDL.
 - **Có bỏ qua được không?**: **KHÔNG**. Tầng Service là trái tim của hệ thống.
 
@@ -272,10 +272,10 @@ class WalletService:
 
 ### 📍 Bước 6: Tạo API Router & Gắn Security Guard
 
-- **Tệp tin**: `app/api/v1/wallets/wallet.py`
-- **Cần làm gì?**: Khai báo endpoint FastAPI, tiêm `db_conn` qua Dependency `get_db`, áp dụng `PermissionGuard`, và trả về JSON Response chuẩn đa ngôn ngữ.
+- **Tệp tin**: 'app/api/v1/wallets/wallet.py'
+- **Cần làm gì?**: Khai báo endpoint FastAPI, tiêm 'db_conn' qua Dependency 'get_db', áp dụng 'PermissionGuard', và trả về JSON Response chuẩn đa ngôn ngữ.
 - **Mã nguồn mẫu**:
-```python
+'''python
 from typing import Any
 from fastapi import APIRouter, Request, Depends, status
 from fastapi.responses import JSONResponse
@@ -325,7 +325,7 @@ async def create_wallet(
             "trace_id": getattr(request.state, "trace_id", "UNKNOWN")
         }
     )
-```
+'''
 - **Vì sao phải làm?**: Bảo vệ API trước các truy cập trái phép hoặc không đủ quyền, đồng thời chuẩn hóa định dạng JSON Response cho Frontend.
 - **Có bỏ qua được không?**: **KHÔNG**. Không bao giờ mở API mà không có xác thực hoặc không trả về theo chuẩn Response.
 
@@ -333,7 +333,7 @@ async def create_wallet(
 
 ### 📍 Bước 7: Kiểm Thử & Ghi Nhận Ma Trận Testcase
 
-- **Tệp tin**: `docs/testing/api_test_cases.md`
+- **Tệp tin**: 'docs/testing/api_test_cases.md'
 - **Cần làm gì?**: Bổ sung các kịch bản kiểm thử:
   1. **Happy Path (HP)**: Dữ liệu chuẩn -> 201 Created.
   2. **Negative Path (NE)**: Thiếu tên, số tiền âm -> 400 Bad Request.
@@ -361,15 +361,15 @@ async def create_wallet(
 
 Trước khi hoàn thành một API, hãy tự đối chiếu danh sách kiểm tra sau:
 
-- [ ] Đã khai báo toàn bộ mã lỗi và quyền hạn trong `app/constants.py` (Không còn chuỗi `""` nào).
-- [ ] Đã có đủ bản dịch trong cả 3 file: `i18n/vi/*.json`, `i18n/en/*.json`, `i18n/zh/*.json`.
-- [ ] Schema Request có Pydantic `@model_validator` chặn missing check và format check.
-- [ ] Router API có gắn `PermissionGuard` hoặc `get_current_user`.
-- [ ] Service có khối `try...except FintechBaseException` kèm lệnh `commit()` và `rollback()`.
+- [ ] Đã khai báo toàn bộ mã lỗi và quyền hạn trong 'app/constants.py' (Không còn chuỗi '""' nào).
+- [ ] Đã có đủ bản dịch trong cả 3 file: 'i18n/vi/*.json', 'i18n/en/*.json', 'i18n/zh/*.json'.
+- [ ] Schema Request có Pydantic '@model_validator' chặn missing check và format check.
+- [ ] Router API có gắn 'PermissionGuard' hoặc 'get_current_user'.
+- [ ] Service có khối 'try...except FintechBaseException' kèm lệnh 'commit()' và 'rollback()'.
 - [ ] Không có truy vấn SQL thô trong Router hoặc Service (Phải gọi qua Repository).
 - [ ] Đã xóa sạch các import thừa (Unused Imports) - IDE không còn cảnh báo vàng.
-- [ ] Đã chạy `python -m compileall app/` và không có bất kỳ lỗi cú pháp nào.
-- [ ] Đã bổ sung ma trận testcase vào file `docs/testing/api_test_cases.md`.
+- [ ] Đã chạy 'python -m compileall app/' và không có bất kỳ lỗi cú pháp nào.
+- [ ] Đã bổ sung ma trận testcase vào file 'docs/testing/api_test_cases.md'.
 
 ---
 © 2026 FinTech Monolith Core Engineering. All rights reserved.

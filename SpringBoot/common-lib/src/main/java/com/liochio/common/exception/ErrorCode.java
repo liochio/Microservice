@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
  *   thông điệp mặc định (fallback) và HTTP Status tương ứng.
  * 
  * Khi nào gọi:
- * - Được ném kèm theo `AppException` trong các tầng Service/Domain logic.
+ * - Được ném kèm theo 'AppException' trong các tầng Service/Domain logic.
  */
 @Getter
 public enum ErrorCode {

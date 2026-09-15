@@ -6,13 +6,13 @@ Quản lý cây danh mục thu chi (Ăn uống, Mua sắm, Tiền lương, v.v.)
 ---
 
 ## 1. Lấy Danh Sách Danh Mục
-- **Endpoint**: `GET /api/v1/categories`
+- **Endpoint**: 'GET /api/v1/categories'
 - **Mục đích**: Lấy toàn bộ danh mục hệ thống mặc định và danh mục do chính người dùng tự tạo.
 - **Khi nào dùng**: Khi hiển thị dropdown chọn danh mục lúc tạo giao dịch hoặc tạo ngân sách.
-- **Quyền yêu cầu**: Đã đăng nhập (`USER`).
+- **Quyền yêu cầu**: Đã đăng nhập ('USER').
 
 ### Response Mẫu (200 OK):
-```json
+'''json
 {
   "success": true,
   "error_code": "CATEGORY_FETCH_SUCCESS",
@@ -38,19 +38,19 @@ Quản lý cây danh mục thu chi (Ăn uống, Mua sắm, Tiền lương, v.v.)
     }
   ]
 }
-```
+'''
 
 ---
 
 ## 2. Tạo Danh Mục Mới
-- **Endpoint**: `POST /api/v1/categories`
+- **Endpoint**: 'POST /api/v1/categories'
 - **Mục đích**: Cho phép người dùng tự định nghĩa danh mục chi tiêu cá nhân.
 - **Payload**:
-```json
+'''json
 {
   "name": "Nuôi thú cưng",
   "type": "EXPENSE",
   "icon": "paw",
   "color": "#8E24AA"
 }
-```
+'''

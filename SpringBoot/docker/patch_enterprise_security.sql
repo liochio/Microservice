@@ -1,9 +1,9 @@
 -- ==============================================================================
--- Portfolio Backend Engine - Enterprise Security & RBAC Master Schema DDL
--- CSDL: `portfolio-engine` (Core Infrastructure Database)
+-- Liochio FinTech Platform - Enterprise Security & RBAC Master Schema DDL
+-- CSDL: `liochio_core_db` (Core Infrastructure Database)
 -- ==============================================================================
 
-USE `portfolio-engine`;
+USE `liochio_core_db`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -68,9 +68,9 @@ CREATE TABLE `audit_logs` (
 -- 1. Seed Tenants
 INSERT INTO `tenants` (`id`, `name`, `type`, `domain`, `subdomain`, `status`, `tenant_id`, `contact_email`)
 VALUES
-('SYSTEM', 'System Super Administration', 'SYSTEM', 'system.portfolio.local', 'system', 'ACTIVE', 'SYSTEM', 'admin@portfolio.com'),
-('corp_vietravel', 'Vietravel Corporation', 'ENTERPRISE', 'vietravel.portfolio.local', 'vietravel', 'ACTIVE', 'corp_vietravel', 'contact@vietravel.com'),
-('tenant_indiv_01', 'Alex Portfolio Showcase', 'INDIVIDUAL', 'alex.portfolio.local', 'alex', 'ACTIVE', 'tenant_indiv_01', 'alex@portfolio.com')
+('SYSTEM', 'System Super Administration', 'SYSTEM', 'system.fintech.local', 'system', 'ACTIVE', 'SYSTEM', 'admin.fintech@liochio.com'),
+('corp_vietravel', 'Vietravel Corporation FinTech Partner', 'ENTERPRISE', 'partner.fintech.local', 'partner', 'ACTIVE', 'corp_vietravel', 'contact@partner.com'),
+('tenant_fintech_01', 'Liochio Retail Banking Services', 'ENTERPRISE', 'retail.fintech.local', 'retail', 'ACTIVE', 'tenant_fintech_01', 'retail@liochio.com')
 ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `status` = VALUES(`status`), `contact_email` = VALUES(`contact_email`);
 
 -- 2. Seed Permissions
@@ -151,7 +151,7 @@ SELECT 4, `id` FROM `permissions` WHERE `permission_code` IN (
 -- BCrypt password hash: $2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy
 INSERT INTO `users` (`id`, `tenant_id`, `username`, `email`, `password`, `phone`, `full_name`, `user_type`, `status`, `is_email_verified`, `is_phone_verified`)
 VALUES
-(1, 'SYSTEM', 'admin', 'admin@portfolio.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '0901234567', 'Super System Administrator', 'SUPER_ADMIN', 'ACTIVE', TRUE, TRUE)
+(1, 'SYSTEM', 'admin', 'admin.fintech@liochio.com', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', '0901234567', 'Super System Administrator', 'SUPER_ADMIN', 'ACTIVE', TRUE, TRUE)
 ON DUPLICATE KEY UPDATE `password` = VALUES(`password`), `status` = 'ACTIVE';
 
 -- 6. Gán Super Admin Role cho user admin

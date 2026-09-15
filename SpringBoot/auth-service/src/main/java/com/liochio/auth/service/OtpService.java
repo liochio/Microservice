@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
  * ==============================================================================
  * 
  * Toàn bộ vòng đời sinh mã, lưu trữ CSDL (liochio_otp_db), TTL 5 phút,
- * đếm số lần thử và xác thực OTP/SmartOTP được quản lý tập trung 100% tại `otp-service`.
- * Kèm theo cơ chế Fallback L1/L2 tự động nếu `otp-service` chưa khởi chạy.
+ * đếm số lần thử và xác thực OTP/SmartOTP được quản lý tập trung 100% tại 'otp-service'.
+ * Kèm theo cơ chế Fallback L1/L2 tự động nếu 'otp-service' chưa khởi chạy.
  */
 @Slf4j
 @Service

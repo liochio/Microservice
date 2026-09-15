@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * Mục đích:
  * - Đặt trên các endpoint quan trọng (thanh toán, tạo đơn hàng, trừ tiền, gửi OTP)
  *   để ngăn chặn việc Client hoặc Network bấm 2 lần gây nhân đôi giao dịch.
- * - Sử dụng Redis SetNX (Distributed Lock) dựa trên Header `Idempotency-Key`.
+ * - Sử dụng Redis SetNX (Distributed Lock) dựa trên Header 'Idempotency-Key'.
  * 
  * Khi nào gọi:
  * - AOP Filter chặn ngay khi request chạm tới Controller.

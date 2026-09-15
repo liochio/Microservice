@@ -4,7 +4,7 @@ from app.repositories.log.mapping.system_log_mapping import SystemLogMappingFact
 class SystemLogRepository:
     """
     👑 REPOSITORY SYSTEM LOGS
-    🎯 Lưu vết log lỗi Exception crash thô sâu của lõi hệ thống chuẩn Model sếp cấu hình.
+    🎯 Lưu vết log lỗi Exception crash thô sâu của lõi hệ thống chuẩn Model hệ thống.
     """
 
     @staticmethod

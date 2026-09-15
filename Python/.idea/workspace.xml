@@ -5,7 +5,327 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7595ff70-27b1-4166-b6ee-52f5f54990c7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../SpringBoot/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../API_CATALOG_FULL.md" beforeDir="false" afterPath="$PROJECT_DIR$/../API_CATALOG_FULL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ARCHITECTURE_SPEC.md" beforeDir="false" afterPath="$PROJECT_DIR$/../ARCHITECTURE_SPEC.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/ai/ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/ai/ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/auth/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/auth/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/auth/verification.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/auth/verification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/budgets/budget.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/budgets/budget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/categories/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/categories/category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/goals/goals.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/goals/goals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/ledger/ledger.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/ledger/ledger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/notifications/notifications.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/notifications/notifications.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/ocr/ocr.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/ocr/ocr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/payment/payment.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/payment/payment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/reports/reports.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/reports/reports.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/smart_piggy/parent_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/smart_piggy/parent_matching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/smart_piggy/smart_piggy.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/smart_piggy/smart_piggy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/smart_piggy/smart_piggy_simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/smart_piggy/smart_piggy_simulator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/transactions/transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/transactions/transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/transactions/wallet_topup.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/transactions/wallet_topup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/transfers/transfer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/transfers/transfer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/users/user_profile.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/users/user_profile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/wallets/wallet.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/wallets/wallet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/v1/websocket/ws_router.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/v1/websocket/ws_router.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/db/transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/db/transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/exceptions/base_exception.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/exceptions/base_exception.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/exceptions/validation_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/exceptions/validation_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/idempotency/idempotency_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/idempotency/idempotency_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/listeners/audit_listener.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/listeners/audit_listener.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/logging/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/logging/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/middleware/correlation_middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/middleware/correlation_middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/middleware/middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/middleware/middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/middleware/rate_limit_middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/middleware/rate_limit_middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/security/guard/guards.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/security/guard/guards.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/security/jwt/jwt_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/security/jwt/jwt_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/translator/i18n_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/translator/i18n_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/core/translator/translator_engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/core/translator/translator_engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/db/session.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/db/session.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dependency.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/dependency.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/audit/request_flow_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/audit/request_flow_log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/common/base_entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/common/base_entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/common/mixins.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/common/mixins.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/finance/mock_bank_account.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/finance/mock_bank_account.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/wallet/wallet.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/wallet/wallet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/wallet/wallet_history.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/wallet/wallet_history.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/wallet/wallet_limit.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/wallet/wallet_limit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/wallet/wallet_notification_setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/wallet/wallet_notification_setting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/wallet/wallet_tag.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/wallet/wallet_tag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/wallet/wallet_transfer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/wallet/wallet_transfer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/auth/auth_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/auth/auth_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/auth/mapping/auth_mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/auth/mapping/auth_mapping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/finance/budget_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/finance/budget_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/finance/category_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/finance/category_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/finance/financial_goal_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/finance/financial_goal_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/finance/transaction_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/finance/transaction_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/finance/transfer_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/finance/transfer_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/finance/wallet_topup_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/finance/wallet_topup_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/log/system_log_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/log/system_log_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/smart_piggy/smart_piggy_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/smart_piggy/smart_piggy_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/users/user_repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/users/user_repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/repositories/wallet/wallet_mapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/repositories/wallet/wallet_mapping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/auth.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/budget.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/budget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/financial_goal.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/financial_goal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/ocr.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/ocr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/parent_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/parent_matching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/payment.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/payment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/smart_piggy.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/smart_piggy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/transfer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/transfer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/requests/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/requests/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/ai.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/ai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/base_response.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/base_response.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/budget.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/budget.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/category.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/financial_goal.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/financial_goal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/notification.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/notification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/ocr.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/ocr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/parent_matching.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/parent_matching.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/payment.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/payment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/report.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/report.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/smart_piggy.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/smart_piggy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/transaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/transaction.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/transfer.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/transfer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/responses/wallet.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/responses/wallet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/schemas/wallet_topup/wallet_topup.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/schemas/wallet_topup/wallet_topup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/ai/ai_habit_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ai/ai_habit_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/ai/ai_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ai/ai_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/ai/smart_piggy_ai_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ai/smart_piggy_ai_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/auth/auth_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/auth/auth_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/auth/processors/login_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/auth/processors/login_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/auth/processors/otp_confirm_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/auth/processors/otp_confirm_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/auth/processors/register_processor.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/auth/processors/register_processor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/auth/token_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/auth/token_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/auth/verification_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/auth/verification_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/permission/permission_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/permission/permission_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/user/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/user/user_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/auth/wallet/wallet_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/auth/wallet/wallet_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/common/crypto_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/common/crypto_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/finance/budget_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/finance/budget_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/finance/category_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/finance/category_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/finance/financial_goal_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/finance/financial_goal_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/finance/transaction_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/finance/transaction_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/finance/transfer_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/finance/transfer_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/finance/wallet_topup_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/finance/wallet_topup_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/ledger/ledger_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ledger/ledger_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/notification/notification_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/notification/notification_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/ocr/ocr_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/ocr/ocr_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/payment/payment_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/payment/payment_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/report/financial_report_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/report/financial_report_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/smart_piggy/piggy_security_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/smart_piggy/piggy_security_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/smart_piggy/piggy_withdrawal_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/smart_piggy/piggy_withdrawal_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/smart_piggy/smart_piggy_iot_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/smart_piggy/smart_piggy_iot_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/smart_piggy/smart_piggy_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/smart_piggy/smart_piggy_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/wallet/wallet_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/wallet/wallet_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/websocket/manager/connection_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/websocket/manager/connection_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build_models_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/build_models_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/ai.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/ai.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/auth.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/auth.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/budgets.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/budgets.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/categories.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/categories.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/ocr.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/ocr.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/smart_piggy.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/smart_piggy.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/standard_api_development_guide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/standard_api_development_guide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/transactions.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/transactions.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/transfers.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/transfers.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/users.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/users.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/wallets.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/wallets.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/ai_finance_architecture_audit.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/ai_finance_architecture_audit.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/optimizations_and_resiliency.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/optimizations_and_resiliency.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/architecture/system_overview.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/architecture/system_overview.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/getting_started.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/getting_started.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/01_auth_identity.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/01_auth_identity.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/02_users_rbac.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/02_users_rbac.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/03_wallets.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/03_wallets.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/04_transactions_topup.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/04_transactions_topup.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/05_transfers_p2p.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/05_transfers_p2p.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/06_budgets_goals.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/06_budgets_goals.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/07_general_ledger.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/07_general_ledger.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/08_smart_piggy_iot.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/08_smart_piggy_iot.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/09_ai_ocr_analytics.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/09_ai_ocr_analytics.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/10_notifications_workers.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/10_notifications_workers.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/testing/all_api_test_cases.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/testing/all_api_test_cases.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/testing/api_test_cases.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/testing/api_test_cases.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/testing/testing_guide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/testing/testing_guide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/thesis_defense_guide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/thesis_defense_guide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/thesis_full_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/thesis_full_report.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/thesis_presentation_slides.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/thesis_presentation_slides.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/nginx/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/i18n_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/i18n_loader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_worker.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_worker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup_project.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup_project.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/ai-service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/ai-service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/ai-service/src/main/java/com/liochio/ai/service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/ai-service/src/main/java/com/liochio/ai/service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/ApiGatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/ApiGatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/config/GatewayCorsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/config/GatewayCorsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/config/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/config/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/config/RateLimitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/config/RateLimitConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/exception/GlobalErrorWebExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/exception/GlobalErrorWebExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/JwtAuthenticationGatewayFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/JwtAuthenticationGatewayFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/TraceIdGatewayFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/api-gateway/src/main/java/com/liochio/gateway/filter/TraceIdGatewayFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/aspect/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/aspect/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/config/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/config/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/controller/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/controller/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/dto/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/dto/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/PermissionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/PermissionEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/QrLoginSessionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/QrLoginSessionEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/RoleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/RoleEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/entity/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/repository/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/repository/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/LoginSecurityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/LoginSecurityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/OtpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/OtpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/QrLoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/QrLoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/UserProvisioningService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/java/com/liochio/auth/service/UserProvisioningService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V1__init_auth_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V1__init_auth_schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V6__create_tenancy_features_and_security_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V6__create_tenancy_features_and_security_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V7__seed_admin_account_and_passwords.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V7__seed_admin_account_and_passwords.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V8__create_core_banking_ledger_and_ekyc.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/auth-service/src/main/resources/db/migration/V8__create_core_banking_ledger_and_ekyc.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/advice/GlobalResponseWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/advice/GlobalResponseWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/advice/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/advice/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/AuditLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/AuditLog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/Idempotent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/Idempotent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/RequirePermission.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/annotation/RequirePermission.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/aspect/AuditLogAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/aspect/AuditLogAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/aspect/SecurityAuthorizationAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/aspect/SecurityAuthorizationAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/CaffeineCacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/CaffeineCacheConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/JacksonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/JacksonConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/JpaAuditingConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/JpaAuditingConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/OpenApiConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/OpenApiConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/RedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/ShedLockConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/config/ShedLockConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/constant/CacheConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/constant/CacheConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/constant/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/constant/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/constant/SecurityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/constant/SecurityConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/context/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/context/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/context/TenantContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/context/TenantContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/context/UserContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/context/UserContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/deserializer/DynamicSanitizeDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/deserializer/DynamicSanitizeDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/deserializer/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/deserializer/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/dto/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/dto/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/dto/PageResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/dto/PageResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/entity/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/entity/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/entity/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/entity/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/enums/LanguageEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/enums/LanguageEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/enums/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/enums/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/enums/OutboxStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/enums/OutboxStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/exception/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/exception/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/exception/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/exception/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/AuditLoggingFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/AuditLoggingFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/MdcTraceFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/MdcTraceFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/TenantFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/filter/TenantFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/i18n/I18nConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/i18n/I18nConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/i18n/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/i18n/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/outbox/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/outbox/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/outbox/OutboxPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/outbox/OutboxPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/outbox/OutboxRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/outbox/OutboxRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/pattern/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/pattern/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/pattern/factory/NotificationFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/pattern/factory/NotificationFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/pattern/factory/StorageFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/pattern/factory/StorageFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/security/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/security/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/security/TotpProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/security/TotpProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/service/SystemConfigService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/service/SystemConfigService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/utils/JsonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/utils/JsonUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/utils/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/common-lib/src/main/java/com/liochio/common/utils/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/config-server/src/main/java/com/liochio/config/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/config-server/src/main/java/com/liochio/config/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docker/patch_columns.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docker/patch_columns.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docker/patch_core_tables.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docker/patch_core_tables.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docker/patch_enterprise_security.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docker/patch_enterprise_security.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docker/sync_and_cleanup_databases.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docker/sync_and_cleanup_databases.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/PROJECT_OVERVIEW.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/PROJECT_OVERVIEW.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/API_CATALOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/API_CATALOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DATABASE_DESIGN.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DATABASE_DESIGN.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DISTRIBUTED_PATTERNS.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DISTRIBUTED_PATTERNS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DOMAIN_DATABASES.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DOMAIN_DATABASES.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DYNAMIC_ENGINE_AND_SDUI.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/DYNAMIC_ENGINE_AND_SDUI.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/ENTERPRISE_SECURITY_AUTHENTICATION.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/ENTERPRISE_SECURITY_AUTHENTICATION.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/SECURITY_AND_ZERO_TRUST.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/SECURITY_AND_ZERO_TRUST.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/docs/architecture/SYSTEM_ARCHITECTURE_CORE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/docs/architecture/SYSTEM_ARCHITECTURE_CORE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/config/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/config/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/controller/DatabaseHealthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/controller/DatabaseHealthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/controller/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/controller/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/dto/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/dto/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/entity/DynamicEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/entity/DynamicEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/entity/DynamicEntityRevisionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/entity/DynamicEntityRevisionEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/entity/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/entity/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/repository/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/repository/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/specification/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/java/com/liochio/entityservice/specification/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/resources/db/migration/V1__init_entity_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/entity-service/src/main/resources/db/migration/V1__init_entity_schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/ledger-service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/ledger-service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/adapter/EmailNotificationAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/adapter/EmailNotificationAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/adapter/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/adapter/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/config/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/config/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/controller/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/controller/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/dto/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/dto/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/entity/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/entity/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/repository/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/repository/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/websocket/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/java/com/liochio/notification/websocket/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/resources/db/migration/V3__create_notification_configs_and_templates.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/notification-service/src/main/resources/db/migration/V3__create_notification_configs_and_templates.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/otp-service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/otp-service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/otp-service/src/main/java/com/liochio/otp/service/DedicatedOtpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/otp-service/src/main/java/com/liochio/otp/service/DedicatedOtpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/otp-service/src/main/resources/db/migration/V1__init_otp_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/otp-service/src/main/resources/db/migration/V1__init_otp_schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/adapter/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/adapter/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/config/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/config/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/controller/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/controller/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/dto/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/dto/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/entity/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/entity/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/repository/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/repository/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/payment-service/src/main/java/com/liochio/payment/service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/realtime-service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/realtime-service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/AuditDatabases.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/AuditDatabases.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/ExecuteCleanup.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/ExecuteCleanup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/InitDatabases.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/InitDatabases.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/MigrateAllDatabases.java" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/MigrateAllDatabases.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/audit_database_schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/audit_database_schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/test_all_23_apis.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/test_all_23_apis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/test_all_databases.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/test_all_databases.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/test_enterprise_security.py" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/test_enterprise_security.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/scripts/test_enterprise_security_suite.ps1" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/scripts/test_enterprise_security_suite.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/service-registry/src/main/java/com/liochio/registry/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/service-registry/src/main/java/com/liochio/registry/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/worker-service/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/worker-service/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SpringBoot/worker-service/src/main/java/com/liochio/worker/NOTE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../SpringBoot/worker-service/src/main/java/com/liochio/worker/NOTE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/dist/assets/index-BN47sMt8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/dist/assets/index-Ck8DdaG5.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/liochio-app-portal/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/api/client.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/api/client.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/api/piggyApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/api/piggyApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/components/UnifiedLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/components/UnifiedLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/context/AuthContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/liochio-app-portal/src/context/AuthContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../postman/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../postman/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/generate_full_api_doc.py" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/generate_full_api_doc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/recreate_enterprise_v3_databases.py" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/recreate_enterprise_v3_databases.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../scripts/test_enterprise_v3.py" beforeDir="false" afterPath="$PROJECT_DIR$/../scripts/test_enterprise_v3.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,7 +333,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="456" />
+    <option name="cachedIndexableFilesCount" value="453" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -24,12 +344,12 @@
     &quot;assignee&quot;: &quot;liochio&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/liochio/Microservice.git",
-    "accountId": "60e999c2-ebe1-4d0d-857e-dd26f031873b"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/liochio/Microservice.git&quot;,
+    &quot;accountId&quot;: &quot;60e999c2-ebe1-4d0d-857e-dd26f031873b&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -84,21 +404,13 @@
       <workItem from="1789120967065" duration="3149000" />
       <workItem from="1789185998918" duration="3097000" />
       <workItem from="1789366928904" duration="8597000" />
+      <workItem from="1789385035978" duration="5337000" />
+      <workItem from="1789450953214" duration="5101000" />
+      <workItem from="1789461908724" duration="1243000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/app/api/v1/ledger/ledger.py</url>
-          <line>1</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

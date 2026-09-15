@@ -4,5 +4,5 @@
 - Định nghĩa DTO truyền nhận dữ liệu gửi thông báo.
 
 ## 2. Các thành phần chính
-- `NotificationSendRequest.java`: DTO gửi tin.
-- `NotificationResponse.java`: DTO trả về kết quả.
+- 'NotificationSendRequest.java': DTO gửi tin.
+- 'NotificationResponse.java': DTO trả về kết quả.

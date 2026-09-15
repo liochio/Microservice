@@ -236,7 +236,7 @@ class WalletService:
         if not target_wallet or target_wallet.is_deleted:
             raise FintechBaseException(error_code="TARGET_WALLET_NOT_FOUND", status_code=404)
 
-        # 🛑 QUY TẮC BỌC THÉP CLOSED-LOOP: CHẶN P2P TỪ VÍ SAVINGS
+        # 🛑 QUY TẮC BẢO MẬT CAO CLOSED-LOOP: CHẶN P2P TỪ VÍ SAVINGS
         is_source_savings = (getattr(source_wallet, "wallet_type", "").upper() == "SAVINGS" or "HEO" in getattr(source_wallet, "name", "").upper())
         if is_source_savings:
             if str(target_wallet.user_id) != str(user_id):

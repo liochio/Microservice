@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/responses/transaction.py
+
 from pydantic import BaseModel
 from typing import List, Optional, Any
 

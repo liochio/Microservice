@@ -16,7 +16,7 @@ import java.util.Locale;
  *   + Tiếng Trung (zh - CHINESE)
  * 
  * Khi nào gọi:
- * - Được I18nConfig, MessageService, và LocaleResolver sử dụng để ánh xạ Header `Accept-Language`.
+ * - Được I18nConfig, MessageService, và LocaleResolver sử dụng để ánh xạ Header 'Accept-Language'.
  */
 @Getter
 public enum LanguageEnum {

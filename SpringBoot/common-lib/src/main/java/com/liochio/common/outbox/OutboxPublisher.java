@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * ==============================================================================
  * 
  * Mục đích:
- * - Đóng gói dữ liệu Payload thành JSON và lưu vào bảng `outbox_events` trong
+ * - Đóng gói dữ liệu Payload thành JSON và lưu vào bảng 'outbox_events' trong
  *   cùng Transaction hiện tại (Propagation.MANDATORY hoặc REQUIRED).
  * 
  * Khi nào gọi:

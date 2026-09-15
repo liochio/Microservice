@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/responses/report.py
+
 from pydantic import BaseModel
 from typing import Optional, List, Dict
 from app.schemas.responses.base_response import BaseResponse

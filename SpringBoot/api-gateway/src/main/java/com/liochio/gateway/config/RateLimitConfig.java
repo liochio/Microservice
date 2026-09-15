@@ -15,10 +15,10 @@ import java.net.InetSocketAddress;
  * ==============================================================================
  * 
  * Mục đích:
- * 1. `userKeyResolver`: Giới hạn lưu lượng trên từng tài khoản người dùng (`X-User-ID`),
+ * 1. 'userKeyResolver': Giới hạn lưu lượng trên từng tài khoản người dùng ('X-User-ID'),
  *    ngăn chặn tình trạng spam API chuyển tiền, thanh toán từ cùng một tài khoản.
- * 2. `ipKeyResolver`: Giới hạn theo Real Client IP (nhận diện qua `CF-Connecting-IP`).
- * 3. `apiKeyResolver`: Giới hạn cho các đối tác / tích hợp API bên ngoài (`X-API-Key`).
+ * 2. 'ipKeyResolver': Giới hạn theo Real Client IP (nhận diện qua 'CF-Connecting-IP').
+ * 3. 'apiKeyResolver': Giới hạn cho các đối tác / tích hợp API bên ngoài ('X-API-Key').
  */
 @Configuration
 public class RateLimitConfig {

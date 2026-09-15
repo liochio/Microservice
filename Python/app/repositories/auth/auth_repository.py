@@ -8,7 +8,7 @@ CORE_FALLBACK_ERRORS = (SQLAlchemyError, AttributeError, TypeError, ValueError, 
 class AuthRepository:
     """
     👑 REPOSITORY AUTHENTICATION LỚP LANG
-    🎯 Quản lý tập trung toàn bộ các thao tác truy vấn dữ liệu tài khoản, bảo toàn kiến trúc bọc thép.
+    🎯 Quản lý tập trung toàn bộ các thao tác truy vấn dữ liệu tài khoản, bảo toàn kiến trúc bảo mật cao.
     """
 
     @staticmethod
@@ -37,7 +37,7 @@ class AuthRepository:
         db_conn.execute(stmt)
 
     # ==============================================================================
-    # 🎯 ĐÁNH DẤU CHỈNH SỬA CHỐT HẠ: KHAI TỬ TOÀN BỘ CHUỖI TEXT() SQL THÔ RÁC RƯỞI
+    # 🎯 ĐÁNH DẤU CHỈNH SỬA CHỐT HẠ: KHAI TỬ TOÀN BỘ CHUỖI TEXT() TRUY VẤN SQL THÔ
     # ==============================================================================
     @staticmethod
     def get_user_by_email(db_conn, email: str):
@@ -48,7 +48,7 @@ class AuthRepository:
             user = result.scalar_one_or_none()
 
             if user is None:
-                # Ép nạp Statement cứu hộ thuần ORM bọc thép từ Factory
+                # Ép nạp Statement cứu hộ thuần ORM bảo mật cao từ Factory
                 stmt_backup = AuthMappingFactory.get_user_backup_stmt(email)
                 row = db_conn.execute(stmt_backup).fetchone()
 
@@ -64,7 +64,7 @@ class AuthRepository:
             return user
         except CORE_FALLBACK_ERRORS:
             try:
-                # Đồng bộ bọc thép chặng cuối bằng ORM tuyệt đối
+                # Đồng bộ bảo mật cao chặng cuối bằng ORM tuyệt đối
                 stmt_backup = AuthMappingFactory.get_user_backup_stmt(email)
                 row = db_conn.execute(stmt_backup).fetchone()
                 if row:
@@ -81,7 +81,7 @@ class AuthRepository:
 
     @staticmethod
     def get_password_hash_direct(db_conn, email: str) -> str:
-        """👑 HÀM CỨU HỘ TRUY VẤN BỌC THÉP THẲNG TUỘT QUA ORM FACTORY"""
+        """👑 HÀM CỨU HỘ TRUY VẤN BẢO MẬT CAO THẲNG TUỘT QUA ORM FACTORY"""
         try:
             # Khai tử câu lệnh text thô cũ, bốc qua bản phối ORM cứu hộ chuẩn chỉ
             stmt = AuthMappingFactory.get_user_backup_stmt(email)

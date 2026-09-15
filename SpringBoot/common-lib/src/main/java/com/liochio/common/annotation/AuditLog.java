@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * ==============================================================================
  * 
  * Mục đích:
- * - Đặt trên method Controller / Service để tự động ghi log vào bảng `audit_logs`
+ * - Đặt trên method Controller / Service để tự động ghi log vào bảng 'audit_logs'
  *   theo dõi mọi biến động dữ liệu, phân loại module, action, thời gian thực thi,
  *   IP, User, Tenant, Thiết bị và dữ liệu trước/sau (old_data, new_data).
  */

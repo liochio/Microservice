@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/repositories/finance/financial_goal_repository.py
+
 import uuid
 from datetime import datetime
 from typing import List, Optional

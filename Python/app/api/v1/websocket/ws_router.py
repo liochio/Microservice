@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/api/v1/websocket/ws_router.py
+
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query
 from app.websocket.manager.connection_manager import ws_manager
 

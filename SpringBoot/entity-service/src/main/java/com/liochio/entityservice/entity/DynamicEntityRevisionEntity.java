@@ -15,7 +15,7 @@ import java.util.Map;
  * ==============================================================================
  * 
  * Mục đích:
- * 1. Lưu lại toàn bộ trạng thái và snapshot của `attributes` qua từng lần chỉnh sửa.
+ * 1. Lưu lại toàn bộ trạng thái và snapshot của 'attributes' qua từng lần chỉnh sửa.
  * 2. Hỗ trợ truy vết audit, so sánh khác biệt (Diff), và khôi phục (Rollback).
  */
 @Entity

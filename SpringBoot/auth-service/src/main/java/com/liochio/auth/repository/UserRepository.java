@@ -15,7 +15,7 @@ import java.util.Optional;
  * ==============================================================================
  * 
  * Mục đích:
- * - Truy vấn thông tin người dùng kèm theo Roles và Permissions bằng `@EntityGraph`
+ * - Truy vấn thông tin người dùng kèm theo Roles và Permissions bằng '@EntityGraph'
  *   để triệt tiêu lỗi N+1 Query theo nguyên tắc Tối ưu hóa hiệu năng.
  */
 @Repository

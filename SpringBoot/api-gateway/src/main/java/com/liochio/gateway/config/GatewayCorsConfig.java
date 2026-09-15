@@ -29,8 +29,9 @@ public class GatewayCorsConfig {
         corsConfig.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"));
         corsConfig.setAllowedHeaders(Arrays.asList(
                 "Authorization", "Content-Type", "X-Tenant-ID", "Accept-Language", "Idempotency-Key",
+                "X-Idempotency-Key", "X-Portal-Type",
                 "X-Request-ID", "X-Trace-ID", "x-correlation-id", "CF-Ray", "CF-Connecting-IP",
-                "X-Device-Id", "X-Session-ID", "X-API-Key"
+                "X-Device-Id", "X-Session-ID", "X-API-Key", "*"
         ));
         corsConfig.setExposedHeaders(Arrays.asList(
                 "Authorization", "X-Tenant-ID", "X-Request-ID", "X-Trace-ID", "x-correlation-id", "CF-Ray"

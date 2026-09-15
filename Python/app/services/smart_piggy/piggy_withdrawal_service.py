@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/services/smart_piggy/piggy_withdrawal_service.py
+
 from datetime import datetime
 from typing import Dict, Any, Optional
 import uuid
@@ -565,7 +565,8 @@ class PiggyWithdrawalService:
             for b in buckets:
                 b.status = "COMPLETED"
                 b.current_amount = 0.0
-            device.status = "SMASHED_EMPTY"
+            device.status = "DECOMMISSIONED_UNBOUND"
+            device.user_id = "UNBOUND"
 
         # Giải phóng Mutex
         PiggySecurityService.release_device_lock(device.id if device else device_id)

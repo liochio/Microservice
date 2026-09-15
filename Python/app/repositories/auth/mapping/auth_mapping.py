@@ -3,8 +3,8 @@ from app.models.user.user import User
 
 class AuthMappingFactory:
     """
-    👑 FACTORY ÁNH XẠ ORM MAPPING CHÍNH QUY CỦA SẾP
-    🎯 Tuyệt đối không chứa một chữ SQL thô text() rác rưởi
+    👑 FACTORY ÁNH XẠ ORM MAPPING CHÍNH QUY HỆ THỐNG
+    🎯 Tuyệt đối không chứa một chữ truy vấn SQL thô
     """
     @staticmethod
     def get_check_email_stmt(email: str):

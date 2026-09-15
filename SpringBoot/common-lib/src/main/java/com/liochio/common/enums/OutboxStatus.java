@@ -8,7 +8,7 @@ import lombok.Getter;
  * ==============================================================================
  * 
  * Mục đích:
- * - Theo dõi vòng đời của sự kiện phân tán trong bảng `outbox_events` nhằm
+ * - Theo dõi vòng đời của sự kiện phân tán trong bảng 'outbox_events' nhằm
  *   đảm bảo tính toàn vẹn dữ liệu khi có lỗi xảy ra hoặc cơ sở dữ liệu rollback.
  * 
  * Khi nào gọi:

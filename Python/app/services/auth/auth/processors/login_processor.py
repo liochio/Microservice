@@ -83,7 +83,7 @@ class UserLoginProcessor:
         user_module_codes = [str(m["code"]) for m in flat_modules_data]
 
         # STEP 5: GENERATE TOKEN PAIR (Mục 8)
-        LogRepository.insert_request_flow_log(trace_id, "GENERATE_TOKEN", f"Đúc cặp bài trùng Token JTI bọc thép.")
+        LogRepository.insert_request_flow_log(trace_id, "GENERATE_TOKEN", f"Đúc cặp bài trùng Token JTI bảo mật cao.")
         token_pair = JwtService.generate_token_pair(user_id, username, perms_token, user_module_codes)
 
         # STEP 6: SAVE SESSION LOCK TO SQL (Mục 8, 14)

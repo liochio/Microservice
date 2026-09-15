@@ -15,7 +15,7 @@ class OtpConfirmProcessor:
 
         user_id = str(getattr(user_data, "id", None) or user_data.get("id"))
 
-        # 👑 Triệu hồi Verify OTP bọc thép
+        # 👑 Triệu hồi Verify OTP bảo mật cao
         OtpService.verify_and_consume_otp(db_conn, str(user_id), str(payload.otp).strip(), "REGISTER")
 
         # 1. Kích hoạt trạng thái người dùng sang ACTIVE

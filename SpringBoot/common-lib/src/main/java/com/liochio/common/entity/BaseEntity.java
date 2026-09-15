@@ -23,10 +23,10 @@ import java.time.Instant;
  * 
  * Mục đích:
  * - Cung cấp các trường dùng chung cho 100% Entity trong toàn bộ các Microservices:
- *   1. Khóa chính `id` (Auto Increment)
- *   2. Định danh khách thuê `tenant_id` và Hibernate Filter cô lập dữ liệu tự động
- *   3. JPA Auditing tự động lưu `created_at`, `updated_at`, `created_by`, `last_modified_by`
- *   4. Cơ chế xóa mềm `is_deleted` (Soft Delete)
+ *   1. Khóa chính 'id' (Auto Increment)
+ *   2. Định danh khách thuê 'tenant_id' và Hibernate Filter cô lập dữ liệu tự động
+ *   3. JPA Auditing tự động lưu 'created_at', 'updated_at', 'created_by', 'last_modified_by'
+ *   4. Cơ chế xóa mềm 'is_deleted' (Soft Delete)
  * - Sử dụng Instant (UTC) cho toàn bộ thời gian lưu trữ cơ sở dữ liệu.
  * 
  * Khi nào gọi:

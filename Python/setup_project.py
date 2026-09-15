@@ -3,7 +3,7 @@ import os
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# 1. Danh sách toàn bộ thư mục cần khởi tạo theo sơ đồ của sếp
+# 1. Danh sách toàn bộ thư mục cần khởi tạo theo sơ đồ kiến trúc hệ thống
 STRUCTURE = [
     "app",
     "app/api",
@@ -185,7 +185,7 @@ STRUCTURE = [
     "docs/security"
 ]
 
-# 2. Định nghĩa nội dung bọc thép cho các file nòng cốt ở thư mục gốc app/
+# 2. Định nghĩa nội dung bảo mật cao cho các file nòng cốt ở thư mục gốc app/
 FILES_WITH_CONTENT = {
     "app/main.py": """from fastapi import FastAPI
 from app.lifespan import app_lifespan
@@ -253,8 +253,8 @@ class Settings(BaseSettings):
 settings = Settings()
 """,
 
-    "app/core/middleware/logging_middleware import LoggingMiddleware": """# Chờ sếp lắp luồng middleware context sau""",
-    "app/core/responses/response_handler.py": """# Chờ sếp lắp bộ phản hồi đa ngữ sau""",
+    "app/core/middleware/logging_middleware import LoggingMiddleware": """# Dự phòng mở rộng middleware context sau""",
+    "app/core/responses/response_handler.py": """# Dự phòng mở rộng bộ phản hồi đa ngữ sau""",
 
     # Khởi tạo ma trận i18n trống để tránh crash hệ thống dịch ngôn ngữ
     "i18n/vi/messages.json": "{}",
@@ -296,7 +296,7 @@ def build_architecture():
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content.strip())
 
-    print("👑 [SUCCESS] Đã tạo xong toàn bộ ma trận kiến trúc Enterprise bọc thép!")
+    print("👑 [SUCCESS] Đã tạo xong toàn bộ ma trận kiến trúc Enterprise bảo mật cao!")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/core/security/guard/guards.py
+
 import jwt
 from typing import Dict, Any, Optional
 from fastapi import Request, Depends, status
@@ -156,7 +156,7 @@ class PermissionGuard:
 class RequireActionTokenGuard:
     """
     👑 SMART OTP ACTION TOKEN GUARD:
-    Xác thực header `X-Action-Token` trước khi thực hiện các giao dịch nhạy cảm (rút tiền ví, mở khóa heo).
+    Xác thực header 'X-Action-Token' trước khi thực hiện các giao dịch nhạy cảm (rút tiền ví, mở khóa heo).
     """
     def __init__(self, action_type: str = "FINTECH_TRANSACTION"):
         self.action_type = action_type

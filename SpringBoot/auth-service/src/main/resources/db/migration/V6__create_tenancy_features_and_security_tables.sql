@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `tenants` (
 
 -- Thêm dữ liệu mặc định cho Tenant 'default'
 INSERT IGNORE INTO `tenants` (`id`, `name`, `type`, `domain`, `subdomain`, `status`, `contact_email`)
-VALUES ('default', 'Hệ Thống Mặc Định (Default Platform)', 'ENTERPRISE', 'localhost', 'default', 'ACTIVE', 'admin@portfolio-engine.dev');
+VALUES ('default', 'Nền Tảng Tài Chính Số Liochio (Liochio FinTech Platform)', 'ENTERPRISE', 'localhost', 'default', 'ACTIVE', 'admin.fintech@liochio.com');
 
 -- 2. Bảng Danh mục Tính năng Hệ thống (Super Admin Quản lý)
 CREATE TABLE IF NOT EXISTS `system_features` (

@@ -9,48 +9,48 @@ Hệ thống là một nền tảng Fintech Microservice lai (Hybrid Architectur
 
 ## 2. PHÂN TÁCH BOUNDED CONTEXT & NGUYÊN TẮC DATABASE-PER-SERVICE
 
-### 2.1. Pure IAM & Compliance Domain (`auth-service :8081`)
-- **Database**: `liochio_core_db`
+### 2.1. Pure IAM & Compliance Domain ('auth-service :8081')
+- **Database**: 'liochio_core_db'
 - **Trách nhiệm**:
-  * Quản lý thông tin định danh người dùng: `users`, `roles`, `permissions`, `user_roles`.
+  * Quản lý thông tin định danh người dùng: 'users', 'roles', 'permissions', 'user_roles'.
   * Cấp phát và thu hồi JWT Token, Refresh Token, Blacklist Token trên Redis.
   * Xác thực đa yếu tố (MFA / OTP), Device Fingerprinting và Session Tracking.
-  * Modular Monolith Compliance: Quản lý cổng Onboarding Khách hàng (`CustomerOnboardingGate`) và quy trình phê duyệt Maker-Checker (`ApprovalRequest`).
+  * Modular Monolith Compliance: Quản lý cổng Onboarding Khách hàng ('CustomerOnboardingGate') và quy trình phê duyệt Maker-Checker ('ApprovalRequest').
 
-### 2.2. Core Banking Ledger Domain (`ledger-service :8085`)
-- **Database**: `liochio_ledger_db`
+### 2.2. Core Banking Ledger Domain ('ledger-service :8085')
+- **Database**: 'liochio_ledger_db'
 - **Trách nhiệm**:
-  * Quản lý cấu trúc tài khoản sổ cái: `ledger_accounts` (phân định rõ: `USER_AVAILABLE`, `USER_HOLDING`, `USER_ESCROW`, `SYSTEM_SETTLEMENT`).
-  * Thực thi nguyên tắc kế toán kép bất biến: Tổng Nợ (`DEBIT`) = Tổng Có (`CREDIT`).
-  * Khóa hàng bi quan (`SELECT ... FOR UPDATE`) chống Race Condition khi có giao dịch đồng thời.
-  * Bảo đảm tính toàn vẹn bằng Chuỗi Mã Băm SHA-256 (Hash Chaining: mỗi bút toán phụ thuộc vào `prev_hash` của bút toán trước).
-  * Kiểm tra tính duy nhất bằng `idempotency_key`.
+  * Quản lý cấu trúc tài khoản sổ cái: 'ledger_accounts' (phân định rõ: 'USER_AVAILABLE', 'USER_HOLDING', 'USER_ESCROW', 'SYSTEM_SETTLEMENT').
+  * Thực thi nguyên tắc kế toán kép bất biến: Tổng Nợ ('DEBIT') = Tổng Có ('CREDIT').
+  * Khóa hàng bi quan ('SELECT ... FOR UPDATE') chống Race Condition khi có giao dịch đồng thời.
+  * Bảo đảm tính toàn vẹn bằng Chuỗi Mã Băm SHA-256 (Hash Chaining: mỗi bút toán phụ thuộc vào 'prev_hash' của bút toán trước).
+  * Kiểm tra tính duy nhất bằng 'idempotency_key'.
 
-### 2.3. Dynamic Engine & UI Configuration Domain (`entity-service :8082`)
-- **Database**: `liochio_entity_db`
+### 2.3. Dynamic Engine & UI Configuration Domain ('entity-service :8082')
+- **Database**: 'liochio_entity_db'
 - **Trách nhiệm**:
   * Dynamic EAV Engine cho thực thể tùy biến.
-  * Hệ thống Cây Menu Động đa cấp, phân quyền và đa ngôn ngữ (`MasterMenu`, `MenuI18n`, `TenantMenu`).
-  * Ma trận tham số cấu hình toàn cục & phân cấp doanh nghiệp (`GlobalSystemConfig`, `TenantConfigOverride`).
+  * Hệ thống Cây Menu Động đa cấp, phân quyền và đa ngôn ngữ ('MasterMenu', 'MenuI18n', 'TenantMenu').
+  * Ma trận tham số cấu hình toàn cục & phân cấp doanh nghiệp ('GlobalSystemConfig', 'TenantConfigOverride').
 
-### 2.4. Payment & Booking Domain (`payment-service :8083`)
-- **Database**: `liochio_payment_db`
+### 2.4. Payment & Booking Domain ('payment-service :8083')
+- **Database**: 'liochio_payment_db'
 - **Trách nhiệm**:
   * Tích hợp cổng thanh toán trực tuyến (VNPAY, MoMo, VietQR).
   * Quản lý giao dịch thanh toán, đặt cọc và đối soát với ngân hàng đối tác.
 
-### 2.5. App Wallet & IoT Satellite Domain (`Python FastAPI :8000`)
-- **Database**: `liochio_app_db`
+### 2.5. App Wallet & IoT Satellite Domain ('Python FastAPI :8000')
+- **Database**: 'liochio_app_db'
 - **Trách nhiệm**:
   * Cổng kết nối thiết bị phần cứng ESP32 cho Heo Đất Thông Minh (WebSocket, MQTT, HTTP).
-  * Quản lý số dư khả dụng tức thì (`wallets`) và lịch sử giao dịch ứng dụng (`transactions`).
-  * M2M HMAC-SHA256 Client tự động đồng bộ bút toán sang `ledger-service`.
+  * Quản lý số dư khả dụng tức thì ('wallets') và lịch sử giao dịch ứng dụng ('transactions').
+  * M2M HMAC-SHA256 Client tự động đồng bộ bút toán sang 'ledger-service'.
 
 ---
 
 ## 3. CƠ CHẾ ĐỒNG BỘ DỮ LIỆU & NHẤT QUÁN CUỐI CÙNG (EVENTUAL CONSISTENCY)
 
-```text
+'''text
 [Client / IoT ESP32]
          │
          │ 1. Gửi lệnh nạp tiền / biến động ví
@@ -71,7 +71,7 @@ Hệ thống là một nền tảng Fintech Microservice lai (Hybrid Architectur
          │ 10. Cập nhật số dư hiển thị trên wallets
          ▼
 [WebSocket Realtime Push tới Mobile/Web]
-```
+'''
 
 ---
 

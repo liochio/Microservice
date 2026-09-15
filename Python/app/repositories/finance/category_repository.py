@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/repositories/finance/category_repository.py
+
 import uuid
 from datetime import datetime
 from sqlalchemy import select, or_, text
@@ -8,7 +8,7 @@ from app.models.finance.category import Category
 class CategoryRepository:
     """
     👑 REPOSITORY: QUẢN LÝ TRUY VẤN DANH MỤC THU / CHI
-    🎯 Nguyên tắc Bọc Thép: Chỉ truy vấn bảng `categories`, không JOIN chéo bảng khác.
+    🎯 Nguyên tắc Bọc Thép: Chỉ truy vấn bảng 'categories', không JOIN chéo bảng khác.
     """
 
     @staticmethod

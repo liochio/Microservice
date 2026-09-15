@@ -42,7 +42,7 @@ import java.util.UUID;
  * 1. Xác thực Asymmetric RS256 JWT qua RSA Public Key mà không phụ thuộc HTTP sang Auth Service.
  * 2. Kiểm tra tức thì Redis L2 Cache cho Token Blacklist / Session Revocation.
  * 3. Header Sanitization: Xóa 100% header nội bộ do Client giả mạo (Anti-Spoofing).
- * 4. Nạp lại downstream các header sạch đã kiểm chứng: `X-User-ID`, `X-Username`, `X-Tenant-ID`, `X-User-Roles`,...
+ * 4. Nạp lại downstream các header sạch đã kiểm chứng: 'X-User-ID', 'X-Username', 'X-Tenant-ID', 'X-User-Roles',...
  */
 @Slf4j
 @Component

@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/requests/transaction.py
+
 from pydantic import BaseModel, model_validator
 from typing import Optional, Any
 from datetime import datetime

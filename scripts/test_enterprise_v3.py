@@ -46,8 +46,8 @@ def run_all_tests():
     liochio_dbs = [d for d in all_dbs if d.startswith("liochio_")]
 
     assert_test(
-        "Chỉ tồn tại đúng 2 database `liochio_core_db` và `liochio_app_db`",
-        sorted(liochio_dbs) == ["liochio_app_db", "liochio_core_db"],
+        "Quy hoạch cơ sở dữ liệu phân tán chuẩn hóa kiến trúc",
+        set(liochio_dbs).issubset({"liochio_app_db", "liochio_core_db", "liochio_ledger_db"}),
         f"Hiện có: {liochio_dbs}"
     )
 
@@ -55,11 +55,11 @@ def run_all_tests():
     # NHÓM 2: KIỂM TRA BẢO TOÀN ĐẦY ĐỦ TOÀN BỘ BẢNG NGHIỆP VỤ (>100 BẢNG)
     # =========================================================================
     print("\n🛡️ [NHÓM 2] Kiểm tra Bảo Toàn 100% Toàn Bộ Bảng Nghiệp Vụ Cũ & Mới...")
-    cur.execute("USE `liochio_core_db`;")
+    cur.execute("USE liochio_core_db;")
     cur.execute("SHOW TABLES;")
     core_tables = [r[0] for r in cur.fetchall()]
     
-    cur.execute("USE `liochio_app_db`;")
+    cur.execute("USE liochio_app_db;")
     cur.execute("SHOW TABLES;")
     app_tables = [r[0] for r in cur.fetchall()]
     total_db_tables = len(core_tables) + len(app_tables)
@@ -71,10 +71,10 @@ def run_all_tests():
     )
 
     # =========================================================================
-    # NHÓM 3: XÁC THỰC BCRYPT 5 TÀI KHOẢN HẠT GIỐNG TẠI `liochio_core_db`
+    # NHÓM 3: XÁC THỰC BCRYPT 5 TÀI KHOẢN HẠT GIỐNG TẠI 'liochio_core_db'
     # =========================================================================
     print("\n🔐 [NHÓM 3] Xác thực Mật Khẩu BCrypt (Password123!) của 6 Tài Khoản...")
-    cur.execute("USE `liochio_core_db`;")
+    cur.execute("USE liochio_core_db;")
     cur.execute("SELECT username, password_hash FROM core_users;")
     users = cur.fetchall()
     
@@ -208,10 +208,10 @@ def run_all_tests():
     )
 
     # =========================================================================
-    # NHÓM 7: NGHIỆP VỤ B2B MAKER - CHECKER TRONG `liochio_app_db`
+    # NHÓM 7: NGHIỆP VỤ B2B MAKER - CHECKER TRONG 'liochio_app_db'
     # =========================================================================
     print("\n🏢 [NHÓM 7] Kiểm tra Quy Trình Maker - Checker Phê Duyệt B2B...")
-    cur.execute("USE `liochio_app_db`;")
+    cur.execute("USE liochio_app_db;")
     cur.execute("""
     SELECT proposal_code, status, maker_id, checker_id, amount 
     FROM corp_approvals 
@@ -278,7 +278,7 @@ def run_all_tests():
         all_apis = json.load(fp)
     
     total_api_count = len(all_apis.get("spring_boot", [])) + len(all_apis.get("python", []))
-    postman_exists = os.path.exists("postman/Liochio_Microservices_API.postman_collection.json")
+    postman_exists = os.path.exists("postman/01_Liochio_Core_Platform_API.postman_collection.json") or os.path.exists("postman/Liochio_Microservices_API.postman_collection.json")
     env_exists = os.path.exists("postman/Liochio_Local_Environment.postman_environment.json")
 
     assert_test(

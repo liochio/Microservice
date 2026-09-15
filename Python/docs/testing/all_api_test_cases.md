@@ -8,7 +8,7 @@ Tất cả các lệnh cURL dưới đây đã được định dạng chuẩn, 
 ## 1. PHÂN HỆ XÁC THỰC (AUTH)
 
 ### 1.1 Đăng Ký Tài Khoản Mới (Happy Path)
-```bash
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/auth/register" \
   -H "Content-Type: application/json" \
   -H "Accept-Language: vi" \
@@ -22,10 +22,10 @@ curl -X POST "http://127.0.0.1/api/v1/auth/register" \
     "date_of_birth": "1999-01-01",
     "gender": "MALE"
   }'
-```
+'''
 
 ### 1.2 Đăng Nhập Tài Khoản
-```bash
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/auth/login" \
   -H "Content-Type: application/json" \
   -H "Accept-Language: vi" \
@@ -33,21 +33,21 @@ curl -X POST "http://127.0.0.1/api/v1/auth/login" \
     "email": "admin@fintech.local",
     "password": "Admin@123456"
   }'
-```
+'''
 
 ---
 
 ## 2. PHÂN HỆ HỒ SƠ NGƯỜI DÙNG (USERS)
 
-### 2.1 Xem Thông Tin Cá Nhân (`GET /users/me`)
-```bash
+### 2.1 Xem Thông Tin Cá Nhân ('GET /users/me')
+'''bash
 curl -X GET "http://127.0.0.1/api/v1/users/me" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Accept-Language: vi"
-```
+'''
 
-### 2.2 Cập Nhật Hồ Sơ (`PUT /users/me`)
-```bash
+### 2.2 Cập Nhật Hồ Sơ ('PUT /users/me')
+'''bash
 curl -X PUT "http://127.0.0.1/api/v1/users/me" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -55,10 +55,10 @@ curl -X PUT "http://127.0.0.1/api/v1/users/me" \
     "full_name": "Nguyễn Văn Đã Cập Nhật",
     "gender": "MALE"
   }'
-```
+'''
 
-### 2.3 Đổi Mật Khẩu (`POST /users/change-password`)
-```bash
+### 2.3 Đổi Mật Khẩu ('POST /users/change-password')
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/users/change-password" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -67,20 +67,20 @@ curl -X POST "http://127.0.0.1/api/v1/users/change-password" \
     "new_password": "NewSecurePass456!",
     "confirm_password": "NewSecurePass456!"
   }'
-```
+'''
 
 ---
 
 ## 3. PHÂN HỆ DANH MỤC THU CHI (CATEGORIES)
 
 ### 3.1 Lấy Danh Sách Danh Mục
-```bash
+'''bash
 curl -X GET "http://127.0.0.1/api/v1/categories" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ### 3.2 Tạo Danh Mục Cá Nhân Mới
-```bash
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/categories" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -90,20 +90,20 @@ curl -X POST "http://127.0.0.1/api/v1/categories" \
     "icon": "paw",
     "color": "#9C27B0"
   }'
-```
+'''
 
 ---
 
 ## 4. PHÂN HỆ VÍ TÀI CHÍNH (WALLETS)
 
 ### 4.1 Lấy Danh Sách Ví
-```bash
+'''bash
 curl -X GET "http://127.0.0.1/api/v1/wallets" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ### 4.2 Tạo Ví Mới
-```bash
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/wallets" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -113,14 +113,14 @@ curl -X POST "http://127.0.0.1/api/v1/wallets" \
     "wallet_type": "SAVINGS",
     "currency": "VND"
   }'
-```
+'''
 
 ---
 
 ## 5. PHÂN HỆ GIAO DỊCH THU CHI (TRANSACTIONS)
 
 ### 5.1 Tạo Giao Dịch Thu/Chi
-```bash
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/transactions" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -131,20 +131,20 @@ curl -X POST "http://127.0.0.1/api/v1/transactions" \
     "transaction_type": "EXPENSE",
     "description": "Ăn sáng bánh mì"
   }'
-```
+'''
 
 ### 5.2 Lấy Danh Sách Giao Dịch
-```bash
+'''bash
 curl -X GET "http://127.0.0.1/api/v1/transactions?limit=20&offset=0" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ---
 
 ## 6. PHÂN HỆ CHUYỂN TIỀN NỘI BỘ (TRANSFERS)
 
 ### 6.1 Chuyển Tiền Giữa 2 Ví
-```bash
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/transfers" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -154,20 +154,20 @@ curl -X POST "http://127.0.0.1/api/v1/transfers" \
     "amount": 200000.0,
     "description": "Chuyển tiền vào quỹ tiết kiệm"
   }'
-```
+'''
 
 ---
 
 ## 7. PHÂN HỆ QUẢN LÝ NGÂN SÁCH (BUDGETS)
 
 ### 7.1 Lấy Danh Sách Ngân Sách
-```bash
+'''bash
 curl -X GET "http://127.0.0.1/api/v1/budgets" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ### 7.2 Tạo Ngân Sách Chi Tiêu
-```bash
+'''bash
 curl -X POST "http://127.0.0.1/api/v1/budgets" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -175,14 +175,14 @@ curl -X POST "http://127.0.0.1/api/v1/budgets" \
     "category_id": "<CATEGORY_ID>",
     "amount_limit": 2500000.0
   }'
-```
+'''
 
 ---
 
 ## 8. PHÂN HỆ HEO ĐẤT THÔNG MINH IOT (SMART PIGGY IOT)
 
 ### 8.1 Ghép Nối Heo Đất Mới (Pairing)
-```bash
+'''bash
 curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/pair" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -191,10 +191,10 @@ curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/pair" \
     "device_name": "Heo Đất Thông Minh Phòng Khách",
     "pairing_code": "123456"
   }'
-```
+'''
 
 ### 8.2 Luồng Nạp Tiền Từ Cảm Biến Phần Cứng (ESP32 Ingestion)
-```bash
+'''bash
 curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/drop-money" \
   -H "Content-Type: application/json" \
   -d '{
@@ -205,10 +205,10 @@ curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/drop-money" \
     "nonce": "test-nonce-12345",
     "timestamp": 1771934400
   }'
-```
+'''
 
 ### 8.3 Đồng Bộ Tiền Đút Ngoại Tuyến (Offline Batch Sync)
-```bash
+'''bash
 curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/sync-offline-batch" \
   -H "Content-Type: application/json" \
   -d '{
@@ -218,19 +218,19 @@ curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/sync-offline-batch" \
       {"offline_tx_id": "off-02", "coin_value": 50000.0}
     ]
   }'
-```
+'''
 
 ### 8.4 Lấy Danh Sách & Lịch Sử Đút Tiền Heo Đất
-```bash
+'''bash
 curl -X GET "http://127.0.0.1:8000/api/v1/smart_piggy/devices" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
 
 curl -X GET "http://127.0.0.1:8000/api/v1/smart_piggy/devices/<DEVICE_ID>/history?limit=50" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ### 8.5 Cảnh Báo Rung Lắc / Chống Trộm / Đập Heo
-```bash
+'''bash
 curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/devices/<DEVICE_ID>/tamper-alert" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -239,10 +239,10 @@ curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/devices/<DEVICE_ID>/tampe
     "intensity_level": "CRITICAL",
     "details": "Phát hiện heo đất bị dốc ngược và rung lắc dữ dội."
   }'
-```
+'''
 
 ### 8.6 Điều Khiển Đèn LED RGB Trên Lưng Heo Từ Mobile App
-```bash
+'''bash
 curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/devices/<DEVICE_ID>/led-control" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
@@ -251,45 +251,45 @@ curl -X POST "http://127.0.0.1:8000/api/v1/smart_piggy/devices/<DEVICE_ID>/led-c
     "effect_mode": "RAINBOW",
     "duration_seconds": 10
   }'
-```
+'''
 
 ---
 
 ## 9. PHÂN HỆ TRÍ TUỆ NHÂN TẠO HEO ĐẤT & OCR (AI & OCR SUITE)
 
 ### 9.1 AI Dự Báo Ngày Đầy Heo / Hoàn Thành Mục Tiêu
-```bash
+'''bash
 curl -X GET "http://127.0.0.1:8000/api/v1/smart_piggy/ai/deposit-forecast" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ### 9.2 AI Phân Tích Thói Quen Tiết Kiệm & Tính Kiên Trì
-```bash
+'''bash
 curl -X GET "http://127.0.0.1:8000/api/v1/smart_piggy/ai/behavior-analysis" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ### 9.3 Cấp Độ Gamification & Huy Hiệu Heo Đất
-```bash
+'''bash
 curl -X GET "http://127.0.0.1:8000/api/v1/smart_piggy/gamification/status" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''
 
 ### 9.4 Quét Hóa Đơn OCR Thông Minh
-```bash
+'''bash
 curl -X POST "http://127.0.0.1:8000/api/v1/ocr/scan" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>" \
   -H "Content-Type: application/json" \
   -d '{
     "image_url": "https://sample-invoices.local/bill_01.png"
   }'
-```
+'''
 
 ### 9.5 AI Chấm Điểm Sức Khỏe Tài Chính Tổng Quan
-```bash
+'''bash
 curl -X GET "http://127.0.0.1:8000/api/v1/ai/spending-score" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
 
 curl -X GET "http://127.0.0.1:8000/api/v1/ai/recommendations" \
   -H "Authorization: Bearer <TOKEN_CỦA_BẠN>"
-```
+'''

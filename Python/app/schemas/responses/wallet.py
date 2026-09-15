@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\schemas\responses\wallet.py
+
 
 from pydantic import BaseModel, Field
 

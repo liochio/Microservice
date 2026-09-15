@@ -14,7 +14,7 @@ import java.util.List;
  * ==============================================================================
  * 
  * Mục đích:
- * - Đóng gói kết quả phân trang từ Spring Data JPA `Page<T>` thành DTO gọn nhẹ,
+ * - Đóng gói kết quả phân trang từ Spring Data JPA 'Page<T>' thành DTO gọn nhẹ,
  *   loại bỏ các trường metadata dư thừa của Spring Data giúp tiết kiệm băng thông mạng.
  * 
  * Khi nào gọi:
@@ -65,7 +65,7 @@ public class PageResponse<T> {
     private boolean isFirst;
 
     /**
-     * Chuyển đổi từ Spring Data `Page<T>` sang `PageResponse<T>`
+     * Chuyển đổi từ Spring Data 'Page<T>' sang 'PageResponse<T>'
      *
      * @param page Đối tượng Spring Data Page
      * @param <T>  Kiểu dữ liệu

@@ -15,7 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * ==============================================================================
  * 
  * Mục đích:
- * - Cấu hình `RedisTemplate<String, Object>` với Key là String UTF-8 và Value là JSON Object
+ * - Cấu hình 'RedisTemplate<String, Object>' với Key là String UTF-8 và Value là JSON Object
  *   được serialize qua Jackson.
  * - Hỗ trợ lưu trữ Tokens, Blacklist, Rate Limiting, Idempotency và Cache phân tán.
  * 

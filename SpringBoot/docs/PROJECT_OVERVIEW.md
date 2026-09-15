@@ -1,17 +1,17 @@
-# TỔNG QUAN KIẾN TRÚC ENTERPRISE PORTFOLIO BACKEND ENGINE (META-ENGINE PLATFORM)
+# TỔNG QUAN KIẾN TRÚC ENTERPRISE FINTECH MICROSERVICES (LIOCHIO FINTECH PLATFORM)
 
-> **Phiên bản:** 2.0.0-ENTERPRISE  
-> **Kiến trúc:** Spring Cloud Microservices & Hierarchical Multi-Tenancy Meta-Engine  
-> **Mô hình Dữ liệu:** Database Core (Hạ tầng dùng chung) + Database-per-Domain (Chủ đề chuyên biệt: Tour, Music, Film, Gaming, Blog, AI, EAV)  
-> **Nền tảng Kỹ thuật:** Java 17 LTS, Spring Boot 3.4.3, Spring Cloud 2024.0.0, MySQL 8.0, Redis 7, Flyway Migration  
+> **Phiên bản:** 3.0.0-THESIS-DEFENSE-READY  
+> **Kiến trúc:** Spring Cloud Distributed Microservices & Zero-Trust Domain Architecture  
+> **Mô hình Dữ liệu:** Database-per-Service (liochio_core_db, liochio_ledger_db, liochio_entity_db, liochio_payment_db, liochio_notification_db, liochio_app_db)  
+> **Nền tảng Kỹ thuật:** Java 17 LTS, Spring Boot 3.4.3, Spring Cloud 2024.0.0, Python 3.10+ FastAPI, MySQL 8.0, Redis 7, Flyway Migration  
 
 ---
 
-## 1. QUY HOẠCH TOÀN BỘ HỆ THỐNG 12 MICROSERVICES
+## 1. QUY HOẠCH TOÀN BỘ HỆ THỐNG MICROSERVICES
 
-Hệ sinh thái gồm **12 Microservices** độc lập (16 Maven Modules) được chia làm 3 nhóm dịch vụ:
+Hệ sinh thái gồm các dịch vụ phân tán độc lập, tuân thủ nguyên tắc Bounded Context của Domain-Driven Design (DDD):
 
-```
+'''
                                  ┌─────────────────────────────────┐
                                  │   Config Server (Port 8888)     │
                                  └───────────────┬─────────────────┘
@@ -27,13 +27,13 @@ Hệ sinh thái gồm **12 Microservices** độc lập (16 Maven Modules) đư�
 │ └──────┬────────────┬────────────┬─────────────┬─────────────┬────────────┬─────────────┬─────┘ │
 └────────┼────────────┼────────────┼─────────────┼─────────────┼────────────┼─────────────┼───────┘
          │            │            │             │             │            │             │
-   [DỊCH VỤ CORE DÙNG CHUNG]       │             │   [DỊCH VỤ CHỦ ĐỀ CHUYÊN BIỆT]         │
+   [DỊCH VỤ ĐỊNH DANH & BẢO MẬT]   │             │   [SỔ CÁI & THANH TOÁN TÀI CHÍNH]      │
          │            │            │             │             │            │             │
          ▼            ▼            ▼             ▼             ▼            ▼             ▼
    ┌──────────┐ ┌──────────┐ ┌──────────┐  ┌──────────┐  ┌──────────┐ ┌──────────┐ ┌──────────┐
-   │   auth   │ │ payment  │ │  media   │  │  entity  │  │   tour   │ │  music   │ │   film   │
-   │ service  │ │ service  │ │ service  │  │ service  │  │ service  │ │ service  │ │ service  │
-   │  (8081)  │ │  (8085)  │ │  (8083)  │  │  (8082)  │  │  (8091)  │ │  (8092)  │ │  (8093)  │
+   │   auth   │ │   otp    │ │  entity  │  │  ledger  │  │ payment  │ │ notifi-  │ │  Python  │
+   │ service  │ │ service  │ │ service  │  │ service  │  │ service  │ │ cation   │ │ FastAPI  │
+   │  (8081)  │ │  (8088)  │ │  (8082)  │  │  (8085)  │  │  (8083)  │ │  (8084)  │ │  (8000)  │
    └────┬─────┘ └────┬─────┘ └────┬─────┘  └────┬─────┘  └────┬─────┘ └────┬─────┘ └────┬─────┘
         │            │            │             │             │            │             │
         └────────────┴─────┬──────┴─────────────┴─────────────┴────────────┴─────────────┘
@@ -41,100 +41,34 @@ Hệ sinh thái gồm **12 Microservices** độc lập (16 Maven Modules) đư�
                            ▼
           ┌───────────────────────────────────┐
           │     DỊCH VỤ BỔ TRỢ & VẬN HÀNH      │
-          │ ├─ notification-service (8084)    │
           │ ├─ ai-service (8086)              │
           │ ├─ realtime-service (8087)        │
-          │ └─ worker-service (Non-Web Worker)│
+          │ └─ worker-service (Outbox Poller) │
           └───────────────────────────────────┘
-```
+'''
 
 ---
 
-## 2. BẢNG PHÂN BỔ SERVICE VÀ CƠ SỞ DỮ LIỆU TƯƠNG ỨNG
+## 2. MA TRẬN PHÂN CHIA DỊCH VỤ & DATABASE-PER-SERVICE
 
-| Nhóm Dịch Vụ | Tên Service | Port | Database Phụ Trách | Nhiệm Vụ & Bảng Nghiệp Vụ Chính |
-| :--- | :--- | :---: | :--- | :--- |
-| **Hạ tầng cốt lõi** | `service-registry` | 8761 | *Không có* | Eureka Service Discovery Server |
-| | `config-server` | 8888 | Git / Local Config | Quản lý cấu hình tập trung |
-| | `api-gateway` | 8080 | Redis Cache/Limiter | Định tuyến, Rate Limiting, Check Blacklist IP, Dynamic CORS |
-| **Core dùng chung** | `auth-service` | 8081 | `portfolio-engine` (`db_core`) | Quản trị `tenants`, `users`, `roles`, `permissions`, `user_devices`, `user_sessions`, `user_otp_verifications`, `security_login_histories` |
-| | `payment-service` | 8085 | `portfolio-engine` (`db_core`) | Giao dịch: `bookings`, `tenant_payment_configs`, `payment_transactions`, `idempotency_keys` |
-| | `media-service` | 8083 | `portfolio-engine` (`db_core`) + CDN | Quản lý tải tệp: `media_assets`, `media_chunk_uploads` |
-| | `notification-service` | 8084 | `portfolio-engine` (`db_core`) | Đa kênh: `tenant_notification_configs`, `notification_templates`, `notifications` |
-| **Chủ đề Động (EAV)** | `entity-service` | 8082 | `db_content_eav` (MySQL) | Động cơ EAV đa năng: `dynamic_entities`, `entity_types`, `dynamic_field_definitions`, `ui_configurations`, `navigation_menus`, `form_definitions`, `i18n_dictionaries` |
-| **Chủ đề Chuyên biệt** | `tour-service` | 8091 | `db_tour` (MySQL) | Du lịch: `tours`, `tour_itineraries`, `tour_departures`, `tour_destinations`, `tour_reviews` |
-| | `music-service` | 8092 | `db_music` (MySQL) | Âm nhạc: `artists`, `albums`, `songs`, `playlists`, `track_reviews` |
-| | `film-service` | 8093 | `db_film` (MySQL) | Điện ảnh: `movies`, `movie_episodes`, `movie_genres`, `streaming_servers` |
-| **AI & Realtime** | `ai-service` | 8086 | `db_ai_vector` (MySQL) | Trí tuệ nhân tạo: `tenant_ai_configs`, `ai_knowledge_base`, `ai_chat_sessions`, `ai_chat_messages` |
-| | `realtime-service` | 8087 | Redis Pub/Sub | WebSocket STOMP Hub, Token Streaming Chatbot, In-App Push |
-| | `worker-service` | Non-Web | `portfolio-engine` (`db_core`) | Outbox Polling Worker, ShedLock Distributed Lock, DB Backup Scheduler, Dọn rác Media |
+| Dịch Vụ | Module Maven | Cổng Mạng | Database Tương Ứng | Trách Nhiệm Nghiệp Vụ Chính |
+|:---|:---|:---:|:---|:---|
+| **api-gateway** | 'api-gateway' | '8080' | *Không (Stateless)* | Cửa ngõ API duy nhất, điều phối định tuyến, xác thực JWT, WAF Rate Limiting. |
+| **auth-service** | 'auth-service' | '8081' | 'liochio_core_db' | Identity & Access Management (IAM), RBAC, cấp phát và thu hồi Token JWT, eKYC gate. |
+| **entity-service** | 'entity-service' | '8082' | 'liochio_entity_db' | Dynamic Menus, Cấu hình ma trận hệ thống (Config Matrix), Feature Flags. |
+| **payment-service** | 'payment-service' | '8083' | 'liochio_payment_db' | Xử lý thanh toán, tích hợp cổng thanh toán (VNPay, VietQR), giao dịch nạp rút. |
+| **notification-service** | 'notification-service' | '8084' | 'liochio_notification_db' | Thông báo đa kênh (Email SMTP, Push Notification, WebSocket). |
+| **ledger-service** | 'ledger-service' | '8085' | 'liochio_ledger_db' | Sổ cái kép ngân hàng (Double-Entry Bookkeeping), Hash Chaining SHA-256, Pessimistic Locking. |
+| **ai-service** | 'ai-service' | '8086' | In-memory / Core | AI Vector Retrieval, phân tích tài chính thông minh. |
+| **realtime-service** | 'realtime-service' | '8087' | Redis Pub/Sub | WebSocket Server, truyền tải biến động số dư và cảnh báo an ninh IoT thời gian thực. |
+| **otp-service** | 'otp-service' | '8088' | 'liochio_otp_db' | Quản lý SmartOTP, TOTP và sinh mã xác thực 2FA. |
+| **worker-service** | 'worker-service' | *Non-Web* | 'liochio_core_db' | Quét bảng Transactional Outbox, ShedLock phân tán, dọn dẹp phiên hết hạn. |
+| **Python Satellite** | 'Python/app' | '8000' | 'liochio_app_db' | Cổng tiếp nhận cảm biến Heo Đất Thông Minh IoT, AI Biometrics, App Wallet. |
 
 ---
 
-## 3. CẤU HÌNH ĐỊNH TUYẾN TOÀN DIỆN TRÊN API GATEWAY
+## 3. NGUYÊN TẮC BẢO MẬT & ĐỐI SOÁT DỮ LIỆU
 
-```yaml
-spring:
-  cloud:
-    gateway:
-      routes:
-        # 1. Auth Service Routes
-        - id: auth-service
-          uri: lb://auth-service
-          predicates:
-            - Path=/api/v1/auth/**, /api/v1/users/**, /api/v1/tenants/**, /api/auth/**, /api/users/**, /api/roles/**, /api/tenants/**
-
-        # 2. Payment Service Routes
-        - id: payment-service
-          uri: lb://payment-service
-          predicates:
-            - Path=/api/v1/payments/**, /api/v1/bookings/**, /api/payments/**, /api/bookings/**
-
-        # 3. Media Service Routes
-        - id: media-service
-          uri: lb://media-service
-          predicates:
-            - Path=/api/v1/media/**, /api/media/**
-
-        # 4. Notification Service Routes
-        - id: notification-service
-          uri: lb://notification-service
-          predicates:
-            - Path=/api/v1/notifications/**, /api/notifications/**
-
-        # 5. Entity / Dynamic Engine Routes
-        - id: entity-service
-          uri: lb://entity-service
-          predicates:
-            - Path=/api/v1/entities/**, /api/v1/portfolios/**, /api/v1/ui-configs/**, /api/v1/forms/**, /api/v1/menus/**, /api/entities/**, /api/portfolios/**, /api/ui-configs/**, /api/forms/**, /api/menus/**
-
-        # 6. Tour Service
-        - id: tour-service
-          uri: lb://tour-service
-          predicates:
-            - Path=/api/v1/tours/**, /api/tours/**
-
-        # 7. Music Service
-        - id: music-service
-          uri: lb://music-service
-          predicates:
-            - Path=/api/v1/music/**, /api/music/**
-
-        # 8. Film Service
-        - id: film-service
-          uri: lb://film-service
-          predicates:
-            - Path=/api/v1/films/**, /api/films/**
-
-        # 9. AI Service
-        - id: ai-service
-          uri: lb://ai-service
-          predicates:
-            - Path=/api/v1/ai/**, /api/ai/**
-
-        # 10. Realtime WebSocket Gateway
-        - id: realtime-service
-          uri: lb:ws://realtime-service
-          predicates:
-            - Path=/ws/**, /ws-notification/**
-```
+1. **Zero-Trust Network**: Mọi giao tiếp giữa Python Satellite và Java Core Backend đều phải thông qua giao thức M2M được ký số HMAC-SHA256 ('X-M2M-Signature', 'X-M2M-Timestamp').
+2. **Single Source of Truth**: Java 'ledger-service' là nguồn chân lý duy nhất cho số dư sổ cái ngân hàng; Python quản lý bảng 'wallets' phục vụ truy vấn tốc độ cao cho thiết bị IoT và Mobile App.
+3. **Audit Immutability**: Các bút toán Sổ cái kép tuân thủ quy tắc ghi đơn hướng (Append-Only), bảo toàn tính toàn vẹn bằng SHA-256 Hash Chain.

@@ -16,8 +16,8 @@ import org.springframework.context.annotation.Primary;
  * Mục đích:
  * - Cấu hình Bean ObjectMapper dùng chung toàn bộ hệ thống:
  *   + Nạp JavaTimeModule hỗ trợ Java 8 Date/Time (Instant, LocalDateTime, LocalDate).
- *   + Tắt ghi date dạng timestamp số nguyên (`WRITE_DATES_AS_TIMESTAMPS = false`) -> Xuất ISO-8601 UTC string.
- *   + Bỏ qua thuộc tính lạ (`FAIL_ON_UNKNOWN_PROPERTIES = false`) để tương thích ngược API DTO.
+ *   + Tắt ghi date dạng timestamp số nguyên ('WRITE_DATES_AS_TIMESTAMPS = false') -> Xuất ISO-8601 UTC string.
+ *   + Bỏ qua thuộc tính lạ ('FAIL_ON_UNKNOWN_PROPERTIES = false') để tương thích ngược API DTO.
  * 
  * Khi nào gọi:
  * - Tự động được Spring Boot nạp khi khởi động và inject vào RestController / Deserializers.

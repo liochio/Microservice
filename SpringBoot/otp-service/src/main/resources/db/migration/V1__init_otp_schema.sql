@@ -1,6 +1,6 @@
 -- ==============================================================================
--- Portfolio Engine - Dedicated OTP & SmartOTP Service Schema Migration (V1)
--- Database: portfolio_otp
+-- Liochio FinTech Platform - Dedicated OTP & SmartOTP Service Schema Migration (V1)
+-- Database: liochio_otp_db
 -- ==============================================================================
 
 -- 1. Bảng Cấu Hình Dịch Vụ OTP & SmartOTP (Hỗ trợ cờ Bật/Tắt Service cho Dev)

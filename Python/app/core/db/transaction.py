@@ -7,7 +7,7 @@ from app.core.logging.logger import DBLogger
 class FintechTransactionManager:
     """
     👑 CORE DB TRANSACTION MANAGER (MỤC THỨ 5)
-    🎯 Kiểm soát tính toàn vẹn giao dịch bọc thép ACID, tự động quản lý phiên và xử lý Rollback lợi hại.
+    🎯 Kiểm soát tính toàn vẹn giao dịch bảo mật cao ACID, tự động quản lý phiên và xử lý Rollback lợi hại.
     """
 
     @staticmethod
@@ -16,7 +16,7 @@ class FintechTransactionManager:
         🛡️ THỰC THI KHỐI NGHIỆP VỤ AN TOÀN TUÂN THỦ NGUYÊN TẮC TOÀN VẸN ACID
         """
         try:
-            # Khởi động mạch bọc thép mở phiên session giao dịch vật lý dưới DB
+            # Khởi động mạch bảo mật cao mở phiên session giao dịch vật lý dưới DB
             # Thực thi logic nghiệp vụ thô thông qua con trỏ hàm đóng gói truyền vào từ Service
             result = business_func(db_session, *args, **kwargs)
 

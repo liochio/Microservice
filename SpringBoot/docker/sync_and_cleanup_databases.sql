@@ -1,5 +1,5 @@
 -- ==============================================================================
--- Portfolio Backend Engine - Đồng Bộ & Quy Hoạch Toàn Diện Cơ Sở Dữ Liệu
+-- Liochio FinTech Platform - Đồng Bộ & Quy Hoạch Toàn Diện Cơ Sở Dữ Liệu
 -- Database-per-Domain Pattern
 -- ==============================================================================
 
@@ -1041,30 +1041,26 @@ CREATE TABLE IF NOT EXISTS `ai_prompts` (
 
 
 -- ==============================================================================
--- 8. DỌN DẸP BẢNG NẰM SAI TRONG CORE DATABASE `portfolio-engine`
+-- 8. DỌN DẸP BẢNG NẰM SAI TRONG CORE DATABASE `liochio_core_db`
 -- ==============================================================================
-USE `portfolio-engine`;
+USE `liochio_core_db`;
 
--- Dọn dẹp các bảng thuộc domain khác khỏi portfolio-engine để tránh nhầm lẫn
+-- Dọn dẹp các bảng thuộc domain khác khỏi core database để đảm bảo nguyên tắc Database-Per-Service
+DROP TABLE IF EXISTS `liochio_core_db`.`ai_chat_messages`;
+DROP TABLE IF EXISTS `liochio_core_db`.`ai_chat_sessions`;
+DROP TABLE IF EXISTS `liochio_core_db`.`ai_knowledge_base`;
+DROP TABLE IF EXISTS `liochio_core_db`.`tenant_ai_configs`;
 
--- Drop các bảng thuộc domain khác khỏi portfolio-engine để tránh nhầm lẫn
-DROP TABLE IF EXISTS `portfolio-engine`.`ai_chat_messages`;
-DROP TABLE IF EXISTS `portfolio-engine`.`ai_chat_sessions`;
-DROP TABLE IF EXISTS `portfolio-engine`.`ai_knowledge_base`;
-DROP TABLE IF EXISTS `portfolio-engine`.`tenant_ai_configs`;
-
-DROP TABLE IF EXISTS `portfolio-engine`.`dynamic_entities`;
-DROP TABLE IF EXISTS `portfolio-engine`.`dynamic_field_definitions`;
-DROP TABLE IF EXISTS `portfolio-engine`.`entity_types`;
-DROP TABLE IF EXISTS `portfolio-engine`.`form_definitions`;
-DROP TABLE IF EXISTS `portfolio-engine`.`i18n_dictionaries`;
-DROP TABLE IF EXISTS `portfolio-engine`.`navigation_menus`;
-DROP TABLE IF EXISTS `portfolio-engine`.`ui_configurations`;
-DROP TABLE IF EXISTS `portfolio-engine`.`portfolio_items`;
-DROP TABLE IF EXISTS `portfolio-engine`.`web_templates`;
-DROP TABLE IF EXISTS `portfolio-engine`.`entity_reviews`;
-DROP TABLE IF EXISTS `portfolio-engine`.`external_api_integrations`;
-
-DROP TABLE IF EXISTS `portfolio-engine`.`bookings`;
+DROP TABLE IF EXISTS `liochio_core_db`.`dynamic_entities`;
+DROP TABLE IF EXISTS `liochio_core_db`.`dynamic_field_definitions`;
+DROP TABLE IF EXISTS `liochio_core_db`.`entity_types`;
+DROP TABLE IF EXISTS `liochio_core_db`.`form_definitions`;
+DROP TABLE IF EXISTS `liochio_core_db`.`i18n_dictionaries`;
+DROP TABLE IF EXISTS `liochio_core_db`.`navigation_menus`;
+DROP TABLE IF EXISTS `liochio_core_db`.`ui_configurations`;
+DROP TABLE IF EXISTS `liochio_core_db`.`web_templates`;
+DROP TABLE IF EXISTS `liochio_core_db`.`entity_reviews`;
+DROP TABLE IF EXISTS `liochio_core_db`.`external_api_integrations`;
+DROP TABLE IF EXISTS `liochio_core_db`.`bookings`;
 
 SET FOREIGN_KEY_CHECKS = 1;

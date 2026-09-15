@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\models\finance\wallet_notification_setting.py
+
 
 from sqlalchemy import Column, String, Numeric, Boolean, ForeignKey, DateTime, text
 from sqlalchemy.sql import func

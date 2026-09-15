@@ -8,12 +8,12 @@ import com.liochio.common.constant.AppConstants;
  * ==============================================================================
  * 
  * Mục đích:
- * - Sử dụng ThreadLocal để lưu trữ mã định danh `tenantId` cho luồng xử lý HTTP hiện tại.
- * - Cho phép bất kỳ tầng nào (Service, Repository, Hibernate Filter) truy xuất `tenantId`
+ * - Sử dụng ThreadLocal để lưu trữ mã định danh 'tenantId' cho luồng xử lý HTTP hiện tại.
+ * - Cho phép bất kỳ tầng nào (Service, Repository, Hibernate Filter) truy xuất 'tenantId'
  *   mà không cần phải truyền tham số qua từng hàm.
  * 
  * Khi nào gọi:
- * - Được TenantFilter thiết lập ngay khi nhận HTTP Request và dọn sạch (clear) ở khối `finally`.
+ * - Được TenantFilter thiết lập ngay khi nhận HTTP Request và dọn sạch (clear) ở khối 'finally'.
  */
 public final class TenantContext {
 

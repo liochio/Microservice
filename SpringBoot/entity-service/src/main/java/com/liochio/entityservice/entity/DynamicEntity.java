@@ -20,7 +20,7 @@ import java.util.Map;
  * Mục đích:
  * - Hỗ trợ mở rộng không giới hạn các loại thực thể (Blog, Sản phẩm, Khách hàng, Chứng chỉ...)
  *   mà không cần phải chạy lại migration sửa cấu trúc bảng cơ sở dữ liệu.
- * - Toàn bộ các thuộc tính động được lưu dưới trường `attributes` (JSON).
+ * - Toàn bộ các thuộc tính động được lưu dưới trường 'attributes' (JSON).
  */
 @Entity
 @Table(name = "dynamic_entities")

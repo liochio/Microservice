@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/responses/transfer.py
+
 from pydantic import BaseModel
 from typing import List, Optional, Any
 

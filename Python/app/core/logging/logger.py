@@ -42,7 +42,7 @@ MASK_PATTERNS = {
 class DBLogger:
     """
     👑 ENGINE HỘP ĐEN VẠN NĂNG - SẢN XUẤT STRUCTURED JSON LINE
-    🎯 Đạt chuẩn 100% mã lỗi i18n, liên thông ma trận forensic bọc thép.
+    🎯 Đạt chuẩn 100% mã lỗi i18n, liên thông ma trận forensic bảo mật cao.
     """
 
     @staticmethod
@@ -84,7 +84,7 @@ class DBLogger:
 
     @classmethod
     def audit(cls, db_conn, user_id: str, action: str, details: str) -> None:
-        """📝 Tương thích ngược logic cũ của sếp - Tự động đổ luồng ra JSON line"""
+        """📝 Tương thích ngược logic cũ hệ thống - Tự động đổ luồng ra JSON line"""
         from app.repositories.log.log_repository import LogRepository
         trace_id = getattr(db_conn, "_ctx_trace_id", "UNKNOWN")
         cls.emit_json_log(trace_id, action, user_id, "SUCCESS", module="AUDIT", details=details)
@@ -92,7 +92,7 @@ class DBLogger:
 
     @classmethod
     def system(cls, db_conn, log_level: str, module: str, message: str) -> None:
-        """📝 Tương thích ngược luồng Crash cũ của sếp"""
+        """📝 Tương thích ngược luồng Crash cũ hệ thống"""
         from app.repositories.log.log_repository import LogRepository
         trace_id = getattr(db_conn, "_ctx_trace_id", "UNKNOWN")
         cls.emit_json_log(trace_id, "SYSTEM_EVENT", "SYSTEM", log_level, module=module, severity=log_level,
@@ -110,7 +110,7 @@ class DBLogger:
 
     @classmethod
     def execute_repo_log(cls, db_conn, repo_class, method_name: str, console_msg: str, **kwargs) -> None:
-        """🎯 Khớp signature hàm Reflection cũ trong API của sếp"""
+        """🎯 Khớp signature hàm Reflection cũ trong API hệ thống"""
         trace_id = getattr(db_conn, "_ctx_trace_id", "UNKNOWN")
         cls.emit_json_log(trace_id, "REPO_REFLECTION", kwargs.get("user_id", "UNKNOWN"), "EXECUTE",
                           module=str(repo_class.__name__), details=console_msg)

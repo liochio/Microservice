@@ -63,7 +63,7 @@ Trong kỷ nguyên số hóa tài chính (FinTech), việc quản lý tài chín
 # CHƯƠNG 3: PHÂN TÍCH & THIẾT KẾ HỆ THỐNG
 
 ### 3.1 Sơ Đồ Kiến Trúc Hệ Thống Phân Tầng (Layered Architecture)
-```
+'''
   [CLIENT LAYER]      Mobile Flutter App / Web SPA / ESP32 Hardware
                              │ (HTTPS REST / WSS)
                              ▼
@@ -80,13 +80,13 @@ Trong kỷ nguyên số hóa tài chính (FinTech), việc quản lý tài chín
                              │
                              ▼
   [PERSISTENCE LAYER] MySQL Enterprise Database 8.0 (22 Bảng chuẩn 3NF)
-```
+'''
 
 ### 3.2 Thiết Kế Cơ Sở Dữ Liệu Quan Hệ (22 Bảng 3NF)
-1. **Nhóm Xác thực & Người dùng**: `users`, `roles`, `permissions`, `user_roles`, `role_modules`, `user_otps`, `refresh_tokens`, `user_sessions`.
-2. **Nhóm Tài chính**: `wallets`, `transactions`, `transfers`, `categories`, `budgets`, `financial_goals`.
-3. **Nhóm Heo Đất IoT & AI**: `smart_piggy_devices`, `smart_piggy_coin_logs`, `smart_piggy_goals`, `smart_piggy_rewards`, `smart_piggy_gamifications`, `smart_piggy_led_logs`.
-4. **Nhóm Thanh toán & Thông báo**: `payment_methods`, `payment_transactions`, `payment_webhooks`, `notifications`, `stored_files`.
+1. **Nhóm Xác thực & Người dùng**: 'users', 'roles', 'permissions', 'user_roles', 'role_modules', 'user_otps', 'refresh_tokens', 'user_sessions'.
+2. **Nhóm Tài chính**: 'wallets', 'transactions', 'transfers', 'categories', 'budgets', 'financial_goals'.
+3. **Nhóm Heo Đất IoT & AI**: 'smart_piggy_devices', 'smart_piggy_coin_logs', 'smart_piggy_goals', 'smart_piggy_rewards', 'smart_piggy_gamifications', 'smart_piggy_led_logs'.
+4. **Nhóm Thanh toán & Thông báo**: 'payment_methods', 'payment_transactions', 'payment_webhooks', 'notifications', 'stored_files'.
 
 ---
 
@@ -94,24 +94,24 @@ Trong kỷ nguyên số hóa tài chính (FinTech), việc quản lý tài chín
 
 ### 4.1 Chi Tiết 69 API Endpoints Đã Hoàn Thiện
 1. **Phân hệ Heo Đất Thông Minh IoT (13 APIs)**:
-   - Ghép nối thiết bị ESP32 theo MAC (`POST /smart_piggy/pair`).
-   - Ingestion Pipeline nạp tiền từ cảm biến (`POST /smart_piggy/drop-money`).
-   - Đồng bộ ngoại tuyến Flash Memory (`POST /smart_piggy/sync-offline-batch`).
-   - Cảnh báo an ninh MPU6050 rung lắc / chống trộm (`POST /smart_piggy/devices/{id}/tamper-alert`).
-   - Điều khiển đèn LED RGB từ xa (`POST /smart_piggy/devices/{id}/led-control`).
+   - Ghép nối thiết bị ESP32 theo MAC ('POST /smart_piggy/pair').
+   - Ingestion Pipeline nạp tiền từ cảm biến ('POST /smart_piggy/drop-money').
+   - Đồng bộ ngoại tuyến Flash Memory ('POST /smart_piggy/sync-offline-batch').
+   - Cảnh báo an ninh MPU6050 rung lắc / chống trộm ('POST /smart_piggy/devices/{id}/tamper-alert').
+   - Điều khiển đèn LED RGB từ xa ('POST /smart_piggy/devices/{id}/led-control').
 2. **Phân hệ Mục Tiêu Tài Chính & Khóa Heo Đất (5 APIs)**:
-   - Tạo mục tiêu, theo dõi % tiến độ (`POST /goals`, `GET /goals`).
-   - Cơ chế Khóa Heo Đất (Piggy Lock) rèn kỷ luật (`POST /goals/{id}/lock`).
+   - Tạo mục tiêu, theo dõi % tiến độ ('POST /goals', 'GET /goals').
+   - Cơ chế Khóa Heo Đất (Piggy Lock) rèn kỷ luật ('POST /goals/{id}/lock').
 3. **Phân hệ Cha Mẹ Thưởng Nhân Đôi Tiền (3 APIs)**:
-   - Cấu hình quy tắc thưởng $50\% - 100\%$ (`POST /smart_piggy/matching-rules`).
-   - Bảng điều khiển gia đình (`GET /smart_piggy/family-dashboard`).
+   - Cấu hình quy tắc thưởng $50\% - 100\%$ ('POST /smart_piggy/matching-rules').
+   - Bảng điều khiển gia đình ('GET /smart_piggy/family-dashboard').
 4. **Phân hệ Cổng Nạp Tiền VietQR & Webhook (3 APIs)**:
-   - Sinh mã VietQR NAPAS 247 (`POST /payment/create-vietqr`).
-   - Webhook tự động cộng tiền số dư (`POST /payment/webhook`).
+   - Sinh mã VietQR NAPAS 247 ('POST /payment/create-vietqr').
+   - Webhook tự động cộng tiền số dư ('POST /payment/webhook').
 5. **Phân hệ Báo Cáo Dòng Tiền & Xuất Sao Kê (5 APIs)**:
    - Biểu đồ dòng tiền Cash Flow, Tỷ trọng danh mục, Xuất Excel/CSV UTF-8 có BOM.
 6. **Phân hệ WebSocket Live & Notifications (5 APIs)**:
-   - WebSocket `/ws/live/{user_id}` bắn thông báo Ting-ting tức thời khi bỏ ống heo.
+   - WebSocket '/ws/live/{user_id}' bắn thông báo Ting-ting tức thời khi bỏ ống heo.
 7. **Phân hệ Ví & Dòng Tiền (13 APIs)**: Quản lý ví đa năng, Nạp tiền, Chuyển tiền ACID.
 8. **Phân hệ Xác Thực & RBAC (11 APIs)**: Đăng ký, Đăng nhập, OTP, Đổi mật khẩu, Phân quyền.
 9. **Phân hệ AI & OCR (3 APIs)**: Chấm điểm tài chính, Lời khuyên AI, Quét hóa đơn OCR.
@@ -122,7 +122,7 @@ Trong kỷ nguyên số hóa tài chính (FinTech), việc quản lý tài chín
 
 ### 5.1 Kết Quả Kiểm Thử Tự Động (100% Passed)
 - Kiểm thử biên dịch: 326/326 modules Python biên dịch thành công 0 lỗi cú pháp.
-- Kiểm thử E2E Integration: 69/69 Endpoints vượt qua toàn bộ kịch bản kiểm thử tự động (`scratch/test_complete_master_suite.py`).
+- Kiểm thử E2E Integration: 69/69 Endpoints vượt qua toàn bộ kịch bản kiểm thử tự động ('scratch/test_complete_master_suite.py').
 
 ### 5.2 Đánh Giá Đóng Góp Của Đề Tài
 - **Tính thực tiễn cao**: Cầu nối hoàn hảo giữa tiền mặt vật lý và ví điện tử số.

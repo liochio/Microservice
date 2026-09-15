@@ -14,7 +14,7 @@ import java.time.Instant;
  * Mục đích:
  * - Quản lý chuỗi trạng thái đăng nhập không mật khẩu (Passwordless QR Login).
  * - Theo dõi các trạng thái: PENDING -> SCANNED -> CONFIRMED -> EXPIRED / REJECTED.
- * - Cấp mã `exchange_auth_code` dùng 1 lần (TTL 10s) cho trình duyệt web đổi Token.
+ * - Cấp mã 'exchange_auth_code' dùng 1 lần (TTL 10s) cho trình duyệt web đổi Token.
  */
 @Entity
 @Table(name = "qr_login_sessions", indexes = {

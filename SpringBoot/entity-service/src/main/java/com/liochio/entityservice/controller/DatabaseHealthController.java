@@ -85,16 +85,14 @@ public class DatabaseHealthController {
     public ApiResponse<OverallHealthReport> checkAllDatabasesHealth() {
         List<DatabaseStatus> reportList = new ArrayList<>();
 
-        // Danh sách các Database cần kiểm tra
+        // Danh sách các Database miền dịch vụ FinTech cần kiểm tra
         List<DatabaseTarget> targets = List.of(
-                new DatabaseTarget("portfolio-engine", "Core Infrastructure (Users, Tenants, Roles, Bookings, Media)", "MySQL 8.0"),
-                new DatabaseTarget("db_tour", "Tour & Travel Domain Service", "MySQL 8.0"),
-                new DatabaseTarget("db_music", "Music & Audio Streaming Domain Service", "MySQL 8.0"),
-                new DatabaseTarget("db_film", "Film & Cinema Domain Service", "MySQL 8.0"),
-                new DatabaseTarget("db_gaming", "Gaming & Esports Domain", "MySQL 8.0"),
-                new DatabaseTarget("db_blog", "Blog & Editorial Domain", "MySQL 8.0"),
-                new DatabaseTarget("db_ai_vector", "AI & Knowledge Base Vector Domain", "MySQL 8.0"),
-                new DatabaseTarget("db_content_eav", "Dynamic Content & EAV Engine", "MySQL 8.0")
+                new DatabaseTarget("liochio_core_db", "Core Identity & Access Management (IAM)", "MySQL 8.0"),
+                new DatabaseTarget("liochio_ledger_db", "Core Banking Double-Entry Ledger Service", "MySQL 8.0"),
+                new DatabaseTarget("liochio_entity_db", "Dynamic Menus, Config Matrix & Entity Service", "MySQL 8.0"),
+                new DatabaseTarget("liochio_payment_db", "Payment Gateway & Transaction Processing", "MySQL 8.0"),
+                new DatabaseTarget("liochio_notification_db", "Multi-Channel Notification Service", "MySQL 8.0"),
+                new DatabaseTarget("liochio_app_db", "Python IoT Piggy Bank & Wallets Satellite", "MySQL 8.0")
         );
 
         int successCount = 0;

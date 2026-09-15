@@ -22,9 +22,9 @@ import java.io.IOException;
  * ==============================================================================
  * 
  * Mục đích:
- * - Trích xuất mã khách thuê từ HTTP Header `X-Tenant-ID` hoặc Host Subdomain.
- * - Nạp mã này vào `TenantContext` (ThreadLocal) để toàn bộ các tầng Service
- *   và Hibernate Filter áp dụng điều kiện cô lập dữ liệu `WHERE tenant_id = :tenantId`.
+ * - Trích xuất mã khách thuê từ HTTP Header 'X-Tenant-ID' hoặc Host Subdomain.
+ * - Nạp mã này vào 'TenantContext' (ThreadLocal) để toàn bộ các tầng Service
+ *   và Hibernate Filter áp dụng điều kiện cô lập dữ liệu 'WHERE tenant_id = :tenantId'.
  * - Tự động xóa ThreadLocal ở khối finally để phòng tránh Memory Leak.
  * 
  * Khi nào gọi:

@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\schemas\wallet_topup\wallet_topup.py
+
 
 import re
 
@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field, field_validator
 
 
 class WalletTopupRequest(BaseModel):
-    """👑 SCHEMA KIỂM ĐỊNH NẠP TIỀN QUA SỐ TÀI KHOẢN BỌC THÉP"""
+    """👑 SCHEMA KIỂM ĐỊNH NẠP TIỀN QUA SỐ TÀI KHOẢN BẢO MẬT CAO"""
 
     wallet_account: str = Field(
         ...,

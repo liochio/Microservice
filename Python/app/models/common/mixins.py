@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\models\common\mixins.py
+
 
 from sqlalchemy import Column, DateTime
 from sqlalchemy.sql import func

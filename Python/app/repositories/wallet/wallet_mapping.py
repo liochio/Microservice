@@ -51,7 +51,7 @@ class WalletFactory:
 
     @staticmethod
     def generate_unique_wallet_account(db_conn: Any) -> str:
-        """👑 THUẬT TOÁN BỌC THÉP CHỐNG TRÙNG: Quét đệ quy liên tục xuống DB thô, bao giờ độc bản mới nhả số"""
+        """👑 THUẬT TOÁN BẢO MẬT CAO CHỐNG TRÙNG: Quét đệ quy liên tục xuống DB thô, bao giờ độc bản mới nhả số"""
         while True:
             # 1. Sinh chuỗi ngẫu nhiên mã hóa an toàn gồm 10 chữ số
             account_num = "".join([str(secrets.randbelow(10)) for _ in range(10)])
@@ -71,7 +71,7 @@ class WalletFactory:
         now = datetime.now()
         initial_balance = Decimal("0.0000")
 
-        # 👑 ĐÁNH DẤU CHỈNH SỬA: Gọi luồng kiểm trùng đệ quy bọc thép bảo vệ hệ thống trước khi trả thông số
+        # 👑 ĐÁNH DẤU CHỈNH SỬA: Gọi luồng kiểm trùng đệ quy bảo mật cao bảo vệ hệ thống trước khi trả thông số
         unique_account = WalletFactory.generate_unique_wallet_account(db_conn)
 
         return {

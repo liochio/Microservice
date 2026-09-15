@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/requests/payment.py
+
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any
 

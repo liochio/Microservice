@@ -28,10 +28,10 @@ import java.util.stream.Collectors;
  * ==============================================================================
  * 
  * Chuỗi vòng đời (State Machine):
- * 1. Web Init: Sinh sessionId (Hạn 120s), Web lắng nghe WebSocket `/topic/qr-login/{sessionId}`.
- * 2. Mobile Scan: App quét mã -> Cập nhật trạng thái `SCANNED`.
- * 3. Mobile Confirm: App xác thực FaceID/PIN -> Cập nhật trạng thái `CONFIRMED`, cấp `exchangeAuthCode` (Hạn 10s).
- * 4. Web Exchange: Web gửi `exchangeAuthCode` -> Đổi lấy cặp Access Token + Refresh Token hoàn tất.
+ * 1. Web Init: Sinh sessionId (Hạn 120s), Web lắng nghe WebSocket '/topic/qr-login/{sessionId}'.
+ * 2. Mobile Scan: App quét mã -> Cập nhật trạng thái 'SCANNED'.
+ * 3. Mobile Confirm: App xác thực FaceID/PIN -> Cập nhật trạng thái 'CONFIRMED', cấp 'exchangeAuthCode' (Hạn 10s).
+ * 4. Web Exchange: Web gửi 'exchangeAuthCode' -> Đổi lấy cặp Access Token + Refresh Token hoàn tất.
  */
 @Service
 @RequiredArgsConstructor

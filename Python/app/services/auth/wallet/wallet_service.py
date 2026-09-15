@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\services\auth\wallet\wallet_service.py
+
 
 from typing import List, Dict, Any, Optional
 from app.repositories.wallet.wallet_repository import WalletRepository
@@ -27,7 +27,7 @@ class WalletService:
 
     @staticmethod
     def get_wallets_by_user(db_conn: Any, user_id: str) -> List[Dict[str, Any]]:
-        print("===========get_wallets_by_user=========", user_id)
+        # logger.debug(f"get_wallets_by_user: {user_id}")
         try:
             orm_wallets = WalletRepository.get_wallets_by_user_id(db_conn, user_id)
             return [WalletService._map_wallet_to_dict(w) for w in orm_wallets]

@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/api/v1/wallets/wallet.py
+
 from fastapi import APIRouter, Request, Depends, status
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder

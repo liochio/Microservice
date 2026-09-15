@@ -1,4 +1,4 @@
-# D:\UIT - HK2\FinanceProject\app\services\finance\wallet_topup_service.py
+
 
 import uuid
 import secrets
@@ -19,7 +19,7 @@ from app.core.exceptions.base_exception import FintechBaseException
 
 
 class WalletTopupService:
-    """👑 DỊCH VỤ NẠP TIỀN TRUNG TÂM PHÒNG VỆ GIAN LẬN THẦN SẦU"""
+    """👑 DỊCH VỤ NẠP TIỀN VÀ KIỂM SOÁT GIAN LẬN TÀI CHÍNH (FRAUD CONTROL TOPUP SERVICE)"""
 
     @staticmethod
     def execute_topup(

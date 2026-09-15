@@ -16,8 +16,8 @@ import java.util.Set;
  * 
  * Mục đích:
  * - Đại diện cho tài khoản người dùng trong hệ thống Multi-Tenancy.
- * - Liên kết quan hệ N-N với RoleEntity qua bảng trung gian `user_roles`.
- * - Tự động xóa mềm (is_deleted = true) và cô lập đa khách thuê theo `tenant_id`.
+ * - Liên kết quan hệ N-N với RoleEntity qua bảng trung gian 'user_roles'.
+ * - Tự động xóa mềm (is_deleted = true) và cô lập đa khách thuê theo 'tenant_id'.
  */
 @Entity
 @Table(name = "users")

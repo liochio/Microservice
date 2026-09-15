@@ -272,7 +272,7 @@ report_lines = [
     "",
     f"> **Thời gian thực thi:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
     f"> **Môi trường:** Windows 11 / Java 17 / MySQL 8.0 / Spring Cloud Microservices",
-    f"> **Target Base URL:** `{target_url}`",
+    f"> **Target Base URL:** '{target_url}'",
     f"> **Kết quả tổng quan:** **{passed_total}/{total_cases} PASSED ({success_rate}% Thành Công)**",
     "",
     "---",
@@ -285,7 +285,7 @@ report_lines = [
 
 for r in results:
     status_str = "✅ **PASSED**" if r["passed"] else "❌ **FAILED**"
-    report_lines.append(f"| {r['id']} | {r['name']} | `{r['endpoint']}` | `POST/GET` | {status_str} | {r['note']} |")
+    report_lines.append(f"| {r['id']} | {r['name']} | '{r['endpoint']}' | 'POST/GET' | {status_str} | {r['note']} |")
 
 report_lines.extend([
     "",
@@ -299,13 +299,13 @@ for r in results:
     status_str = "✅ **PASSED**" if r["passed"] else "❌ **FAILED**"
     report_lines.extend([
         f"### {r['id']}. {r['name']}",
-        f"- **Endpoint:** `{r['endpoint']}`",
+        f"- **Endpoint:** '{r['endpoint']}'",
         f"- **Trạng thái:** {status_str}",
         f"- **Mô tả nghiệp vụ:** {r['note']}",
         f"- **Dữ liệu thực tế:**",
-        "```text",
+        "'''text",
         r["details"],
-        "```",
+        "'''",
         ""
     ])
 
@@ -314,11 +314,11 @@ report_lines.extend([
     "",
     "## 🛡️ KẾT LUẬN & ĐÁNH GIÁ CHẤT LƯỢNG HỆ THỐNG",
     "",
-    "1. **Mô hình Multi-Tenancy & Zero Trust:** Phân lập người dùng theo `tenant_id`, đối soát header `X-Tenant-ID` chặt chẽ tại API Gateway.",
+    "1. **Mô hình Multi-Tenancy & Zero Trust:** Phân lập người dùng theo 'tenant_id', đối soát header 'X-Tenant-ID' chặt chẽ tại API Gateway.",
     "2. **Dual-Token & Token Reuse Detection:** Cơ chế xoay vòng Refresh Token và bảo vệ Family Revocation hoạt động chính xác 100%, ngăn chặn hoàn toàn nguy cơ Replay Attack.",
-    "3. **Quản trị Thiết bị & 2FA Step-up:** Hệ thống nhận diện chuẩn xác thiết bị mới (`is_trusted = false`) và kích hoạt thách thức OTP trước khi cấp quyền.",
+    "3. **Quản trị Thiết bị & 2FA Step-up:** Hệ thống nhận diện chuẩn xác thiết bị mới ('is_trusted = false') và kích hoạt thách thức OTP trước khi cấp quyền.",
     "4. **Đăng nhập Không mật khẩu QR Code:** Toàn bộ chu kỳ Web Init $\\rightarrow$ Mobile Scan $\\rightarrow$ Mobile Confirm $\\rightarrow$ Web Exchange Token hoàn tất trơn tru.",
-    "5. **Kiểm toán Không thể chối bỏ (Non-Repudiation):** Bảng `audit_logs` và `security_login_histories` ghi nhận đầy đủ `trace_id`, thời gian thực thi, địa chỉ IP và lịch sử bảo mật."
+    "5. **Kiểm toán Không thể chối bỏ (Non-Repudiation):** Bảng 'audit_logs' và 'security_login_histories' ghi nhận đầy đủ 'trace_id', thời gian thực thi, địa chỉ IP và lịch sử bảo mật."
 ])
 
 with open(REPORT_FILE, "w", encoding="utf-8") as f:

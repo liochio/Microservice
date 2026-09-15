@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/repositories/smart_piggy/smart_piggy_repository.py
+
 from sqlalchemy.orm import Session
 from sqlalchemy import desc, func
 from typing import List, Optional

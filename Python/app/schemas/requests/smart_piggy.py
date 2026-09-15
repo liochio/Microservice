@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/requests/smart_piggy.py
+
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List
 from datetime import datetime

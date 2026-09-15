@@ -8,7 +8,7 @@ from app.core.security.jwt.jwt_config import JWTConfig
 class CryptoService:
     """
     👑 TẦNG MÃ HÓA VÀ AN NINH MẬT MÃ LÕI
-    🎯 Giữ nguyên vẹn logic Bcrypt cũ của sếp và bọc thép thêm cơ chế sinh chuỗi token JWT bảo mật cao.
+    🎯 Giữ nguyên vẹn thuật toán Bcrypt tiêu chuẩn và bảo mật cao thêm cơ chế sinh chuỗi token JWT bảo mật cao.
     """
 
     @staticmethod
@@ -34,7 +34,7 @@ class CryptoService:
 
     @staticmethod
     def create_access_token(data: dict) -> str:
-        """🛡️ Sản sinh Access Token (JWT) ngắn hạn cấu hình trực tiếp từ .env của sếp"""
+        """🛡️ Sản sinh Access Token (JWT) ngắn hạn cấu hình trực tiếp từ biến môi trường hệ thống (.env)"""
         # 👑 ĐÁNH DẤU CHỈNH SỬA: Ép kiểu và làm sạch dữ liệu đầu vào để chống nuốt dữ liệu khi mã hóa
         to_encode = {str(k): v for k, v in data.items()}
         expire = datetime.now(timezone.utc) + timedelta(minutes=JWTConfig.ACCESS_TOKEN_EXPIRE_MINUTES)

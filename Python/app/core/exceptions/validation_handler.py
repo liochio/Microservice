@@ -1,6 +1,6 @@
 from fastapi import Request, FastAPI
 from fastapi.exceptions import RequestValidationError
-# 👑 Bảo lưu nguyên vẹn con hàng ResponseHandler tuyến đầu của sếp
+# 👑 Bảo lưu nguyên vẹn module ResponseHandler tuyến đầu hệ thống
 from app.core.responses.response_handler import ResponseHandler
 # 👑 ĐÁNH DẤU CHỈNH SỬA: Import bộ dịch đa ngôn ngữ động chính quy của hệ thống
 from app.core.translator.translator_engine import i18n_translator
@@ -8,7 +8,7 @@ from app.core.translator.translator_engine import i18n_translator
 async def custom_validation_exception_handler(request: Request, exc: RequestValidationError):
     """
     🛡️ INTERCEPTOR: Chuyển đổi các lỗi dạng RequestValidationError (nếu có sót)
-    về đúng chuẩn ma trận lỗi đầu vào của sếp.
+    về đúng chuẩn ma trận lỗi đầu vào hệ thống.
     🎯 ĐÁNH DẤU SỬA ĐỔI: Ép ăn theo i18n_translator, tự động bốc ngôn ngữ từ Request thông qua Middleware
     """
     errors = exc.errors()
@@ -28,7 +28,7 @@ async def custom_validation_exception_handler(request: Request, exc: RequestVali
     error_code_key = SystemConstants.VALIDATION_ERROR_400
     translated_message = i18n_translator.translate(request, error_code=error_code_key, msg_type=SystemConstants.MSG_TYPE_ERROR)
 
-    # Gọi ResponseHandler bọc thép, truyền đầy đủ message đã dịch và db=None để khớp signature
+    # Gọi ResponseHandler bảo mật cao, truyền đầy đủ message đã dịch và db=None để khớp signature
     return ResponseHandler.error(
         request=request,
         error_code=error_code_key,

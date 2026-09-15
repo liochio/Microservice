@@ -25,8 +25,8 @@ import java.util.UUID;
  * ==============================================================================
  * 
  * Mục đích:
- * 1. Đồng bộ mã Trace ID xuyên suốt: Trích xuất `CF-Ray` do Cloudflare sinh, làm `X-Trace-ID` và `x-correlation-id`.
- * 2. Nhận diện Real Client IP chính xác qua `CF-Connecting-IP` / `X-Forwarded-For`, chống lấy nhầm IP proxy.
+ * 1. Đồng bộ mã Trace ID xuyên suốt: Trích xuất 'CF-Ray' do Cloudflare sinh, làm 'X-Trace-ID' và 'x-correlation-id'.
+ * 2. Nhận diện Real Client IP chính xác qua 'CF-Connecting-IP' / 'X-Forwarded-For', chống lấy nhầm IP proxy.
  * 3. Strict Origin Protection: Kiểm tra dải IP Whitelist của Cloudflare, ngăn chặn bypass WAF khi chạy Production.
  * 4. Truy vết luồng IN/OUT kèm đo lường thời gian thực thi (Latency Tracking).
  */

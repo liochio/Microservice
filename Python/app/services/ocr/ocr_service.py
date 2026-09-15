@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/services/ocr/ocr_service.py
+
 from datetime import datetime
 import re
 import uuid

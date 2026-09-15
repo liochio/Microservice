@@ -8,11 +8,11 @@ Sử dụng thuật toán học máy và phân tích định lượng để:
 ---
 
 ## 1. Chấm Điểm Sức Khỏe Tài Chính
-- **Endpoint**: `GET /api/v1/ai/spending-score`
-- **Response**: Score, Rating (`EXCELLENT`, `GOOD`, `FAIR`, `POOR`), Thu nhập/Chi tiêu 30 ngày, Tỷ lệ tiết kiệm và Báo cáo tóm tắt.
+- **Endpoint**: 'GET /api/v1/ai/spending-score'
+- **Response**: Score, Rating ('EXCELLENT', 'GOOD', 'FAIR', 'POOR'), Thu nhập/Chi tiêu 30 ngày, Tỷ lệ tiết kiệm và Báo cáo tóm tắt.
 
 ---
 
 ## 2. Nhận Lời Khuyên Tối Ưu Chi Tiêu
-- **Endpoint**: `GET /api/v1/ai/recommendations`
-- **Response**: Danh sách đề xuất kèm số tiền có thể tiết kiệm được (`potential_savings`).
+- **Endpoint**: 'GET /api/v1/ai/recommendations'
+- **Response**: Danh sách đề xuất kèm số tiền có thể tiết kiệm được ('potential_savings').

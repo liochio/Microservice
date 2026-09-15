@@ -24,7 +24,7 @@
 
 <!-- SLIDE 3: KIẾN TRÚC TỔNG THỂ -->
 # 🏛️ 2. SƠ ĐỒ KIẾN TRÚC HỆ THỐNG
-```
+'''
    [Phần Cứng Heo Đất ESP32]          [Mobile Flutter App / Web]
               │                                    │
               │ (HMAC-SHA256)                      │ (JWT Bearer Token / WebSocket)
@@ -43,7 +43,7 @@
 └───────────────────────────────────┬────────────────────────────────────┘
                                     ▼
                          [MYSQL DATABASE 8.0 ACID]
-```
+'''
 
 ---
 
@@ -57,8 +57,8 @@
 
 ---
 
-<!-- SLIDE 5: LUỒNG NẠP TIỀN BỌC THÉP -->
-# 🛡️ 4. LUỒNG NẠP TIỀN BỌC THÉP 6 TẦNG (ACID INGESTION)
+<!-- SLIDE 5: LUỒNG NẠP TIỀN BẢO MẬT CAO -->
+# 🛡️ 4. LUỒNG NẠP TIỀN BẢO MẬT CAO 6 TẦNG (ACID INGESTION)
 1. **Xác thực thiết bị**: Đối chiếu địa chỉ MAC cứng của chip ESP32 đã ghép nối với User.
 2. **Chữ ký điện tử HMAC-SHA256 & Nonce**: Chống 100% nguy cơ Replay Attack (tấn công phát lại).
 3. **Đối soát cảm biến kép**: Mắt đọc quang học + Cân điện tử Load Cell.
@@ -72,7 +72,7 @@
 # 📴 5. CƠ CHẾ ĐỒNG BỘ NGOẠI TUYẾN (OFFLINE FLASH SYNC)
 - **Tình huống**: Heo đất bị mất mạng WiFi khi người dùng nhét tiền vào ống.
 - **Xử lý tại phần cứng**: ESP32 lưu vết các lần đút tiền vào bộ nhớ Flash Memory nội bộ.
-- **Tự động đồng bộ**: Khi có lại WiFi, ESP32 gọi API `POST /api/v1/smart_piggy/sync-offline-batch`.
+- **Tự động đồng bộ**: Khi có lại WiFi, ESP32 gọi API 'POST /api/v1/smart_piggy/sync-offline-batch'.
 - **Kết quả**: Backend xử lý toàn bộ batch theo chuẩn ACID, đảm bảo **không bao giờ bị mất tiền**.
 
 ---

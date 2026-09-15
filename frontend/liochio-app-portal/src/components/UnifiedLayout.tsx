@@ -18,7 +18,9 @@ import {
   Bot,
   Layers,
   ChevronRight,
-  Shield
+  Shield,
+  Sparkles,
+  AlertTriangle
 } from 'lucide-react';
 
 interface UnifiedLayoutProps {
@@ -78,14 +80,61 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
     }
   }, [activeWorkspace, allowedWorkspaces, navigate, userRoles]);
 
-  const handleLogout = () => {
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const confirmLogout = () => {
     localStorage.removeItem('app_token');
     localStorage.removeItem('app_user');
     localStorage.removeItem('corp_token');
     localStorage.removeItem('corp_user');
     localStorage.removeItem('liochio_jwt_token');
+    localStorage.removeItem('tenant_id');
+    localStorage.removeItem('app_user_id');
+    localStorage.removeItem('app_username');
+    setShowLogoutConfirm(false);
     navigate('/login');
   };
+
+  // Inactivity timeout (15 mins) & token expiration checker
+  React.useEffect(() => {
+    const IDLE_TIMEOUT_MS = 15 * 60 * 1000;
+    let timer: any = null;
+
+    const resetTimer = () => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        confirmLogout();
+      }, IDLE_TIMEOUT_MS);
+    };
+
+    const checkJwtExp = () => {
+      const token = localStorage.getItem('app_token') || localStorage.getItem('corp_token');
+      if (token && token.includes('.')) {
+        try {
+          const parts = token.split('.');
+          if (parts.length === 3) {
+            const payload = JSON.parse(atob(parts[1]));
+            if (payload.exp && Date.now() >= payload.exp * 1000) {
+              confirmLogout();
+            }
+          }
+        } catch (e) {}
+      }
+    };
+
+    checkJwtExp();
+    const expInterval = setInterval(checkJwtExp, 15000);
+
+    const events = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
+    events.forEach(e => window.addEventListener(e, resetTimer));
+    resetTimer();
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      clearInterval(expInterval);
+      events.forEach(e => window.removeEventListener(e, resetTimer));
+    };
+  }, []);
 
   // Nav menus by workspace
   const isCorpAdmin = userRoles.includes('ROLE_CORP_ADMIN');
@@ -99,6 +148,7 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
   ];
 
   const retailNavItems = [
+    { path: '/retail/smart-piggy-demo', label: 'Heo Đất IoT', icon: Sparkles, badge: 'Demo' },
     { path: '/retail/piggy', label: 'Heo Đất Thông Minh IoT', icon: PiggyBank, badge: 'Live' },
     { path: '/retail/wallets', label: 'Ví & Sổ Cái Kép', icon: Wallet },
     { path: '/retail/goals', label: 'Hũ Tiết Kiệm & Nhiệm Vụ', icon: Target },
@@ -129,7 +179,7 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
             </div>
             <div>
               <div className="font-black text-sm tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-300">
-                Liochio Unified
+                Smart Pig Bank
               </div>
               <div className="text-[10px] text-slate-400 font-mono tracking-tight">APP PORTAL :5173</div>
             </div>
@@ -141,15 +191,15 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
               Không Gian Làm Việc
             </div>
             {allowedWorkspaces.length > 1 ? (
-              <div className={`grid grid-cols-${allowedWorkspaces.length} gap-1 bg-slate-950/60 p-1 rounded-lg border border-slate-800`}>
+              <div className={"grid grid-cols-" + allowedWorkspaces.length + " gap-1 bg-slate-950/60 p-1 rounded-lg border border-slate-800"}>
                 {allowedWorkspaces.includes('corp') && (
                   <button
                     onClick={() => navigate('/corp/dashboard')}
-                    className={`py-1.5 px-1 text-xs rounded font-medium transition flex flex-col items-center gap-0.5 ${
+                    className={"py-1.5 px-1 text-xs rounded font-medium transition flex flex-col items-center gap-0.5 " + (
                       activeWorkspace === 'corp' 
                         ? 'bg-cyan-600/90 text-white shadow-sm' 
                         : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                    }`}
+                    )}
                   >
                     <Building2 className="w-3.5 h-3.5" />
                     <span className="text-[10px]">Corp B2B</span>
@@ -158,11 +208,11 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
                 {allowedWorkspaces.includes('business') && (
                   <button
                     onClick={() => navigate('/business/iot-fleet')}
-                    className={`py-1.5 px-1 text-xs rounded font-medium transition flex flex-col items-center gap-0.5 ${
+                    className={"py-1.5 px-1 text-xs rounded font-medium transition flex flex-col items-center gap-0.5 " + (
                       activeWorkspace === 'business' 
                         ? 'bg-indigo-600/90 text-white shadow-sm' 
                         : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                    }`}
+                    )}
                   >
                     <Cpu className="w-3.5 h-3.5" />
                     <span className="text-[10px]">Business</span>
@@ -212,14 +262,14 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all group ${
+                  className={"flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all group " + (
                     isActive
                       ? 'bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 text-cyan-400 border border-cyan-500/30'
                       : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                  }`}
+                  )}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 transition ${isActive ? 'text-cyan-400' : 'text-slate-400 group-hover:text-slate-200'}`} />
+                    <Icon className={"w-4 h-4 transition " + (isActive ? "text-cyan-400" : "text-slate-400 group-hover:text-slate-200")} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
@@ -246,7 +296,7 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
               </div>
             </div>
             <button
-              onClick={handleLogout}
+              onClick={() => setShowLogoutConfirm(true)}
               className="p-1.5 rounded-lg hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition"
               title="Đăng xuất"
             >
@@ -293,6 +343,46 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
           {children}
         </main>
       </div>
+
+      {/* Modal Popup Xac Nhan Dang Xuat */}
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/30">
+                <LogOut className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-white">Xác Nhận Đăng Xuất</h3>
+                <p className="text-xs text-slate-400">Liochio FinTech Platform</p>
+              </div>
+            </div>
+
+            <p className="text-sm text-slate-300 leading-relaxed">
+              Bạn có chắc chắn muốn kết thúc phiên làm việc hiện tại và đăng xuất khỏi tài khoản{' '}
+              <span className="font-semibold text-cyan-400">{currentUser.fullName || currentUser.username || 'người dùng'}</span> không?
+            </p>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowLogoutConfirm(false)}
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 transition"
+              >
+                Hủy Bỏ
+              </button>
+              <button
+                type="button"
+                onClick={confirmLogout}
+                className="px-4 py-2 text-xs font-bold rounded-xl bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition flex items-center gap-1.5"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                Đăng Xuất Ngay
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

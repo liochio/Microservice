@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS journal_entry_details (
     INDEX idx_jed_account (account_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 5. Cập nhật dữ liệu mẫu eKYC cho tài khoản Admin và Test User
+-- 5. Cập nhật dữ liệu eKYC mẫu cho tài khoản Quản trị viên và Khách hàng cá nhân
 UPDATE users 
 SET ekyc_level = 'TIER_3', 
     ekyc_status = 'VERIFIED', 
@@ -77,7 +77,7 @@ SET ekyc_level = 'TIER_2',
     id_card_type = 'CCCD', 
     daily_transfer_limit = 500000000.00,
     ekyc_verified_at = CURRENT_TIMESTAMP
-WHERE id = 5 OR username = 'fintech_user01';
+WHERE id = 5 OR username = 'user_demo';
 
 -- 6. Khởi tạo tài khoản Sổ cái Hệ thống và Người dùng mẫu
 INSERT INTO ledger_accounts (tenant_id, account_number, user_id, account_type, currency, balance, status, version)
@@ -93,7 +93,7 @@ ON DUPLICATE KEY UPDATE balance = VALUES(balance);
 -- 7. Khởi tạo Bút toán Genesis Sổ cái kép mẫu (Nạp tiền khởi tạo ví User 5)
 INSERT INTO journal_entries (id, tenant_id, entry_no, transaction_type, reference_id, idempotency_key, amount, currency, description, posted_at, prev_hash, current_hash, created_by)
 VALUES 
-(1, 'SYSTEM', 'JRN_GENESIS_001', 'TOPUP', 'VIETQR_INIT_001', 'idemp_genesis_topup_user5', 65000000.00, 'VND', 'Nạp tiền khởi tạo số dư ban đầu cho User fintech_user01', CURRENT_TIMESTAMP, '0000000000000000000000000000000000000000000000000000000000000000', 'a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0', 'SYSTEM_GENESIS')
+(1, 'SYSTEM', 'JRN_GENESIS_001', 'TOPUP', 'VIETQR_INIT_001', 'idemp_genesis_topup_user5', 65000000.00, 'VND', 'Khởi tạo hạn mức ban đầu cho tài khoản khách hàng Nguyễn Văn An', CURRENT_TIMESTAMP, '0000000000000000000000000000000000000000000000000000000000000000', 'a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0', 'SYSTEM_GENESIS')
 ON DUPLICATE KEY UPDATE amount = VALUES(amount);
 
 -- Chi tiết bút toán Nợ System Settlement / Có User Available (50tr) và Escrow (15tr)

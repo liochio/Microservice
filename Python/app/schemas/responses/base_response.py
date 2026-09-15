@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/responses/base_response.py
+
 from pydantic import BaseModel
 from typing import Optional, Any
 

@@ -11,11 +11,11 @@ Nhận diện văn bản trên ảnh hóa đơn/bill bán hàng siêu thị, nh�
 ---
 
 ## 1. Quét Ảnh Hóa Đơn
-- **Endpoint**: `POST /api/v1/ocr/scan`
+- **Endpoint**: 'POST /api/v1/ocr/scan'
 - **Payload**:
-```json
+'''json
 {
   "image_base64": "data:image/jpeg;base64,...",
   "image_url": "https://storage.fintech.local/invoices/inv_01.jpg"
 }
-```
+'''

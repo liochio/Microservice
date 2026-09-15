@@ -21,7 +21,7 @@ import java.io.IOException;
  *   nội dung chuỗi String trước khi dữ liệu chạm tới Controller.
  * 
  * Khi nào gọi:
- * - Được Jackson kích hoạt khi bắt gặp annotation `@DynamicSanitize` trên trường của DTO.
+ * - Được Jackson kích hoạt khi bắt gặp annotation '@DynamicSanitize' trên trường của DTO.
  */
 public class DynamicSanitizeDeserializer extends StdDeserializer<String> implements ContextualDeserializer {
 

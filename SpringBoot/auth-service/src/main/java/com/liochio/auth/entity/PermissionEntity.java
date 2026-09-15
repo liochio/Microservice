@@ -14,8 +14,8 @@ import org.hibernate.annotations.SQLRestriction;
  * ==============================================================================
  * 
  * Mục đích:
- * - Lưu trữ các quyền hạn tài nguyên chi tiết theo chuẩn `resource:action`
- *   (vd: `portfolio:read`, `portfolio:write`, `entity:delete`).
+ * - Lưu trữ các quyền hạn tài nguyên chi tiết theo chuẩn 'resource:action'
+ *   (vd: 'portfolio:read', 'portfolio:write', 'entity:delete').
  */
 @Entity
 @Table(name = "permissions")

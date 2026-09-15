@@ -15,12 +15,12 @@ import java.util.Optional;
  * ==============================================================================
  * 
  * Mục đích:
- * - Tự động kích hoạt cơ chế JPA Auditing để gán giá trị cho `@CreatedBy` và `@LastModifiedBy`
- *   trên các Entity kế thừa `BaseEntity`.
- * - Lấy thông tin tài khoản người dùng từ `UserContext` (ThreadLocal đã xác thực từ JWT).
+ * - Tự động kích hoạt cơ chế JPA Auditing để gán giá trị cho '@CreatedBy' và '@LastModifiedBy'
+ *   trên các Entity kế thừa 'BaseEntity'.
+ * - Lấy thông tin tài khoản người dùng từ 'UserContext' (ThreadLocal đã xác thực từ JWT).
  * 
  * Khi nào gọi:
- * - Tự động được Hibernate / Spring Data JPA kích hoạt khi gọi `repository.save()`.
+ * - Tự động được Hibernate / Spring Data JPA kích hoạt khi gọi 'repository.save()'.
  */
 @Configuration
 @org.springframework.boot.autoconfigure.condition.ConditionalOnBean(name = "entityManagerFactory")

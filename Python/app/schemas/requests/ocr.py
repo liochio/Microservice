@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/requests/ocr.py
+
 from pydantic import BaseModel, model_validator
 from typing import Optional, Any
 from app.constants import SystemConstants

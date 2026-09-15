@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  *   cho các dữ liệu siêu tĩnh như: Quy tắc làm sạch, Từ điển i18n, Layout UI schema, Roles & Permissions.
  * 
  * Khi nào gọi:
- * - Được Spring Cache kích hoạt qua các annotation `@Cacheable(value = "tenantSanitizeRules")`.
+ * - Được Spring Cache kích hoạt qua các annotation '@Cacheable(value = "tenantSanitizeRules")'.
  */
 @Configuration
 @EnableCaching

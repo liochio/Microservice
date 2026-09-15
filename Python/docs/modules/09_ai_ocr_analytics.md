@@ -4,7 +4,7 @@
 Phân hệ **AI & OCR Analytics** cung cấp các tính năng thông minh giúp người dùng tự động hóa quản lý tài chính: Quét hóa đơn qua ảnh chụp (OCR), Chấm điểm sức khỏe tài chính (Financial Health Score), Dự báo chi tiêu tháng tới và Gợi ý tiết kiệm thông minh.
 
 ### Trạng thái triển khai:
-- ⏳ **Đang hoàn thiện**: Mô hình bảng `ocr_results`, `ocr_extracted_items`, `ai_financial_scores`, `ai_predictions`, `ai_recommendations`, `ai_model_logs`.
+- ⏳ **Đang hoàn thiện**: Mô hình bảng 'ocr_results', 'ocr_extracted_items', 'ai_financial_scores', 'ai_predictions', 'ai_recommendations', 'ai_model_logs'.
 - ⏳ **Kế hoạch tương lai (Roadmap)**: Tích hợp mô hình OCR (Tesseract / EasyOCR / Google Vision), Mô hình Machine Learning dự báo chuỗi thời gian (ARIMA / LSTM) phân tích thói quen tiêu dùng.
 
 ---
@@ -23,8 +23,8 @@ Phân hệ **AI & OCR Analytics** cung cấp các tính năng thông minh giúp 
 ---
 
 ## 3. Cấu Trúc Bảng Dữ Liệu
-- `ocr_results`: Kết quả trích xuất hóa đơn tổng thể.
-- `ocr_extracted_items`: Từng dòng chi tiết món hàng trên hóa đơn.
-- `ai_financial_scores`: Điểm số tài chính định kỳ của người dùng.
-- `ai_predictions`: Kết quả dự báo chi tiêu tương lai.
-- `ai_recommendations`: Các lời khuyên tài chính cá nhân hóa.
+- 'ocr_results': Kết quả trích xuất hóa đơn tổng thể.
+- 'ocr_extracted_items': Từng dòng chi tiết món hàng trên hóa đơn.
+- 'ai_financial_scores': Điểm số tài chính định kỳ của người dùng.
+- 'ai_predictions': Kết quả dự báo chi tiêu tương lai.
+- 'ai_recommendations': Các lời khuyên tài chính cá nhân hóa.

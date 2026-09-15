@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/services/smart_piggy/smart_piggy_iot_service.py
+
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from typing import List, Dict, Any, Optional
@@ -81,6 +81,22 @@ class SmartPiggyIotService:
                 db.add(new_w)
                 db.flush()
                 wallet_id = new_w.id
+
+        # Rang buoc chat che: 1 Vi chi duoc lien ket toi da 1 Thiet bi dang hoat dong (ONLINE/ACTIVE)
+        from app.models.smart_piggy.smart_piggy_device import SmartPiggyDevice
+        conflict_device = db.query(SmartPiggyDevice).filter(
+            SmartPiggyDevice.wallet_id == wallet_id,
+            SmartPiggyDevice.status.in_(["ONLINE", "ACTIVE"]),
+            SmartPiggyDevice.mac_address != mac
+        ).first()
+        if conflict_device:
+            raise FintechBaseException(
+                error_code="WALLET_ALREADY_HAS_ACTIVE_DEVICE",
+                status_code=400,
+                context={
+                    "message": f"Vi nay hien da duoc lien ket voi Heo Dat '{conflict_device.device_name}' ({conflict_device.mac_address}). Moi vi chi duoc phep lien ket voi 1 Heo Dat duy nhat!"
+                }
+            )
 
         if existing:
             existing.user_id = user_id

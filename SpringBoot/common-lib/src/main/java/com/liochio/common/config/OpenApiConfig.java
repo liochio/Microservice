@@ -19,9 +19,9 @@ import org.springframework.context.annotation.Configuration;
  * ==============================================================================
  * 
  * Mục đích:
- * - Tự động sinh tài liệu API trực quan tại `/swagger-ui.html` và `/v3/api-docs`.
+ * - Tự động sinh tài liệu API trực quan tại '/swagger-ui.html' và '/v3/api-docs'.
  * - Tích hợp cấu hình xác thực JWT Bearer Token trực tiếp trên giao diện Swagger.
- * - Tự động thêm Header `X-Tenant-ID` và `Accept-Language` vào mọi API request.
+ * - Tự động thêm Header 'X-Tenant-ID' và 'Accept-Language' vào mọi API request.
  * 
  * Khi nào gọi:
  * - Được SpringDoc khởi tạo khi ứng dụng khởi chạy.
@@ -35,12 +35,12 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Portfolio Backend Engine API")
-                        .description("Tài liệu kỹ thuật và cổng kết nối RESTful API Headless Engine cho hệ thống Portfolio đa người thuê.")
+                        .title("Liochio FinTech Core Banking & Digital Finance Platform API")
+                        .description("Tài liệu kỹ thuật và cổng kết nối RESTful API cho Hệ thống Ngân hàng số và Quản lý Tài chính Microservices.")
                         .version("1.0.0")
                         .contact(new Contact()
-                                .name("Portfolio Engineering Team")
-                                .email("contact@portfolio-engine.dev"))
+                                .name("Liochio FinTech Engineering Team")
+                                .email("engineering@fintech.liochio.com"))
                         .license(new License().name("Apache 2.0").url("https://springdoc.org")))
                 .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
                 .components(new Components()

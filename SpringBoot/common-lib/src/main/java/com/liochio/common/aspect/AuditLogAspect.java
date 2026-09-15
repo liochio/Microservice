@@ -26,9 +26,9 @@ import java.time.Instant;
  * ==============================================================================
  * 
  * Mục đích:
- * - Bắt trọn vẹn ngữ cảnh thao tác của các Controller / Service đánh dấu `@AuditLog`.
- * - Đo thời gian thực thi `execution_time_ms`, dữ liệu cũ/mới, kết quả thành công/thất bại.
- * - Lưu bản ghi kiểm toán toàn diện vào bảng `audit_logs`.
+ * - Bắt trọn vẹn ngữ cảnh thao tác của các Controller / Service đánh dấu '@AuditLog'.
+ * - Đo thời gian thực thi 'execution_time_ms', dữ liệu cũ/mới, kết quả thành công/thất bại.
+ * - Lưu bản ghi kiểm toán toàn diện vào bảng 'audit_logs'.
  */
 @Slf4j
 @Aspect

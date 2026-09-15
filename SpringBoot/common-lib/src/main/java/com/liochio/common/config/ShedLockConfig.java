@@ -21,9 +21,9 @@ import javax.sql.DataSource;
  * ==============================================================================
  * 
  * Mục đích:
- * - Đồng bộ hóa các tác vụ chạy định kỳ `@Scheduled` khi hệ thống mở rộng đa node (multi-instances),
+ * - Đồng bộ hóa các tác vụ chạy định kỳ '@Scheduled' khi hệ thống mở rộng đa node (multi-instances),
  *   đảm bảo tại một thời điểm chỉ có DUY NHẤT 1 instance thực thi tác vụ (dọn token, xóa rác, outbox relay).
- * - MẶC ĐỊNH: Sử dụng MySQL DataSource (Bảng `shedlock`) đã được tạo sẵn trong Database Core `portfolio-engine`.
+ * - MẶC ĐỊNH: Sử dụng MySQL DataSource (Bảng 'shedlock') đã được tạo sẵn trong Database Core 'portfolio-engine'.
  *   Điều này giúp Scheduler hoạt động 100% độc lập, không bị crash kể cả khi Redis Server chưa bật.
  * - FALLBACK: Sử dụng Redis nếu hệ thống chạy ở chế độ không có DataSource.
  */
@@ -33,7 +33,7 @@ import javax.sql.DataSource;
 public class ShedLockConfig {
 
     /**
-     * Ưu tiên sử dụng JDBC DataSource và bảng `shedlock` trong MySQL.
+     * Ưu tiên sử dụng JDBC DataSource và bảng 'shedlock' trong MySQL.
      */
     @Bean
     @Primary

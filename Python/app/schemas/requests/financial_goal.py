@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/schemas/requests/financial_goal.py
+
 from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime

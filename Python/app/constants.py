@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/constants.py
+
 class SystemConstants:
     """
     👑 TRỤC TỌA ĐỘ HẰNG SỐ CHUNG TOÀN HỆ THỐNG FINTECH MONOLITH

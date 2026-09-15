@@ -100,7 +100,7 @@ SELECT 1, id FROM `permissions`;
 -- Thêm tài khoản mặc định: superadmin (Mật khẩu: 12345678)
 -- Hash BCrypt $2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi tương đương password 'password' hoặc '12345678'
 INSERT IGNORE INTO `users` (`id`, `tenant_id`, `username`, `password`, `email`, `full_name`, `status`) VALUES
-(1, 'default', 'superadmin', '$2a$12$Nq9v7P8vV1eR7o4M2E4uEu9yD0iC1dJ0v8kK5rG3u2oB4zL9mN8m.', 'admin@portfolio-engine.dev', 'System Super Administrator', 'ACTIVE');
+(1, 'default', 'superadmin', '$2a$12$Nq9v7P8vV1eR7o4M2E4uEu9yD0iC1dJ0v8kK5rG3u2oB4zL9mN8m.', 'admin.fintech@liochio.com', 'System Super Administrator', 'ACTIVE');
 
 -- Gán ROLE_SUPER_ADMIN cho user superadmin
 INSERT IGNORE INTO `user_roles` (`user_id`, `role_id`) VALUES (1, 1);

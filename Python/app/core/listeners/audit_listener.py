@@ -67,5 +67,5 @@ def after_cursor_execute(conn, cursor, statement, parameters, context, execmany)
 
 def register_audit_listeners(session_factory):
     """🎯 Kích hoạt cổng bẫy sự kiện SQLAlchemy mức độ toàn cục"""
-    # Hàm này giữ nguyên signature để gọi từ file main.py cũ của sếp
+    # Hàm này giữ nguyên signature để gọi từ file main.py cũ hệ thống
     pass

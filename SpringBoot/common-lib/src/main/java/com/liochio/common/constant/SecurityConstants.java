@@ -51,7 +51,7 @@ public final class SecurityConstants {
     /**
      * Khóa bí mật mặc định dùng cho ký HMAC-SHA256 (Khuyến nghị ghi đè qua biến môi trường .env)
      */
-    public static final String DEFAULT_JWT_SECRET = "portfolio-engine-super-secret-jwt-key-minimum-256-bits-for-security-2026";
+    public static final String DEFAULT_JWT_SECRET = "liochio-fintech-super-secret-jwt-key-minimum-256-bits-for-security-2026";
 
     /**
      * Danh sách URL công khai không yêu cầu xác thực JWT (Whitelist)

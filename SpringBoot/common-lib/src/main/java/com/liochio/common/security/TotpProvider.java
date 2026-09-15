@@ -16,7 +16,7 @@ import java.util.Arrays;
  * 
  * Mục đích:
  * - Sinh khóa bí mật Base32 ngẫu nhiên (160-bit).
- * - Sinh chuỗi URI Barcode QR Code chuẩn (`otpauth://totp/...`).
+ * - Sinh chuỗi URI Barcode QR Code chuẩn ('otpauth://totp/...').
  * - Xác thực mã 6 số TOTP với cửa sổ thời gian trôi (Time window $\pm 1$ step = 30s).
  */
 @Slf4j

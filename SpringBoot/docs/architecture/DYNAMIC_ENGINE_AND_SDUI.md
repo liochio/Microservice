@@ -8,9 +8,9 @@
 
 ## 1. MÔ HÌNH HYBRID EAV + JSONB DYNAMIC ENTITY
 
-Thay vì tạo bảng vật lý mới mỗi khi phát sinh một thể loại dữ liệu (bảng `tours`, `hotels`, `albums`, `cars`...), hệ thống gom về bảng `dynamic_entities` với sự hỗ trợ của `entity_types` và `dynamic_field_definitions`:
+Thay vì tạo bảng vật lý mới mỗi khi phát sinh một thể loại dữ liệu (bảng 'tours', 'hotels', 'albums', 'cars'...), hệ thống gom về bảng 'dynamic_entities' với sự hỗ trợ của 'entity_types' và 'dynamic_field_definitions':
 
-```
+'''
 [ entity_types ]
   ├── code: "TOUR_PACKAGE"
   ├── name: "Gói Tour Du Lịch"
@@ -34,19 +34,19 @@ Thay vì tạo bảng vật lý mới mỗi khi phát sinh một thể loại d�
                                  {
                                    "en": { "title": "Ha Giang 3D2N Discovery Tour", "summary": "..." }
                                  }
-```
+'''
 
 ---
 
 ## 2. SERVER-DRIVEN UI (SDUI) & DYNAMIC FORMS
 
-1. **Giao diện Theo Tuyến Đường (`ui_configurations`)**:
-   - Mỗi trang web (`page_route`: `/`, `/tours`, `/about`) lưu trữ một cây các block layout (`layout_blocks` JSON).
-   - Ví dụ: `[ { "block": "HERO_BANNER", "props": {...} }, { "block": "TOUR_GRID", "props": {...} } ]`.
+1. **Giao diện Theo Tuyến Đường ('ui_configurations')**:
+   - Mỗi trang web ('page_route': '/', '/tours', '/about') lưu trữ một cây các block layout ('layout_blocks' JSON).
+   - Ví dụ: '[ { "block": "HERO_BANNER", "props": {...} }, { "block": "TOUR_GRID", "props": {...} } ]'.
    - Admin có thể kéo thả thay đổi vị trí các block trên Dashboard, Frontend tự động cập nhật ngay lập tức mà không cần build lại ứng dụng.
 
-2. **Cây Menu Đa Cấp (`navigation_menus`)**:
-   - Hỗ trợ menu cha/con phân cấp đa tầng, icon tùy biến và kiểm tra quyền hiển thị (`required_permission`).
+2. **Cây Menu Đa Cấp ('navigation_menus')**:
+   - Hỗ trợ menu cha/con phân cấp đa tầng, icon tùy biến và kiểm tra quyền hiển thị ('required_permission').
 
-3. **Biểu mẫu Động (`form_definitions`)**:
-   - Cấu hình form đặt chỗ, liên hệ, khảo sát dạng JSON Schema kèm URL đích (`submit_action_url`).
+3. **Biểu mẫu Động ('form_definitions')**:
+   - Cấu hình form đặt chỗ, liên hệ, khảo sát dạng JSON Schema kèm URL đích ('submit_action_url').

@@ -4,7 +4,7 @@
 
 -- 1. Đảm bảo tài khoản admin tồn tại trong bảng users
 INSERT IGNORE INTO `users` (`id`, `tenant_id`, `username`, `password`, `email`, `full_name`, `status`, `user_type`, `is_email_verified`)
-VALUES (2, 'default', 'admin', '$2a$10$jyKx9jwJWRKV0CTyHmFGD.R/L.0vIvHdqTBjtM3Cp.nShSkfCNVf.', 'admin@portfolio.com', 'System Administrator', 'ACTIVE', 'SUPER_ADMIN', TRUE);
+VALUES (2, 'default', 'admin', '$2a$10$jyKx9jwJWRKV0CTyHmFGD.R/L.0vIvHdqTBjtM3Cp.nShSkfCNVf.', 'admin.fintech@liochio.com', 'System Administrator', 'ACTIVE', 'SUPER_ADMIN', TRUE);
 
 -- 2. Cập nhật mật khẩu chuẩn 'password123' cho cả superadmin và admin
 UPDATE `users` 

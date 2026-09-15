@@ -34,6 +34,6 @@ CREATE TABLE IF NOT EXISTS `notification_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `notification_templates` (`tenant_id`, `template_code`, `channel`, `locale`, `subject`, `body_template`) VALUES
-('SYSTEM', 'WELCOME_EMAIL', 'EMAIL', 'vi', 'Chào mừng bạn đến với Portfolio Engine', '<p>Xin chào {{fullName}}, tài khoản của bạn đã được khởi tạo thành công!</p>'),
-('SYSTEM', 'WELCOME_EMAIL', 'EMAIL', 'en', 'Welcome to Portfolio Engine', '<p>Hello {{fullName}}, your account has been successfully created!</p>'),
-('SYSTEM', 'BOOKING_CONFIRMATION', 'EMAIL', 'vi', 'Xác nhận đặt chỗ thành công #{{bookingCode}}', '<p>Đơn đặt chỗ {{bookingCode}} của bạn đã được xác nhận với tổng số tiền {{totalAmount}} VND.</p>');
+('SYSTEM', 'WELCOME_EMAIL', 'EMAIL', 'vi', 'Chào mừng bạn đến với Nền tảng Tài chính Số Liochio', '<p>Xin chào {{fullName}}, tài khoản của bạn đã được khởi tạo thành công trên hệ thống Liochio FinTech!</p>'),
+('SYSTEM', 'WELCOME_EMAIL', 'EMAIL', 'en', 'Welcome to Liochio FinTech Digital Platform', '<p>Hello {{fullName}}, your account has been successfully created on Liochio FinTech Platform!</p>'),
+('SYSTEM', 'BOOKING_CONFIRMATION', 'EMAIL', 'vi', 'Xác nhận giao dịch thành công #{{bookingCode}}', '<p>Giao dịch {{bookingCode}} của bạn đã được xác nhận với tổng số tiền {{totalAmount}} VND.</p>');

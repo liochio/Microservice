@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/repositories/finance/transaction_repository.py
+
 import uuid
 from datetime import datetime
 from sqlalchemy import select, and_, desc, text
@@ -7,8 +7,8 @@ from app.models.finance.transaction import Transaction
 
 class TransactionRepository:
     """
-    👑 REPOSITORY: TRUY VẤN VÀ QUẢN LÝ BẢNG `transactions`
-    🎯 Nguyên tắc Bọc Thép: Chỉ thao tác bảng `transactions`.
+    👑 REPOSITORY: TRUY VẤN VÀ QUẢN LÝ BẢNG 'transactions'
+    🎯 Nguyên tắc Bọc Thép: Chỉ thao tác bảng 'transactions'.
     """
 
     @staticmethod

@@ -109,7 +109,7 @@ class UserRegisterRequest(BaseModel):
 
 
 class UserLoginRequest(BaseModel):
-    """👑 DTO ĐẦU VÀO ĐĂNG NHẬP BỌC THÉP TUẦN TỰ"""
+    """👑 DTO ĐẦU VÀO ĐĂNG NHẬP BẢO MẬT CAO TUẦN TỰ"""
     identifier: Optional[Any] = None
     email: Optional[Any] = None
     username: Optional[Any] = None

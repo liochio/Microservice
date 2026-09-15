@@ -29,30 +29,30 @@ def audit():
     
     for db in EXPECTED_DATABASES:
         if db in existing_dbs:
-            cursor.execute(f"SHOW TABLES FROM `{db}`")
+            cursor.execute(f"SHOW TABLES FROM '{db}'")
             tables = [r[0] for r in cursor.fetchall()]
-            print(f"\n📂 Database: `{db}` -> {len(tables)} bảng:")
+            print(f"\n📂 Database: '{db}' -> {len(tables)} bảng:")
             for t in tables:
                 print(f"   ├─ {t}")
         else:
-            print(f"\n⚠️ Database: `{db}` -> Chưa tồn tại")
+            print(f"\n⚠️ Database: '{db}' -> Chưa tồn tại")
             
     print("\n" + "-" * 80)
     print("🛡️ KIỂM TRA PHÂN LẬP & TÁCH BẢNG RÁC:")
     
     # Kiểm tra db_auth không được chứa user_otp_verifications
-    cursor.execute("SHOW TABLES FROM `db_auth` LIKE 'user_otp_verifications'")
+    cursor.execute("SHOW TABLES FROM db_auth LIKE 'user_otp_verifications'")
     otp_in_auth = cursor.fetchall()
     if not otp_in_auth:
-        print("  ✅ db_auth: Đã dọn dẹp sạch sẽ, không còn bảng `user_otp_verifications`")
+        print("  ✅ db_auth: Đã dọn dẹp sạch sẽ, không còn bảng 'user_otp_verifications'")
     else:
-        print("  ❌ db_auth: Vẫn còn bảng `user_otp_verifications`")
+        print("  ❌ db_auth: Vẫn còn bảng 'user_otp_verifications'")
         
     # Kiểm tra db_otp có bảng otp_service_configs và user_otp_verifications
-    cursor.execute("SHOW TABLES FROM `db_otp`")
+    cursor.execute("SHOW TABLES FROM db_otp")
     otp_tables = [r[0] for r in cursor.fetchall()]
     if "otp_service_configs" in otp_tables and "user_otp_verifications" in otp_tables:
-        print("  ✅ db_otp: Đầy đủ các bảng `otp_service_configs` và `user_otp_verifications`")
+        print("  ✅ db_otp: Đầy đủ các bảng 'otp_service_configs' và 'user_otp_verifications'")
     else:
         print(f"  ❌ db_otp: Thiếu bảng, hiện có: {otp_tables}")
 

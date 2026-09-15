@@ -1,10 +1,10 @@
 from app.constants import SystemConstants
 from app.core.exceptions.base_exception import FintechBaseException
 
-# 👑 IMPORT CỤC INTERCEPTOR TỔNG HỢP GHI LOG DÙNG CHUNG Ở THƯ MỤC COMMON CỦA SẾP
+# 👑 IMPORT CỤC INTERCEPTOR TỔNG HỢP GHI LOG DÙNG CHUNG TỪ COMMON PACKAGE
 from app.services.common.log_interceptor import AuthLogInterceptor
 
-# 👑 FIX CHUẨN ĐƯỜNG DẪN: Import 2 bộ xử lý nghiệp vụ con khớp khít 100% theo ảnh chụp của sếp
+# 👑 FIX CHUẨN ĐƯỜNG DẪN: Import 2 bộ xử lý nghiệp vụ con theo chuẩn kiến trúc hệ thống
 from app.services.auth.auth.processors.register_processor import UserRegisterProcessor
 from app.services.auth.auth.processors.login_processor import UserLoginProcessor
 
@@ -39,7 +39,7 @@ class AuthService:
             if isinstance(e, FintechBaseException):
                 raise e
 
-            # Hệ thống vỡ trận nổ lỗi thô -> Bọc lại bằng mã lỗi 500 bọc thép chuẩn Enterprise
+            # Hệ thống vỡ trận nổ lỗi thô -> Bọc lại bằng mã lỗi 500 bảo mật cao chuẩn Enterprise
             raise FintechBaseException(error_code=SystemConstants.REGISTRATION_PROCESSOR_CRASH, status_code=500)
 
     @staticmethod

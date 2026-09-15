@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/core/middleware/middleware.py
+
 import time
 import uuid
 import json
@@ -140,7 +140,7 @@ class RequestContextAndLogMiddleware(BaseHTTPMiddleware):
     👑 MIDDLEWARE 1: TRACE-ID, NGỮ CẢNH REQUEST, SECURITY HEADERS & LOGGING
     🎯 Mục đích & Nhiệm vụ:
        1. Khởi tạo/nhận Trace-ID duy nhất, bấm giờ Latency nano/milli-second.
-       2. Bóc tách IP, User-Agent, Device-ID, Locale vào `request.state`.
+       2. Bóc tách IP, User-Agent, Device-ID, Locale vào 'request.state'.
        3. Giải mã sớm Bearer JWT (nếu có) trên RAM để nạp user_id vào context (leeway = 0s).
        4. Tiêm các Header an ninh WAF chuẩn quốc tế (HSTS, nosniff, DENY frame) vào Response.
        5. Ghi đúng 1 dòng Log JSON có cấu trúc khi kết thúc Request (0 kết nối DB).

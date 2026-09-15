@@ -15,7 +15,7 @@ import java.util.List;
  * ==============================================================================
  * 
  * Mục đích:
- * - Cung cấp hàm truy vấn các sự kiện đang ở trạng thái `PENDING` hoặc `FAILED`
+ * - Cung cấp hàm truy vấn các sự kiện đang ở trạng thái 'PENDING' hoặc 'FAILED'
  *   để Scheduler định kỳ quét và phát tán lên Message Broker (RabbitMQ/Kafka).
  */
 @Repository

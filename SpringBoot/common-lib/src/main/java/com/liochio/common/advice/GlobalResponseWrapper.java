@@ -20,10 +20,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * ==============================================================================
  * 
  * Mục đích:
- * - Tự động bọc kết quả trả về từ tất cả các Controller vào đối tượng `ApiResponse<T>`
- *   chuẩn hóa mà lập trình viên không cần phải viết tay bọc `ApiResponse.success(...)` lặp lại.
- * - Bỏ qua các endpoint đặc thù của Swagger/OpenAPI, Actuator và các response đã là `ApiResponse`.
- * - Xử lý chuyển đổi riêng biệt kiểu `String` để tránh lỗi ClassCastException trong StringHttpMessageConverter.
+ * - Tự động bọc kết quả trả về từ tất cả các Controller vào đối tượng 'ApiResponse<T>'
+ *   chuẩn hóa mà lập trình viên không cần phải viết tay bọc 'ApiResponse.success(...)' lặp lại.
+ * - Bỏ qua các endpoint đặc thù của Swagger/OpenAPI, Actuator và các response đã là 'ApiResponse'.
+ * - Xử lý chuyển đổi riêng biệt kiểu 'String' để tránh lỗi ClassCastException trong StringHttpMessageConverter.
  * 
  * Khi nào gọi:
  * - Tự động được Spring MVC kích hoạt ngay trước khi ghi dữ liệu phản hồi xuống luồng HTTP OutputStream.

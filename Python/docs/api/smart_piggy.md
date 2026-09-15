@@ -12,7 +12,7 @@ Phân hệ **Smart Piggy Bank IoT & AI Core** là giải pháp cầu nối giữ
 
 ## 🛡️ 2. Luồng Nạp Tiền Bọc Thép 6 Tầng (Ingestion Security Pipeline)
 
-```
+'''
  [Phần Cứng ESP32]
    │
    ├─► Cảm biến Quang + Load Cell cân nặng ──► Đo Mệnh giá & Khối lượng
@@ -26,32 +26,32 @@ Phân hệ **Smart Piggy Bank IoT & AI Core** là giải pháp cầu nối giữ
    │
    ├─► 1. Verify HMAC-SHA256 + Check Nonce (Chống Replay Attack 100%)
    ├─► 2. Đối chiếu cảm biến cân nặng (Chống đút giấy rác)
-   ├─► 3. Ghi `smart_piggy_coin_logs` + Tăng số dư Ví `SMART_PIGGY` (SQL Transaction)
+   ├─► 3. Ghi 'smart_piggy_coin_logs' + Tăng số dư Ví 'SMART_PIGGY' (SQL Transaction)
    ├─► 4. Cộng điểm Gamification (1,000 VND = 1 Point) & Thăng cấp Level
    ├─► 5. AI Cập nhật Dự báo ngày đầy heo & Phân tích thói quen
    │
    ├─► Phản hồi ESP32: Lệnh bật đèn LED RGB + Buzzer vui mừng
    └─► Bắn WebSocket: "Ting ting" tức thì lên App điện thoại
-```
+'''
 
 ---
 
 ## 🚀 3. Danh Sách Chi Tiết Các Endpoint API
 
 ### 3.1 Ghép Nối Thiết Bị Heo Đất Mới (Pairing)
-- **Endpoint**: `POST /api/v1/smart_piggy/pair`
+- **Endpoint**: 'POST /api/v1/smart_piggy/pair'
 - **Mục đích**: Liên kết địa chỉ MAC của chip ESP32 với tài khoản người dùng và ví tích lũy.
-- **Header**: `Authorization: Bearer <ACCESS_TOKEN>`
+- **Header**: 'Authorization: Bearer <ACCESS_TOKEN>'
 - **Payload Request**:
-```json
+'''json
 {
   "mac_address": "24:6F:28:AB:CD:EF",
   "device_name": "Heo Đất Phòng Khách",
   "pairing_code": "123456"
 }
-```
+'''
 - **Response Thành Công (201 Created)**:
-```json
+'''json
 {
   "success": true,
   "error_code": "SMART_PIGGY_SYNC_SUCCESS",
@@ -65,15 +65,15 @@ Phân hệ **Smart Piggy Bank IoT & AI Core** là giải pháp cầu nối giữ
     "status": "ONLINE"
   }
 }
-```
+'''
 
 ---
 
 ### 3.2 Luồng Nạp Tiền Từ Cảm Biến Heo Đất (Sensor Ingestion)
-- **Endpoint**: `POST /api/v1/smart_piggy/drop-money`
+- **Endpoint**: 'POST /api/v1/smart_piggy/drop-money'
 - **Mục đích**: ESP32 bắn dữ liệu tiền vừa đút về Backend để cộng tiền tự động vào ví số.
 - **Payload Request**:
-```json
+'''json
 {
   "mac_address": "24:6F:28:AB:CD:EF",
   "coin_value": 50000.0,
@@ -82,9 +82,9 @@ Phân hệ **Smart Piggy Bank IoT & AI Core** là giải pháp cầu nối giữ
   "nonce": "e4d2a1b9-8c7f",
   "timestamp": 1771934400
 }
-```
+'''
 - **Response Thành Công (200 OK)**:
-```json
+'''json
 {
   "success": true,
   "error_code": "SMART_PIGGY_SYNC_SUCCESS",
@@ -105,15 +105,15 @@ Phân hệ **Smart Piggy Bank IoT & AI Core** là giải pháp cầu nối giữ
     }
   }
 }
-```
+'''
 
 ---
 
 ### 3.3 Đồng Bộ Tiền Đút Ngoại Tuyến Khi Có Lại WiFi (Offline Batch Sync)
-- **Endpoint**: `POST /api/v1/smart_piggy/sync-offline-batch`
+- **Endpoint**: 'POST /api/v1/smart_piggy/sync-offline-batch'
 - **Mục đích**: ESP32 đẩy danh sách các lần đút tiền khi mất mạng đã lưu trong bộ nhớ Flash.
 - **Payload Request**:
-```json
+'''json
 {
   "mac_address": "24:6F:28:AB:CD:EF",
   "batch_items": [
@@ -129,50 +129,50 @@ Phân hệ **Smart Piggy Bank IoT & AI Core** là giải pháp cầu nối giữ
     }
   ]
 }
-```
+'''
 
 ---
 
 ### 3.4 Xem Lịch Sử Bỏ Ống Heo Vật Lý
-- **Endpoint**: `GET /api/v1/smart_piggy/devices/{device_id}/history?limit=50`
+- **Endpoint**: 'GET /api/v1/smart_piggy/devices/{device_id}/history?limit=50'
 - **Mục đích**: Xem chi tiết từng mệnh giá, thời gian và tổng tiền đã bỏ vào ống heo.
 
 ---
 
 ### 3.5 Cảnh Báo An Ninh: Rung Lắc / Chống Trộm / Đập Heo
-- **Endpoint**: `POST /api/v1/smart_piggy/devices/{device_id}/tamper-alert`
+- **Endpoint**: 'POST /api/v1/smart_piggy/devices/{device_id}/tamper-alert'
 - **Payload Request**:
-```json
+'''json
 {
   "sensor_type": "MPU6050_TILT_AND_SHAKE",
   "intensity_level": "CRITICAL",
   "details": "Heo đất bị dốc ngược góc 120 độ và rung lắc mạnh liên tục."
 }
-```
-- **Response**: Trả về lệnh kích hoạt còi hú `2000Hz` và chớp đèn LED đỏ cảnh báo `STROBE_ALARM`.
+'''
+- **Response**: Trả về lệnh kích hoạt còi hú '2000Hz' và chớp đèn LED đỏ cảnh báo 'STROBE_ALARM'.
 
 ---
 
 ### 3.6 Điều Khiển Đèn LED RGB Trên Lưng Heo Đất Từ Mobile App
-- **Endpoint**: `POST /api/v1/smart_piggy/devices/{device_id}/led-control`
+- **Endpoint**: 'POST /api/v1/smart_piggy/devices/{device_id}/led-control'
 - **Payload Request**:
-```json
+'''json
 {
   "color_hex": "#FF9800",
   "effect_mode": "RAINBOW",
   "duration_seconds": 10
 }
-```
+'''
 
 ---
 
 ## 🧠 4. Các API Trí Tuệ Nhân Tạo (AI Smart Piggy Advisor)
 
 ### 4.1 AI Dự Báo Ngày Đầy Heo / Hoàn Thành Mục Tiêu
-- **Endpoint**: `GET /api/v1/smart_piggy/ai/deposit-forecast`
+- **Endpoint**: 'GET /api/v1/smart_piggy/ai/deposit-forecast'
 - **Thuật toán**: Mô hình hồi quy chuỗi thời gian phân tích tốc độ tích lũy trung bình ngày $\bar{v}$ và khoảng tiền còn lại $\Delta M$.
 - **Response (200 OK)**:
-```json
+'''json
 {
   "success": true,
   "data": {
@@ -187,22 +187,22 @@ Phân hệ **Smart Piggy Bank IoT & AI Core** là giải pháp cầu nối giữ
     "ai_financial_advice": "Bạn đang tích lũy ổn định ~35,000 VND/ngày. Hãy thử tăng thêm 10,000 VND mỗi lần đút để về đích sớm hơn 2 tuần."
   }
 }
-```
+'''
 
 ---
 
 ### 4.2 AI Phân Tích Thói Quen Tiết Kiệm & Tính Kiên Trì
-- **Endpoint**: `GET /api/v1/smart_piggy/ai/behavior-analysis`
+- **Endpoint**: 'GET /api/v1/smart_piggy/ai/behavior-analysis'
 - **Response**:
-  - `most_frequent_day_of_week`: Ngày đút tiền nhiều nhất (Ví dụ: Chủ Nhật).
-  - `favorite_coin_denomination`: Mệnh giá đút thường xuyên nhất (Ví dụ: 50,000 VND).
-  - `saving_consistency_score`: Điểm kiên trì (0 - 100).
-  - `behavior_persona`: Danh hiệu tính cách ("Chiến Binh Tiết Kiệm Bền Bỉ").
+  - 'most_frequent_day_of_week': Ngày đút tiền nhiều nhất (Ví dụ: Chủ Nhật).
+  - 'favorite_coin_denomination': Mệnh giá đút thường xuyên nhất (Ví dụ: 50,000 VND).
+  - 'saving_consistency_score': Điểm kiên trì (0 - 100).
+  - 'behavior_persona': Danh hiệu tính cách ("Chiến Binh Tiết Kiệm Bền Bỉ").
 
 ---
 
 ### 4.3 Cấp Độ Gamification & Huy Hiệu Heo Đất
-- **Endpoint**: `GET /api/v1/smart_piggy/gamification/status`
+- **Endpoint**: 'GET /api/v1/smart_piggy/gamification/status'
 - **Bảng Cấp Độ**:
   - **Level 1**: Heo Đất Sơ Sinh (0 - 500 điểm)
   - **Level 2**: Heo Con Chăm Chỉ (501 - 2,000 điểm)

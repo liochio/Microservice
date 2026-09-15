@@ -462,12 +462,12 @@ class VerificationService:
                 .values(status=SystemConstants.ACTIVE, is_active=1, is_verified=1, updated_at=now)
             )
 
-            # Đồng bộ sang liochio_auth_db.users
+            # Đồng bộ sang liochio_core_db.users
             try:
                 db_conn.execute(text("""
-                    UPDATE `liochio_auth_db`.`users`
-                    SET `status` = 'ACTIVE', `is_email_verified` = 1, `updated_at` = NOW()
-                    WHERE `username` = :uname
+                    UPDATE liochio_core_db.users
+                    SET status = 'ACTIVE', is_email_verified = 1, updated_at = NOW()
+                    WHERE username = :uname
                 """), {"uname": user.username})
             except Exception:
                 pass
@@ -515,10 +515,10 @@ class VerificationService:
                     }
                 )
 
-            # Đồng bộ Sổ cái Kép (Ledger Accounts) bên liochio_auth_db
+            # Đồng bộ Sổ cái Kép (Ledger Accounts) bên liochio_core_db
             try:
                 res_auth_user = db_conn.execute(
-                    text("SELECT id FROM `liochio_auth_db`.`users` WHERE username = :uname LIMIT 1"),
+                    text("SELECT id FROM liochio_core_db.users WHERE username = :uname LIMIT 1"),
                     {"uname": user.username}
                 ).fetchone()
                 if res_auth_user:
@@ -526,10 +526,10 @@ class VerificationService:
                     for acc_t in ['USER_AVAILABLE', 'USER_HOLDING', 'USER_ESCROW']:
                         acc_num = f"LEDGER_{acc_t}_{auth_uid}"
                         db_conn.execute(text("""
-                            INSERT IGNORE INTO `liochio_auth_db`.`ledger_accounts` (
-                                `tenant_id`, `account_number`, `user_id`, `account_type`, `currency`, `balance`, `status`, `version`, `created_at`, `updated_at`
+                            INSERT IGNORE INTO liochio_core_db.ledger_accounts (
+                                tenant_id, account_no, user_id, account_type, currency, balance, status, created_at
                             ) VALUES (
-                                'default', :acc_num, :uid, :acc_type, 'VND', 0.00, 'ACTIVE', 0, NOW(), NOW()
+                                'default', :acc_num, :uid, :acc_type, 'VND', 0.00, 'ACTIVE', NOW()
                             );
                         """), {"acc_num": acc_num, "uid": auth_uid, "acc_type": acc_t})
             except Exception:

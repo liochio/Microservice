@@ -107,7 +107,7 @@ public class DedicatedOtpService {
             try {
                 String subject = "Mã xác thực OTP Liochio: " + rawOtp;
                 String bodyContent = "Kính gửi quý khách,\n\nMã OTP xác thực của bạn là: " + rawOtp + "\nMã có hiệu lực trong 5 phút. Vui lòng không chia sẻ mã này cho bất kỳ ai.\n\nTrân trọng,\nLiochio Enterprise Team";
-                jdbc.update("INSERT INTO `liochio_app_db`.`mail_logs` (`trace_id`, `recipient`, `channel`, `template_code`, `language_code`, `subject`, `content`, `status`, `execution_time_ms`, `retry_count`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                jdbc.update("INSERT INTO liochio_app_db.mail_logs (trace_id, recipient, channel, template_code, language_code, subject, content, status, execution_time_ms, retry_count, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())",
                         referenceId, request.getDestination(), "EMAIL", "OTP_REGISTER_MAIL", "vi", subject, bodyContent, "PENDING", 0, 0);
                 log.info("[DedicatedOtpService] -> Đã tạo bản ghi mail_log PENDING cho mã OTP '{}'", referenceId);
             } catch (Exception e) {

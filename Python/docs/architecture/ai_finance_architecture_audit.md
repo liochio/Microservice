@@ -6,9 +6,9 @@ Source code hiện tại là một backend FastAPI cho nền tảng tài chính 
 
 Tuy nhiên, khi đối chiếu theo source code thực tế, hệ thống mới hoàn thiện một phần nhỏ của kiến trúc:
 
-- API đang expose thực tế: auth register/login/verification, wallet CRUD, wallet topup, một endpoint report dưới `auth/report.py`.
+- API đang expose thực tế: auth register/login/verification, wallet CRUD, wallet topup, một endpoint report dưới 'auth/report.py'.
 - Database models rất đầy đủ nhưng nhiều domain chưa có route/service/repository tương ứng.
-- AI hiện có chỉ có anomaly detection bằng Z-score trong `app/services/ai/predict_service.py`; chưa thấy được gọi từ luồng giao dịch/topup.
+- AI hiện có chỉ có anomaly detection bằng Z-score trong 'app/services/ai/predict_service.py'; chưa thấy được gọi từ luồng giao dịch/topup.
 - OCR, IoT, Payment, Budget, Analytics, Ledger, Report, Recommendation, LLM Assistant chủ yếu mới là folder/model placeholder hoặc chưa đủ dữ liệu để kết luận đã hoạt động.
 - Queue/event architecture có dependency Kafka, Celery, gmqtt, Redis nhưng code thực tế mới dùng Redis rate limit và worker gửi email quét DB bằng APScheduler/loop.
 - Có technical debt đáng kể: route/service mismatch ở wallet topup, nhiều file rỗng, CI rỗng, Dockerfile sai dạng CMD, docker-compose chỉ chạy web, migration tự động tạo revision lúc startup gây rủi ro.
@@ -21,32 +21,32 @@ Kết luận: kiến trúc mục tiêu nên được thiết kế lại thành m
 
 | Layer | Bằng chứng source code | Chức năng | Mức cần thiết | Độ phức tạp | Phù hợp đồ án |
 |---|---|---|---|---|---|
-| API Layer | `app/api/router.py`, `app/api/v1/*` | Auto-discover router FastAPI | Cao | Trung bình | Phù hợp |
-| Middleware Layer | `app/core/middleware/middleware.py` | correlation, clock, fingerprint, i18n, body buffer, security headers, Redis rate limit, DB session, JWT auth, RBAC, structured logging | Cao | Cao | Hơi nặng nhưng có giá trị demo |
-| Service Layer | `app/services/*` | Business logic cho auth, wallet, topup, notification, AI | Cao | Trung bình | Phù hợp |
-| Repository Layer | `app/repositories/*` | Data access, một phần raw SQL/mapping | Cao | Trung bình | Phù hợp nhưng chưa nhất quán |
-| Model Layer | `app/models/*` | ORM schema cho finance, AI, OCR, IoT, payment, notification, ledger | Cao | Cao | Quá rộng so với phần đã implement |
-| Schema Layer | `app/schemas/*` | Pydantic request/response | Cao | Thấp | Phù hợp |
-| Config Layer | `app/core/config/settings.py` | env, DB, Redis, SMTP, JWT | Cao | Thấp | Phù hợp |
-| Security Layer | `app/core/security/*` | JWT, hashing, permissions, csrf, rate limit, encryption | Cao | Trung bình | Phù hợp nhưng một số phần chưa được wire rõ |
-| Observability Layer | `app/core/logging`, `app/core/observability`, middleware logging | API log, security log, request flow log | Trung bình | Cao | Nên đơn giản hóa |
-| Worker Layer | `app/jobs/notification_worker.py`, `run_worker.py` | Quét notification pending và gửi email SMTP | Trung bình | Trung bình | Phù hợp MVP |
-| Event Layer | `app/core/events/*` | Có event classes/dispatcher | Trung bình | Thấp | Chưa đủ dữ liệu để kết luận đã dùng thực tế |
+| API Layer | 'app/api/router.py', 'app/api/v1/*' | Auto-discover router FastAPI | Cao | Trung bình | Phù hợp |
+| Middleware Layer | 'app/core/middleware/middleware.py' | correlation, clock, fingerprint, i18n, body buffer, security headers, Redis rate limit, DB session, JWT auth, RBAC, structured logging | Cao | Cao | Hơi nặng nhưng có giá trị demo |
+| Service Layer | 'app/services/*' | Business logic cho auth, wallet, topup, notification, AI | Cao | Trung bình | Phù hợp |
+| Repository Layer | 'app/repositories/*' | Data access, một phần raw SQL/mapping | Cao | Trung bình | Phù hợp nhưng chưa nhất quán |
+| Model Layer | 'app/models/*' | ORM schema cho finance, AI, OCR, IoT, payment, notification, ledger | Cao | Cao | Quá rộng so với phần đã implement |
+| Schema Layer | 'app/schemas/*' | Pydantic request/response | Cao | Thấp | Phù hợp |
+| Config Layer | 'app/core/config/settings.py' | env, DB, Redis, SMTP, JWT | Cao | Thấp | Phù hợp |
+| Security Layer | 'app/core/security/*' | JWT, hashing, permissions, csrf, rate limit, encryption | Cao | Trung bình | Phù hợp nhưng một số phần chưa được wire rõ |
+| Observability Layer | 'app/core/logging', 'app/core/observability', middleware logging | API log, security log, request flow log | Trung bình | Cao | Nên đơn giản hóa |
+| Worker Layer | 'app/jobs/notification_worker.py', 'run_worker.py' | Quét notification pending và gửi email SMTP | Trung bình | Trung bình | Phù hợp MVP |
+| Event Layer | 'app/core/events/*' | Có event classes/dispatcher | Trung bình | Thấp | Chưa đủ dữ liệu để kết luận đã dùng thực tế |
 
 ### 2.2 Service, Middleware, API Gateway, Database, Cache, Queue, Worker, IoT, AI, OCR, Payment, Notification, Monitoring, DevOps
 
 | Thành phần | Hiện trạng source code | Đánh giá |
 |---|---|---|
-| API Gateway | `gateway/nginx/nginx.conf`, `routes.conf`, rate limit config | Có cấu hình Nginx nhưng docker-compose chưa chạy gateway. Cần thiết cho production demo, chưa cần cho MVP. |
-| FastAPI App | `app/main.py` | Có app, lifespan, middleware, exception handler, router auto-discovery. Cần thiết. |
-| Database | SQLAlchemy MySQL qua `DATABASE_URL`, `SessionLocal`, rất nhiều ORM models | Cốt lõi. Schema rộng, nhưng nhiều bảng chưa có flow nghiệp vụ. |
+| API Gateway | 'gateway/nginx/nginx.conf', 'routes.conf', rate limit config | Có cấu hình Nginx nhưng docker-compose chưa chạy gateway. Cần thiết cho production demo, chưa cần cho MVP. |
+| FastAPI App | 'app/main.py' | Có app, lifespan, middleware, exception handler, router auto-discovery. Cần thiết. |
+| Database | SQLAlchemy MySQL qua 'DATABASE_URL', 'SessionLocal', rất nhiều ORM models | Cốt lõi. Schema rộng, nhưng nhiều bảng chưa có flow nghiệp vụ. |
 | Migration | Alembic trong startup: upgrade, revision autogenerate, upgrade | Không nên tạo migration tự động lúc runtime. Rủi ro cao cho production và đồ án. |
 | Cache | Redis dùng cho rate limit | Có dùng thực tế. Chưa dùng cache nghiệp vụ/session. |
-| Queue | requirements có Kafka, Celery, AMQP; folder `app/kafka`, `consumers` | Chủ yếu skeleton, chưa đủ dữ liệu để kết luận hoạt động. Worker hiện không dùng Kafka/Celery. |
+| Queue | requirements có Kafka, Celery, AMQP; folder 'app/kafka', 'consumers' | Chủ yếu skeleton, chưa đủ dữ liệu để kết luận hoạt động. Worker hiện không dùng Kafka/Celery. |
 | Worker | Notification worker quét DB và gửi SMTP | Có logic thực tế, nhưng hard-code email trong worker là technical debt. |
-| IoT | models `iot_*`, `smart_piggy_*`, MQTT package, `piggy_consumer.py` rỗng | Chủ yếu data model/placeholder. Chưa có MQTT flow thực tế. |
-| AI | `PredictService.detect_transaction_anomaly` | Có Z-score anomaly detection nhưng chưa thấy được gọi. Chưa có prediction/recommendation/LLM/OCR AI. |
-| OCR | models `ocr_results`, `ocr_extracted_items`, package service/repository rỗng | Placeholder. Chưa thấy PaddleOCR/Tesseract/API upload receipt. |
+| IoT | models 'iot_*', 'smart_piggy_*', MQTT package, 'piggy_consumer.py' rỗng | Chủ yếu data model/placeholder. Chưa có MQTT flow thực tế. |
+| AI | 'PredictService.detect_transaction_anomaly' | Có Z-score anomaly detection nhưng chưa thấy được gọi. Chưa có prediction/recommendation/LLM/OCR AI. |
+| OCR | models 'ocr_results', 'ocr_extracted_items', package service/repository rỗng | Placeholder. Chưa thấy PaddleOCR/Tesseract/API upload receipt. |
 | Payment | models payment method/transaction/webhook/refund/reconciliation | Data model có, API/service chưa có. Topup dùng mock bank account, chưa tích hợp payment gateway. |
 | Notification | notification service, repository, worker, templates, logs | Có triển khai tương đối thực tế cho email verification/wallet notification. |
 | Monitoring | middleware ghi request flow/API/security/system log; observability files rỗng | Logging nhiều, nhưng metrics/tracing rỗng. Chưa có Prometheus/OpenTelemetry thực tế. |
@@ -66,14 +66,14 @@ Kết luận: kiến trúc mục tiêu nên được thiết kế lại thành m
 
 ## 4. Những Gì Còn Thiếu Hoặc Chưa Đủ Dữ Liệu Kết Luận
 
-- Chưa có API thực tế cho `ai`, `ocr`, `iot`, `payment`, `budgets`, `ledger`, `analytics`, `reports`, `smart_piggy`, `transfers`, `users` vì các package này chỉ có `__init__.py` hoặc thiếu router.
+- Chưa có API thực tế cho 'ai', 'ocr', 'iot', 'payment', 'budgets', 'ledger', 'analytics', 'reports', 'smart_piggy', 'transfers', 'users' vì các package này chỉ có '__init__.py' hoặc thiếu router.
 - Chưa thấy Smart Piggy Bank device ingestion qua MQTT hoạt động.
 - Chưa thấy OCR pipeline đọc hóa đơn.
 - Chưa thấy recommendation engine, forecast engine, financial score service, budget optimizer.
 - Chưa thấy LLM assistant hoặc OpenAI API.
 - Chưa thấy queue Kafka/Celery hoạt động thực tế.
 - Chưa thấy model training pipeline/model registry thực tế.
-- Chưa có tests trong `tests`.
+- Chưa có tests trong 'tests'.
 - GitHub workflow files rỗng.
 - Không đủ dữ liệu để kết luận frontend/dashboard đã tồn tại.
 
@@ -81,12 +81,12 @@ Kết luận: kiến trúc mục tiêu nên được thiết kế lại thành m
 
 | AI Capability | Hiện trạng | Kết luận |
 |---|---|---|
-| Anomaly Detection | Có `PredictService.detect_transaction_anomaly`, dùng NumPy Z-score trên 30 giao dịch gần nhất | Có logic thật nhưng đơn giản, chưa thấy được gọi trong transaction/topup |
-| Prediction | Có model `ai_predictions`, file `model.pkl`, nhưng `train_model.py` rỗng | Placeholder |
-| Recommendation | Có model `ai_recommendations` | Placeholder |
+| Anomaly Detection | Có 'PredictService.detect_transaction_anomaly', dùng NumPy Z-score trên 30 giao dịch gần nhất | Có logic thật nhưng đơn giản, chưa thấy được gọi trong transaction/topup |
+| Prediction | Có model 'ai_predictions', file 'model.pkl', nhưng 'train_model.py' rỗng | Placeholder |
+| Recommendation | Có model 'ai_recommendations' | Placeholder |
 | OCR | Có models OCR | Placeholder |
 | NLP/LLM | Không thấy OpenAI/langchain/transformers hoặc service assistant | Chưa có |
-| Financial Score | Có model `ai_financial_scores` | Placeholder |
+| Financial Score | Có model 'ai_financial_scores' | Placeholder |
 | Time Series Forecasting | Không thấy implementation | Chưa có |
 | Classification | Không thấy implementation | Chưa có |
 | Clustering | Không thấy implementation | Chưa có |
@@ -108,7 +108,7 @@ Kết luận: kiến trúc mục tiêu nên được thiết kế lại thành m
 | Anomaly Detection v2 | Bất thường giao dịch, device, login, topup | IsolationForest/LocalOutlierFactor + Z-score fallback | Cao |
 | AI Notification Engine | Chọn thời điểm/nội dung thông báo thông minh | rule-based + bandit đơn giản | Trung bình |
 | AI Report Generator | Báo cáo tuần/tháng bằng Markdown/PDF | pandas + Jinja2 + LLM summary | Trung bình |
-| Model Training Pipeline | Huấn luyện định kỳ, lưu metrics | Celery/APScheduler + MLflow hoặc table `ai_model_logs` | Trung bình |
+| Model Training Pipeline | Huấn luyện định kỳ, lưu metrics | Celery/APScheduler + MLflow hoặc table 'ai_model_logs' | Trung bình |
 | Model Registry | Quản lý model version, status, path, metrics | DB table + file storage, hoặc MLflow nếu muốn nâng cao | Trung bình |
 
 ## 7. Automation Cần Bổ Sung
@@ -155,37 +155,37 @@ Kết luận: kiến trúc mục tiêu nên được thiết kế lại thành m
 
 ### 9.1 Module Đã Hoàn Thành Tương Đối
 
-- `app/main.py`: app bootstrap, middleware, exception handling.
-- `app/api/router.py`: auto discovery router.
-- `app/api/v1/auth/*`: register/login/verification endpoints.
-- `app/api/v1/wallets/wallet.py`: wallet CRUD endpoints.
-- `app/api/v1/transactions/wallet_topup.py`: topup endpoint, nhưng có lỗi signature khi gọi service.
-- `app/services/auth/*`: auth processors, token, OTP, verification.
-- `app/services/wallet/wallet_service.py`: wallet business logic.
-- `app/services/finance/wallet_topup_service.py`: topup business logic.
-- `app/services/notification` + `app/jobs/notification_worker.py`: notification queue/email worker.
-- `app/core/middleware/middleware.py`: middleware pipeline.
-- `app/models/*`: ORM models rất rộng.
+- 'app/main.py': app bootstrap, middleware, exception handling.
+- 'app/api/router.py': auto discovery router.
+- 'app/api/v1/auth/*': register/login/verification endpoints.
+- 'app/api/v1/wallets/wallet.py': wallet CRUD endpoints.
+- 'app/api/v1/transactions/wallet_topup.py': topup endpoint, nhưng có lỗi signature khi gọi service.
+- 'app/services/auth/*': auth processors, token, OTP, verification.
+- 'app/services/wallet/wallet_service.py': wallet business logic.
+- 'app/services/finance/wallet_topup_service.py': topup business logic.
+- 'app/services/notification' + 'app/jobs/notification_worker.py': notification queue/email worker.
+- 'app/core/middleware/middleware.py': middleware pipeline.
+- 'app/models/*': ORM models rất rộng.
 
 ### 9.2 Module Chưa Hoàn Thành
 
-- `app/api/v1/ai`, `analytics`, `budgets`, `iot`, `ledger`, `notifications`, `ocr`, `payment`, `reports`, `smart_piggy`, `transfers`, `users`: chưa có route implementation.
-- `app/services/ai/train_model.py`, `app/services/ai/anomaly_detection.py`: rỗng.
-- `app/services/ocr`, `app/repositories/ocr`: chưa có implementation.
-- `app/services/iot`, `app/repositories/iot`, `app/mqtt/consumers/piggy_consumer.py`: chưa có implementation thực tế.
-- `app/kafka/*`, `consumers/*`, `producers/*`, `schedulers/*`, `tasks/*`: không đủ dữ liệu để kết luận hoạt động.
-- `app/core/observability/metrics.py`, `tracing.py`: rỗng.
-- `tests`: không có test file.
-- `github/workflows/*`: rỗng.
+- 'app/api/v1/ai', 'analytics', 'budgets', 'iot', 'ledger', 'notifications', 'ocr', 'payment', 'reports', 'smart_piggy', 'transfers', 'users': chưa có route implementation.
+- 'app/services/ai/train_model.py', 'app/services/ai/anomaly_detection.py': rỗng.
+- 'app/services/ocr', 'app/repositories/ocr': chưa có implementation.
+- 'app/services/iot', 'app/repositories/iot', 'app/mqtt/consumers/piggy_consumer.py': chưa có implementation thực tế.
+- 'app/kafka/*', 'consumers/*', 'producers/*', 'schedulers/*', 'tasks/*': không đủ dữ liệu để kết luận hoạt động.
+- 'app/core/observability/metrics.py', 'tracing.py': rỗng.
+- 'tests': không có test file.
+- 'github/workflows/*': rỗng.
 
 ### 9.3 Technical Debt Quan Trọng
 
-- `wallet_topup_endpoint` truyền `user_agent` và `idempotency_key` vào `execute_topup`, nhưng service không nhận hai tham số này. Route có thể crash runtime.
-- `Dockerfile` dùng `CMD ['uvicorn', ...]` dạng single quote, không phải exec-form JSON hợp lệ; nên dùng `CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]`.
-- `docker-compose.yml` chỉ chạy web, chưa có MySQL, Redis, worker, gateway, MQTT broker.
-- Startup tự `alembic revision --autogenerate` trong `lifespan`; không nên tạo migration tự động mỗi lần chạy app.
+- 'wallet_topup_endpoint' truyền 'user_agent' và 'idempotency_key' vào 'execute_topup', nhưng service không nhận hai tham số này. Route có thể crash runtime.
+- 'Dockerfile' dùng 'CMD ['uvicorn', ...]' dạng single quote, không phải exec-form JSON hợp lệ; nên dùng 'CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]'.
+- 'docker-compose.yml' chỉ chạy web, chưa có MySQL, Redis, worker, gateway, MQTT broker.
+- Startup tự 'alembic revision --autogenerate' trong 'lifespan'; không nên tạo migration tự động mỗi lần chạy app.
 - Nhiều comment/log bị lỗi encoding, gây khó đọc.
-- Notification worker hard-code email `voduylebt99@gmail.com`.
+- Notification worker hard-code email 'voduylebt99@gmail.com'.
 - Có dependency enterprise như Kafka/Celery/gmqtt nhưng thiếu wiring, dễ tạo cảm giác over-engineering.
 - Auto-discover routers có thể nuốt lỗi import bằng print, khiến route missing khó phát hiện.
 - Mix raw SQL và ORM chưa nhất quán.
@@ -222,7 +222,7 @@ Kết luận: kiến trúc mục tiêu nên được thiết kế lại thành m
 
 ## 11. Mermaid Enterprise Architecture
 
-```mermaid
+'''mermaid
 flowchart TB
     subgraph Client["Client & Device Layer"]
         Web["Web/Mobile Dashboard"]
@@ -321,11 +321,11 @@ flowchart TB
     App --> Metrics
     App --> Tracing
     CI --> Docker
-```
+'''
 
 ## 12. Mermaid AI Event Flow
 
-```mermaid
+'''mermaid
 sequenceDiagram
     autonumber
     participant U as User
@@ -352,11 +352,11 @@ sequenceDiagram
     else Normal behavior
         AI->>R: Refresh dashboard insight
     end
-```
+'''
 
 ## 13. Mermaid IoT Flow
 
-```mermaid
+'''mermaid
 flowchart LR
     Piggy["Smart Piggy Device\ncoin sensor, weight sensor, LED"] --> MQTT["MQTT Broker"]
     MQTT --> Consumer["MQTT Consumer\npiggy_consumer.py"]
@@ -369,11 +369,11 @@ flowchart LR
     Noti --> User["User Dashboard/Email/Push"]
     AI --> LED["Optional LED Command\nreward/status"]
     LED --> MQTT
-```
+'''
 
 ## 14. PlantUML Enterprise Architecture
 
-```plantuml
+'''plantuml
 @startuml
 skinparam componentStyle rectangle
 skinparam packageStyle rectangle
@@ -490,7 +490,7 @@ Registry --> Anomaly
 Registry --> Rec
 Redis --> MW
 @enduml
-```
+'''
 
 ## 15. Kết Luận
 

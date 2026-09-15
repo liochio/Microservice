@@ -46,22 +46,22 @@ function Log-TestCase {
     } else {
         $res = "**FAILED**"
     }
-    $script:TableRows += "| $Id | $Name | `$Endpoint` | `$Method` | $res | $Note |"
+    $script:TableRows += "| $Id | $Name | '$Endpoint' | '$Method' | $res | $Note |"
     
     $script:Details += "### $Id. $Name"
-    $script:Details += "- Endpoint: `$Method $Endpoint`"
+    $script:Details += "- Endpoint: '$Method $Endpoint'"
     $script:Details += "- Status: $res"
     $script:Details += "- Chi tiet:"
-    $script:Details += '```text'
+    $script:Details += ''''text'
     $script:Details += $DetailText
-    $script:Details += '```'
+    $script:Details += '''''
     $script:Details += ""
 }
 
 # ==============================================================================
 # TEST 1: REGISTRATION & OTP ACTIVATION
 # ==============================================================================
-Write-Host "`n[1/7] Dang ky va Kich hoat tai khoan qua OTP..." -ForegroundColor Yellow
+Write-Host "'n[1/7] Dang ky va Kich hoat tai khoan qua OTP..." -ForegroundColor Yellow
 $regBody = @{
     username = $TestUser
     email    = $TestEmail
@@ -76,7 +76,7 @@ try {
     Write-Host "  -> [OK] Registered User ID: $userId, Status: $status" -ForegroundColor Green
 
     # Set OTP hash in MySQL to 123456
-    $setOtpCmd = "UPDATE user_otp_verifications SET otp_code_hash = '`$2a`$10`$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi' WHERE user_id = $userId AND otp_purpose = 'REGISTRATION';"
+    $setOtpCmd = "UPDATE user_otp_verifications SET otp_code_hash = ''$2a'$10'$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi' WHERE user_id = $userId AND otp_purpose = 'REGISTRATION';"
     & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p12345678 -D "portfolio-engine" -e $setOtpCmd 2>$null
 
     # Verify OTP
@@ -98,7 +98,7 @@ try {
 # ==============================================================================
 # TEST 2: UNTRUSTED DEVICE LOGIN (2FA STEP-UP) & VERIFY
 # ==============================================================================
-Write-Host "`n[2/7] Thach thuc 2FA Thiet bi la va Xac thuc thiet bi..." -ForegroundColor Yellow
+Write-Host "'n[2/7] Thach thuc 2FA Thiet bi la va Xac thuc thiet bi..." -ForegroundColor Yellow
 $loginUntrustedBody = @{
     username = $TestUser
     password = $TestPassword
@@ -111,7 +111,7 @@ try {
     Write-Host "  -> [OK] Thiet bi la -> requires2Fa: $req2Fa, Challenge: $($loginUntrustedRes.data.challengeToken)" -ForegroundColor Green
 
     # Set OTP hash in MySQL to 123456
-    $setDevOtpCmd = "UPDATE user_otp_verifications SET otp_code_hash = '`$2a`$10`$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi' WHERE user_id = $userId AND otp_purpose = 'DEVICE_TRUST';"
+    $setDevOtpCmd = "UPDATE user_otp_verifications SET otp_code_hash = ''$2a'$10'$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi' WHERE user_id = $userId AND otp_purpose = 'DEVICE_TRUST';"
     & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p12345678 -D "portfolio-engine" -e $setDevOtpCmd 2>$null
 
     # Verify Device OTP
@@ -136,13 +136,13 @@ try {
 # ==============================================================================
 # TEST 3: SUPER ADMIN LOGIN & PHAN QUYEN RBAC
 # ==============================================================================
-Write-Host "`n[3/7] Phan quyen Da tang RBAC (Super Admin vs User Thuong)..." -ForegroundColor Yellow
+Write-Host "'n[3/7] Phan quyen Da tang RBAC (Super Admin vs User Thuong)..." -ForegroundColor Yellow
 $AdminToken = $null
 
 try {
     $adminRes = Invoke-RestMethod -Uri "$TargetUrl/api/v1/auth/login" -Method Post -Body (@{ username = "admin"; password = "12345678" } | ConvertTo-Json) -ContentType "application/json" -Headers @{ "X-Device-Id" = "dev_admin_console" }
     if ($adminRes.data.requires2Fa -eq $true) {
-        $setAdminOtpCmd = "UPDATE user_otp_verifications SET otp_code_hash = '`$2a`$10`$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi' WHERE user_id = $($adminRes.data.userId) AND otp_purpose = 'DEVICE_TRUST';"
+        $setAdminOtpCmd = "UPDATE user_otp_verifications SET otp_code_hash = ''$2a'$10'$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVKIUi' WHERE user_id = $($adminRes.data.userId) AND otp_purpose = 'DEVICE_TRUST';"
         & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p12345678 -D "portfolio-engine" -e $setAdminOtpCmd 2>$null
         $adminVerRes = Invoke-RestMethod -Uri "$TargetUrl/api/v1/auth/verify-device-otp" -Method Post -Body (@{ username = "admin"; deviceId = "dev_admin_console"; otpCode = "123456"; rememberDevice = $true } | ConvertTo-Json) -ContentType "application/json"
         $AdminToken = $adminVerRes.data.accessToken
@@ -174,7 +174,7 @@ if ($AdminToken) {
 # ==============================================================================
 # TEST 4: TOKEN ROTATION & TOKEN REUSE DETECTION
 # ==============================================================================
-Write-Host "`n[4/7] Xoay vong Token va Chong Replay Attack (Family Revocation)..." -ForegroundColor Yellow
+Write-Host "'n[4/7] Xoay vong Token va Chong Replay Attack (Family Revocation)..." -ForegroundColor Yellow
 if ($userRefreshToken) {
     try {
         # 1. Rotate
@@ -204,7 +204,7 @@ if ($userRefreshToken) {
 # ==============================================================================
 # TEST 5: PASSWORDLESS QR CODE LOGIN
 # ==============================================================================
-Write-Host "`n[5/7] Dang nhap Khong mat khau quet ma QR (Full QR Cycle)..." -ForegroundColor Yellow
+Write-Host "'n[5/7] Dang nhap Khong mat khau quet ma QR (Full QR Cycle)..." -ForegroundColor Yellow
 try {
     # 1. Web Init
     $qrInit = Invoke-RestMethod -Uri "$TargetUrl/api/v1/auth/qr/init" -Method Post -Headers @{ "X-Device-Id" = "web_test_screen" }
@@ -235,7 +235,7 @@ try {
 # ==============================================================================
 # TEST 6: SMARTOTP RFC 6238 & QUAN TRI THIET BI / PHIEN
 # ==============================================================================
-Write-Host "`n[6/7] Thiet lap SmartOTP RFC 6238 va Quan tri Thiet bi / Phien..." -ForegroundColor Yellow
+Write-Host "'n[6/7] Thiet lap SmartOTP RFC 6238 va Quan tri Thiet bi / Phien..." -ForegroundColor Yellow
 if ($AdminToken) {
     try {
         $sotpRes = Invoke-RestMethod -Uri "$TargetUrl/api/v1/auth/smart-otp/setup" -Method Post -Headers @{ "Authorization" = "Bearer $AdminToken" }
@@ -254,12 +254,12 @@ if ($AdminToken) {
 # ==============================================================================
 # TEST 7: KIEM TOAN AUDIT LOGS & LICH SU SECURITY LOGIN
 # ==============================================================================
-Write-Host "`n[7/7] Kiem tra Kiem toan Audit Logs va Lich su Bao mat..." -ForegroundColor Yellow
+Write-Host "'n[7/7] Kiem tra Kiem toan Audit Logs va Lich su Bao mat..." -ForegroundColor Yellow
 try {
     $auditLogsQuery = & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p12345678 -D "portfolio-engine" -e "SELECT count(*) as total_audit_logs, max(created_at) as latest_audit FROM audit_logs;" 2>$null
     $loginHistQuery = & "C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p12345678 -D "portfolio-engine" -e "SELECT id, attempted_username, login_status, failure_reason, created_at FROM security_login_histories ORDER BY id DESC LIMIT 5;" 2>$null
 
-    Log-TestCase -Id "TC_07" -Name "Ghi vet Kiem toan Toan dien (Audit Logs & Histories)" -Endpoint "MySQL: audit_logs & security_login_histories" -Method "SQL" -Success $true -Note "Tu dong ghi nhan moi thao tac dang nhap, 2FA challenge, phan quyen va quan tri" -DetailText "$auditLogsQuery`n`nTop 5 Login Histories:`n$loginHistQuery"
+    Log-TestCase -Id "TC_07" -Name "Ghi vet Kiem toan Toan dien (Audit Logs & Histories)" -Endpoint "MySQL: audit_logs & security_login_histories" -Method "SQL" -Success $true -Note "Tu dong ghi nhan moi thao tac dang nhap, 2FA challenge, phan quyen va quan tri" -DetailText "$auditLogsQuery'n'nTop 5 Login Histories:'n$loginHistQuery"
     Write-Host "  -> [OK] Kiem toan Audit Logging va Security Histories hoat dong 100%!" -ForegroundColor Green
 } catch {
     Log-TestCase -Id "TC_07" -Name "Audit Logs" -Endpoint "MySQL Database" -Method "SQL" -Success $false -Note "Loi: $($_.Exception.Message)" -DetailText "$($_.Exception)"
@@ -293,6 +293,6 @@ foreach ($d in $Details) {
 }
 
 $Report | Out-File -FilePath $ReportFile -Encoding utf8
-Write-Host "`n==============================================================================" -ForegroundColor Cyan
+Write-Host "'n==============================================================================" -ForegroundColor Cyan
 Write-Host "  DA XUAT BAO CAO CHI TIET RA FILE: $ReportFile" -ForegroundColor Green
 Write-Host "==============================================================================" -ForegroundColor Cyan

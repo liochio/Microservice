@@ -23,10 +23,10 @@ import java.util.UUID;
  * ==============================================================================
  * 
  * Mục đích:
- * - Trích xuất hoặc tự sinh `traceId` (mã định danh duy nhất của request).
- * - Nạp `traceId`, `tenantId`, `userId` vào Mapped Diagnostic Context (MDC) của SLF4J
+ * - Trích xuất hoặc tự sinh 'traceId' (mã định danh duy nhất của request).
+ * - Nạp 'traceId', 'tenantId', 'userId' vào Mapped Diagnostic Context (MDC) của SLF4J
  *   để tự động xuất hiện trên mọi dòng log console và file log của microservice.
- * - Trả `X-Trace-ID` về Header của Response để Frontend/Client có thể dùng tra cứu khi gặp sự cố.
+ * - Trả 'X-Trace-ID' về Header của Response để Frontend/Client có thể dùng tra cứu khi gặp sự cố.
  * 
  * Khi nào gọi:
  * - Chạy ở mức ưu tiên cao nhất (HIGHEST_PRECEDENCE) ngay khi request đi vào microservice.

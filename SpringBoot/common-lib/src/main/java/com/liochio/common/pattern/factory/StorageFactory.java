@@ -14,8 +14,8 @@ import java.util.Map;
  * ==============================================================================
  * 
  * Mục đích:
- * - Tự động thu thập tất cả các Spring Beans thực thi interface `StorageStrategy`
- *   và nạp vào bảng tra cứu EnumMap để truy xuất nhanh theo `StorageProvider`.
+ * - Tự động thu thập tất cả các Spring Beans thực thi interface 'StorageStrategy'
+ *   và nạp vào bảng tra cứu EnumMap để truy xuất nhanh theo 'StorageProvider'.
  */
 @Component
 public class StorageFactory {

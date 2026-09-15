@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/repositories/finance/transfer_repository.py
+
 import uuid
 from datetime import datetime
 from sqlalchemy import select, desc
@@ -7,7 +7,7 @@ from app.models.finance.transfer import Transfer
 
 class TransferRepository:
     """
-    👑 REPOSITORY: QUẢN LÝ BẢNG `transfers`
+    👑 REPOSITORY: QUẢN LÝ BẢNG 'transfers'
     """
 
     @staticmethod

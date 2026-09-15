@@ -15,11 +15,12 @@ import { CustomerOnboardingPage } from './pages/corp/CustomerOnboardingPage';
 import { BrandingPage } from './pages/corp/BrandingPage';
 import { CorpMailConfigPage } from './pages/corp/CorpMailConfigPage';
 
-// Retail Pages
 import { SmartPiggyPage } from './pages/retail/piggy/SmartPiggyPage';
+import { SmartPiggyDemoPage } from './pages/retail/piggy/SmartPiggyDemoPage';
 import { WalletsPage } from './pages/retail/wallets/WalletsPage';
 import { ParentalPage } from './pages/retail/parental/ParentalPage';
 import { AiRoboAdvisorPage } from './pages/retail/ai/AiRoboAdvisorPage';
+import { WebSocketProvider } from './context/WebSocketContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -98,8 +99,9 @@ const RootRedirect: React.FC = () => {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <WebSocketProvider>
+      <BrowserRouter>
+        <Routes>
         {/* Authentication */}
         <Route path="/login" element={<UnifiedLoginPage />} />
 
@@ -173,6 +175,14 @@ export default function App() {
 
         {/* Retail Workspace */}
         <Route
+          path="/retail/smart-piggy-demo"
+          element={
+            <ProtectedRoute requiredWorkspace="retail">
+              <SmartPiggyDemoPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/retail/piggy"
           element={
             <ProtectedRoute requiredWorkspace="retail">
@@ -218,5 +228,6 @@ export default function App() {
         <Route path="*" element={<RootRedirect />} />
       </Routes>
     </BrowserRouter>
+  </WebSocketProvider>
   );
 }

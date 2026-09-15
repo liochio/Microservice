@@ -7,7 +7,7 @@ class PermissionService:
         permissions_data = []
         permissions_list_for_token = []
         try:
-            # 👑 FIX DỨT ĐIỂM: Gọi đúng tên hàm fetch_by_user_id định nghĩa trong Repository của sếp
+            # 👑 FIX DỨT ĐIỂM: Gọi đúng tên hàm fetch_by_user_id định nghĩa trong Repository tương ứng
             rows = PermissionRepository.fetch_by_user_id(db_conn, user_id)
             for row in rows:
                 if not row:

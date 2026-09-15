@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # Khởi tạo Scheduler
     scheduler = BackgroundScheduler()
 
-    # Thiết lập cấu hình: Cứ cách 15 giây gõ lệnh quét hàng chờ PENDING của sếp một lần
+    # Thiết lập cấu hình: Cứ cách 15 giây gõ lệnh quét hàng chờ PENDING hệ thống một lần
     scheduler.add_job(execute_notification_cron_job, 'interval', seconds=15, id='standalone_noti_job')
 
     # Bấm nút kích hoạt

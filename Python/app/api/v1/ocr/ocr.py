@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/api/v1/ocr/ocr.py
+
 from fastapi import APIRouter, Depends, Request, status
 from sqlalchemy.orm import Session
 from app.dependency import get_db

@@ -15,7 +15,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *   1. Định tuyến thông minh tới các microservices qua Eureka (lb://auth-service, lb://entity-service...)
  *   2. Kiểm soát CORS đa nguồn
  *   3. Lọc xác thực JWT và chuyển tiếp thông tin User ID / Tenant ID qua HTTP Headers
- *   4. Tự động chuyển đổi `X-Tenant-ID`
+ *   4. Tự động chuyển đổi 'X-Tenant-ID'
  * 
  * Cổng chạy mặc định: 8080 (http://localhost:8080)
  */

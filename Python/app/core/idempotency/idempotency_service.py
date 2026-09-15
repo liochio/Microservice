@@ -7,7 +7,7 @@ from app.core.logging.logger import DBLogger
 class IdempotencyService:
     """
     👑 CENTRALIZED IDEMPOTENCY SERVICE (APPLICATION LAYER)
-    🎯 Chốt chặn bọc thép, khóa cứng tiến trình và trút log an ninh nếu phát hiện lặp lệnh.
+    🎯 Chốt chặn bảo mật cao, khóa cứng tiến trình và trút log an ninh nếu phát hiện lặp lệnh.
     """
 
     @staticmethod

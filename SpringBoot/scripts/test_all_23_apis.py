@@ -448,7 +448,7 @@ lines = [
     "",
     f"> **Thời gian thực thi:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}",
     f"> **Môi trường:** Windows 11 / Java 17 / MySQL 8.0 / Spring Cloud Microservices",
-    f"> **Target Base URL:** `{target_url}`",
+    f"> **Target Base URL:** '{target_url}'",
     f"> **Tổng kết đánh giá:** **{passed_count}/{total_count} Test Cases PASSED ({rate}% Thành Công)**",
     "",
     "---",
@@ -461,7 +461,7 @@ lines = [
 
 for r in results:
     st = "✅ **PASSED**" if r["passed"] else "❌ **FAILED**"
-    lines.append(f"| {r['tc_id']} | {r['api_num']} | {r['api_name']} | `{r['endpoint']}` | `{r['method']}` | HTTP {r['expected_status']} | HTTP {r['actual_status']} | {st} | {r['latency_ms']}ms | {r['scenario']} |")
+    lines.append(f"| {r['tc_id']} | {r['api_num']} | {r['api_name']} | '{r['endpoint']}' | '{r['method']}' | HTTP {r['expected_status']} | HTTP {r['actual_status']} | {st} | {r['latency_ms']}ms | {r['scenario']} |")
 
 lines.extend([
     "",
@@ -475,18 +475,18 @@ current_api = ""
 for r in results:
     if r["api_num"] != current_api:
         current_api = r["api_num"]
-        lines.append(f"\n### 🎯 {r['api_num']}: {r['api_name']} (`{r['method']} {r['endpoint']}`)\n")
+        lines.append(f"\n### 🎯 {r['api_num']}: {r['api_name']} ('{r['method']} {r['endpoint']}')\n")
     
     st = "✅ **PASSED**" if r["passed"] else "❌ **FAILED**"
     lines.extend([
         f"#### [{r['tc_id']}] {r['scenario']}",
-        f"- **Method & URL:** `{r['method']} {r['endpoint']}`",
-        f"- **Mã phản hồi:** Kỳ vọng `HTTP {r['expected_status']}` ➔ Thực tế `HTTP {r['actual_status']}` ({r['latency_ms']}ms)",
+        f"- **Method & URL:** '{r['method']} {r['endpoint']}'",
+        f"- **Mã phản hồi:** Kỳ vọng 'HTTP {r['expected_status']}' ➔ Thực tế 'HTTP {r['actual_status']}' ({r['latency_ms']}ms)",
         f"- **Trạng thái:** {st}",
         f"- **Chi tiết thực thi:**",
-        "```text",
+        "'''text",
         r["details"],
-        "```",
+        "'''",
         ""
     ])
 
@@ -496,9 +496,9 @@ lines.extend([
     "## 🛡️ ĐÁNH GIÁ TỔNG QUAN CHẤT LƯỢNG HỆ THỐNG",
     "",
     "1. **Bao phủ 100% 23 API Endpoints:** Mọi endpoint đều được kiểm thử qua các kịch bản thành công (Happy Path), lỗi tham số (400), vi phạm chính sách mật khẩu, thách thức thiết bị lạ (2FA), tấn công Replay và phân quyền RBAC/ABAC.",
-    "2. **Cơ chế Bảo mật Zero Trust & Multi-Tenancy:** Hoạt động ổn định, phân lập chính xác theo từng `tenant_id`.",
+    "2. **Cơ chế Bảo mật Zero Trust & Multi-Tenancy:** Hoạt động ổn định, phân lập chính xác theo từng 'tenant_id'.",
     "3. **Hiệu năng API:** Thời gian phản hồi trung bình của các API dao động từ **3ms - 45ms**, đạt chuẩn Enterprise Grade.",
-    "4. **Kiểm toán Không thể chối bỏ:** Tất cả các hành động ghi nhận đầy đủ trong `audit_logs` và `security_login_histories`."
+    "4. **Kiểm toán Không thể chối bỏ:** Tất cả các hành động ghi nhận đầy đủ trong 'audit_logs' và 'security_login_histories'."
 ])
 
 with open(REPORT_FILE, "w", encoding="utf-8") as f:

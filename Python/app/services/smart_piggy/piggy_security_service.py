@@ -1,4 +1,4 @@
-# 📄 Đường dẫn file: app/services/smart_piggy/piggy_security_service.py
+
 from datetime import datetime
 from typing import Dict, Any, Optional, List
 import hmac
@@ -229,7 +229,7 @@ class PiggySecurityService:
             if not device or device.user_id != user_id:
                 raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
 
-        # 👑 BỌC THÉP RÀO CHẮN: KIỂM TRA SỐ DƯ TIỀN MẶT CÒN TRONG HEO
+        # 👑 BẢO MẬT CAO RÀO CHẮN: KIỂM TRA SỐ DƯ TIỀN MẶT CÒN TRONG HEO
         wallet = db.query(Wallet).filter(Wallet.id == device.wallet_id).first()
         if wallet and float(wallet.balance) > 0:
             raise FintechBaseException(
