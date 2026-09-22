@@ -4,6 +4,9 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
+  optimizeDeps: {
+    include: ['clsx', 'tailwind-merge', 'lucide-react', 'axios', 'react', 'react-dom', 'react-router-dom'],
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
