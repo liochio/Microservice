@@ -80,7 +80,7 @@ class VerificationService:
         }
 
     @staticmethod
-    def validate_and_activate_user(
+    def _legacy_validate_and_activate_user(
         db_conn,
         user_id: Optional[str] = None,
         username: Optional[str] = None,

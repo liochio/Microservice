@@ -28,17 +28,12 @@ export const UnifiedLoginPage: React.FC = () => {
 
     const cleanUsername = username.trim().toLowerCase();
 
-    // 1. Cross-portal Security Wall: Chặn tuyệt đối superadmin trên cổng người dùng
-    if (cleanUsername === 'superadmin') {
-      setLoading(false);
-      setError('TRUY CẬP BỊ TỪ CHỐI: Tài khoản SuperAdmin chỉ được phép đăng nhập tại Cổng Quản Trị Hạ Tầng Core (http://localhost:5170). Không cho phép đăng nhập trên App Portal!');
-      return;
-    }
-
     try {
-      // 2. Determine target portal type: CORP for corporate accounts, CONSUMER for retail
+      // 2. Determine target portal type: SUPERADMIN, CORP for corporate accounts, CONSUMER for retail
       let targetPortal = 'CONSUMER';
-      if (['corp_admin', 'corp_maker', 'corp_checker'].includes(cleanUsername)) {
+      if (cleanUsername === 'superadmin') {
+        targetPortal = 'SUPERADMIN';
+      } else if (['corp_admin', 'corp_maker', 'corp_checker'].includes(cleanUsername)) {
         targetPortal = 'CORP';
       }
 
@@ -72,16 +67,14 @@ export const UnifiedLoginPage: React.FC = () => {
           typeof r === 'string' ? r.toUpperCase() : (r.code || r.name || '').toUpperCase()
         );
 
-        // Security check: Chặn nếu role trả về là SuperAdmin
-        if (roles.some((r: string) => r.includes('SUPER_ADMIN'))) {
-          throw new Error('TRUY CẬP BỊ TỪ CHỐI: Tài khoản Quản trị hạ tầng (SuperAdmin) chỉ được phép truy cập cổng Core :5170!');
-        }
-
         // Determine Domain & RBAC Redirect Path
-        let userDomain: 'CORP_PORTAL' | 'RETAIL_FINTECH' = 'RETAIL_FINTECH';
+        let userDomain: 'SUPERADMIN' | 'CORP_PORTAL' | 'RETAIL_FINTECH' = 'RETAIL_FINTECH';
         let redirectPath = '/retail/piggy';
 
-        if (roles.includes('ROLE_CORP_ADMIN')) {
+        if (roles.includes('ROLE_SUPER_ADMIN') || cleanUsername === 'superadmin') {
+          userDomain = 'SUPERADMIN';
+          redirectPath = '/admin/dashboard';
+        } else if (roles.includes('ROLE_CORP_ADMIN')) {
           userDomain = 'CORP_PORTAL';
           redirectPath = '/corp/dashboard';
         } else if (roles.includes('ROLE_MAKER') || roles.includes('ROLE_CHECKER')) {
@@ -100,7 +93,7 @@ export const UnifiedLoginPage: React.FC = () => {
           roles: roles,
           domain: userDomain,
           token: d.accessToken || d.access_token || `jwt_${Date.now()}`,
-          accountRef: d.coreAccountRef || (userDomain === 'CORP_PORTAL' ? 'ACC_CORP_OPS' : 'ACC_RETAIL_PARENT')
+          accountRef: d.coreAccountRef || (userDomain === 'SUPERADMIN' ? 'ACC_SYS_CORE' : userDomain === 'CORP_PORTAL' ? 'ACC_CORP_OPS' : 'ACC_RETAIL_PARENT')
         };
 
         // Persist session tokens
@@ -108,6 +101,8 @@ export const UnifiedLoginPage: React.FC = () => {
         localStorage.setItem('app_user', JSON.stringify(sessionData));
         localStorage.setItem('corp_token', sessionData.token);
         localStorage.setItem('corp_user', JSON.stringify(sessionData));
+        localStorage.setItem('superadmin_token', sessionData.token);
+        localStorage.setItem('superadmin_user', JSON.stringify(sessionData));
         localStorage.setItem('liochio_jwt_token', sessionData.token);
         localStorage.setItem('tenant_id', sessionData.tenantId);
 
@@ -253,10 +248,10 @@ export const UnifiedLoginPage: React.FC = () => {
             </button>
             <button
               onClick={() => fillQuickAccount('superadmin')}
-              className="p-2.5 rounded-lg bg-slate-950/80 border border-rose-900/50 hover:border-rose-500/50 text-left transition text-[11px]"
+              className="p-2.5 rounded-lg bg-slate-950/80 border border-amber-500/40 hover:border-amber-400 text-left transition text-[11px]"
             >
-              <div className="font-bold text-rose-400">⛔ superadmin</div>
-              <div className="text-[10px] text-rose-300">Thử test chặn chéo (:5170)</div>
+              <div className="font-bold text-amber-400">🛡️ superadmin</div>
+              <div className="text-[10px] text-slate-400">Quản trị toàn sàn (4 Workspaces)</div>
             </button>
           </div>
         </div>

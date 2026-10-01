@@ -40,17 +40,16 @@ start "8. OTP Service (8094)" cmd /k "set ""JAVA_HOME=C:\Program Files\Java\jdk-
 echo [9/11] Starting Dedicated Worker Service (Port 8095) ...
 start "9. Worker Service (8095)" cmd /k "set ""JAVA_HOME=C:\Program Files\Java\jdk-17"" && set ""PATH=C:\Program Files\Java\jdk-17\bin;%PATH%"" && cd /d %~dp0SpringBoot && .\mvnw.cmd -pl worker-service spring-boot:run"
 
-echo [10/11] Starting SuperAdmin Platform Portal (Port 5170) ...
-start "10. SuperAdmin Portal (5170)" cmd /k "set ""PATH=C:\Program Files\nodejs;%PATH%"" && cd /d %~dp0frontend\liochio-admin && npm run dev"
+echo [10/12] Starting Python FinTech AI Core (Port 8000) ...
+start "10. Python FinTech AI (8000)" cmd /k "cd /d %~dp0Python && .\venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload"
 
-echo [11/11] Starting Unified App Portal (Port 5173) ...
-start "11. Unified App Portal (5173)" cmd /k "set ""PATH=C:\Program Files\nodejs;%PATH%"" && cd /d %~dp0frontend\liochio-app-portal && npm run dev"
+echo [11/11] Starting Unified Frontend Portal (Port 5173 - All Roles) ...
+start "11. Unified Frontend Portal (5173)" cmd /k "set ""PATH=C:\Program Files\nodejs;%PATH%"" && cd /d %~dp0frontend\liochio-app-portal && npm run dev"
 
 echo.
 echo ======================================================================
 echo ALL ECOSYSTEM SERVICES LAUNCHED!
-echo SuperAdmin Core Portal:        http://localhost:5170
-echo Unified App Portal:            http://localhost:5173
+echo Unified Frontend Portal:       http://localhost:5173 (SuperAdmin + Corp + Retail)
 echo Reactive API Gateway:          http://localhost:8080
 echo Service Registry (Eureka):     http://localhost:8761
 echo Python FinTech AI Swagger:     http://127.0.0.1:8000/docs

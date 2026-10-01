@@ -1,0 +1,165 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot - ServiceRegistry (8761)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.registry.ServiceRegistryApplication",
+            "projectName": "service-registry",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - ApiGateway (8080)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.gateway.ApiGatewayApplication",
+            "projectName": "api-gateway",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - AuthService (8081)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.auth.AuthServiceApplication",
+            "projectName": "auth-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - ConfigServer (8888)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.config.ConfigServerApplication",
+            "projectName": "config-server",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - EntityService (8082)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.entityservice.EntityServiceApplication",
+            "projectName": "entity-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - LedgerService (8085)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.ledger.LedgerServiceApplication",
+            "projectName": "ledger-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - NotificationService (8084)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.notification.NotificationServiceApplication",
+            "projectName": "notification-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - PaymentService (8083)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.payment.PaymentServiceApplication",
+            "projectName": "payment-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - OtpService (8094)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.otp.OtpServiceApplication",
+            "projectName": "otp-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - WorkerService (8095)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.worker.WorkerServiceApplication",
+            "projectName": "worker-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - AiService (8091)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.ai.AiServiceApplication",
+            "projectName": "ai-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot - RealtimeService (8092)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/SpringBoot",
+            "mainClass": "com.liochio.realtime.RealtimeServiceApplication",
+            "projectName": "realtime-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "name": "Python - FinTech AI Core (8000)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "app.main:app",
+                "--reload",
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8000"
+            ],
+            "cwd": "${workspaceFolder}/Python",
+            "envFile": "${workspaceFolder}/Python/.env",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Frontend - SuperAdmin Portal (5170)",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}/frontend/liochio-admin"
+        },
+        {
+            "name": "Frontend - Unified App Portal (5173)",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}/frontend/liochio-app-portal"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "All Frontends (Admin + App Portal)",
+            "configurations": [
+                "Frontend - SuperAdmin Portal (5170)",
+                "Frontend - Unified App Portal (5173)"
+            ]
+        }
+    ]
+}

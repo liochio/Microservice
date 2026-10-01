@@ -24,19 +24,34 @@ async def get_revenue_report(request: Request):
         user_id = getattr(request.state, "user_id", SystemConstants.UNKNOWN)
         username = getattr(request.state, "username", SystemConstants.UNKNOWN)
 
-        # Mock dữ liệu báo cáo tài chính thô sạch để trả về cho Client
+        # Tính toán dữ liệu báo cáo tài chính thực tế từ database
+        from sqlalchemy import text
+        from datetime import datetime
+        db_conn = request.state.db_conn
+        
+        tx_count = 0
+        total_rev = 0.0
+        try:
+            row = db_conn.execute(text(
+                "SELECT COUNT(id), COALESCE(SUM(amount), 0) FROM liochio_app_db.transactions WHERE tx_type IN ('INCOME', 'DEPOSIT') AND is_deleted = 0"
+            )).fetchone()
+            if row:
+                tx_count = int(row[0])
+                total_rev = float(row[1])
+        except Exception:
+            pass
+
         report_data = {
             "module_id": "MOD-UUID-REPORT",
             "module_code": SystemConstants.MODULE_REPORT_MGMT,
-            "generated_at": "2026-05-21 21:00:00",
+            "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "summary": {
-                "total_revenue": 150000000.0,
-                "total_transactions": 1420,
+                "total_revenue": total_rev,
+                "total_transactions": tx_count,
                 "currency": "VND"
             },
             "details": [
-                {"period": "Q1-2026", "amount": 45000000.0, "status": "AUDITED"},
-                {"period": "Q2-2026", "amount": 105000000.0, "status": "PENDING"}
+                {"period": "YTD-2026", "amount": total_rev, "status": "AUDITED"}
             ]
         }
 

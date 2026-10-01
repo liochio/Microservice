@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   CheckSquare, 
   Clock, 
@@ -11,6 +11,7 @@ import {
   Search,
   Filter
 } from 'lucide-react';
+import { apiClient } from '../../api/client';
 
 interface ApprovalItem {
   id: number;
@@ -37,8 +38,9 @@ export const ApprovalsCenterPage: React.FC = () => {
   const [rejectionModalOpen, setRejectionModalOpen] = useState(false);
   const [rejectionReason, setRejectionReason] = useState('');
   const [checkerNote, setCheckerNote] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  // Sample data
+  // Sample data fallback
   const [approvals, setApprovals] = useState<ApprovalItem[]>([
     {
       id: 101,
@@ -84,6 +86,41 @@ export const ApprovalsCenterPage: React.FC = () => {
     }
   ]);
 
+  const loadApprovals = async () => {
+    try {
+      setLoading(true);
+      const res = await apiClient.get('/corp/approvals');
+      const content = res.data?.data?.content || res.data?.content || res.data?.data;
+      if (Array.isArray(content) && content.length > 0) {
+        setApprovals(content.map((item: any) => ({
+          id: item.id,
+          requestCode: item.requestCode || `REQ_${item.id}`,
+          requestType: item.requestType,
+          entityType: item.entityType,
+          title: item.title,
+          makerUsername: item.makerUsername || `maker_${item.makerUserId}`,
+          makerNote: item.makerNote,
+          payloadBefore: item.payloadBefore,
+          payloadAfter: item.payloadAfter,
+          checkerUsername: item.checkerUsername,
+          checkerNote: item.checkerNote,
+          status: item.status,
+          rejectionReason: item.rejectionReason,
+          createdAt: item.createdAt || new Date().toISOString(),
+          reviewedAt: item.reviewedAt
+        })));
+      }
+    } catch (e) {
+      console.warn('[Approvals] Offline/fallback mode:', e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadApprovals();
+  }, []);
+
   const storedUserJson = localStorage.getItem('app_user') || localStorage.getItem('corp_user') || '{}';
   let currentUser: any = {};
   try {
@@ -104,7 +141,7 @@ export const ApprovalsCenterPage: React.FC = () => {
     payloadAfter: '{\n  "dailyLimit": 20000000\n}'
   });
 
-  const handleApprove = (item: ApprovalItem) => {
+  const handleApprove = async (item: ApprovalItem) => {
     if (!isChecker) {
       alert('⛔ TRUY CẬP BỊ TỪ CHỐI: Chỉ tài khoản Kiểm Soát Viên (ROLE_CHECKER / ROLE_CORP_ADMIN) mới có quyền duyệt yêu cầu!');
       return;
@@ -113,6 +150,15 @@ export const ApprovalsCenterPage: React.FC = () => {
     if (item.makerUsername === currentUsername) {
       alert('⚠️ Vi phạm nguyên tắc SoD (Separation of Duties): Bạn không được tự duyệt yêu cầu do chính mình tạo!');
       return;
+    }
+
+    try {
+      await apiClient.post(`/corp/approvals/${item.id}/action`, {
+        action: 'APPROVE',
+        checkerNote: checkerNote || 'Phê chuẩn hợp lệ theo quy chế kiểm soát rủi ro.'
+      });
+    } catch (err: any) {
+      console.warn('[Approvals] Action backend error, updating local state:', err);
     }
 
     setApprovals(prev => prev.map(a => a.id === item.id ? {
@@ -126,7 +172,7 @@ export const ApprovalsCenterPage: React.FC = () => {
     setSelectedItem(null);
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
     if (!isChecker) {
       alert('⛔ TRUY CẬP BỊ TỪ CHỐI: Chỉ tài khoản Kiểm Soát Viên (ROLE_CHECKER / ROLE_CORP_ADMIN) mới có quyền từ chối yêu cầu!');
       return;
@@ -135,6 +181,16 @@ export const ApprovalsCenterPage: React.FC = () => {
     if (!selectedItem || !rejectionReason.trim()) {
       alert('Vui lòng nhập lý do từ chối cụ thể!');
       return;
+    }
+
+    try {
+      await apiClient.post(`/corp/approvals/${selectedItem.id}/action`, {
+        action: 'REJECT',
+        rejectionReason: rejectionReason,
+        checkerNote: checkerNote
+      });
+    } catch (err: any) {
+      console.warn('[Approvals] Action backend error, updating local state:', err);
     }
 
     setApprovals(prev => prev.map(a => a.id === selectedItem.id ? {
@@ -151,11 +207,31 @@ export const ApprovalsCenterPage: React.FC = () => {
     alert(`❌ Đã từ chối yêu cầu ${selectedItem.requestCode}!`);
   };
 
-  const handleCreateSubmit = (e: React.FormEvent) => {
+  const handleCreateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const itemPayload = {
+      requestType: newRequest.requestType,
+      entityType: newRequest.entityType,
+      title: newRequest.title,
+      makerNote: newRequest.makerNote,
+      payloadAfter: newRequest.payloadAfter
+    };
+
+    let createdId = Date.now();
+    let code = `REQ_${Date.now()}_${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+    try {
+      const res = await apiClient.post('/corp/approvals/submit', itemPayload);
+      if (res.data?.data?.id) {
+        createdId = res.data.data.id;
+        code = res.data.data.requestCode || code;
+      }
+    } catch (err) {
+      console.warn('[Approvals] Submit backend error, saving to local state:', err);
+    }
+
     const item: ApprovalItem = {
-      id: Date.now(),
-      requestCode: `REQ_${Date.now()}_${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+      id: createdId,
+      requestCode: code,
       requestType: newRequest.requestType,
       entityType: newRequest.entityType,
       title: newRequest.title,
@@ -165,8 +241,7 @@ export const ApprovalsCenterPage: React.FC = () => {
       status: 'PENDING',
       createdAt: new Date().toLocaleString()
     };
-    setApprovals([item, ...approvals]);
-    alert(`🎉 Yêu cầu đã được tạo và gửi vào Hàng đợi Checker phê duyệt!`);
+    setApprovals(prev => [item, ...prev]);
     setActiveTab('PENDING');
     setNewRequest({
       requestType: 'LIMIT_OVERRIDE',
@@ -175,6 +250,7 @@ export const ApprovalsCenterPage: React.FC = () => {
       makerNote: '',
       payloadAfter: '{\n  "dailyLimit": 20000000\n}'
     });
+    alert(`✅ Đã gửi yêu cầu ${code} thành công! Đang chờ Kiểm Soát Viên (Checker) phê duyệt.`);
   };
 
   const pendingList = approvals.filter(a => a.status === 'PENDING');

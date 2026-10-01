@@ -1,10 +1,11 @@
-﻿{
+{
   "name": "liochio-microservices-ecosystem",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "admin": "npm --prefix frontend/liochio-admin run dev",
-    "corp": "npm --prefix frontend/liochio-corp-fintech run dev",
-    "retail": "npm --prefix frontend/liochio-retail-fintech run dev"
+    "dev": "npm --prefix frontend/liochio-app-portal run dev",
+    "build": "npm --prefix frontend/liochio-app-portal run build",
+    "portal": "npm --prefix frontend/liochio-app-portal run dev",
+    "admin": "npm --prefix frontend/liochio-app-portal run dev"
   }
 }

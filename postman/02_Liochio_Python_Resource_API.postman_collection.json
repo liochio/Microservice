@@ -1385,6 +1385,913 @@
               }
             }
           ]
+        },
+        {
+          "name": "2.12 [SECURITY] Cảnh báo cạy nắp Heo Đất Limit Switch (Lid Tamper Security Alert)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/security/lid-tamper",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "security",
+                "lid-tamper"
+              ]
+            },
+            "description": "Cảm biến công tắc hành trình phát hiện nắp Heo bị cạy mở -> Báo động, phong tỏa ví tạm thời và gửi email cảnh báo bảo mật.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"lid_opened\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.13 [SECURITY] Cảnh báo rút nguồn điện Adapter (Power Cut Alert)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/security/power-cut",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "security",
+                "power-cut"
+              ]
+            },
+            "description": "Cảm biến điện áp phát hiện mất nguồn Adapter ngoài -> Chuyển sang nguồn Pin 18650 dự phòng và ghi nhật ký.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"battery_pct\": 85.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.14 [BUCKETS] Tạo Hũ mục tiêu con (Create Sub-pot Bucket)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/buckets",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "buckets"
+              ]
+            },
+            "description": "Tạo Hũ mục tiêu tiết kiệm phân bổ theo mô hình hũ con gắn với Heo Đất.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"goal_name\": \"Quỹ Mua Xe Đạp Thể Thao\",\n  \"target_amount\": 2500000.0,\n  \"deadline\": \"2026-12-31\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.15 [BUCKETS] Lấy danh sách Hũ mục tiêu con (Get Buckets)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/buckets?device_id={{piggyDeviceId}}",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "buckets"
+              ],
+              "query": [
+                {
+                  "key": "device_id",
+                  "value": "{{piggyDeviceId}}"
+                }
+              ]
+            },
+            "description": "Truy vấn danh sách tất cả các Hũ mục tiêu tiết kiệm đang hoạt động của Heo Đất.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.16 [PARENT MATCHING] Thiết lập quy tắc Cha Mẹ Thưởng Tiền (Create Matching Rule)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/matching-rules",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "matching-rules"
+              ]
+            },
+            "description": "Cha mẹ thiết lập quy tắc thưởng tiền tỷ lệ % khi con bỏ ống heo (lưu trữ bền vững trong DB system_settings).",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"child_user_id\": \"{{userId}}\",\n  \"matching_percentage\": 50.0,\n  \"max_monthly_bonus\": 1000000.0,\n  \"parent_wallet_id\": \"parent_wallet_demo\",\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.17 [PARENT MATCHING] Xem quy tắc thưởng đang áp dụng (Get Matching Rules)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/matching-rules",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "matching-rules"
+              ]
+            },
+            "description": "Truy vấn quy tắc thưởng tiền Parent Matching Bonus hiện đang kích hoạt.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.18 [FAMILY] Bảng điều khiển Tiết kiệm Gia đình (Family Dashboard)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/family-dashboard",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "family-dashboard"
+              ]
+            },
+            "description": "Tổng hợp số dư tiết kiệm của cả gia đình, bảng xếp hạng thi đua và tiến độ tích lũy.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.19 [DEMO ONBOARDING] Onboard Người dùng Mới & Sinh mã OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/onboard-user",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "onboard-user"
+              ]
+            },
+            "description": "Đăng ký tài khoản người dùng mới, tự động kiểm tra và ghi nhận vào bảng users.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Nguyễn Kiểm Thử Postman\",\n  \"username\": \"postman_user_{{$randomInt}}\",\n  \"email\": \"voduylebt99@gmail.com\",\n  \"phone_number\": \"098{{$randomInt}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Tạo user thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    var json = pm.response.json();",
+                  "    if (json.data && json.data.user_id) {",
+                  "        pm.environment.set(\"userId\", json.data.user_id);",
+                  "        pm.environment.set(\"pythonUserId\", json.data.user_id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.20 [DEMO ONBOARDING] Khởi tạo Ví Heo Đất & Gửi OTP Kích hoạt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/init-wallet",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "init-wallet"
+              ]
+            },
+            "description": "Khởi tạo bản ghi ví Heo Đất ở trạng thái PENDING_ACTIVATION và sinh mã OTP lưu DB + gửi mail.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"wallet_name\": \"Ví Heo Đất Tiết Kiệm Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Khởi tạo ví thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    var json = pm.response.json();",
+                  "    if (json.data && json.data.wallet_id) {",
+                  "        pm.environment.set(\"walletId\", json.data.wallet_id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.21 [DEMO ONBOARDING] Kích hoạt Ví thật bằng mã OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/activate-wallet",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "activate-wallet"
+              ]
+            },
+            "description": "Xác thực mã OTP từ Database / Mail để chuyển trạng thái ví sang ACTIVE.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_id\": \"{{walletId}}\",\n  \"otp_code\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.22 [DEMO ONBOARDING] Mở khóa Ví Heo Đất (Unfreeze Wallet)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/unfreeze-wallet",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "unfreeze-wallet"
+              ]
+            },
+            "description": "Phục hồi trạng thái ví từ FROZEN về ACTIVE sau khi đã xử lý xong sự cố an ninh.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_id\": \"{{walletId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.23 [DEMO ONBOARDING] Đập Heo Tất toán & Đóng liên kết (Smash Demo)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/smash",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "smash"
+              ]
+            },
+            "description": "Tất toán toàn bộ số dư heo đất, hoàn trả tài chính và ngắt liên kết thiết bị.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_id\": \"{{walletId}}\",\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"user_id\": \"{{userId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },

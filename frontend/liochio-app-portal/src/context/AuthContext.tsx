@@ -49,26 +49,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (
     username: string,
-    role: any = 'CORP_ADMIN',
-    tenantCode: any = 'VPB-FINTECH',
-    password?: any
+    arg2?: any,
+    arg3?: any,
+    arg4?: any
   ): Promise<boolean> => {
     if (username.trim().length > 0) {
       try {
+        let actualPassword = 'Password123!';
+        let actualRole: any = 'CORP_ADMIN';
+        let actualTenant = 'VPB-FINTECH';
+        let portalType = 'CORP';
+
+        // Check if called as login(username, password, role) vs login(username, role, tenant, password)
+        if (typeof arg2 === 'string' && (arg2.length >= 6 || arg2.includes('!') || !['CORP_ADMIN', 'MAKER', 'CHECKER'].includes(arg2.toUpperCase()))) {
+          actualPassword = arg2;
+          if (arg3) actualRole = arg3;
+          if (['PARENT', 'CHILD', 'CONSUMER'].includes(String(actualRole).toUpperCase())) {
+            portalType = 'CONSUMER';
+          }
+        } else {
+          if (arg2) actualRole = arg2;
+          if (arg3) actualTenant = arg3;
+          if (arg4) actualPassword = arg4;
+        }
+
         const payload = {
           username: username.trim(),
-          password: password || 'Password123!',
-          portalType: 'CORP',
+          password: actualPassword,
+          portalType: portalType,
         };
         let res;
         try {
           res = await axios.post('http://localhost:8080/api/v1/auth/login', payload, {
-            headers: { 'Content-Type': 'application/json', 'X-Portal-Type': 'CORP' },
+            headers: { 'Content-Type': 'application/json', 'X-Portal-Type': portalType },
             timeout: 5000,
           });
         } catch {
           res = await axios.post('http://localhost:8081/api/v1/auth/login', payload, {
-            headers: { 'Content-Type': 'application/json', 'X-Portal-Type': 'CORP' },
+            headers: { 'Content-Type': 'application/json', 'X-Portal-Type': portalType },
             timeout: 5000,
           });
         }
@@ -76,7 +94,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           const d = res.data.data || res.data;
           const newToken = d.accessToken || d.access_token || ('corp_jwt_' + Date.now());
           
-          let detectedRole: 'CORP_ADMIN' | 'MAKER' | 'CHECKER' = role;
+          let detectedRole: 'CORP_ADMIN' | 'MAKER' | 'CHECKER' = actualRole;
           const roles = (d.roles || []).map((r: string) => r.toUpperCase());
           if (roles.some((r: string) => r.includes('MAKER'))) detectedRole = 'MAKER';
           else if (roles.some((r: string) => r.includes('CHECKER'))) detectedRole = 'CHECKER';

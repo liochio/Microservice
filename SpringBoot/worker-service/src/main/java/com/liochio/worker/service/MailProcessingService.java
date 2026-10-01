@@ -190,28 +190,62 @@ public class MailProcessingService {
     private void sendSmtpEmail(String to, String subject, String content) {
         JavaMailSender sender = buildDynamicMailSender();
         if (sender != null) {
+            String effectiveRecipient = resolveRecipient(to);
             try {
                 MimeMessage mimeMessage = sender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-                String fromEmail = getConfigValue("smtp.from_email", "voduylebt99@gmail.com");
+                String fromEmail = getConfigValue("smtp.from_email", getConfigValue("smtp.username", "no-reply@liochio.vn"));
                 helper.setFrom(new InternetAddress(fromEmail, "Liochio FinTech Platform", "UTF-8"));
-                helper.setTo(to);
-                helper.setSubject(subject);
+                helper.setTo(effectiveRecipient);
+
+                String finalSubject = subject;
+                if (!effectiveRecipient.equalsIgnoreCase(to)) {
+                    finalSubject = "[Chuyển tiếp từ: " + to + "] " + subject;
+                }
+                helper.setSubject(finalSubject);
+
+                String prefixBanner = "";
+                if (!effectiveRecipient.equalsIgnoreCase(to)) {
+                    prefixBanner = "<div style=\"background-color: #fef3c7; border: 1px solid #f59e0b; color: #92400e; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-family: sans-serif;\">"
+                            + "⚠️ <strong>Thông báo Hệ thống:</strong> Email này được chuyển tiếp tự động từ người nhận không tồn tại/kiểm thử: <code>" + to + "</code> tới hòm thư mặc định được cấu hình trong DB."
+                            + "</div>";
+                }
 
                 if (content != null && (content.contains("<div") || content.contains("<h") || content.contains("<p"))) {
-                    helper.setText(content, true);
+                    helper.setText(prefixBanner + content, true);
                 } else {
                     String htmlBody = "<div style=\"font-family: Arial, sans-serif; font-size: 15px; color: #1F2937; line-height: 1.6; padding: 15px;\">"
+                            + prefixBanner
                             + (content != null ? content.replace("\n", "<br/>") : subject)
                             + "</div>";
                     helper.setText(htmlBody, true);
                 }
 
                 sender.send(mimeMessage);
-                log.info("[MailProcessingService] 📨 Đã chuyển thông điệp UTF-8 MIME qua SMTP tới '{}'", to);
+                log.info("[MailProcessingService] 📨 Đã chuyển thông điệp UTF-8 MIME qua SMTP tới '{}' (Địa chỉ gốc: '{}')", effectiveRecipient, to);
             } catch (Exception e) {
-                log.warn("[MailProcessingService] Gửi qua SMTP Socket gặp thông báo: {} (Đã lưu trữ nội dung vào mail_logs)", e.getMessage());
+                log.warn("[MailProcessingService] Gửi qua SMTP Socket gặp lỗi: {} (Đang thử nghiệm phương án dự phòng...)", e.getMessage());
+                // Fallback lần 2 nếu gửi cho email gốc thất bại do hòm thư không tồn tại
+                String fallbackAllowed = getConfigValue("mail.fallback_to_default_recipient", "true");
+                String fallbackMail = getConfigValue("mail.default_recipient", "voduylebt99@gmail.com");
+                if (!effectiveRecipient.equalsIgnoreCase(fallbackMail) && ("1".equals(fallbackAllowed) || "true".equalsIgnoreCase(fallbackAllowed))) {
+                    try {
+                        log.info("[MailProcessingService] 🔄 Đang gửi lại thư tới email mặc định dự phòng '{}'...", fallbackMail);
+                        MimeMessage fallbackMsg = sender.createMimeMessage();
+                        MimeMessageHelper fallbackHelper = new MimeMessageHelper(fallbackMsg, true, "UTF-8");
+                        String fromEmail = getConfigValue("smtp.from_email", getConfigValue("smtp.username", "no-reply@liochio.vn"));
+                        fallbackHelper.setFrom(new InternetAddress(fromEmail, "Liochio FinTech Platform", "UTF-8"));
+                        fallbackHelper.setTo(fallbackMail);
+                        fallbackHelper.setSubject("[DỰ PHÒNG CHUYỂN TIẾP - Gốc: " + to + "] " + subject);
+                        String notice = "<p style='color:red;'><b>Ghi chú hệ thống:</b> Gửi tới hòm thư gốc " + to + " thất bại (" + e.getMessage() + "), đã chuyển tiếp tự động tới hòm thư mặc định.</p>";
+                        fallbackHelper.setText(notice + content, true);
+                        sender.send(fallbackMsg);
+                        log.info("[MailProcessingService] 📨 Đã gửi lại thành công qua SMTP tới hòm thư mặc định '{}'", fallbackMail);
+                    } catch (Exception ex2) {
+                        log.warn("[MailProcessingService] Gửi lại tới hòm thư mặc định cũng thất bại: {}", ex2.getMessage());
+                    }
+                }
             }
         }
     }
@@ -244,6 +278,7 @@ public class MailProcessingService {
 
     public String resolveRecipient(String defaultRecipient) {
         try {
+            // 1. Kiểm tra cấu hình override toàn bộ
             String isOverride = getConfigValue("mail.override_enabled", "0");
             if ("1".equals(isOverride) || "true".equalsIgnoreCase(isOverride)) {
                 String overrideEmail = getConfigValue("mail.override_recipient", "");
@@ -251,10 +286,38 @@ public class MailProcessingService {
                     return overrideEmail.trim();
                 }
             }
+
+            // 2. Kiểm tra tính năng chuyển tiếp email mặc định khi email người nhận không có thật / test
+            String fallbackAllowed = getConfigValue("mail.fallback_to_default_recipient", "true");
+            if ("1".equals(fallbackAllowed) || "true".equalsIgnoreCase(fallbackAllowed)) {
+                if (isDummyOrNonExistentEmail(defaultRecipient)) {
+                    String defaultFallbackMail = getConfigValue("mail.default_recipient", "voduylebt99@gmail.com");
+                    log.info("[MailProcessingService] ⚠️ Người nhận '{}' là email kiểm thử/không tồn tại. " +
+                            "Theo cấu hình DB (mail.fallback_to_default_recipient=true), chuyển tiếp tới email mặc định: '{}'",
+                            defaultRecipient, defaultFallbackMail);
+                    return defaultFallbackMail;
+                }
+            }
         } catch (Exception e) {
             log.debug("[MailProcessingService] Lỗi đọc mail.override: {}", e.getMessage());
         }
         return defaultRecipient;
+    }
+
+    private boolean isDummyOrNonExistentEmail(String email) {
+        if (email == null || email.isBlank()) {
+            return true;
+        }
+        String clean = email.trim().toLowerCase();
+        if (!clean.contains("@") || !clean.contains(".") || clean.length() < 6) {
+            return true;
+        }
+        if (clean.equals("abc@gmail.com") || clean.startsWith("test") || clean.startsWith("dummy")
+                || clean.startsWith("sample") || clean.contains("example.com") || clean.endsWith(".test")
+                || clean.equals("user@gmail.com")) {
+            return true;
+        }
+        return false;
     }
 
     private String getConfigValue(String key, String defaultValue) {
@@ -265,7 +328,15 @@ public class MailProcessingService {
                     key
             );
         } catch (Exception ignored) {
-            return defaultValue;
+            try {
+                return jdbcTemplate.queryForObject(
+                        "SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = ? AND status = 'ACTIVE' LIMIT 1",
+                        String.class,
+                        key
+                );
+            } catch (Exception ignored2) {
+                return defaultValue;
+            }
         }
     }
 

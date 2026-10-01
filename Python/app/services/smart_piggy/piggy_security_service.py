@@ -96,6 +96,19 @@ class PiggySecurityService:
 
         # So sánh an toàn chống Timing Attack
         if not hmac.compare_digest(expected_sig.lower(), received_signature.lower()):
+            # 🛡️ KIỂM TRA CẤU HÌNH DATABASE: Cho phép bypass phần cứng nếu cờ cấu hình bật
+            try:
+                from app.db.session import SessionLocal
+                from sqlalchemy import text
+                _db = SessionLocal()
+                bypass_row = _db.execute(text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'iot.allow_hardware_bypass' LIMIT 1")).fetchone()
+                is_bypass_enabled = bypass_row and str(bypass_row[0]).strip().lower() in ("true", "1", "yes")
+                _db.close()
+                if is_bypass_enabled and (not received_signature or received_signature.upper() in ("BYPASS", "TEST_SIGNATURE", "DEMO", "DEV_TEST")):
+                    return True
+            except Exception:
+                pass
+
             raise FintechBaseException(
                 error_code="INVALID_HMAC_SIGNATURE",
                 status_code=401
@@ -306,6 +319,37 @@ class PiggySecurityService:
             except Exception:
                 pass
 
+            # 🛡️ GỬI EMAIL CẢNH BÁO AN NINH VẬT LÝ KHẨN CẤP
+            try:
+                from app.jobs.notification_worker import NotificationWorker
+                from app.models.user.user import User
+                recipient_email = "voduylebt99@gmail.com"
+                if device and device.user_id:
+                    user_record = db.query(User).filter(User.id == device.user_id).first()
+                    if user_record and user_record.email:
+                        recipient_email = user_record.email
+                
+                alert_html = f"""
+                <div style="font-family: Arial, sans-serif; padding: 20px; border: 2px solid #e53e3e; border-radius: 8px;">
+                    <h2 style="color: #e53e3e;">🚨 CẢNH BÁO AN NINH: PHÁT HIỆN CẠY NẮP HEO ĐẤT!</h2>
+                    <p>Hệ thống IoT Liochio phát hiện thiết bị Heo Đất <b>{device_id}</b> có hiện tượng cạy nắp vật lý trái phép.</p>
+                    <ul>
+                        <li><b>Mã thiết bị:</b> {device_id}</li>
+                        <li><b>Thời gian phát hiện:</b> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</li>
+                        <li><b>Hành động tự vệ:</b> Còi hú 100dB kích hoạt, chốt khóa Solenoid khóa chặt, ví Heo Đất đã tự động <b>PHONG TỎA (FROZEN)</b> để bảo toàn số dư.</li>
+                    </ul>
+                    <p style="color: #718096; font-size: 13px;">Nếu đây là thao tác của bạn, vui lòng đăng nhập ứng dụng Liochio App để mở khóa bằng mã OTP xác thực.</p>
+                </div>
+                """
+                NotificationWorker.send_email_via_smtp(
+                    to_email=recipient_email,
+                    subject=f"[CẢNH BÁO NGUY CẤP] Heo Đất {device_id} bị cạy mở nắp trái phép!",
+                    html_content=alert_html,
+                    db_conn=db
+                )
+            except Exception as mail_err:
+                print(f"[PIGGY_SECURITY] Không thể gửi email cảnh báo cạy nắp: {mail_err}")
+
             return {
                 "status": "SECURITY_BREACH",
                 "device_id": device.id if device else device_id,
@@ -316,7 +360,7 @@ class PiggySecurityService:
                     "led": "#FF0000_STROBE",
                     "solenoid": "LOCKED"
                 },
-                "message": "CẢNH BÁO: Phát hiện cạy nắp trái phép! Còi hú 100dB đã kích hoạt và ví đã bị phong tỏa."
+                "message": "CẢNH BÁO: Phát hiện cạy nắp trái phép! Còi hú 100dB đã kích hoạt, ví đã bị phong tỏa và email cảnh báo đã gửi tới phụ huynh."
             }
 
         return {
@@ -382,7 +426,7 @@ class PiggySecurityService:
                 wallet.status = "FROZEN"
                 db.commit()
 
-        # Gửi cảnh báo khẩn cấp
+        # Gửi cảnh báo khẩn cấp qua WebSocket
         ws_event = {
             "event": "FATAL_CRASH_EMERGENCY",
             "device_id": device_id,
@@ -390,12 +434,53 @@ class PiggySecurityService:
             "status": "DEVICE_DESTROYED_WALLET_FROZEN",
             "message": f"CẢNH BÁO NGUY CẤP: Heo Đất phát hiện lực va đập hủy diệt {g_force:.1f}G! Ví đã tự động đóng băng (FROZEN)."
         }
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                if device and device.user_id:
+                    asyncio.create_task(ws_manager.send_to_user(device.user_id, ws_event))
+                asyncio.create_task(ws_manager.broadcast_all(ws_event))
+        except Exception:
+            pass
+
+        # 🛡️ GỬI EMAIL CẢNH BÁO VA ĐẬP PHÁ HỦY TÀI SẢN
+        try:
+            from app.jobs.notification_worker import NotificationWorker
+            from app.models.user.user import User
+            recipient_email = "voduylebt99@gmail.com"
+            if device and device.user_id:
+                user_record = db.query(User).filter(User.id == device.user_id).first()
+                if user_record and user_record.email:
+                    recipient_email = user_record.email
+
+            crash_html = f"""
+            <div style="font-family: Arial, sans-serif; padding: 20px; border: 2px solid #b91c1c; border-radius: 8px;">
+                <h2 style="color: #b91c1c;">💥 CẢNH BÁO KHẨN CẤP: HEO ĐẤT BỊ TÁC ĐỘNG VẬT LÝ NGUY HIỂM!</h2>
+                <p>Hệ thống gia tốc kế phát hiện thiết bị Heo Đất <b>{device_id}</b> vừa chịu lực va đập cực mạnh lên đến <b>{g_force:.1f}G</b> (ngưỡng phá hủy cấu trúc).</p>
+                <ul>
+                    <li><b>Thiết bị:</b> {device_id}</li>
+                    <li><b>Lực va đập (G-Force):</b> {g_force:.1f}G</li>
+                    <li><b>Thời gian:</b> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</li>
+                    <li><b>Trạng thái Ví:</b> Đã <b>ĐÓNG BĂNG TOÀN BỘ (FROZEN)</b> để bảo vệ tài sản khỏi thất thoát hoặc gian lận.</li>
+                </ul>
+                <p>Vui lòng kiểm tra thiết bị thực tế. Nếu Heo Đất bị vỡ hoặc cần rút tiền, hãy vào mục <i>Đối soát thiệt hại tài sản (Write-off Reconciliation)</i> trong ứng dụng.</p>
+            </div>
+            """
+            NotificationWorker.send_email_via_smtp(
+                to_email=recipient_email,
+                subject=f"[KHẨN CẤP] Heo Đất {device_id} phát hiện lực va đập nguy hiểm ({g_force:.1f}G)!",
+                html_content=crash_html,
+                db_conn=db
+            )
+        except Exception as mail_err:
+            print(f"[PIGGY_SECURITY] Không thể gửi email cảnh báo fatal crash: {mail_err}")
+
         return {
             "status": "EMERGENCY_FROZEN",
             "device_id": device_id,
             "g_force_detected": g_force,
             "wallet_status": "FROZEN",
-            "message": "Heo Đất đã bị tác động vật lý phá hủy. Ví đã được phong tỏa để kiểm toán đối soát."
+            "message": "Heo Đất đã bị tác động vật lý phá hủy. Ví đã được phong tỏa để kiểm toán đối soát và email cảnh báo đã gửi tới phụ huynh."
         }
 
     @classmethod

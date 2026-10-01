@@ -48,11 +48,40 @@ async def create_or_update_parent_matching_rule(
         "current_monthly_bonus": 0.0,
         "parent_wallet_id": payload.parent_wallet_id,
         "is_active": payload.is_active,
-        "created_at": datetime.now()
+        "created_at": datetime.now().isoformat()
     }
     _FAMILY_MATCHING_RULES[payload.child_user_id] = rule_data
 
-    item = ParentMatchingRuleItem(**rule_data)
+    # Lưu bền vững vào bảng system_settings
+    try:
+        import json
+        from sqlalchemy import text
+        setting_key = f"piggy_rule_{payload.child_user_id}"
+        rule_json = json.dumps(rule_data, default=str)
+        db.execute(text("""
+            INSERT INTO liochio_app_db.system_settings (`key`, `value`, `type`, `status`, `description`, created_at, updated_at)
+            VALUES (:skey, :sval, 'MATCHING_RULE', 'ACTIVE', :desc, NOW(), NOW())
+            ON DUPLICATE KEY UPDATE `value` = :sval, updated_at = NOW()
+        """), {
+            "skey": setting_key,
+            "sval": rule_json,
+            "desc": f"Quy tac Parent Matching Bonus cho user {payload.child_user_id}"
+        })
+        db.commit()
+    except Exception as err:
+        print(f"[PARENT_MATCHING] Khong the luu quy tac vao DB: {err}")
+
+    item = ParentMatchingRuleItem(
+        id=rule_id,
+        parent_user_id=parent_id,
+        child_user_id=payload.child_user_id,
+        matching_percentage=payload.matching_percentage,
+        max_monthly_bonus=payload.max_monthly_bonus,
+        current_monthly_bonus=0.0,
+        parent_wallet_id=payload.parent_wallet_id,
+        is_active=payload.is_active,
+        created_at=datetime.now()
+    )
     return ParentMatchingRuleResponse(
         success=True,
         error_code=SystemConstants.PIGGY_CONFIG_UPDATE_SUCCESS,
@@ -71,6 +100,23 @@ async def get_parent_matching_rule(
     """Xem quy tắc thưởng đang áp dụng"""
     user_id = current_user.get("user_id")
     rule_data = _FAMILY_MATCHING_RULES.get(user_id)
+    
+    # Nếu chưa có trong cache RAM, đọc từ Database system_settings
+    if not rule_data:
+        try:
+            import json
+            from sqlalchemy import text
+            row = db.execute(text(
+                "SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = :skey LIMIT 1"
+            ), {"skey": f"piggy_rule_{user_id}"}).fetchone()
+            if row and row[0]:
+                rule_data = json.loads(row[0])
+                if "created_at" in rule_data and isinstance(rule_data["created_at"], str):
+                    rule_data["created_at"] = datetime.fromisoformat(rule_data["created_at"])
+                _FAMILY_MATCHING_RULES[user_id] = rule_data
+        except Exception as e:
+            print(f"[PARENT_MATCHING] Loi doc quy tac tu DB: {e}")
+
     if not rule_data:
         # Default rule
         rule_data = {

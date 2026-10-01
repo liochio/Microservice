@@ -34,6 +34,7 @@ public class LedgerService {
     private final JournalEntryRepository journalEntryRepository;
     private final JournalEntryDetailRepository detailRepository;
     private final OutboxPublisher outboxPublisher;
+    private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
 
     public static final String ACC_SYS_SETTLEMENT = "ACC_SYS_SETTLEMENT";
     public static final String ACC_SYS_REVENUE = "ACC_SYS_REVENUE";
@@ -297,11 +298,26 @@ public class LedgerService {
 
     private void checkDailyLimit(Long userId, BigDecimal amount) {
         if (userId == null) return;
-        BigDecimal dailyLimit = new BigDecimal("50000000.00");
+        BigDecimal dailyLimit = getUserDailyLimit(userId);
         if (amount.compareTo(dailyLimit) > 0) {
             throw new AppException(ErrorCode.EKYC_LIMIT_EXCEEDED,
                     "Số tiền giao dịch (" + amount + " VND) vượt quá hạn mức ngày (" + dailyLimit + " VND)");
         }
+    }
+
+    private BigDecimal getUserDailyLimit(Long userId) {
+        try {
+            BigDecimal configuredLimit = jdbcTemplate.queryForObject(
+                    "SELECT daily_limit FROM liochio_core_db.customer_onboarding_gates WHERE user_id = ? LIMIT 1",
+                    BigDecimal.class,
+                    userId
+            );
+            if (configuredLimit != null && configuredLimit.compareTo(BigDecimal.ZERO) > 0) {
+                return configuredLimit;
+            }
+        } catch (Exception ignored) {
+        }
+        return new BigDecimal("50000000.00");
     }
 
     private String calculateSha256(String input) {

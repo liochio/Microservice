@@ -1,0 +1,97 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Ecosystem: Start All (Powershell)",
+            "type": "shell",
+            "command": "powershell.exe -ExecutionPolicy Bypass -File ${workspaceFolder}/start_all.ps1",
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Ecosystem: Start All (Batch)",
+            "type": "shell",
+            "command": "${workspaceFolder}/run_all.bat",
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Ecosystem: Stop All Services",
+            "type": "shell",
+            "command": "${workspaceFolder}/stop_all_services.bat",
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Python: Run FinTech AI Server (8000)",
+            "type": "shell",
+            "command": "${workspaceFolder}/Python/venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload",
+            "options": {
+                "cwd": "${workspaceFolder}/Python"
+            },
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Frontend: Dev Admin Portal (5170)",
+            "type": "shell",
+            "command": "npm run dev",
+            "options": {
+                "cwd": "${workspaceFolder}/frontend/liochio-admin"
+            },
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Frontend: Dev App Portal (5173)",
+            "type": "shell",
+            "command": "npm run dev",
+            "options": {
+                "cwd": "${workspaceFolder}/frontend/liochio-app-portal"
+            },
+            "problemMatcher": [],
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "SpringBoot: Maven Clean Install",
+            "type": "shell",
+            "command": ".\\mvnw.cmd clean install -DskipTests",
+            "options": {
+                "cwd": "${workspaceFolder}/SpringBoot"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        }
+    ]
+}

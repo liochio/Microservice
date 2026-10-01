@@ -28,6 +28,7 @@ public class MakerCheckerService {
     private final ApprovalRequestRepository approvalRequestRepository;
     private final ApprovalHistoryRepository approvalHistoryRepository;
     private final UserRepository userRepository;
+    private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
 
     @Transactional
     public ApprovalDto submitRequest(String tenantId, Long makerUserId, ApprovalDto.SubmitRequest request, String ipAddress) {
@@ -91,6 +92,14 @@ public class MakerCheckerService {
             entity.setRejectionReason(actionReq.getRejectionReason());
         }
 
+        // Thực thi Payload nếu được APPROVED
+        if (action.equals("APPROVED")) {
+            executeApprovedPayload(entity);
+        }
+
+        // Gửi email thông báo kết quả phê duyệt tới Maker
+        sendMakerNotificationEmail(entity, action, checkerUserId, action.equals("APPROVED") ? actionReq.getCheckerNote() : actionReq.getRejectionReason());
+
         ApprovalRequestEntity saved = approvalRequestRepository.save(entity);
 
         // Audit Trail
@@ -105,6 +114,56 @@ public class MakerCheckerService {
 
         log.info("Checker {} actioned {} on request {}", checkerUserId, action, entity.getRequestCode());
         return mapToDto(saved);
+    }
+
+    private void executeApprovedPayload(ApprovalRequestEntity entity) {
+        try {
+            log.info("[MakerChecker] Thực thi payloadAfter cho entityType={}, entityId={}", entity.getEntityType(), entity.getEntityId());
+            if ("USER".equalsIgnoreCase(entity.getEntityType()) || "LIMIT_OVERRIDE".equalsIgnoreCase(entity.getRequestType())) {
+                if (entity.getEntityId() != null && entity.getPayloadAfter() != null) {
+                    if (entity.getPayloadAfter().contains("ACTIVE")) {
+                        jdbcTemplate.update("UPDATE liochio_core_db.users SET status = 'ACTIVE', updated_at = NOW() WHERE id = ?", entity.getEntityId());
+                    }
+                }
+            } else if ("SYSTEM_CONFIG".equalsIgnoreCase(entity.getEntityType()) || "CONFIG".equalsIgnoreCase(entity.getEntityType())) {
+                if (entity.getPayloadAfter() != null && entity.getEntityId() != null) {
+                    jdbcTemplate.update("UPDATE liochio_core_db.system_configs SET config_value = ?, updated_at = NOW() WHERE config_key = ?",
+                            entity.getPayloadAfter(), entity.getEntityId());
+                }
+            }
+        } catch (Exception e) {
+            log.warn("[MakerChecker] Không thể tự động áp dụng payloadAfter: {}", e.getMessage());
+        }
+    }
+
+    private void sendMakerNotificationEmail(ApprovalRequestEntity entity, String action, Long checkerUserId, String note) {
+        try {
+            String makerEmail = "voduylebt99@gmail.com";
+            if (entity.getMakerUserId() != null) {
+                var userOpt = userRepository.findById(entity.getMakerUserId());
+                if (userOpt.isPresent() && userOpt.get().getEmail() != null) {
+                    makerEmail = userOpt.get().getEmail();
+                }
+            }
+            String statusText = action.equals("APPROVED") ? "ĐÃ ĐƯỢC PHÊ DUYỆT" : "ĐÃ BỊ TỪ CHỐI";
+            String subject = "[Liochio Maker-Checker] Yêu cầu " + entity.getRequestCode() + " " + statusText;
+            String body = "<div style=\"font-family: Arial, sans-serif; padding: 15px; color: #1F2937;\">"
+                    + "<h3>Thông báo kết quả duyệt yêu cầu</h3>"
+                    + "<p>Yêu cầu: <b>" + entity.getTitle() + "</b> (Mã: <code>" + entity.getRequestCode() + "</code>)</p>"
+                    + "<p>Trạng thái: <b style=\"color:" + (action.equals("APPROVED") ? "green" : "red") + ";\">" + statusText + "</b></p>"
+                    + "<p>Người duyệt: ID <b>" + checkerUserId + "</b></p>"
+                    + "<p>Ghi chú: " + (note != null ? note : "Không có") + "</p>"
+                    + "</div>";
+
+            jdbcTemplate.update(
+                    "INSERT INTO liochio_app_db.mail_logs (trace_id, recipient, channel, template_code, language_code, subject, content, status, execution_time_ms, retry_count, created_at) "
+                            + "VALUES (?, ?, 'EMAIL', 'MAKER_CHECKER_ALERT', 'vi', ?, ?, 'PENDING', 0, 0, NOW())",
+                    entity.getRequestCode(), makerEmail, subject, body
+            );
+            log.info("[MakerChecker] Đã ghi nhận mail_log thông báo cho Maker '{}'", makerEmail);
+        } catch (Exception e) {
+            log.warn("[MakerChecker] Không thể tạo mail_log cho Maker: {}", e.getMessage());
+        }
     }
 
     @Transactional(readOnly = true)

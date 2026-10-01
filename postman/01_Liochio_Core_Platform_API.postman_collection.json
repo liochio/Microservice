@@ -2465,6 +2465,149 @@
               }
             }
           ]
+        },
+        {
+          "name": "6.3 Khởi tạo thanh toán VietQR Napas 247 (Create VietQR URL)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/payments/create-url",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "create-url"
+              ]
+            },
+            "description": "Khởi tạo liên kết thanh toán chuẩn VietQR chuyển khoản nhanh Napas 247.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"ORD_VIETQR_{{$randomInt}}\",\n  \"amount\": 100000,\n  \"orderInfo\": \"Nap tien vi Heo Dat qua VietQR Napas 247\",\n  \"paymentMethod\": \"VIETQR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "6.4 Đối soát chủ động đơn hàng (Active Status Reconciliation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/payments/orders/ORD_DEMO_001/reconcile",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "orders",
+                "ORD_DEMO_001",
+                "reconcile"
+              ]
+            },
+            "description": "Truy vấn đối soát trực tiếp với Gateway ngân hàng để cập nhật trạng thái đơn hàng.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },
@@ -2592,6 +2735,830 @@
               "script": {
                 "exec": [
                   "pm.test(\"Lấy trạng thái Central Worker thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "09. Quản Trị Phê Duyệt Maker-Checker & 4 Cửa Ải Khách Hàng (Corporate Governance)",
+      "item": [
+        {
+          "name": "9.1 Lấy danh sách tiến trình 4 Cửa ải Onboarding (List Customer Gates)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates?page=0&size=10",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Xem danh sách tiến trình vượt 4 Cửa ải Onboarding của toàn bộ khách hàng trong hệ thống.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.2 Xem chi tiết 4 Cửa ải của User (Get Customer Gate)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}"
+              ]
+            },
+            "description": "Xem hồ sơ tiến trình và trạng thái các Gate của một User cụ thể.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.3 Thẩm định Gate 1 eKYC (Review Gate 1 eKYC)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate1-review",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate1-review"
+              ]
+            },
+            "description": "Cán bộ Checker thẩm định và phê duyệt bước Định danh eKYC Gate 1.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approved\": true,\n  \"note\": \"Hồ sơ CCCD chip đối chiếu hợp lệ với cơ sở dữ liệu quốc gia.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.4 Cấp phát Vai trò & Xếp hạng Gate 2 (Assign Gate 2 Tier)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate2-tier",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate2-tier"
+              ]
+            },
+            "description": "Cán bộ Checker chỉ định phân hạng khách hàng (BRONZE/SILVER/GOLD) và cấp hạn mức ngày.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assignedTier\": \"GOLD\",\n  \"assignedRole\": \"ROLE_CUSTOMER\",\n  \"dailyLimit\": 100000000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.5 Kích hoạt Cặp Tài khoản Sổ cái Gate 3 (Provision Gate 3 Wallets)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate3-wallets",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate3-wallets"
+              ]
+            },
+            "description": "Kích hoạt cặp tài khoản sổ cái kép (Khả dụng + Phong tỏa) trên Ledger Service.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.6 Phê chuẩn Ghép đôi Heo Đất Gate 4 (Pair Gate 4 Device)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate4-pair",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate4-pair"
+              ]
+            },
+            "description": "Phê chuẩn gán thiết bị Heo đất thông minh vào tài khoản sau khi hoàn thành 3 cửa ải trước.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"macAddress\": \"AA:BB:CC:11:22:33\",\n  \"deviceName\": \"Heo Đất Phê Duyệt Gate 4\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.7 Khách hàng tra cứu tiến trình Onboarding 4 Cửa ải (My Onboarding Status)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/app/onboarding-status",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "app",
+                "onboarding-status"
+              ]
+            },
+            "description": "Khách hàng tự tra cứu tiến trình 4 Cửa ải định danh của bản thân qua Mobile App / Web Portal.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.8 Maker tạo yêu cầu phê duyệt mới (Submit Maker Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals/submit",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals",
+                "submit"
+              ]
+            },
+            "description": "Maker khởi tạo hồ sơ yêu cầu phê duyệt chuyển sang trạng thái PENDING.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"LIMIT_CHANGE\",\n  \"entityType\": \"USER_LIMIT\",\n  \"entityId\": \"1\",\n  \"proposedData\": \"{\\\"daily_limit\\\": 200000000}\",\n  \"reason\": \"Yêu cầu nâng hạn mức giao dịch cho khách hàng doanh nghiệp\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.9 Checker phê duyệt hoặc từ chối yêu cầu (Action Maker-Checker Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals/1/action",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals",
+                "1",
+                "action"
+              ]
+            },
+            "description": "Checker độc lập xem xét và ra quyết định APPROVE hoặc REJECT.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"APPROVE\",\n  \"checkerComment\": \"Đã đối chiếu hồ sơ và đồng ý phê duyệt.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.10 Danh sách yêu cầu phê duyệt Maker-Checker (List Approval Requests)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals?status=PENDING&page=0&size=10",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Tra cứu danh sách hồ sơ cần phê duyệt theo trạng thái.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.11 Chi tiết yêu cầu phê duyệt (Get Approval Request)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals/1",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals",
+                "1"
+              ]
+            },
+            "description": "Xem chi tiết một hồ sơ phê duyệt Maker-Checker.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
                   "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
                   "});"
                 ],

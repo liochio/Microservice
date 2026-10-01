@@ -120,7 +120,7 @@ public class DedicatedOtpService {
                 .destination(request.getDestination())
                 .expiresInSeconds(OTP_EXPIRY_SECONDS)
                 .isBypassed(isBypassed)
-                .devBypassCode(rawOtp)
+                .devBypassCode(isBypassed ? rawOtp : null)
                 .expiresAt(expiresAt)
                 .build();
     }

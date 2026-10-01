@@ -25,6 +25,7 @@ public class CustomerGateService {
 
     private final CustomerOnboardingGateRepository gateRepository;
     private final UserRepository userRepository;
+    private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
 
     @Transactional
     public CustomerGateDto getOrCreateGate(Long userId, String tenantId) {
@@ -120,7 +121,20 @@ public class CustomerGateService {
         String availAccNo = "ACC_USR_" + userId + "_AVAIL";
         String savingsAccNo = "ACC_USR_" + userId + "_SAVINGS";
 
-        // Việc cấp phát thực tế do ledger-service quản lý độc lập
+        // Tạo tài khoản kế toán thật trên liochio_ledger_db
+        try {
+            jdbcTemplate.update("INSERT INTO liochio_ledger_db.ledger_accounts (tenant_id, account_no, user_id, account_type, currency, balance, status, created_at) "
+                    + "VALUES ('default', ?, ?, 'USER_AVAILABLE', 'VND', 0.00, 'ACTIVE', NOW()) "
+                    + "ON DUPLICATE KEY UPDATE status = 'ACTIVE'", availAccNo, userId);
+
+            jdbcTemplate.update("INSERT INTO liochio_ledger_db.ledger_accounts (tenant_id, account_no, user_id, account_type, currency, balance, status, created_at) "
+                    + "VALUES ('default', ?, ?, 'USER_HOLDING', 'VND', 0.00, 'ACTIVE', NOW()) "
+                    + "ON DUPLICATE KEY UPDATE status = 'ACTIVE'", savingsAccNo, userId);
+            log.info("[CustomerGate] Đã khởi tạo thành công tài khoản sổ cái thực tế: {} và {}", availAccNo, savingsAccNo);
+        } catch (Exception e) {
+            log.warn("[CustomerGate] Lỗi tạo tài khoản sổ cái liochio_ledger_db: {}", e.getMessage());
+        }
+
         entity.setAvailableAccountNo(availAccNo);
         entity.setSavingsAccountNo(savingsAccNo);
         entity.setGate3WalletProvisionStatus("PROVISIONED");

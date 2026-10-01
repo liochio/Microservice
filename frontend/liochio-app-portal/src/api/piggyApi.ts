@@ -258,7 +258,24 @@ export const piggyApi = {
     }
   },
 
-  getSavingsGoals: async (): Promise<SavingsGoal[]> => {
+  getSavingsGoals: async (deviceId?: string): Promise<SavingsGoal[]> => {
+    try {
+      const url = deviceId ? `/smart-piggy/buckets/${deviceId}` : '/smart-piggy/buckets';
+      const res = await apiClient.get(url);
+      const data = res.data?.data || res.data || [];
+      if (Array.isArray(data) && data.length > 0) {
+        return data.map((b: any) => ({
+          id: b.id,
+          title: b.goal_name || b.name,
+          targetAmount: Number(b.target_amount || 0),
+          currentAmount: Number(b.current_amount || 0),
+          icon: b.icon || '🎯',
+          completed: b.status === 'COMPLETED' || Number(b.current_amount || 0) >= Number(b.target_amount || 1)
+        }));
+      }
+    } catch (e) {
+      // Fallback khi thiết bị chưa có hũ
+    }
     return [
       { id: 'g-1', title: 'Bo Xep Hinh Lego Technic', targetAmount: 500000, currentAmount: 420000, icon: '🧱', completed: false },
       { id: 'g-2', title: 'Xe Dap The Thao Martin', targetAmount: 2000000, currentAmount: 1650000, icon: '🚲', completed: false },

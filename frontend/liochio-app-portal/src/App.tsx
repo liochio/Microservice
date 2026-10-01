@@ -22,19 +22,30 @@ import { ParentalPage } from './pages/retail/parental/ParentalPage';
 import { AiRoboAdvisorPage } from './pages/retail/ai/AiRoboAdvisorPage';
 import { WebSocketProvider } from './context/WebSocketContext';
 
+// SuperAdmin Pages
+import { PlatformDashboardPage } from './pages/admin/PlatformDashboardPage';
+import { TenantManagementPage } from './pages/admin/TenantManagementPage';
+import { MasterDataPage } from './pages/admin/MasterDataPage';
+import { MasterIamPage } from './pages/admin/MasterIamPage';
+import { FinancialPoliciesPage } from './pages/admin/FinancialPoliciesPage';
+import { IntegrationsGatewayPage } from './pages/admin/IntegrationsGatewayPage';
+import { PlatformSecurityPage } from './pages/admin/PlatformSecurityPage';
+import { StorageHardwarePage } from './pages/admin/StorageHardwarePage';
+import { AuditCompliancePage } from './pages/admin/AuditCompliancePage';
+
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredWorkspace: 'corp' | 'business' | 'retail';
+  requiredWorkspace: 'superadmin' | 'corp' | 'business' | 'retail';
   adminOnly?: boolean;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredWorkspace, adminOnly = false }) => {
-  const token = localStorage.getItem('app_token') || localStorage.getItem('corp_token');
+  const token = localStorage.getItem('app_token') || localStorage.getItem('corp_token') || localStorage.getItem('superadmin_token');
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  const storedUserJson = localStorage.getItem('app_user') || localStorage.getItem('corp_user') || '{}';
+  const storedUserJson = localStorage.getItem('app_user') || localStorage.getItem('corp_user') || localStorage.getItem('superadmin_user') || '{}';
   let currentUser: any = {};
   try {
     currentUser = JSON.parse(storedUserJson);
@@ -44,32 +55,32 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredWorks
 
   const userRoles: string[] = currentUser.roles || [];
 
-  // 1. Chặn tuyệt đối SuperAdmin trên App Portal (:5173)
+  // Tính toán danh sách workspace được phép theo Role
+  const allowedWorkspaces: ('superadmin' | 'corp' | 'business' | 'retail')[] = [];
   if (userRoles.includes('ROLE_SUPER_ADMIN') || currentUser.username?.toLowerCase() === 'superadmin') {
-    localStorage.clear();
-    return <Navigate to="/login" replace />;
-  }
-
-  // 2. Tính toán danh sách workspace được phép theo Role
-  const allowedWorkspaces: ('corp' | 'business' | 'retail')[] = [];
-  if (userRoles.includes('ROLE_CORP_ADMIN')) {
+    allowedWorkspaces.push('superadmin', 'corp', 'business', 'retail');
+  } else if (userRoles.includes('ROLE_CORP_ADMIN')) {
     allowedWorkspaces.push('corp', 'business');
   } else if (userRoles.includes('ROLE_MAKER') || userRoles.includes('ROLE_CHECKER')) {
     allowedWorkspaces.push('corp');
   } else if (userRoles.includes('ROLE_CUSTOMER') || userRoles.includes('ROLE_PARENT') || userRoles.includes('ROLE_CHILD')) {
     allowedWorkspaces.push('retail');
   } else {
-    if (currentUser.domain === 'CORP_PORTAL') {
+    if (currentUser.domain === 'SUPERADMIN') {
+      allowedWorkspaces.push('superadmin');
+    } else if (currentUser.domain === 'CORP_PORTAL') {
       allowedWorkspaces.push('corp');
     } else {
       allowedWorkspaces.push('retail');
     }
   }
 
-  // 3. Kiểm tra thẩm quyền truy cập phân hệ
-  if (!allowedWorkspaces.includes(requiredWorkspace) || (adminOnly && !userRoles.includes('ROLE_CORP_ADMIN'))) {
+  // Kiểm tra thẩm quyền truy cập phân hệ
+  if (!allowedWorkspaces.includes(requiredWorkspace) || (adminOnly && !userRoles.includes('ROLE_CORP_ADMIN') && !userRoles.includes('ROLE_SUPER_ADMIN'))) {
     // Điều hướng về trang chủ mặc định được phép của tài khoản
-    if (allowedWorkspaces.includes('corp')) {
+    if (allowedWorkspaces.includes('superadmin')) {
+      return <Navigate to="/admin/dashboard" replace />;
+    } else if (allowedWorkspaces.includes('corp')) {
       const defaultCorp = userRoles.includes('ROLE_CORP_ADMIN') ? '/corp/dashboard' : '/corp/approvals';
       return <Navigate to={defaultCorp} replace />;
     } else if (allowedWorkspaces.includes('retail')) {
@@ -82,13 +93,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredWorks
 };
 
 const RootRedirect: React.FC = () => {
-  const token = localStorage.getItem('app_token') || localStorage.getItem('corp_token');
+  const token = localStorage.getItem('app_token') || localStorage.getItem('corp_token') || localStorage.getItem('superadmin_token');
   if (!token) return <Navigate to="/login" replace />;
 
-  const storedUserJson = localStorage.getItem('app_user') || localStorage.getItem('corp_user') || '{}';
+  const storedUserJson = localStorage.getItem('app_user') || localStorage.getItem('corp_user') || localStorage.getItem('superadmin_user') || '{}';
   try {
     const user = JSON.parse(storedUserJson);
     const roles: string[] = user.roles || [];
+    if (roles.includes('ROLE_SUPER_ADMIN') || user.username?.toLowerCase() === 'superadmin') return <Navigate to="/admin/dashboard" replace />;
     if (roles.includes('ROLE_CORP_ADMIN')) return <Navigate to="/corp/dashboard" replace />;
     if (roles.includes('ROLE_MAKER') || roles.includes('ROLE_CHECKER')) return <Navigate to="/corp/approvals" replace />;
     if (roles.includes('ROLE_CUSTOMER') || roles.includes('ROLE_PARENT') || roles.includes('ROLE_CHILD')) return <Navigate to="/retail/piggy" replace />;
@@ -104,6 +116,37 @@ export default function App() {
         <Routes>
         {/* Authentication */}
         <Route path="/login" element={<UnifiedLoginPage />} />
+
+        {/* SuperAdmin Workspace */}
+        <Route path="/admin/dashboard" element={<ProtectedRoute requiredWorkspace="superadmin"><PlatformDashboardPage /></ProtectedRoute>} />
+        <Route path="/admin/dashboard/*" element={<ProtectedRoute requiredWorkspace="superadmin"><PlatformDashboardPage /></ProtectedRoute>} />
+        <Route path="/admin/tenants" element={<ProtectedRoute requiredWorkspace="superadmin"><TenantManagementPage /></ProtectedRoute>} />
+        <Route path="/admin/tenants/*" element={<ProtectedRoute requiredWorkspace="superadmin"><TenantManagementPage /></ProtectedRoute>} />
+        <Route path="/admin/master-data" element={<ProtectedRoute requiredWorkspace="superadmin"><MasterDataPage /></ProtectedRoute>} />
+        <Route path="/admin/master-data/*" element={<ProtectedRoute requiredWorkspace="superadmin"><MasterDataPage /></ProtectedRoute>} />
+        <Route path="/admin/master-iam" element={<ProtectedRoute requiredWorkspace="superadmin"><MasterIamPage /></ProtectedRoute>} />
+        <Route path="/admin/master-iam/*" element={<ProtectedRoute requiredWorkspace="superadmin"><MasterIamPage /></ProtectedRoute>} />
+        <Route path="/admin/financial-policies" element={<ProtectedRoute requiredWorkspace="superadmin"><FinancialPoliciesPage /></ProtectedRoute>} />
+        <Route path="/admin/financial-policies/*" element={<ProtectedRoute requiredWorkspace="superadmin"><FinancialPoliciesPage /></ProtectedRoute>} />
+        <Route path="/admin/integrations" element={<ProtectedRoute requiredWorkspace="superadmin"><IntegrationsGatewayPage /></ProtectedRoute>} />
+        <Route path="/admin/integrations/*" element={<ProtectedRoute requiredWorkspace="superadmin"><IntegrationsGatewayPage /></ProtectedRoute>} />
+        <Route path="/admin/security-aml" element={<ProtectedRoute requiredWorkspace="superadmin"><PlatformSecurityPage /></ProtectedRoute>} />
+        <Route path="/admin/security-aml/*" element={<ProtectedRoute requiredWorkspace="superadmin"><PlatformSecurityPage /></ProtectedRoute>} />
+        <Route path="/admin/storage-hardware" element={<ProtectedRoute requiredWorkspace="superadmin"><StorageHardwarePage /></ProtectedRoute>} />
+        <Route path="/admin/storage-hardware/*" element={<ProtectedRoute requiredWorkspace="superadmin"><StorageHardwarePage /></ProtectedRoute>} />
+        <Route path="/admin/audit-compliance" element={<ProtectedRoute requiredWorkspace="superadmin"><AuditCompliancePage /></ProtectedRoute>} />
+        <Route path="/admin/audit-compliance/*" element={<ProtectedRoute requiredWorkspace="superadmin"><AuditCompliancePage /></ProtectedRoute>} />
+
+        {/* SuperAdmin Legacy Aliases */}
+        <Route path="/dashboard" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="/tenants" element={<Navigate to="/admin/tenants" replace />} />
+        <Route path="/master-data" element={<Navigate to="/admin/master-data" replace />} />
+        <Route path="/master-iam" element={<Navigate to="/admin/master-iam" replace />} />
+        <Route path="/financial-policies" element={<Navigate to="/admin/financial-policies" replace />} />
+        <Route path="/integrations" element={<Navigate to="/admin/integrations" replace />} />
+        <Route path="/security-aml" element={<Navigate to="/admin/security-aml" replace />} />
+        <Route path="/storage-hardware" element={<Navigate to="/admin/storage-hardware" replace />} />
+        <Route path="/audit-compliance" element={<Navigate to="/admin/audit-compliance" replace />} />
 
         {/* Corporate Workspace */}
         <Route

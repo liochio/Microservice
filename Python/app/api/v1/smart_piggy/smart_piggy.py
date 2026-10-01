@@ -1494,6 +1494,47 @@ async def demo_init_wallet(
     })
     db.commit()
 
+    # Sinh mã OTP bảo mật 6 chữ số và lưu vào Database
+    real_otp = f"{random.randint(100000, 999999)}"
+    try:
+        db.execute(text("""
+            INSERT INTO liochio_app_db.user_otps (
+                id, user_id, otp_code, type, is_used, expired_at, created_at, updated_at
+            ) VALUES (
+                :id, :user_id, :otp, 'WALLET_ACTIVATION', 0, DATE_ADD(NOW(), INTERVAL 15 MINUTE), NOW(), NOW()
+            )
+        """), {
+            "id": str(uuid.uuid4()),
+            "user_id": payload.user_id,
+            "otp": real_otp
+        })
+        db.commit()
+
+        # Gửi email mã OTP thật qua NotificationWorker
+        from app.jobs.notification_worker import NotificationWorker
+        from app.models.user.user import User
+        target_user = db.query(User).filter(User.id == payload.user_id).first()
+        target_email = target_user.email if (target_user and target_user.email) else "voduylebt99@gmail.com"
+        
+        email_body = f"""
+        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+            <h2 style="color: #4f46e5;">Xác Thực Kích Hoạt Ví Heo Đất Liochio</h2>
+            <p>Mã xác thực OTP của bạn cho Ví Heo Đất <b>{wallet_name}</b> ({rand_account}) là:</p>
+            <div style="font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #1e293b; padding: 15px; background: #f1f5f9; text-align: center; border-radius: 6px;">
+                {real_otp}
+            </div>
+            <p style="color: #64748b; font-size: 13px; margin-top: 15px;">Mã này có hiệu lực trong 15 phút. Tuyệt đối không chia sẻ mã này cho bất kỳ ai.</p>
+        </div>
+        """
+        NotificationWorker.send_email_via_smtp(
+            to_email=target_email,
+            subject=f"[Liochio] Mã OTP kích hoạt Ví Heo Đất: {real_otp}",
+            html_content=email_body,
+            db_conn=db
+        )
+    except Exception as otp_err:
+        print(f"[DEMO_WALLET] Lỗi tạo OTP hoặc gửi mail: {otp_err}")
+
     # Ghi audit log
     try:
         db.execute(text("""
@@ -1511,7 +1552,7 @@ async def demo_init_wallet(
 
     return {
         "success": True,
-        "message": "Khoi tao vi Heo Dat thanh cong! Vi o trang thai PENDING_ACTIVATION, can nhap ma OTP de kich hoat.",
+        "message": "Khoi tao vi Heo Dat thanh cong! Ma OTP xac thuc da duoc gui toi email cua ban.",
         "data": {
             "wallet_id": wallet_uuid,
             "wallet_account": rand_account,
@@ -1519,8 +1560,7 @@ async def demo_init_wallet(
             "name": wallet_name,
             "balance": 0.0,
             "currency": "VND",
-            "status": "PENDING_ACTIVATION",
-            "demo_otp": "123456"
+            "status": "PENDING_ACTIVATION"
         }
     }
 
@@ -1533,14 +1573,14 @@ async def demo_activate_wallet(
 ):
     """
     BUOC 2B DEMO: KICH HOAT VI QUA MA OTP
-    - Kiem tra ma OTP
+    - Kiem tra ma OTP từ liochio_app_db.user_otps
     - Chuyen trang thai vi sang ACTIVE
     - Sau khi ACTIVE moi duoc phep thuc hien ghep doi thiet bi
     """
     from sqlalchemy import text
 
     row = db.execute(
-        text("SELECT id, wallet_account, name, balance FROM liochio_app_db.wallets WHERE id = :w_id LIMIT 1"),
+        text("SELECT id, user_id, wallet_account, name, balance FROM liochio_app_db.wallets WHERE id = :w_id LIMIT 1"),
         {"w_id": payload.wallet_id}
     ).fetchone()
     if not row:
@@ -1550,11 +1590,35 @@ async def demo_activate_wallet(
             context={"message": "Khong tim thay vi can kich hoat!"}
         )
 
-    if payload.otp_code.strip() != "123456" and len(payload.otp_code.strip()) < 4:
+    entered_otp = payload.otp_code.strip()
+    target_user_id = row[1]
+
+    # Kiểm tra cờ cho phép bypass môi trường dev từ system_settings
+    dev_bypass_row = db.execute(
+        text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'otp.allow_dev_bypass' LIMIT 1")
+    ).fetchone()
+    allow_dev_bypass = dev_bypass_row and str(dev_bypass_row[0]).strip().lower() in ("true", "1", "yes")
+
+    # Tìm OTP hợp lệ trong database
+    otp_record = db.execute(text("""
+        SELECT id, otp_code FROM liochio_app_db.user_otps
+        WHERE user_id = :u_id AND type = 'WALLET_ACTIVATION' AND is_used = 0 AND expired_at > NOW()
+        ORDER BY created_at DESC LIMIT 1
+    """), {"u_id": target_user_id}).fetchone()
+
+    is_valid_otp = False
+    if otp_record and otp_record[1] == entered_otp:
+        is_valid_otp = True
+        db.execute(text("UPDATE liochio_app_db.user_otps SET is_used = 1, updated_at = NOW() WHERE id = :oid"), {"oid": otp_record[0]})
+        db.commit()
+    elif allow_dev_bypass and entered_otp == "123456":
+        is_valid_otp = True
+
+    if not is_valid_otp:
         raise FintechBaseException(
             error_code="INVALID_OTP",
             status_code=status.HTTP_400_BAD_REQUEST,
-            context={"message": "Ma OTP khong chinh xac! Vui long nhap ma OTP demo 123456."}
+            context={"message": "Ma OTP khong chinh xac hoac da het han! Vui long kiem tra email."}
         )
 
     db.execute(
@@ -1573,7 +1637,7 @@ async def demo_activate_wallet(
                 'DEMO_WALLET_ACTIVATED', 'wallets', 'UPDATE',
                 :desc, 'SUCCESS', 'SMART_PIGGY_DEMO', 8, '/api/v1/smart-piggy/demo/activate-wallet', NOW(), NOW()
             )
-        """), {"desc": f"Kich hoat vi '{row[1]}' thanh cong bang OTP -> Chuyen trang thai sang ACTIVE"})
+        """), {"desc": f"Kich hoat vi '{row[2]}' thanh cong bang OTP -> Chuyen trang thai sang ACTIVE"})
         db.commit()
     except Exception:
         pass
@@ -1583,9 +1647,9 @@ async def demo_activate_wallet(
         "message": "Kich hoat vi Heo Dat thanh cong! Trang thai hien tai: ACTIVE. Da du dieu kien de ghep doi thiet bi Heo Dat.",
         "data": {
             "wallet_id": row[0],
-            "wallet_account": row[1],
-            "name": row[2],
-            "balance": float(row[3]),
+            "wallet_account": row[2],
+            "name": row[3],
+            "balance": float(row[4] or 0.0),
             "status": "ACTIVE"
         }
     }
@@ -1862,16 +1926,27 @@ async def demo_pair_device(
     """), {"u_id": target_user_id}).fetchone()
 
     entered_otp = payload.otp_code.strip()
-    if not otp_row or (otp_row[1] != entered_otp and entered_otp != "123456"):
+
+    # Kiểm tra cờ allow dev bypass từ system_settings
+    dev_bypass_row = db.execute(
+        text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'otp.allow_dev_bypass' LIMIT 1")
+    ).fetchone()
+    allow_dev_bypass = dev_bypass_row and str(dev_bypass_row[0]).strip().lower() in ("true", "1", "yes")
+
+    is_valid_otp = False
+    if otp_row and otp_row[1] == entered_otp:
+        is_valid_otp = True
+        db.execute(text("UPDATE liochio_app_db.user_otps SET is_used = 1, updated_at = NOW() WHERE id = :oid"), {"oid": otp_row[0]})
+        db.commit()
+    elif allow_dev_bypass and entered_otp == "123456":
+        is_valid_otp = True
+
+    if not is_valid_otp:
         raise FintechBaseException(
             error_code="INVALID_OTP",
             status_code=status.HTTP_400_BAD_REQUEST,
             context={"message": "Ma xac thuc OTP khong chinh xac hoac da het han! Vui long kiem tra email hoac yeu cau gui lai ma moi."}
         )
-
-    if otp_row and otp_row[1] == entered_otp:
-        db.execute(text("UPDATE liochio_app_db.user_otps SET is_used = 1, updated_at = NOW() WHERE id = :oid"), {"oid": otp_row[0]})
-        db.commit()
 
     # 1. Kiem tra vi
     wallet_row = db.execute(

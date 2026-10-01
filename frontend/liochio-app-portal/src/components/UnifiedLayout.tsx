@@ -42,9 +42,13 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
 
   const userRoles: string[] = currentUser.roles || [];
 
+  type WorkspaceType = 'superadmin' | 'corp' | 'business' | 'retail';
+
   // Compute allowed workspaces strictly by role
-  const allowedWorkspaces: ('corp' | 'business' | 'retail')[] = [];
-  if (userRoles.includes('ROLE_CORP_ADMIN')) {
+  const allowedWorkspaces: WorkspaceType[] = [];
+  if (userRoles.includes('ROLE_SUPER_ADMIN') || currentUser.username?.toLowerCase() === 'superadmin') {
+    allowedWorkspaces.push('superadmin', 'corp', 'business', 'retail');
+  } else if (userRoles.includes('ROLE_CORP_ADMIN')) {
     allowedWorkspaces.push('corp', 'business');
   } else if (userRoles.includes('ROLE_MAKER') || userRoles.includes('ROLE_CHECKER')) {
     allowedWorkspaces.push('corp');
@@ -52,7 +56,9 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
     allowedWorkspaces.push('retail');
   } else {
     // Fallback based on domain
-    if (currentUser.domain === 'CORP_PORTAL') {
+    if (currentUser.domain === 'SUPERADMIN') {
+      allowedWorkspaces.push('superadmin');
+    } else if (currentUser.domain === 'CORP_PORTAL') {
       allowedWorkspaces.push('corp');
     } else {
       allowedWorkspaces.push('retail');
@@ -60,8 +66,10 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
   }
 
   // Determine active workspace from URL path
-  let activeWorkspace: 'corp' | 'retail' | 'business' = allowedWorkspaces[0] || 'retail';
-  if (location.pathname.startsWith('/corp')) {
+  let activeWorkspace: WorkspaceType = allowedWorkspaces[0] || 'retail';
+  if (location.pathname.startsWith('/admin') || location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/tenants') || location.pathname.startsWith('/master-data') || location.pathname.startsWith('/master-iam') || location.pathname.startsWith('/financial-policies') || location.pathname.startsWith('/integrations') || location.pathname.startsWith('/security-aml') || location.pathname.startsWith('/storage-hardware') || location.pathname.startsWith('/audit-compliance')) {
+    activeWorkspace = 'superadmin';
+  } else if (location.pathname.startsWith('/corp')) {
     activeWorkspace = 'corp';
   } else if (location.pathname.startsWith('/business')) {
     activeWorkspace = 'business';
@@ -72,7 +80,9 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
   // Auto redirect if user accidentally lands on an unauthorized workspace
   React.useEffect(() => {
     if (allowedWorkspaces.length > 0 && !allowedWorkspaces.includes(activeWorkspace)) {
-      if (allowedWorkspaces.includes('corp')) {
+      if (allowedWorkspaces.includes('superadmin')) {
+        navigate('/admin/dashboard', { replace: true });
+      } else if (allowedWorkspaces.includes('corp')) {
         navigate(userRoles.includes('ROLE_CORP_ADMIN') ? '/corp/dashboard' : '/corp/approvals', { replace: true });
       } else if (allowedWorkspaces.includes('retail')) {
         navigate('/retail/piggy', { replace: true });
@@ -87,6 +97,8 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
     localStorage.removeItem('app_user');
     localStorage.removeItem('corp_token');
     localStorage.removeItem('corp_user');
+    localStorage.removeItem('superadmin_token');
+    localStorage.removeItem('superadmin_user');
     localStorage.removeItem('liochio_jwt_token');
     localStorage.removeItem('tenant_id');
     localStorage.removeItem('app_user_id');
@@ -108,7 +120,7 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
     };
 
     const checkJwtExp = () => {
-      const token = localStorage.getItem('app_token') || localStorage.getItem('corp_token');
+      const token = localStorage.getItem('app_token') || localStorage.getItem('corp_token') || localStorage.getItem('superadmin_token');
       if (token && token.includes('.')) {
         try {
           const parts = token.split('.');
@@ -140,6 +152,18 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
   const isCorpAdmin = userRoles.includes('ROLE_CORP_ADMIN');
   const isChild = userRoles.includes('ROLE_CHILD') && !userRoles.includes('ROLE_PARENT');
 
+  const superAdminNavItems = [
+    { path: '/admin/dashboard', label: 'Bảng Điều Khiển Tổng Quan', icon: Activity },
+    { path: '/admin/tenants', label: 'Quản Trị Multi-Tenants', icon: Building2 },
+    { path: '/admin/master-data', label: 'Master Data & EAV Engine', icon: Layers },
+    { path: '/admin/master-iam', label: 'Phân Quyền Master IAM', icon: Users },
+    { path: '/admin/financial-policies', label: 'Chính Sách Tài Chính', icon: ShieldCheck },
+    { path: '/admin/integrations', label: 'Cổng Tích Hợp Gateway', icon: Sparkles },
+    { path: '/admin/security-aml', label: 'An Ninh Nền Tảng & AML', icon: Shield },
+    { path: '/admin/storage-hardware', label: 'Hạ Tầng Lưu Trữ & IoT', icon: Cpu },
+    { path: '/admin/audit-compliance', label: 'Kiểm Toán & Tuân Thủ', icon: CheckSquare },
+  ];
+
   const corpNavItems = [
     { path: '/corp/approvals', label: 'Maker - Checker Queue', icon: CheckSquare, badge: 'Hot' },
     { path: '/corp/dashboard', label: 'Bàn Làm Việc B2B', icon: Activity },
@@ -164,8 +188,9 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
   ];
 
   let currentNavItems = retailNavItems;
-  if (activeWorkspace === 'corp') currentNavItems = corpNavItems;
-  if (activeWorkspace === 'business') currentNavItems = businessNavItems;
+  if (activeWorkspace === 'superadmin') currentNavItems = superAdminNavItems;
+  else if (activeWorkspace === 'corp') currentNavItems = corpNavItems;
+  else if (activeWorkspace === 'business') currentNavItems = businessNavItems;
 
   return (
     <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
@@ -191,7 +216,20 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
               Không Gian Làm Việc
             </div>
             {allowedWorkspaces.length > 1 ? (
-              <div className={"grid grid-cols-" + allowedWorkspaces.length + " gap-1 bg-slate-950/60 p-1 rounded-lg border border-slate-800"}>
+              <div className="grid grid-cols-2 gap-1 bg-slate-950/60 p-1 rounded-lg border border-slate-800">
+                {allowedWorkspaces.includes('superadmin') && (
+                  <button
+                    onClick={() => navigate('/admin/dashboard')}
+                    className={"py-1.5 px-1 text-xs rounded font-medium transition flex flex-col items-center gap-0.5 " + (
+                      activeWorkspace === 'superadmin' 
+                        ? 'bg-amber-600/90 text-white shadow-sm' 
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                    )}
+                  >
+                    <Shield className="w-3.5 h-3.5" />
+                    <span className="text-[10px]">SuperAdmin</span>
+                  </button>
+                )}
                 {allowedWorkspaces.includes('corp') && (
                   <button
                     onClick={() => navigate('/corp/dashboard')}
@@ -218,16 +256,40 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
                     <span className="text-[10px]">Business</span>
                   </button>
                 )}
+                {allowedWorkspaces.includes('retail') && (
+                  <button
+                    onClick={() => navigate('/retail/piggy')}
+                    className={"py-1.5 px-1 text-xs rounded font-medium transition flex flex-col items-center gap-0.5 " + (
+                      activeWorkspace === 'retail' 
+                        ? 'bg-emerald-600/90 text-white shadow-sm' 
+                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                    )}
+                  >
+                    <PiggyBank className="w-3.5 h-3.5" />
+                    <span className="text-[10px]">Retail</span>
+                  </button>
+                )}
               </div>
             ) : (
               <div className="px-3 py-2 rounded-lg bg-slate-950/80 border border-slate-800/80 flex items-center gap-2.5">
+                {allowedWorkspaces[0] === 'superadmin' && (
+                  <>
+                    <div className="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                      <Shield className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-amber-400">SuperAdmin Platform</div>
+                      <div className="text-[9px] text-slate-400 font-mono">QUẢN TRỊ TOÀN SÀN</div>
+                    </div>
+                  </>
+                )}
                 {allowedWorkspaces[0] === 'retail' && (
                   <>
                     <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                       <PiggyBank className="w-4 h-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-emerald-400">Khách Hàng Cá Nhân</div>
+                      <div className="text-xs font-bold text-emerald-400">Retail App</div>
                       <div className="text-[9px] text-slate-400 font-mono">RETAIL & HEO ĐẤT IOT</div>
                     </div>
                   </>
@@ -250,6 +312,7 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({ children }) => {
           {/* Navigation Links */}
           <nav className="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-280px)]">
             <div className="px-3 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+              {activeWorkspace === 'superadmin' && 'Quản Trị Hệ Thống (SuperAdmin)'}
               {activeWorkspace === 'corp' && 'Doanh Nghiệp (Maker - Checker)'}
               {activeWorkspace === 'retail' && 'Cá Nhân & Heo Đất IoT'}
               {activeWorkspace === 'business' && 'Vận Hành Ứng Dụng'}

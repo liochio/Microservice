@@ -1215,7 +1215,7 @@ export const SmartPiggyDemoPage: React.FC = () => {
             </div>
             <div className="text-right hidden sm:block">
               <span className="text-[11px] text-slate-500 block">Phân hệ dịch vụ</span>
-              <span className="text-xs font-bold text-pink-400">Ngân Hàng Bán Lẻ (Retail)</span>
+              <span className="text-xs font-bold text-pink-400">Cá nhân(Retail)</span>
             </div>
           </div>
 
@@ -1770,7 +1770,7 @@ export const SmartPiggyDemoPage: React.FC = () => {
             </div>
 
             <div className="text-emerald-400 font-mono text-xs font-bold">
-              +{feedingAmount.toLocaleString('vi-VN')} đ đang nạp vào CSDL MySQL thật...
+              +{feedingAmount.toLocaleString('vi-VN')} đ đang nạp vào heo...
             </div>
           </div>
         </div>

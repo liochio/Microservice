@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building2, 
   Plus, 
@@ -11,6 +11,7 @@ import { Card, Badge } from '../components/common/CardAndBadge';
 import { Button } from '../components/common/Button';
 import { Modal } from '../components/common/Modal';
 import { Tenant, TenantType } from '../types';
+import { getTenants, createTenant } from '../api/client';
 
 export const TenantsPage: React.FC = () => {
   const [tenants, setTenants] = useState<Tenant[]>([
@@ -89,7 +90,39 @@ export const TenantsPage: React.FC = () => {
     domain: '',
   });
 
-  const handleCreateTenant = (e: React.FormEvent) => {
+  const loadTenants = async () => {
+    try {
+      const res = await getTenants();
+      const list = res?.data?.content || res?.data || res;
+      if (Array.isArray(list) && list.length > 0) {
+        setTenants(list.map((item: any) => ({
+          id: String(item.id || item.tenantId),
+          code: item.code || item.tenantCode,
+          name: item.name || item.tenantName,
+          type: item.type || 'BANK',
+          status: item.status || 'ACTIVE',
+          domain: item.domain || `${(item.code || 'tenant').toLowerCase()}.liochio.vn`,
+          maxUsersQuota: Number(item.maxUsersQuota || 50000),
+          maxDevicesQuota: Number(item.maxDevicesQuota || 10000),
+          currentUsersCount: Number(item.currentUsersCount || 0),
+          currentDevicesCount: Number(item.currentDevicesCount || 0),
+          contactEmail: item.contactEmail || 'admin@tenant.com',
+          contactPhone: item.contactPhone || '19000000',
+          contractExpiresAt: item.contractExpiresAt || '2027-12-31',
+          createdAt: item.createdAt || new Date().toISOString().split('T')[0],
+          features: item.features || ['SMART_PIGGY', 'PARENTAL_MATCHING', 'AI_ROBO', 'DOUBLE_ENTRY_LEDGER'],
+        })));
+      }
+    } catch (e) {
+      console.warn('[Tenants] Offline mode, using default mock tenants list:', e);
+    }
+  };
+
+  useEffect(() => {
+    loadTenants();
+  }, []);
+
+  const handleCreateTenant = async (e: React.FormEvent) => {
     e.preventDefault();
     const created: Tenant = {
       id: `tenant-${Date.now().toString().slice(-4)}`,
@@ -108,6 +141,21 @@ export const TenantsPage: React.FC = () => {
       createdAt: new Date().toISOString().split('T')[0],
       features: ['SMART_PIGGY', 'PARENTAL_MATCHING', 'AI_ROBO'],
     };
+
+    try {
+      await createTenant({
+        code: created.code,
+        name: created.name,
+        type: created.type,
+        domain: created.domain,
+        contactEmail: created.contactEmail,
+        contactPhone: created.contactPhone,
+        maxUsersQuota: created.maxUsersQuota,
+        maxDevicesQuota: created.maxDevicesQuota
+      });
+    } catch (apiErr) {
+      console.warn('[Tenants] Create API error, saving to local state:', apiErr);
+    }
 
     setTenants([created, ...tenants]);
     setIsModalOpen(false);

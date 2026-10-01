@@ -2520,6 +2520,149 @@
               }
             }
           ]
+        },
+        {
+          "name": "6.3 Khởi tạo thanh toán VietQR Napas 247 (Create VietQR URL)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/payments/create-url",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "create-url"
+              ]
+            },
+            "description": "Khởi tạo liên kết thanh toán chuẩn VietQR chuyển khoản nhanh Napas 247.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"ORD_VIETQR_{{$randomInt}}\",\n  \"amount\": 100000,\n  \"orderInfo\": \"Nap tien vi Heo Dat qua VietQR Napas 247\",\n  \"paymentMethod\": \"VIETQR\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "6.4 Đối soát chủ động đơn hàng (Active Status Reconciliation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/payments/orders/ORD_DEMO_001/reconcile",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "payments",
+                "orders",
+                "ORD_DEMO_001",
+                "reconcile"
+              ]
+            },
+            "description": "Truy vấn đối soát trực tiếp với Gateway ngân hàng để cập nhật trạng thái đơn hàng.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },
@@ -2658,7 +2801,831 @@
       ]
     },
     {
-      "name": "[Python] 01. Xác Thực & Quản Lý Hồ Sơ Cá Nhân (Auth & Profile)",
+      "name": "09. Quản Trị Phê Duyệt Maker-Checker & 4 Cửa Ải Khách Hàng (Corporate Governance)",
+      "item": [
+        {
+          "name": "9.1 Lấy danh sách tiến trình 4 Cửa ải Onboarding (List Customer Gates)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates?page=0&size=10",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Xem danh sách tiến trình vượt 4 Cửa ải Onboarding của toàn bộ khách hàng trong hệ thống.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.2 Xem chi tiết 4 Cửa ải của User (Get Customer Gate)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}"
+              ]
+            },
+            "description": "Xem hồ sơ tiến trình và trạng thái các Gate của một User cụ thể.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.3 Thẩm định Gate 1 eKYC (Review Gate 1 eKYC)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate1-review",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate1-review"
+              ]
+            },
+            "description": "Cán bộ Checker thẩm định và phê duyệt bước Định danh eKYC Gate 1.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"approved\": true,\n  \"note\": \"Hồ sơ CCCD chip đối chiếu hợp lệ với cơ sở dữ liệu quốc gia.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.4 Cấp phát Vai trò & Xếp hạng Gate 2 (Assign Gate 2 Tier)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate2-tier",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate2-tier"
+              ]
+            },
+            "description": "Cán bộ Checker chỉ định phân hạng khách hàng (BRONZE/SILVER/GOLD) và cấp hạn mức ngày.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assignedTier\": \"GOLD\",\n  \"assignedRole\": \"ROLE_CUSTOMER\",\n  \"dailyLimit\": 100000000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.5 Kích hoạt Cặp Tài khoản Sổ cái Gate 3 (Provision Gate 3 Wallets)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate3-wallets",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate3-wallets"
+              ]
+            },
+            "description": "Kích hoạt cặp tài khoản sổ cái kép (Khả dụng + Phong tỏa) trên Ledger Service.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.6 Phê chuẩn Ghép đôi Heo Đất Gate 4 (Pair Gate 4 Device)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/customer-gates/{{coreUserId}}/gate4-pair",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "customer-gates",
+                "{{coreUserId}}",
+                "gate4-pair"
+              ]
+            },
+            "description": "Phê chuẩn gán thiết bị Heo đất thông minh vào tài khoản sau khi hoàn thành 3 cửa ải trước.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"macAddress\": \"AA:BB:CC:11:22:33\",\n  \"deviceName\": \"Heo Đất Phê Duyệt Gate 4\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.7 Khách hàng tra cứu tiến trình Onboarding 4 Cửa ải (My Onboarding Status)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/app/onboarding-status",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "app",
+                "onboarding-status"
+              ]
+            },
+            "description": "Khách hàng tự tra cứu tiến trình 4 Cửa ải định danh của bản thân qua Mobile App / Web Portal.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.8 Maker tạo yêu cầu phê duyệt mới (Submit Maker Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals/submit",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals",
+                "submit"
+              ]
+            },
+            "description": "Maker khởi tạo hồ sơ yêu cầu phê duyệt chuyển sang trạng thái PENDING.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestType\": \"LIMIT_CHANGE\",\n  \"entityType\": \"USER_LIMIT\",\n  \"entityId\": \"1\",\n  \"proposedData\": \"{\\\"daily_limit\\\": 200000000}\",\n  \"reason\": \"Yêu cầu nâng hạn mức giao dịch cho khách hàng doanh nghiệp\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.9 Checker phê duyệt hoặc từ chối yêu cầu (Action Maker-Checker Request)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals/1/action",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals",
+                "1",
+                "action"
+              ]
+            },
+            "description": "Checker độc lập xem xét và ra quyết định APPROVE hoặc REJECT.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"APPROVE\",\n  \"checkerComment\": \"Đã đối chiếu hồ sơ và đồng ý phê duyệt.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.10 Danh sách yêu cầu phê duyệt Maker-Checker (List Approval Requests)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals?status=PENDING&page=0&size=10",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Tra cứu danh sách hồ sơ cần phê duyệt theo trạng thái.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "9.11 Chi tiết yêu cầu phê duyệt (Get Approval Request)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{coreToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{coreUrl}}/api/v1/corp/approvals/1",
+              "host": [
+                "{{coreUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "corp",
+                "approvals",
+                "1"
+              ]
+            },
+            "description": "Xem chi tiết một hồ sơ phê duyệt Maker-Checker.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "01. Xác Thực & Quản Lý Hồ Sơ Cá Nhân (Auth & Profile)",
       "description": "Đăng nhập, Xem & Cập nhật hồ sơ cá nhân (PUT /me), Đổi mật khẩu, Quên & Đặt lại mật khẩu bằng OTP và Kích hoạt tài khoản.",
       "item": [
         {
@@ -3171,7 +4138,7 @@
       ]
     },
     {
-      "name": "[Python] 02. Phân Hệ Heo Đất Thông Minh IoT (Smart Piggy Bank)",
+      "name": "02. Phân Hệ Heo Đất Thông Minh IoT (Smart Piggy Bank)",
       "description": "100% Nghiệp vụ Khách Hàng Cá Nhân: Ghép đôi Heo, Thả tiền cảm biến, Đồng bộ ngoại tuyến Flash LittleFS, Rút tiền 2 pha và Cảnh báo cạy phá MPU6050.",
       "item": [
         {
@@ -3974,11 +4941,918 @@
               }
             }
           ]
+        },
+        {
+          "name": "2.12 [SECURITY] Cảnh báo cạy nắp Heo Đất Limit Switch (Lid Tamper Security Alert)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/security/lid-tamper",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "security",
+                "lid-tamper"
+              ]
+            },
+            "description": "Cảm biến công tắc hành trình phát hiện nắp Heo bị cạy mở -> Báo động, phong tỏa ví tạm thời và gửi email cảnh báo bảo mật.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"lid_opened\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.13 [SECURITY] Cảnh báo rút nguồn điện Adapter (Power Cut Alert)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/security/power-cut",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "security",
+                "power-cut"
+              ]
+            },
+            "description": "Cảm biến điện áp phát hiện mất nguồn Adapter ngoài -> Chuyển sang nguồn Pin 18650 dự phòng và ghi nhật ký.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"battery_pct\": 85.5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.14 [BUCKETS] Tạo Hũ mục tiêu con (Create Sub-pot Bucket)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/buckets",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "buckets"
+              ]
+            },
+            "description": "Tạo Hũ mục tiêu tiết kiệm phân bổ theo mô hình hũ con gắn với Heo Đất.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"goal_name\": \"Quỹ Mua Xe Đạp Thể Thao\",\n  \"target_amount\": 2500000.0,\n  \"deadline\": \"2026-12-31\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.15 [BUCKETS] Lấy danh sách Hũ mục tiêu con (Get Buckets)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/buckets?device_id={{piggyDeviceId}}",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "buckets"
+              ],
+              "query": [
+                {
+                  "key": "device_id",
+                  "value": "{{piggyDeviceId}}"
+                }
+              ]
+            },
+            "description": "Truy vấn danh sách tất cả các Hũ mục tiêu tiết kiệm đang hoạt động của Heo Đất.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.16 [PARENT MATCHING] Thiết lập quy tắc Cha Mẹ Thưởng Tiền (Create Matching Rule)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/matching-rules",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "matching-rules"
+              ]
+            },
+            "description": "Cha mẹ thiết lập quy tắc thưởng tiền tỷ lệ % khi con bỏ ống heo (lưu trữ bền vững trong DB system_settings).",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"child_user_id\": \"{{userId}}\",\n  \"matching_percentage\": 50.0,\n  \"max_monthly_bonus\": 1000000.0,\n  \"parent_wallet_id\": \"parent_wallet_demo\",\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.17 [PARENT MATCHING] Xem quy tắc thưởng đang áp dụng (Get Matching Rules)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/matching-rules",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "matching-rules"
+              ]
+            },
+            "description": "Truy vấn quy tắc thưởng tiền Parent Matching Bonus hiện đang kích hoạt.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.18 [FAMILY] Bảng điều khiển Tiết kiệm Gia đình (Family Dashboard)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/family-dashboard",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "family-dashboard"
+              ]
+            },
+            "description": "Tổng hợp số dư tiết kiệm của cả gia đình, bảng xếp hạng thi đua và tiến độ tích lũy.",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.19 [DEMO ONBOARDING] Onboard Người dùng Mới & Sinh mã OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/onboard-user",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "onboard-user"
+              ]
+            },
+            "description": "Đăng ký tài khoản người dùng mới, tự động kiểm tra và ghi nhận vào bảng users.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"Nguyễn Kiểm Thử Postman\",\n  \"username\": \"postman_user_{{$randomInt}}\",\n  \"email\": \"voduylebt99@gmail.com\",\n  \"phone_number\": \"098{{$randomInt}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Tạo user thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    var json = pm.response.json();",
+                  "    if (json.data && json.data.user_id) {",
+                  "        pm.environment.set(\"userId\", json.data.user_id);",
+                  "        pm.environment.set(\"pythonUserId\", json.data.user_id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.20 [DEMO ONBOARDING] Khởi tạo Ví Heo Đất & Gửi OTP Kích hoạt",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/init-wallet",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "init-wallet"
+              ]
+            },
+            "description": "Khởi tạo bản ghi ví Heo Đất ở trạng thái PENDING_ACTIVATION và sinh mã OTP lưu DB + gửi mail.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"{{userId}}\",\n  \"wallet_name\": \"Ví Heo Đất Tiết Kiệm Postman\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Khởi tạo ví thành công\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "    var json = pm.response.json();",
+                  "    if (json.data && json.data.wallet_id) {",
+                  "        pm.environment.set(\"walletId\", json.data.wallet_id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.21 [DEMO ONBOARDING] Kích hoạt Ví thật bằng mã OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/activate-wallet",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "activate-wallet"
+              ]
+            },
+            "description": "Xác thực mã OTP từ Database / Mail để chuyển trạng thái ví sang ACTIVE.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_id\": \"{{walletId}}\",\n  \"otp_code\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.22 [DEMO ONBOARDING] Mở khóa Ví Heo Đất (Unfreeze Wallet)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/unfreeze-wallet",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "unfreeze-wallet"
+              ]
+            },
+            "description": "Phục hồi trạng thái ví từ FROZEN về ACTIVE sau khi đã xử lý xong sự cố an ninh.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_id\": \"{{walletId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "2.23 [DEMO ONBOARDING] Đập Heo Tất toán & Đóng liên kết (Smash Demo)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept-Language",
+                "value": "vi-VN",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "SYSTEM",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-ID",
+                "value": "{{deviceId}}",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "POSTMAN",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{pythonToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{pythonUrl}}/api/v1/smart-piggy/demo/smash",
+              "host": [
+                "{{pythonUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "smart-piggy",
+                "demo",
+                "smash"
+              ]
+            },
+            "description": "Tất toán toàn bộ số dư heo đất, hoàn trả tài chính và ngắt liên kết thiết bị.",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_id\": \"{{walletId}}\",\n  \"device_id\": \"{{piggyDeviceId}}\",\n  \"user_id\": \"{{userId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code hợp lệ (200, 201, 204)\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },
     {
-      "name": "[Python] 03. Phân Tích Tài Chính Cá Nhân, Ngân Sách & Mục Tiêu AI",
+      "name": "03. Phân Tích Tài Chính Cá Nhân, Ngân Sách & Mục Tiêu AI",
       "description": "Mục tiêu tài chính cá nhân, ngân sách chi tiêu, dự báo AI và thói quen tiết kiệm Heo Đất.",
       "item": [
         {

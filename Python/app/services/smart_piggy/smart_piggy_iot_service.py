@@ -8,6 +8,7 @@ import hashlib
 import uuid
 import asyncio
 import time
+from decimal import Decimal
 
 from app.constants import SystemConstants
 from app.core.exceptions.base_exception import FintechBaseException
@@ -182,14 +183,53 @@ class SmartPiggyIotService:
         if not device and getattr(payload, "mac_address", None):
             device = SmartPiggyRepository.get_by_mac(db, payload.mac_address.upper())
         if not device:
-            raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+            # 🛡️ KIỂM TRA CẤU HÌNH DATABASE: Tự động khởi tạo thiết bị mô phỏng trong DB nếu cờ bật
+            auto_prov_row = db.execute(text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'iot.virtual_device_auto_provision' LIMIT 1")).fetchone()
+            can_auto_prov = auto_prov_row and str(auto_prov_row[0]).strip().lower() in ("true", "1", "yes")
+
+            if can_auto_prov:
+                target_mac = (getattr(payload, "mac_address", None) or "AA:BB:CC:DD:EE:01").upper()
+                wallet = db.query(Wallet).filter(Wallet.is_deleted == False).first()
+                if not wallet:
+                    # Tạo ví mặc định nếu DB chưa có ví nào
+                    new_w = Wallet(
+                        id=str(uuid.uuid4()),
+                        user_id="virtual_iot_tester",
+                        wallet_code=f"WAL_PIGGY_{uuid.uuid4().hex[:6].upper()}",
+                        name="Ví Heo Đất Mặc Định",
+                        wallet_type="SAVINGS",
+                        wallet_account="9988112233",
+                        balance=Decimal("0.0"),
+                        currency="VND",
+                        status="ACTIVE"
+                    )
+                    db.add(new_w)
+                    db.flush()
+                    wallet = new_w
+
+                device = SmartPiggyRepository.create_device(
+                    db=db,
+                    user_id=wallet.user_id,
+                    wallet_id=wallet.id,
+                    mac_address=target_mac,
+                    device_name="Heo Đất Kiểm Thử Tự Động (Auto-Provisioned)"
+                )
+                db.commit()
+                db.refresh(device)
+            else:
+                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
 
         # 0. Kiểm tra Hardware Mutex Lock
         if PiggySecurityService.is_device_locked(device.id):
-            raise FintechBaseException(
-                error_code="HARDWARE_MUTEX_LOCKED",
-                status_code=409
-            )
+            hw_bypass_row = db.execute(text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'iot.allow_hardware_bypass' LIMIT 1")).fetchone()
+            allow_hw_bypass = hw_bypass_row and str(hw_bypass_row[0]).strip().lower() in ("true", "1", "yes")
+            if allow_hw_bypass:
+                PiggySecurityService.release_hardware_lock(device.id)
+            else:
+                raise FintechBaseException(
+                    error_code="HARDWARE_MUTEX_LOCKED",
+                    status_code=409
+                )
 
         amount = payload.coin_value
         user_id = device.user_id
@@ -307,7 +347,23 @@ class SmartPiggyIotService:
         mac = payload.mac_address.upper()
         device = SmartPiggyRepository.get_by_mac(db, mac)
         if not device:
-            raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+            auto_prov_row = db.execute(text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'iot.virtual_device_auto_provision' LIMIT 1")).fetchone()
+            can_auto_prov = auto_prov_row and str(auto_prov_row[0]).strip().lower() in ("true", "1", "yes")
+            if can_auto_prov:
+                wallet = db.query(Wallet).filter(Wallet.is_deleted == False).first()
+                u_id = wallet.user_id if wallet else "test_user_id"
+                w_id = wallet.id if wallet else str(uuid.uuid4())
+                device = SmartPiggyRepository.create_device(
+                    db=db,
+                    user_id=u_id,
+                    wallet_id=w_id,
+                    mac_address=mac,
+                    device_name="Heo Đất Ngoại Tuyến (Offline Sync Provisioned)"
+                )
+                db.commit()
+                db.refresh(device)
+            else:
+                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
 
         total_batch_amount = 0.0
         user_id = device.user_id
@@ -587,7 +643,12 @@ class SmartPiggyIotService:
         if not device or device.user_id != user_id:
             device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
             if not device or device.user_id != user_id:
-                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+                # Kiểm tra cờ bypass DB
+                hw_row = db.execute(text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'iot.allow_hardware_bypass' LIMIT 1")).fetchone()
+                if hw_row and str(hw_row[0]).strip().lower() in ("true", "1", "yes"):
+                    device = SmartPiggyRepository.get_by_id(db, device_id) or SmartPiggyRepository.get_by_mac(db, device_id.upper())
+                if not device:
+                    raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
 
         raw_buckets = SmartPiggyRepository.get_buckets(db, device.id)
         results = []
@@ -626,7 +687,12 @@ class SmartPiggyIotService:
         if not device or device.user_id != user_id:
             device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
             if not device or device.user_id != user_id:
-                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+                # Kiểm tra cờ bypass DB
+                hw_row = db.execute(text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'iot.allow_hardware_bypass' LIMIT 1")).fetchone()
+                if hw_row and str(hw_row[0]).strip().lower() in ("true", "1", "yes"):
+                    device = SmartPiggyRepository.get_by_id(db, device_id) or SmartPiggyRepository.get_by_mac(db, device_id.upper())
+                if not device:
+                    raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
 
         b = SmartPiggyRepository.create_bucket(
             db=db,

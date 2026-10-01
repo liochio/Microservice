@@ -96,6 +96,27 @@ class UserService:
 
         # Sinh mã OTP 6 số bảo mật
         otp = OtpService.create_secure_otp(db, user.id, "FORGOT_PASSWORD", 5)
+
+        # Gửi email chứa mã OTP xác thực
+        try:
+            from app.jobs.notification_worker import NotificationWorker
+            subject = "[Liochio FinTech] Mã OTP Đặt Lại Mật Khẩu"
+            content = f"""
+            <div style="font-family: Arial, sans-serif; padding: 20px; background: #0f172a; color: #e2e8f0; border-radius: 12px;">
+                <h2 style="color: #10b981;">Yêu Cầu Đặt Lại Mật Khẩu</h2>
+                <p>Xin chào <strong>{user.full_name or user.username}</strong>,</p>
+                <p>Hệ thống nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn.</p>
+                <div style="padding: 15px; background: #1e293b; border-radius: 8px; margin: 20px 0; text-align: center;">
+                    <span style="font-size: 14px; color: #94a3b8;">Mã OTP xác thực (Hiệu lực 5 phút):</span><br/>
+                    <strong style="font-size: 32px; color: #34d399; letter-spacing: 5px;">{otp.otp_code}</strong>
+                </div>
+                <p style="font-size: 12px; color: #64748b;">Nếu bạn không yêu cầu hành động này, vui lòng bỏ qua email.</p>
+            </div>
+            """
+            NotificationWorker.send_email_via_smtp(user.email, subject, content, db_conn=db)
+        except Exception as e:
+            print(f"[AUTH_FORGOT_PASSWORD] Lỗi gửi email OTP: {e}")
+
         return {"status": "OTP_SENT", "email": email}
 
     @staticmethod

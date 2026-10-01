@@ -30,14 +30,14 @@ def _insert_audit_db_sync(trace_id: str, tenant_id: str, user_id: Any, username:
             conn.execute(
                 text("""
                     INSERT INTO audit_logs (
-                        id, action, trace_id, tenant_id, user_id, username, user_email,
+                        action, table_name, trace_id, tenant_id, user_id, username, user_email,
                         user_role, client_ip, platform, device_id, device_name,
                         user_agent, module, action_type, action_description,
                         http_method, request_uri, request_params, request_body,
                         old_data, new_data, status, http_status_code,
                         error_message, execution_time_ms, created_at
                     ) VALUES (
-                        :id, :action, :trace_id, :tenant_id, :user_id, :username, :user_email,
+                        :action, 'API_REQUEST', :trace_id, :tenant_id, :user_id, :username, :user_email,
                         :user_role, :client_ip, :platform, :device_id, :device_name,
                         :user_agent, :module, :action_type, :action_description,
                         :http_method, :request_uri, :request_params, :request_body,
@@ -46,7 +46,6 @@ def _insert_audit_db_sync(trace_id: str, tenant_id: str, user_id: Any, username:
                     )
                 """),
                 {
-                    "id": str(uuid.uuid4()),
                     "action": f"{method} {path}",
                     "trace_id": trace_id,
                     "tenant_id": tenant_id or "default",

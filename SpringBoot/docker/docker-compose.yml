@@ -11,7 +11,7 @@ services:
     container_name: liochio-mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "your_password"
+      MYSQL_ROOT_PASSWORD: "12345678"
       TZ: "UTC"
     ports:
       - "3306:3306"

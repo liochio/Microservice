@@ -109,7 +109,7 @@ public class JwtAuthenticationGatewayFilter implements GlobalFilter, Ordered {
 
     public JwtAuthenticationGatewayFilter(
             ResourceLoader resourceLoader,
-            @Value("${jwt.secret:liochio-super-secret-jwt-key-minimum-256-bits-for-security-2026}") String secret,
+            @Value("${jwt.secret:liochio-fintech-super-secret-jwt-key-minimum-256-bits-for-security-2026}") String secret,
             @Value("${jwt.rsa.public-key-path:classpath:certs/rsa-public.pem}") String publicKeyLocation,
             @Autowired(required = false) ReactiveStringRedisTemplate reactiveRedisTemplate
     ) {

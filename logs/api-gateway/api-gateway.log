@@ -1,36 +1,196 @@
-2026-09-08 21:03:27.121  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Starting ApiGatewayApplication v1.0.0-SNAPSHOT using Java 17.0.17 with PID 28876 (D:\Github\Back-end\Microservice\SpringBoot\api-gateway\target\api-gateway-1.0.0-SNAPSHOT.jar started by Liochio in D:\Github\Back-end\Microservice)
-2026-09-08 21:03:27.125 DEBUG [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Running with Spring Boot v3.4.3, Spring v6.2.3
-2026-09-08 21:03:27.126  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : No active profile set, falling back to 1 default profile: "default"
-2026-09-08 21:03:28.208  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
-2026-09-08 21:03:28.214  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2026-09-08 21:03:28.258  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
-2026-09-08 21:03:28.626  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=fafba36a-6497-3133-8642-bad105457fb4
-2026-09-08 21:03:30.292  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.l.g.f.JwtAuthenticationGatewayFilter   : [GatewayAuthFilter] Loaded RSA Public Key successfully from classpath:certs/rsa-public.pem
-2026-09-08 21:03:31.895  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
-2026-09-08 21:03:33.260  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
-2026-09-08 21:03:33.851  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
-2026-09-08 21:03:33.853  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
-2026-09-08 21:03:33.853  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
-2026-09-08 21:03:33.853  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
-2026-09-08 21:03:33.854  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
-2026-09-08 21:03:33.854  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
-2026-09-08 21:03:33.855  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
-2026-09-08 21:03:33.855  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
-2026-09-08 21:03:33.855  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
-2026-09-08 21:03:33.856  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
-2026-09-08 21:03:33.856  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
-2026-09-08 21:03:33.857  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
-2026-09-08 21:03:33.857  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
-2026-09-08 21:03:33.857  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
-2026-09-08 21:03:35.476  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
-2026-09-08 21:03:35.512  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
-2026-09-08 21:03:35.562  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-09-08 21:03:35.636  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2026-09-08 21:03:36.330  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:03:36.331  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] com.netflix.discovery.DiscoveryClient    : Using default backup registry implementation which does not do anything.
-2026-09-08 21:03:36.343  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
-2026-09-08 21:03:36.441  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:03:36.441  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/localhost:api-gateway:8080 - registration failed Cannot execute request on any known server
+2026-10-01 17:03:03.596  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Starting ApiGatewayApplication using Java 17.0.17 with PID 74948 (E:\Github\Back-end\Microservice\SpringBoot\api-gateway\target\classes started by Liochio in E:\Github\Back-end\Microservice)
+2026-10-01 17:03:03.600 DEBUG [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Running with Spring Boot v3.4.3, Spring v6.2.3
+2026-10-01 17:03:03.602  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-10-01 17:03:04.565  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-01 17:03:04.571  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-01 17:03:04.613  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+2026-10-01 17:03:04.933  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=eba7c129-4835-3c2d-8192-08d3f9a53c10
+2026-10-01 17:03:06.221  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.l.g.f.JwtAuthenticationGatewayFilter   : [GatewayAuthFilter] Loaded RSA Public Key successfully from classpath:certs/rsa-public.pem
+2026-10-01 17:03:07.824  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-10-01 17:03:07.824  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-10-01 17:03:07.826  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-10-01 17:03:07.826  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-10-01 17:03:07.828  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-10-01 17:03:07.829  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-10-01 17:03:07.829  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-10-01 17:03:07.829  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-10-01 17:03:07.829  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-10-01 17:03:07.831  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-10-01 17:03:07.831  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-10-01 17:03:07.831  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-10-01 17:03:07.831  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-10-01 17:03:07.831  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-10-01 17:03:08.843  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-10-01 17:03:08.889  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-01 17:03:08.975  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-10-01 17:03:09.574  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2026-10-01 17:03:09.896  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080 (http)
+2026-10-01 17:03:09.898  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2026-10-01 17:03:10.301  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Started ApiGatewayApplication in 7.831 seconds (process running for 8.851)
+2026-10-01 17:05:43.715  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_590a71344f204f2c ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:05:43.715  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_6db86b9209a14719 ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:05:44.027  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_590a71344f204f2c ip=0:0:0:0:0:0:0:1 status=200 duration=312ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:05:44.086  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_6db86b9209a14719 ip=0:0:0:0:0:0:0:1 status=200 duration=371ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:05:44.092 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] r.netty.transport.ServerTransport        : [7555bb40-1, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:56833] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x7555bb40, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:56833]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 17:09:31.948  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_ceedb0652ba442fd ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:31.956  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_ceedb0652ba442fd ip=0:0:0:0:0:0:0:1 status=200 duration=8ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:31.973  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_0ad7b3ddf05247bc ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:31.980  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_0ad7b3ddf05247bc ip=0:0:0:0:0:0:0:1 status=200 duration=7ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:51.249  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_9d1b8369318e4051 ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:51.250  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_79225fe80a07482d ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:51.259  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_9d1b8369318e4051 ip=0:0:0:0:0:0:0:1 status=200 duration=10ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:51.261  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_79225fe80a07482d ip=0:0:0:0:0:0:0:1 status=200 duration=11ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:09:51.261 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] r.netty.transport.ServerTransport        : [0ab0371d-1, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:59146] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x0ab0371d, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:59146]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 17:11:52.581  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-1] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_66271c7265894375 ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:11:52.590  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-1] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_66271c7265894375 ip=0:0:0:0:0:0:0:1 status=200 duration=9ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:11:52.605  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_85da74aba3224d6d ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:11:52.608  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_85da74aba3224d6d ip=0:0:0:0:0:0:0:1 status=200 duration=3ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:15:22.097  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_90042db4c69848c7 ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:15:22.106  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_90042db4c69848c7 ip=0:0:0:0:0:0:0:1 status=200 duration=9ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:15:22.176  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_e86c3958d3fa46e6 ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:15:22.238  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_e86c3958d3fa46e6 ip=0:0:0:0:0:0:0:1 status=200 duration=62ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:16:49.049  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_ae07c38e16714f30 ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:16:49.058  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_ae07c38e16714f30 ip=0:0:0:0:0:0:0:1 status=200 duration=9ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:16:49.082  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_50df432828fe4c00 ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:16:49.104  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_50df432828fe4c00 ip=0:0:0:0:0:0:0:1 status=200 duration=22ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:18:04.149  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_ae277ef996264b0a ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:18:04.159  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_ae277ef996264b0a ip=0:0:0:0:0:0:0:1 status=200 duration=10ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:18:09.240  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_fce8350a80d941cc ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 17:18:09.245  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_fce8350a80d941cc ip=0:0:0:0:0:0:0:1 status=200 duration=5ms path=/api/v1/ws/live/retail_user
+2026-10-01 17:18:09.251  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application API-GATEWAY with eureka with status DOWN
+2026-10-01 17:18:09.392  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-01 17:18:10.125  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown complete
+2026-10-01 17:18:11.866  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] o.a.h.c.h.i.c.HttpRequestRetryExec       : Recoverable I/O exception (org.apache.hc.core5.http.NoHttpResponseException) caught when processing request to {}->[http://localhost:8761]
+2026-10-01 17:18:13.484  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] o.a.h.c.h.i.c.HttpRequestRetryExec       : Recoverable I/O exception (org.apache.hc.core5.http.NoHttpResponseException) caught when processing request to {}->[http://localhost:8761]
+2026-10-01 17:18:14.273  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connection reset
+2026-10-01 17:18:14.273  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/delta": Connection reset
+2026-10-01 17:18:14.399  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 17:18:14.435 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 17:18:14.694  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/delta": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 17:18:16.549  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 17:18:16.549 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - de-registration failedCannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:202)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:195)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:136)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:735)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:692)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1401)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:651)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1394)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1219)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1180)
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.doClose(ReactiveWebServerApplicationContext.java:155)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1126)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 18:37:53.054  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Starting ApiGatewayApplication using Java 17.0.17 with PID 76920 (E:\Github\Back-end\Microservice\SpringBoot\api-gateway\target\classes started by Liochio in E:\Github\Back-end\Microservice)
+2026-10-01 18:37:53.116 DEBUG [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Running with Spring Boot v3.4.3, Spring v6.2.3
+2026-10-01 18:37:53.118  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-10-01 18:37:54.488  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-01 18:37:54.494  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-01 18:37:54.566  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
+2026-10-01 18:37:55.098  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=eba7c129-4835-3c2d-8192-08d3f9a53c10
+2026-10-01 18:37:58.618  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.l.g.f.JwtAuthenticationGatewayFilter   : [GatewayAuthFilter] Loaded RSA Public Key successfully from classpath:certs/rsa-public.pem
+2026-10-01 18:38:00.997  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-10-01 18:38:00.998  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-10-01 18:38:00.998  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-10-01 18:38:00.998  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-10-01 18:38:01.000  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-10-01 18:38:01.001  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-10-01 18:38:01.006  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-10-01 18:38:01.008  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-10-01 18:38:01.011  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-10-01 18:38:01.011  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-10-01 18:38:01.018  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-10-01 18:38:01.019  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-10-01 18:38:01.019  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-10-01 18:38:01.019  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-10-01 18:38:02.561  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-10-01 18:38:02.603  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-01 18:38:02.706  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-10-01 18:38:03.471  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:38:03.472  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] com.netflix.discovery.DiscoveryClient    : Using default backup registry implementation which does not do anything.
+2026-10-01 18:38:03.485  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2026-10-01 18:38:03.574  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:38:03.574  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - registration failed Cannot execute request on any known server
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -48,7 +208,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2026-09-08 21:03:36.448  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+2026-10-01 18:38:03.578  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -66,14 +226,12 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2026-09-08 21:03:36.674  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080 (http)
-2026-09-08 21:03:36.678  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
-2026-09-08 21:03:37.843  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
-2026-09-08 21:03:38.993  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.commons.util.InetUtils         : Cannot determine local hostname
-2026-09-08 21:03:39.025  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Started ApiGatewayApplication in 14.112 seconds (process running for 14.821)
-2026-09-08 21:04:06.412  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:04:06.412  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/localhost:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:04:06.412 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/localhost:api-gateway:8080 - was unable to send heartbeat!
+2026-10-01 18:38:03.899  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080 (http)
+2026-10-01 18:38:03.901  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2026-10-01 18:38:04.406  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Started ApiGatewayApplication in 13.399 seconds (process running for 14.685)
+2026-10-01 18:38:33.527  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:38:33.527  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:38:33.528 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - was unable to send heartbeat!
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -89,8 +247,8 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2026-09-08 21:04:06.504  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:04:06.504  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/localhost:api-gateway:8080 - registration failed Cannot execute request on any known server
+2026-10-01 18:38:33.648  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:38:33.648  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - registration failed Cannot execute request on any known server
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -107,7 +265,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2026-09-08 21:04:06.504  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+2026-10-01 18:38:33.648  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -124,16 +282,8 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2026-09-08 21:04:21.911  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=cfray-c0bba10131cb-HAN ip=203.0.113.195 method=GET path=/api/v1/auth/health
-2026-09-08 21:04:21.915  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.g.f.JwtAuthenticationGatewayFilter   : [GatewayAuthFilter] Missing or invalid Authorization header at path: /api/v1/auth/health
-2026-09-08 21:04:21.947  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_14a6734888ec485f ip=0:0:0:0:0:0:0:1 method=GET path=/api/v1/auth/health
-2026-09-08 21:04:21.947  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.g.f.JwtAuthenticationGatewayFilter   : [GatewayAuthFilter] Missing or invalid Authorization header at path: /api/v1/auth/health
-2026-09-08 21:04:21.947  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=cfray-c0bba10131cb-HAN ip=203.0.113.195 status=401 duration=36ms path=/api/v1/auth/health
-2026-09-08 21:04:21.949  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_14a6734888ec485f ip=0:0:0:0:0:0:0:1 status=401 duration=2ms path=/api/v1/auth/health
-2026-09-08 21:04:21.971 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] c.l.g.e.GlobalErrorWebExceptionHandler   : [GATEWAY_EXCEPTION] traceId=NO_TRACE path=/api/v1/non-existent-endpoint-xyz status=404 error=404 NOT_FOUND "No static resource api/v1/non-existent-endpoint-xyz."
-2026-09-08 21:04:32.830 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.g.e.GlobalErrorWebExceptionHandler   : [GATEWAY_EXCEPTION] traceId=cfray-2ce43f037d0a-HAN path=/actuator/health status=404 error=404 NOT_FOUND "No static resource actuator/health."
-2026-09-08 21:04:36.448  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/localhost:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:04:36.448 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/localhost:api-gateway:8080 - was unable to send heartbeat!
+2026-10-01 18:39:03.570  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:39:03.570 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - was unable to send heartbeat!
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -149,9 +299,9 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2026-09-08 21:04:36.450  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:04:36.567  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
-2026-09-08 21:04:36.567  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/localhost:api-gateway:8080 - registration failed Cannot execute request on any known server
+2026-10-01 18:39:03.581  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:39:03.661  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on POST request for "http://localhost:8761/eureka/apps/API-GATEWAY": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 18:39:03.663  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - registration failed Cannot execute request on any known server
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -168,7 +318,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2026-09-08 21:04:36.567  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+2026-10-01 18:39:03.663  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
@@ -183,5 +333,331 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 18:45:15.872  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_55583695ba2f46f0 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 18:45:16.037  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_55583695ba2f46f0 ip=192.168.1.2 status=200 duration=165ms path=/api/v1/ws/live/retail_user
+2026-10-01 18:45:40.870  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_c58a5940d1b8422a ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 18:45:40.881  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_cb4f706a60b94a0d ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 18:45:40.882  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_c58a5940d1b8422a ip=192.168.1.2 status=200 duration=12ms path=/api/v1/ws/live/retail_user
+2026-10-01 18:45:40.906 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] r.netty.transport.ServerTransport        : [04ecaa98-1, L:/192.168.1.2:8080 - R:/192.168.1.2:61868] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x04ecaa98, L:/192.168.1.2:8080 - R:/192.168.1.2:61868]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 18:45:40.909  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_cb4f706a60b94a0d ip=192.168.1.2 status=200 duration=28ms path=/api/v1/ws/live/retail_user
+2026-10-01 18:46:02.007  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_dc58ecf9896e41c2 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 18:46:02.018  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_dc58ecf9896e41c2 ip=192.168.1.2 status=200 duration=11ms path=/api/v1/ws/live/retail_user
+2026-10-01 18:46:02.021  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_eaaab6253cb549ba ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 18:46:02.023 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] r.netty.transport.ServerTransport        : [f1c5e617-1, L:/192.168.1.2:8080 - R:/192.168.1.2:62859] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0xf1c5e617, L:/192.168.1.2:8080 - R:/192.168.1.2:62859]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 18:46:02.049  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_eaaab6253cb549ba ip=192.168.1.2 status=200 duration=28ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:10:23.155  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-1] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_7ae3d2ee9a2f4939 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:10:23.152  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_4adf4769b7e24b27 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:10:23.186  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-1] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_7ae3d2ee9a2f4939 ip=192.168.1.2 status=200 duration=36ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:10:23.190  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_4adf4769b7e24b27 ip=192.168.1.2 status=200 duration=40ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:10:23.194 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] r.netty.transport.ServerTransport        : [edfc9a82-1, L:/192.168.1.2:8080 - R:/192.168.1.2:52188] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0xedfc9a82, L:/192.168.1.2:8080 - R:/192.168.1.2:52188]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 19:23:37.051  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_75bb3e8ab4634715 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:37.051  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_d63eedc939f047bf ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:37.145  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_d63eedc939f047bf ip=192.168.1.2 status=200 duration=94ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:37.148  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_75bb3e8ab4634715 ip=192.168.1.2 status=200 duration=97ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:37.150 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] r.netty.transport.ServerTransport        : [38f93d10-1, L:/192.168.1.2:8080 - R:/192.168.1.2:56041] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x38f93d10, L:/192.168.1.2:8080 - R:/192.168.1.2:56041]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 19:23:42.813  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_1a39e93a685b4d13 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:42.818  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_1a39e93a685b4d13 ip=192.168.1.2 status=200 duration=5ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:42.828  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_75d35db473b046cb ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:42.833  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-5] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_75d35db473b046cb ip=192.168.1.2 status=200 duration=5ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:23:42.823 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-4] r.netty.transport.ServerTransport        : [45b05df6-1, L:/192.168.1.2:8080 - R:/192.168.1.2:63762] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x45b05df6, L:/192.168.1.2:8080 - R:/192.168.1.2:63762]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 19:24:14.426  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_9e22add4a64f48fb ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:24:14.438  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_602f65d55ec74d5f ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 19:24:14.447  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_9e22add4a64f48fb ip=192.168.1.2 status=200 duration=21ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:24:14.455  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-7] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_602f65d55ec74d5f ip=192.168.1.2 status=200 duration=17ms path=/api/v1/ws/live/retail_user
+2026-10-01 19:24:14.456 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-6] r.netty.transport.ServerTransport        : [0d26cf41-1, L:/192.168.1.2:8080 - R:/192.168.1.2:56232] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x0d26cf41, L:/192.168.1.2:8080 - R:/192.168.1.2:56232]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 20:20:39.334  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_b8fa6af1ad674637 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 20:20:39.334  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-1] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_4b3ae6096a5948db ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 20:20:39.434  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-1] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_4b3ae6096a5948db ip=192.168.1.2 status=200 duration=103ms path=/api/v1/ws/live/retail_user
+2026-10-01 20:20:39.444  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_b8fa6af1ad674637 ip=192.168.1.2 status=200 duration=110ms path=/api/v1/ws/live/retail_user
+2026-10-01 20:20:39.448 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-8] r.netty.transport.ServerTransport        : [0786786b-1, L:/192.168.1.2:8080 - R:/192.168.1.2:62662] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x0786786b, L:/192.168.1.2:8080 - R:/192.168.1.2:62662]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 20:59:32.240  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_07139fcf44694014 ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 20:59:32.236  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_aa8897e543144d3b ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 20:59:32.283  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_aa8897e543144d3b ip=192.168.1.2 status=200 duration=49ms path=/api/v1/ws/live/retail_user
+2026-10-01 20:59:32.286  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_07139fcf44694014 ip=192.168.1.2 status=200 duration=46ms path=/api/v1/ws/live/retail_user
+2026-10-01 20:59:32.289 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] r.netty.transport.ServerTransport        : [54e7fefe-1, L:/192.168.1.2:8080 - R:/192.168.1.2:63731] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x54e7fefe, L:/192.168.1.2:8080 - R:/192.168.1.2:63731]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 21:33:21.737  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] o.s.c.n.e.s.EurekaServiceRegistry        : Unregistering application API-GATEWAY with eureka with status DOWN
+2026-10-01 21:33:22.184  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] o.s.b.w.embedded.netty.GracefulShutdown  : Commencing graceful shutdown. Waiting for active requests to complete
+2026-10-01 21:33:44.881  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 21:33:44.899  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on PUT request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 21:33:44.900 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [beatExecutor-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - was unable to send heartbeat!
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$3.execute(EurekaHttpClientDecorator.java:92)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.sendHeartBeat(EurekaHttpClientDecorator.java:89)
+	at com.netflix.discovery.DiscoveryClient.renew(DiscoveryClient.java:845)
+	at com.netflix.discovery.DiscoveryClient$HeartbeatThread.run(DiscoveryClient.java:1402)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 21:33:50.488  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/delta": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 21:33:50.529  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [reshExecutor-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on GET request for "http://localhost:8761/eureka/apps/delta": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 21:33:52.264  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] o.s.c.support.DefaultLifecycleProcessor  : Shutdown phase 2147482623 ends with 1 bean still running after timeout of 30000ms: [webServerGracefulShutdown]
+2026-10-01 21:33:52.272  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ netty-shutdown] o.s.b.w.embedded.netty.GracefulShutdown  : Graceful shutdown aborted with one or more requests still active
+2026-10-01 21:33:57.506  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: I/O error on DELETE request for "http://localhost:8761/eureka/apps/API-GATEWAY/192.168.1.2:api-gateway:8080": Connect to http://localhost:8761 [localhost/127.0.0.1, localhost/0:0:0:0:0:0:0:1] failed: Connection refused: no further information
+2026-10-01 21:33:57.506 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ionShutdownHook] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/192.168.1.2:api-gateway:8080 - de-registration failedCannot execute request on any known server
+
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:76)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:919)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:900)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:202)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:195)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:136)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:735)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:692)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1401)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:651)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1394)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1219)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1180)
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.doClose(ReactiveWebServerApplicationContext.java:155)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1126)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:147)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:116)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+
+2026-10-01 23:48:04.439  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Starting ApiGatewayApplication using Java 17.0.17 with PID 72988 (E:\Github\Back-end\Microservice\SpringBoot\api-gateway\target\classes started by Liochio in E:\Github\Back-end\Microservice)
+2026-10-01 23:48:04.446 DEBUG [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Running with Spring Boot v3.4.3, Spring v6.2.3
+2026-10-01 23:48:04.447  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-10-01 23:48:05.661  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-10-01 23:48:05.665  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-10-01 23:48:05.705  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2026-10-01 23:48:06.041  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=eba7c129-4835-3c2d-8192-08d3f9a53c10
+2026-10-01 23:48:07.071  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.l.g.f.JwtAuthenticationGatewayFilter   : [GatewayAuthFilter] Loaded RSA Public Key successfully from classpath:certs/rsa-public.pem
+2026-10-01 23:48:08.114  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-10-01 23:48:08.114  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-10-01 23:48:08.114  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-10-01 23:48:08.114  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-10-01 23:48:08.114  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-10-01 23:48:08.116  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-10-01 23:48:08.703  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-10-01 23:48:08.749  WARN [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-10-01 23:48:08.833  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-10-01 23:48:11.453  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2026-10-01 23:48:11.845  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080 (http)
+2026-10-01 23:48:11.846  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 8080
+2026-10-01 23:48:12.205  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [           main] c.liochio.gateway.ApiGatewayApplication  : Started ApiGatewayApplication in 8.822 seconds (process running for 9.982)
+2026-10-01 23:50:45.434  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_463c81009f6546cf ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 23:50:45.434  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_IN] traceId=tr_f2a02a91a1ed470d ip=192.168.1.2 method=GET path=/api/v1/ws/live/retail_user
+2026-10-01 23:50:45.518  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_f2a02a91a1ed470d ip=192.168.1.2 status=200 duration=84ms path=/api/v1/ws/live/retail_user
+2026-10-01 23:50:45.521  INFO [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-3] c.l.gateway.filter.TraceIdGatewayFilter  : [GATEWAY_OUT] traceId=tr_463c81009f6546cf ip=192.168.1.2 status=200 duration=87ms path=/api/v1/ws/live/retail_user
+2026-10-01 23:50:45.521 ERROR [api-gateway] [traceId=NO_TRACE] [tenantId=default] [ctor-http-nio-2] r.netty.transport.ServerTransport        : [92f721fb-1, L:/192.168.1.2:8080 - R:/192.168.1.2:59379] onUncaughtException(ws{uri=/api/v1/ws/live/retail_user, connection=SimpleConnection{channel=[id: 0x92f721fb, L:/192.168.1.2:8080 - R:/192.168.1.2:59379]}})
+
+java.io.IOException: An established connection was aborted by the software in your host machine
+	at java.base/sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at java.base/sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:46)
+	at java.base/sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:330)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:284)
+	at java.base/sun.nio.ch.IOUtil.read(IOUtil.java:259)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:417)
+	at io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:255)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1132)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:356)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:151)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:796)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:732)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:998)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 

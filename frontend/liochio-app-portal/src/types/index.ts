@@ -47,3 +47,25 @@ export interface CorpBrandingConfig {
   accentColor: string;
   customDomain?: string;
 }
+
+export type TenantType = 'ENTERPRISE' | 'FINTECH_PARTNER' | 'BANK' | 'SME' | 'INDIVIDUAL';
+export type TenantStatus = 'ACTIVE' | 'SUSPENDED' | 'EXPIRED' | 'PENDING_APPROVAL';
+
+export interface Tenant {
+  id: string;
+  code: string;
+  name: string;
+  type: TenantType;
+  status: TenantStatus;
+  domain?: string;
+  maxUsersQuota: number;
+  maxDevicesQuota: number;
+  currentUsersCount: number;
+  currentDevicesCount: number;
+  contactEmail: string;
+  contactPhone: string;
+  contractExpiresAt: string;
+  createdAt: string;
+  features: string[];
+}
+

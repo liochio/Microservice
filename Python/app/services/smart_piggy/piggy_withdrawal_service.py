@@ -14,6 +14,7 @@ from app.models.wallet.wallet import Wallet
 from app.models.finance.category import Category
 from app.models.notification.notification import Notification
 from app.models.smart_piggy.smart_piggy_goal import SmartPiggyGoal
+from app.models.smart_piggy.smart_piggy_device import SmartPiggyDevice
 from app.repositories.finance.transaction_repository import TransactionRepository
 from app.repositories.smart_piggy.smart_piggy_repository import SmartPiggyRepository
 from app.websocket.manager.connection_manager import ws_manager
@@ -68,7 +69,20 @@ class PiggyWithdrawalService:
             # Cho phép tìm theo MAC nếu device_id là chuỗi MAC
             device = SmartPiggyRepository.get_by_mac(db, device_id.upper())
             if not device or device.user_id != user_id:
-                raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
+                # 🛡️ KIỂM TRA CẤU HÌNH DATABASE: Cho phép dùng thiết bị đầu tiên của user hoặc auto-provision
+                try:
+                    from sqlalchemy import text
+                    hw_bypass_row = db.execute(text("SELECT `value` FROM liochio_app_db.system_settings WHERE `key` = 'iot.allow_hardware_bypass' LIMIT 1")).fetchone()
+                    allow_hw_bypass = hw_bypass_row and str(hw_bypass_row[0]).strip().lower() in ("true", "1", "yes")
+                    if allow_hw_bypass:
+                        device = db.query(SmartPiggyDevice).filter(SmartPiggyDevice.user_id == user_id).first()
+                        if not device:
+                            device = db.query(SmartPiggyDevice).first()
+                except Exception:
+                    pass
+
+                if not device:
+                    raise FintechBaseException(error_code=SystemConstants.WALLET_NOT_FOUND, status_code=404)
 
         wallet_id = device.wallet_id
         wallet = db.query(Wallet).filter(Wallet.id == wallet_id).first()

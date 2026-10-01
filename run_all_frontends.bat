@@ -2,13 +2,11 @@
 set "PATH=C:\Program Files\nodejs;%PATH%"
 
 echo ======================================================================
-echo STARTING 2 ENTERPRISE FRONTEND PORTALS (ADMIN:5170, APP-PORTAL:5173)
+echo STARTING UNIFIED FRONTEND PLATFORM (PORT 5173 - SINGLE SOURCE FOR ALL ROLES)
 echo ======================================================================
 echo.
 
-start "1. SuperAdmin Platform (5170)" cmd /k "set ""PATH=C:\Program Files\nodejs;%PATH%"" && cd /d %~dp0frontend\liochio-admin && npm run dev"
-start "2. Unified App Portal (5173)" cmd /k "set ""PATH=C:\Program Files\nodejs;%PATH%"" && cd /d %~dp0frontend\liochio-app-portal && npm run dev"
+start "Liochio Unified Portal (5173)" cmd /k "set ""PATH=C:\Program Files\nodejs;%PATH%"" && cd /d %~dp0frontend\liochio-app-portal && npm run dev"
 
-echo All 2 enterprise frontend portals have been started!
-echo 1. SuperAdmin Platform:    http://localhost:5170
-echo 2. Unified App Portal:     http://localhost:5173 (Corp B2B + Retail + Business)
+echo Unified Frontend has been started!
+echo URL: http://localhost:5173 (SuperAdmin + Corp B2B + Business Ops + Retail)

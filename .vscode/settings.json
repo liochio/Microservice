@@ -1,0 +1,19 @@
+{
+    "python.defaultInterpreterPath": "${workspaceFolder}/Python/venv/Scripts/python.exe",
+    "python.terminal.activateEnvironment": true,
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "maven.executable.preferMavenWrapper": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/venv": true,
+        "**/target": true
+    }
+}
